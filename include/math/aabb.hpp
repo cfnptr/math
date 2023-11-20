@@ -1,4 +1,4 @@
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Copyright 2022-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 
 #pragma once
 #include "math/ray.hpp"
@@ -61,7 +61,7 @@ public:
 	float3 getSize() const noexcept { return max - min; }
 	float3 getPosition() const noexcept { return (min + max) * 0.5f; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 	void setExtent(const float3& extent, const float3& position = float3(0.0f)) noexcept
 	{
 		assert(extent >= 0.0f);
@@ -121,7 +121,7 @@ public:
 static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept {
 	return memcmp(&a, &b, sizeof(float3) * 2) < 0; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Returns true if point is inside AABB.
 static bool isInside(const Aabb& aabb, const float3& point) noexcept
 {
@@ -133,7 +133,7 @@ static float3 closestPoint(const Aabb& aabb, const float3& point) noexcept
 	return clamp(point, aabb.getMin(), aabb.getMax());
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Returns distance to the intersection points.
 static float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept
 {
@@ -174,7 +174,7 @@ static float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept
 	return float2(tMin, tMax);
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Returns distance to the first intersection point.
 static float raycast1(const Aabb& aabb, const Ray& ray) noexcept
 {
@@ -209,7 +209,7 @@ static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
 		std::min(t3, t4)), std::min(t5, t6));
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static bool isIntersected(float2 raycastPoints) noexcept
 {
 	// If tMax < 0.0f, ray is intersecting AABB, but whole AABB is behind us.
@@ -232,7 +232,7 @@ static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 	return aMin <= bMax && aMax >= bMin;
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static bool isIntersected(const float3& center,
 	const float3& extent, const Triangle& triangle) noexcept
 {
@@ -301,7 +301,7 @@ static bool isIntersected(const float3& center,
 	return distance <= r;
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static bool isBehindFrustum(const Aabb& aabb, const float4x4& model,
 	const Plane* planes, uint8 planeCount = FRUSTUM_PLANE_COUNT) noexcept
 {

@@ -1,4 +1,4 @@
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Copyright 2022-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 
 #pragma once
 #include "math/types.hpp"
@@ -29,7 +29,7 @@ namespace math
 
 using namespace std;
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 struct int2
 {
 	int32 x, y;
@@ -94,7 +94,7 @@ struct int2
 	static const int2 left, right, bottom, top;
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 struct float2
 {
 	float x, y;
@@ -142,7 +142,7 @@ struct float2
 	static const float2 left, right, bottom, top;
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 struct int3
 {
 	int32 x, y, z;
@@ -163,7 +163,7 @@ struct int3
 		return ((int32*)this)[i];
 	}
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 	explicit operator int2() const noexcept { return int2(x, y); }
 	explicit operator int32() const noexcept { return x; }
 	int3 operator+(const int3& v) const noexcept {
@@ -239,7 +239,7 @@ struct int3
 	static const int3 left, right, bottom, top, back, front;
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 struct float3
 {
 	float x, y, z;
@@ -263,7 +263,7 @@ struct float3
 		return ((float*)this)[i];
 	}
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 	explicit operator int3() const noexcept {
 		return int3((int32)x, (int32)y, (int32)z); }
 	explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
@@ -311,7 +311,7 @@ struct float3
 	static const float3 left, right, bottom, top, back, front;
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 struct int4
 {
 	int32 x, y, z, w;
@@ -344,7 +344,7 @@ struct int4
 		return ((int32*)this)[i];
 	}
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 	explicit operator int3() const noexcept { return int3(x, y, z); }
 	explicit operator int2() const noexcept { return int2(x, y); }
 	explicit operator int32() const noexcept { return x; }
@@ -433,7 +433,7 @@ struct int4
 	}
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 struct float4
 {
 	float x, y, z, w;
@@ -469,7 +469,7 @@ struct float4
 		return ((float*)this)[i];
 	}
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 	explicit operator int4() const noexcept {
 		return int4((int32)x, (int32)y, (int32)z, (int32)w); }
 	explicit operator int3() const noexcept {
@@ -521,7 +521,7 @@ struct float4
 	}
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float min(float a, float b, float c) { return std::min(std::min(a, b), c); }
 static float max(float a, float b, float c) { return std::max(std::max(a, b), c); }
 static int32 min(int32 a, int32 b, int32 c) { return std::min(std::min(a, b), c); }
@@ -545,7 +545,7 @@ static float lerp(float a, float b, float t) noexcept
 	return a + t * (b - a);
 }
 
-//----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 static float2 operator+(float2 v, float n) noexcept { return float2(v.x + n, v.y + n); }
 static float2 operator-(float2 v, float n) noexcept { return float2(v.x - n, v.y - n); }
 static float2 operator*(float2 v, float n) noexcept { return float2(v.x * n, v.y * n); }
@@ -569,7 +569,7 @@ static bool operator<=(float n, float2 v) noexcept { return float2(n) <= v; }
 static bool operator>=(float n, float2 v) noexcept { return float2(n) >= v; }
 
 // TODO: possibly add more specific math functions like remquo, sph_neumann or dFdx.
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float2 abs(float2 v) noexcept {
 	return float2(std::abs(v.x), std::abs(v.y)); }
 static float2 mod(float2 a, float2 b) noexcept {
@@ -599,7 +599,7 @@ static float2 repeat(float2 v) noexcept {
 static float2 sign(float2 v) noexcept {
 	return float2(sign(v.x), sign(v.y)); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float2 exp(float2 v) noexcept {
 	return float2(std::exp(v.x), std::exp(v.y)); }
 static float2 exp2(float2 v) noexcept {
@@ -621,7 +621,7 @@ static float2 sqrt(float2 v) noexcept {
 static float2 cbrt(float2 v) noexcept {
 	return float2(std::cbrt(v.x), std::cbrt(v.y)); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float2 sin(float2 v) noexcept {
 	return float2(std::sin(v.x), std::sin(v.y)); }
 static float2 cos(float2 v) noexcept {
@@ -649,7 +649,7 @@ static float2 acosh(float2 v) noexcept {
 static float2 atanh(float2 v) noexcept {
 	return float2(std::atanh(v.x), std::atanh(v.y)); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float dot(float2 a, float2 b) noexcept { return a.x * b.x + a.y * b.y; }
 static float length(float2 v) noexcept { return std::sqrt(dot(v, v)); }
 static float length2(float2 v) noexcept { return dot(v, v); }
@@ -672,7 +672,7 @@ static float2 lerp(float2 a, float2 b, float t) noexcept
 static bool isBinaryLess(float2 a, float2 b) noexcept {
 	return *((const int64*)&a) < *((const int64*)&b); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static int2 operator+(int2 v, int32 n) noexcept { return int2(v.x + n, v.y + n); }
 static int2 operator-(int2 v, int32 n) noexcept { return int2(v.x - n, v.y - n); }
 static int2 operator*(int2 v, int32 n) noexcept { return int2(v.x * n, v.y * n); }
@@ -707,7 +707,7 @@ static bool operator>(int32 n, int2 v) noexcept { return int2(n) > v; }
 static bool operator<=(int32 n, int2 v) noexcept { return int2(n) <= v; }
 static bool operator>=(int32 n, int2 v) noexcept { return int2(n) >= v; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static int2 max(int2 a, int2 b) noexcept {
 	return int2(std::max(a.x, b.x), std::max(a.y, b.y)); }
 static int2 max(int2 a, int2 b, int2 c)
@@ -722,7 +722,7 @@ static int2 clamp(int2 v, int2 min, int2 max) noexcept {
 static bool isBinaryLess(int2 a, int2 b) noexcept {
 	return *((const int64*)&a) < *((const int64*)&b); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float3 operator+(const float3& v, float n) noexcept {
 	return float3(v.x + n, v.y + n, v.z + n); }
 static float3 operator-(const float3& v, float n) noexcept {
@@ -753,7 +753,7 @@ static bool operator>(float n, const float3& v) noexcept { return float3(n) > v;
 static bool operator<=(float n, const float3& v) noexcept { return float3(n) <= v; }
 static bool operator>=(float n, const float3& v) noexcept { return float3(n) >= v; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float3 abs(const float3& v) noexcept {
 	return float3(std::abs(v.x), std::abs(v.y), std::abs(v.z)); }
 static float3 mod(const float3& a, const float3& b) noexcept {
@@ -785,7 +785,7 @@ static float3 repeat(const float3& v) noexcept {
 static float3 sign(const float3& v) noexcept {
 	return float3(sign(v.x), sign(v.y), sign(v.z)); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float3 exp(const float3& v) noexcept { 
 	return float3(std::exp(v.x), std::exp(v.y), std::exp(v.z)); }
 static float3 exp2(const float3& v) noexcept {
@@ -807,7 +807,7 @@ static float3 sqrt(const float3& v) noexcept {
 static float3 cbrt(const float3& v) noexcept {
 	return float3(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z)); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float3 sin(const float3& v) noexcept {
 	return float3(std::sin(v.x), std::sin(v.y), std::sin(v.z)); }
 static float3 cos(const float3& v) noexcept {
@@ -835,7 +835,7 @@ static float3 acosh(const float3& v) noexcept {
 static float3 atanh(const float3& v) noexcept {
 	return float3(std::atanh(v.x), std::atanh(v.y), std::atanh(v.z)); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float dot(const float3& a, const float3& b) noexcept {
 	return a.x * b.x + a.y * b.y + a.z * b.z; }
 static float3 cross(const float3& a, const float3& b) noexcept {
@@ -861,7 +861,7 @@ static float3 lerp(const float3& a, const float3& b, float t) noexcept
 static bool isBinaryLess(const float3& a, const float3& b) noexcept {
 	return memcmp(&a, &b, sizeof(float) * 3) < 0; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static int3 operator+(const int3& v, int32 n) noexcept {
 	return int3(v.x + n, v.y + n, v.z + n); }
 static int3 operator-(const int3& v, int32 n) noexcept {
@@ -916,7 +916,7 @@ static bool operator>(int32 n, const int3& v) noexcept { return int3(n) > v; }
 static bool operator<=(int32 n, const int3& v) noexcept { return int3(n) <= v; }
 static bool operator>=(int32 n, const int3& v) noexcept { return int3(n) >= v; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static int3 max(const int3& a, const int3& b) noexcept {
 	return int3(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z)); }
 static int3 max(const int3& a, const int3& b, const int3& c)
@@ -932,7 +932,7 @@ static int3 clamp(const int3& v, const int3& min, const int3& max) noexcept {
 static bool isBinaryLess(const int3& a, const int3& b) noexcept {
 	return memcmp(&a, &b, sizeof(int32) * 3) < 0; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float4 operator+(const float4& v, float n) noexcept {
 	return float4(v.x + n, v.y + n, v.z + n, v.w + n); }
 static float4 operator-(const float4& v, float n) noexcept {
@@ -963,7 +963,7 @@ static bool operator>(float n, const float4& v) noexcept { return float4(n) > v;
 static bool operator<=(float n, const float4& v) noexcept { return float4(n) <= v; }
 static bool operator>=(float n, const float4& v) noexcept { return float4(n) >= v; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float4 abs(const float4& v) noexcept {
 	return float4(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w)); }
 static float4 mod(const float4& a, const float4& b) noexcept {
@@ -998,7 +998,7 @@ static float4 repeat(const float4& v) noexcept {
 static float4 sign(const float4& v) noexcept {
 	return float4(sign(v.x), sign(v.y), sign(v.z), sign(v.w)); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float4 exp(const float4& v) noexcept { 
 	return float4(std::exp(v.x), std::exp(v.y), std::exp(v.z), std::exp(v.w)); }
 static float4 exp2(const float4& v) noexcept {
@@ -1021,7 +1021,7 @@ static float4 sqrt(const float4& v) noexcept {
 static float4 cbrt(const float4& v) noexcept {
 	return float4(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z), std::cbrt(v.w)); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float4 sin(const float4& v) noexcept {
 	return float4(std::sin(v.x), std::sin(v.y), std::sin(v.z), std::sin(v.w)); }
 static float4 cos(const float4& v) noexcept {
@@ -1050,7 +1050,7 @@ static float4 acosh(const float4& v) noexcept {
 static float4 atanh(const float4& v) noexcept {
 	return float4(std::atanh(v.x), std::atanh(v.y), std::atanh(v.z), std::atanh(v.w)); }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float dot(const float4& a, const float4& b) noexcept {
 	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w; }
 static float length(const float4& v) noexcept { return std::sqrt(dot(v, v)); }
@@ -1076,7 +1076,7 @@ static float4 lerp(const float4& a, const float4& b, float t) noexcept
 static bool isBinaryLess(const float4& a, const float4& b) noexcept {
 	return memcmp(&a, &b, sizeof(float) * 4) < 0; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static int4 operator+(const int4& v, int32 n) noexcept {
 	return int4(v.x + n, v.y + n, v.z + n, v.w + n); }
 static int4 operator-(const int4& v, int32 n) noexcept {
@@ -1131,7 +1131,7 @@ static bool operator>(int32 n, const int4& v) noexcept { return int4(n) > v; }
 static bool operator<=(int32 n, const int4& v) noexcept { return int4(n) <= v; }
 static bool operator>=(int32 n, const int4& v) noexcept { return int4(n) >= v; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static int4 max(const int4& a, const int4& b) noexcept {
 	return int4(std::max(a.x, b.x), std::max(a.y, b.y),
 	std::max(a.z, b.z), std::max(a.w, b.w)); }
@@ -1148,7 +1148,7 @@ static int4 clamp(const int4& v, const int4& min, const int4& max) noexcept {
 static bool isBinaryLess(const int4& a, const int4& b) noexcept {
 	return memcmp(&a, &b, sizeof(int32) * 4) < 0; }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static uint8 calcMipCount(int32 size)
 {
 	return (uint8)(std::floor(std::log2((float)size))) + 1;
@@ -1163,7 +1163,7 @@ static uint8 calcMipCount(const int3& size)
 		std::max(std::max(size.x, size.y), size.z)))) + 1;
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static int32 calcSizeAtMip(int32 sizeAt0, uint8 mip)
 {
 	return std::max(sizeAt0 / (int32)std::exp2((float)mip), 1);

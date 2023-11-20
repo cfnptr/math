@@ -1,4 +1,4 @@
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Copyright 2022-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 
 #pragma once
 #include "math/ibl.hpp"
@@ -25,7 +25,7 @@ namespace math::sh
 using namespace math;
 using namespace math::ibl;
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 #define M_SQRT_PI  1.77245385090551602729816748334114518
 #define M_SQRT3    1.73205080756887729352744634150587237
 #define M_SQRT5    2.23606797749978969640917366873127624
@@ -61,7 +61,7 @@ static float calcSolidAngle(float2 st, float invDim)
 		sphereQuadrantArea(v1.x, v0.y) + sphereQuadrantArea(v1.x, v1.y);
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static void computeShBasis(const float3& s, float shb[SH_COEF_COUNT])
 {
 	auto pml2 = 0.0f, pml1 = 1.0f;
@@ -105,7 +105,7 @@ static void computeShBasis(const float3& s, float shb[SH_COEF_COUNT])
 	}
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static void projectVecToSH2K(const float3& s, float r[5])
 {
 	r[0] = s.y * s.x;
@@ -123,7 +123,7 @@ static void multiply(const float m[25], const float v[5], float r[5])
 	r[4] = m[4] * v[0] + m[9] * v[1] + m[14] * v[2] + m[19] * v[3] + m[24] * v[4];
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float3 rotateSphericalHarmonicBand1(const float3& band1, const float3x3& m)
 {
 	static const auto invA1TimesK = float3x3(
@@ -189,7 +189,7 @@ static void rotateSh3Bands(const float shw[SH_COEF_COUNT],
 	r[4] = b2[0]; r[5] = b2[1]; r[6] = b2[2]; r[7] = b2[3]; r[8] = b2[4];
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float sincWindow(int32 l, float w)
 {
 	if (l == 0) return 1.0f;
@@ -266,7 +266,7 @@ static float shmin(float shw[SH_COEF_COUNT])
 	return minimum;
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static void deringingSH(float4 sh[SH_COEF_COUNT])
 {
 	auto cutoff = (float)(SH_BAND_COUNT * 4 + 1);
@@ -303,7 +303,7 @@ static void deringingSH(float4 sh[SH_COEF_COUNT])
 	}
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static void shaderPreprocessSH(float4 sh[SH_COEF_COUNT])
 {
 	static const float ca[SH_COEF_COUNT] =

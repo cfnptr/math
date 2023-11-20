@@ -1,4 +1,4 @@
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Copyright 2022-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 
 // Coordinate system: X-right, Y-up, Z-forward (Left handed)
 // Matrices are column-major. (OpenGL, Vulkan like)
@@ -73,7 +73,7 @@ struct float2x2
 	static const float2x2 identity;
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 struct float3x3
 {
 	float3 c0, c1, c2;
@@ -129,7 +129,7 @@ struct float3x3
 	static const float3x3 identity;
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 struct float4x4
 {
 	float4 c0, c1, c2, c3;
@@ -194,7 +194,7 @@ struct float4x4
 	static const float4x4 identity;
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float2 operator*(float2 v, const float2x2& m) noexcept
 {
 	return float2(
@@ -219,7 +219,7 @@ static float2x2 inverse(const float2x2& matrix) noexcept
 		m.c0.x * oneOverDeterminant);
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float3 operator*(const float3& v, const float3x3& m) noexcept
 {
 	return float3(
@@ -253,7 +253,7 @@ static float3x3 inverse(const float3x3& matrix) noexcept
 		(m.c0.x * m.c2.y - m.c1.x * m.c0.y) * oneOverDeterminant);
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float4 operator*(const float4& v, const float4x4& m) noexcept
 {
 	return float4(
@@ -318,7 +318,7 @@ static float4x4 inverse(const float4x4& matrix) noexcept
 	return i * (1.0f / d1);
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float4x4 translate(const float4x4& m, const float3& t) noexcept {
 	return float4x4(m.c0, m.c1, m.c2, m.c0 * t.x + m.c1 * t.y + m.c2 * t.z + m.c3); }
 static float4x4 translate(const float3& t) noexcept
@@ -338,7 +338,7 @@ static void setTranslation(float4x4& m, const float3& t)
 	m.c3.x = t.x; m.c3.y = t.y; m.c3.z = t.z;
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float4x4 scale(const float4x4& m, const float3& s) noexcept {
 	return float4x4(m.c0 * s.x, m.c1 * s.y, m.c2 * s.z, m.c3); }
 static float4x4 scale(const float3& s) noexcept
@@ -355,7 +355,7 @@ static float3 extractScale(const float4x4& m)
 		length((float3)m.c1), length((float3)m.c2));
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float4x4 rotate(const quat& q) noexcept
 {
 	auto xx = q.x * q.x, yy = q.y * q.y, zz = q.z * q.z;
@@ -410,7 +410,7 @@ static float4x4 calcModel(const float3& position,
 	return translate(position) * rotate(normalize(rotation)) * math::scale(scale);
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static quat extractQuat(const float3x3& m)
 {
 	auto fourXSquaredMinus1 = m.c0.x - m.c1.y - m.c2.z;
@@ -457,12 +457,12 @@ static quat extractQuat(const float4x4& m)
 	return extractQuat((float3x3)m);
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // These projections are fixed for the Vulkan NDC space.
 // http://matthewwellings.com/blog/the-new-vulkan-coordinate-system/
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Infinite Reversed Z Perspective Projection
 static float4x4 calcPerspProjInfRevZ(float fieldOfView,
 	float aspectRatio, float nearPlane)
@@ -502,7 +502,7 @@ static float4x4 calcPerspProj(float fieldOfView,
 		0.0f, 0.0f, 1.0f, 0.0f);
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Reversed Z Orthographic Projection
 static float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth)
 {
@@ -522,7 +522,7 @@ static float4x4 calcOrthoProj(float2 width, float2 height, float2 depth)
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 static float4x4 lookAt(const float3& from,
 	const float3& to, const float3& up = float3::top)
 {

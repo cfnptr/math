@@ -1,4 +1,4 @@
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Copyright 2022-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 
 #pragma once
 #include "math/line.hpp"
@@ -58,7 +58,7 @@ public:
 	static const Plane left, right, bottom, top, back, front;
 };
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Returns distance to the plane.
 static float distance(const Plane& plane, const float3& point) noexcept {
 	return dot(plane.getNormal(), point) + plane.distance; }
@@ -84,7 +84,7 @@ static float3 closestPoint(const Triangle& triangle, const float3& point) noexce
     return c2;
 }
 
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Returns unnormalized plane normals.
 static void extractFrustumPlanes(const float4x4& frustum, Plane* planes) noexcept
 {

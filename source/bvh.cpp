@@ -1,4 +1,4 @@
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
 // Copyright 2022-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 //
 // Bounding Volume Hierarchy
 // Based on this: https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/
-//----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
 #include "math/bvh.hpp"
 
@@ -24,7 +24,7 @@
 
 using namespace math;
 
-//----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 static Aabb calculateNodeAabb(const Bvh::Node* node,
 	const uint8* vertices, const uint8* indices, const uint32* primitives, 
 	uint32 vertexSize, uint32 indexSize, function<uint32(const uint8*)> getIndex)
@@ -47,7 +47,7 @@ static Aabb calculateNodeAabb(const Bvh::Node* node,
 	return Aabb(min, max);
 }
 
-//----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 static Aabb calculateNodeAabb(const Bvh::Node* node,
 	const Aabb* aabbs, const uint32* primitives)
 {
@@ -62,7 +62,7 @@ static Aabb calculateNodeAabb(const Bvh::Node* node,
 	return Aabb(min, max);
 }
 
-//----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 #define BIN_COUNT 8
 
 static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
@@ -151,7 +151,7 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
 	cost = bestCost;
 }
 
-//----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
 	const Aabb* aabbs, const uint32* primitives, const float3* centroids,
 	int32& axis, float& split, float& cost)
@@ -230,7 +230,7 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
 	cost = bestCost;
 }
 
-//----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 Bvh::Bvh(const uint8* vertices, const uint8* indices, const Aabb& aabb,
 	uint32 indexCount, uint32 vertexSize, uint32 indexSize, const float3* _centroids)
 {
@@ -241,13 +241,13 @@ Bvh::Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const float3* _c
 	recreate(aabbs, aabb, aabbCount, _centroids);
 }
 
-//----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 void Bvh::recreate(const uint8* vertices, const uint8* indices,
 	const Aabb& aabb, uint32 indexCount, uint32 vertexSize,
 	uint32 indexSize, const float3* _centroids)
 {
-	assert(vertices != nullptr);
-	assert(indices != nullptr);
+	assert(vertices);
+	assert(indices);
 	assert(indexCount > 0);
 	assert(vertexSize > 0);
 	assert(indexSize > 0);
@@ -267,7 +267,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 	else if (indexSize != sizeof(uint32)) abort();
 
 	const float3* centroidData;
-	if (_centroids == nullptr)
+	if (!_centroids)
 	{
 		centroids.resize(primitiveCount);
 		centroidData = centroids.data();
@@ -364,11 +364,11 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 	nodes.resize(nodeCount);
 }
 
-//----------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb,
 	uint32 aabbCount, const float3* _centroids)
 {
-	assert(aabbs != nullptr);
+	assert(aabbs);
 	assert(aabbCount > 0);
 	nodes.resize(aabbCount * 2 - 1);
 
@@ -377,7 +377,7 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb,
 	for (uint32 i = 0; i < aabbCount; i++) primitiveData[i] = i;
 
 	const float3* centroidData;
-	if (_centroids == nullptr)
+	if (!_centroids)
 	{
 		centroids.resize(aabbCount);
 		centroidData = centroids.data();

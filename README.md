@@ -1,4 +1,4 @@
-# MATH ![CI](https://github.com/cfnptr/math/actions/workflows/cmake.yml/badge.svg)
+# Math ![CI](https://github.com/cfnptr/math/actions/workflows/cmake.yml/badge.svg)
 
 A library providing common linear algebra math operations.
 
