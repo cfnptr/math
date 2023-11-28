@@ -719,6 +719,10 @@ static int2 min(int2 a, int2 b, int2 c)
 static int2 clamp(int2 v, int2 min, int2 max) noexcept {
 	return int2(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y)); }
 
+static int32 dot(int2 a, int2 b) noexcept { return a.x * b.x + a.y * b.y; }
+static int32 length2(int2 v) noexcept { return dot(v, v); }
+static int32 distance2(int2 a, int2 b) noexcept { return length2(a - b); }
+
 static bool isBinaryLess(int2 a, int2 b) noexcept {
 	return *((const int64*)&a) < *((const int64*)&b); }
 
@@ -929,6 +933,12 @@ static int3 clamp(const int3& v, const int3& min, const int3& max) noexcept {
 	return int3(std::clamp(v.x, min.x, max.x),
 	std::clamp(v.y, min.y, max.y), std::clamp(v.z, min.z, max.z)); }
 
+static int32 dot(const int3& a, const int3& b) noexcept {
+	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+static int32 length2(const int3& v) noexcept { return dot(v, v); }
+static int32 distance2(const int3& a, const int3& b) noexcept { return length2(a - b); }
+
 static bool isBinaryLess(const int3& a, const int3& b) noexcept {
 	return memcmp(&a, &b, sizeof(int32) * 3) < 0; }
 
@@ -1055,10 +1065,8 @@ static float dot(const float4& a, const float4& b) noexcept {
 	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w; }
 static float length(const float4& v) noexcept { return std::sqrt(dot(v, v)); }
 static float length2(const float4& v) noexcept { return dot(v, v); }
-static float distance(const float4& a, const float4& b)
-	noexcept { return length(a - b); }
-static float distance2(const float4& a, const float4& b)
-	noexcept { return length2(a - b); }
+static float distance(const float4& a, const float4& b) noexcept { return length(a - b); }
+static float distance2(const float4& a, const float4& b) noexcept { return length2(a - b); }
 
 static float4 normalize(const float4& v) noexcept
 {
@@ -1145,6 +1153,13 @@ static int4 min(const int4& a, const int4& b, const int4& c)
 static int4 clamp(const int4& v, const int4& min, const int4& max) noexcept {
 	return int4(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y),
 	std::clamp(v.z, min.z, max.z), std::clamp(v.w, min.w, max.w)); }
+
+static int32 dot(const int4& a, const int4& b) noexcept {
+	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+}
+static int32 length2(const int4& v) noexcept { return dot(v, v); }
+static int32 distance2(const int4& a, const int4& b) noexcept { return length2(a - b); }
+
 static bool isBinaryLess(const int4& a, const int4& b) noexcept {
 	return memcmp(&a, &b, sizeof(int32) * 4) < 0; }
 
