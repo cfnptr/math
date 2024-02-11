@@ -33,7 +33,7 @@ static Aabb calculateNodeAabb(const Bvh::Node* node,
 	float3 min = float3(FLT_MAX), max = float3(-FLT_MAX);
 	for (uint32 i = node->leaf.firstPrimitive; i < lastPrimitive; i++)
 	{
-		auto offset = primitives[i] * TRIANGLE_POINT_COUNT;
+		auto offset = primitives[i] * trianglePointCount;
 		auto i0 = getIndex(indices + (offset    ) * indexSize);
 		auto i1 = getIndex(indices + (offset + 1) * indexSize);
 		auto i2 = getIndex(indices + (offset + 2) * indexSize);
@@ -95,7 +95,7 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
 		for (uint32 i = firstPrimitive; i < lastPrimitive; i++)
 		{
 			auto index = primitives[i];
-			auto offset = index * TRIANGLE_POINT_COUNT;
+			auto offset = index * trianglePointCount;
 			auto i0 = getIndex(indices + (offset    ) * indexSize);
 			auto i1 = getIndex(indices + (offset + 1) * indexSize);
 			auto i2 = getIndex(indices + (offset + 2) * indexSize);
@@ -252,7 +252,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 	assert(vertexSize > 0);
 	assert(indexSize > 0);
 
-	auto primitiveCount = indexCount / TRIANGLE_POINT_COUNT;
+	auto primitiveCount = indexCount / trianglePointCount;
 	nodes.resize(primitiveCount * 2 - 1);
 	primitives.resize(primitiveCount);
 	auto primitiveData = primitives.data();
@@ -275,7 +275,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 
 		for (uint32 i = 0; i < primitiveCount; i++)
 		{
-			auto offset = i * TRIANGLE_POINT_COUNT;
+			auto offset = i * trianglePointCount;
 			auto i0 = getIndex(indices + (offset    ) * indexSize);
 			auto i1 = getIndex(indices + (offset + 1) * indexSize);
 			auto i2 = getIndex(indices + (offset + 2) * indexSize);

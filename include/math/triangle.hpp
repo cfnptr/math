@@ -20,13 +20,13 @@
 namespace math
 {
 
-#define TRIANGLE_POINT_COUNT 3
+const int32 trianglePointCount = 3;
 
 using namespace std;
 
 struct Triangle
 {
-	float3 points[TRIANGLE_POINT_COUNT];
+	float3 points[trianglePointCount];
 	Triangle(const float3& point0, const float3& point1, const float3& point2) noexcept {
 		points[0] = point0; points[1] = point1; points[2] = point2; }
 	Triangle() = default;

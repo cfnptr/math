@@ -303,7 +303,7 @@ static bool isIntersected(const float3& center,
 
 //------------------------------------------------------------------------------------------------------------
 static bool isBehindFrustum(const Aabb& aabb, const float4x4& model,
-	const Plane* planes, uint8 planeCount = FRUSTUM_PLANE_COUNT) noexcept
+	const Plane* planes, uint8 planeCount = frustumPlaneCount) noexcept
 {
 	auto min = aabb.getMin(), max = aabb.getMax();
 	auto v0 = model * float4(min, 1.0f);

@@ -22,7 +22,7 @@
 namespace math
 {
 
-#define FRUSTUM_PLANE_COUNT 6
+const int32 frustumPlaneCount = 6;
 
 using namespace std;
 

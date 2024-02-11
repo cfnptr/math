@@ -21,9 +21,9 @@
 namespace math::ibl
 {
 
-#define IBL_DFG_SIZE 128
-#define SH_BAND_COUNT 3
-#define SH_COEF_COUNT 9 // 3 * 3
+const int32 iblDfgSize = 128;
+const int32 shBandCount = 3;
+const int32 shCoefCount = 9; // 3 * 3
 
 using namespace math;
 
