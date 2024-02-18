@@ -1,4 +1,3 @@
-//--------------------------------------------------------------------------------------------------
 // Copyright 2022-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//--------------------------------------------------------------------------------------------------
 
 #pragma once
 #include "math/types.hpp"
@@ -20,6 +18,9 @@
 namespace math
 {
 
+/**
+ * @brief Declares enum class common operators. (|, &, |=, &=, hasAnyFlag, hasOneFlag)
+ */
 #define DECLARE_ENUM_CLASS_FLAG_OPERATORS(enumType)         \
 static enumType operator|(enumType a, enumType b)           \
 { return (enumType)((uint64)(a) | (uint64)(b)); }           \
@@ -34,4 +35,4 @@ static bool hasAnyFlag(enumType a, enumType flags)          \
 static bool hasOneFlag(enumType a, enumType flag)           \
 { return (uint64)(a & flag) == (uint64)a; }
 
-} // math
+} // namespace math

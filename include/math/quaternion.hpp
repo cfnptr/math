@@ -123,4 +123,4 @@ static quat conjugate(const quat& q) noexcept { return quat(-q.x, -q.y, -q.z, q.
 static quat inverse(const quat& q) noexcept { return conjugate(q) / dot(q, q);  }
 static float3 operator*(const float3& v, const quat& q) noexcept { return inverse(q) * v; }
 
-} // math
+} // namespace math

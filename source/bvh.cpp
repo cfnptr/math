@@ -82,7 +82,9 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
 			boundsMin = std::min(boundsMin, value);
 			boundsMax = std::max(boundsMax, value);
 		}
-		if (boundsMin == boundsMax) continue;
+
+		if (boundsMin == boundsMax)
+			continue;
 
 		struct Bin
 		{
@@ -168,7 +170,9 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
 			boundsMin = std::min(boundsMin, value);
 			boundsMax = std::max(boundsMax, value);
 		}
-		if (boundsMin == boundsMax) continue;
+
+		if (boundsMin == boundsMax)
+			continue;
 
 		struct Bin
 		{
@@ -263,7 +267,8 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 	function getIndex32 = [](const uint8* data)
 	{ return *(const uint32*)data; };
 	auto getIndex = getIndex32;
-	if (indexSize == sizeof(uint16)) getIndex = getIndex16;
+	if (indexSize == sizeof(uint16))
+		getIndex = getIndex16;
 	else if (indexSize != sizeof(uint32)) abort();
 
 	const float3* centroidData;
@@ -285,7 +290,10 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 			data[i] = (*v0 + *v1 + *v2) * (1.0f / 3.0f);
 		}
 	}
-	else centroidData = _centroids;
+	else
+	{
+		centroidData = _centroids;
+	}
 
 	auto nodeData = nodes.data();
 	auto nodeCount = (uint32)1;
@@ -307,22 +315,36 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 		auto nodeCost = node->getAabb().getArea() * primitiveCount;
 		if (cost >= nodeCost)
 		{
-			if (nodeStack.empty()) break;
-			else { node = nodeStack.top();  nodeStack.pop(); continue; }
+			if (nodeStack.empty())
+			{
+				break;
+			}
+			else
+			{
+				node = nodeStack.top();  nodeStack.pop(); continue;
+			}
 		}
 
 		auto i = firstPrimitive, j = i + primitiveCount - 1;
 		while (i <= j)
 		{
-			if (centroidData[primitiveData[i]][axis] < split) i++;
-			else std::swap(primitiveData[i], primitiveData[j--]);
+			if (centroidData[primitiveData[i]][axis] < split)
+				i++;
+			else
+				std::swap(primitiveData[i], primitiveData[j--]);
 		}
 
 		auto count1 = i - firstPrimitive;
 		if (count1 == 0 || count1 == primitiveCount)
 		{
-			if (nodeStack.empty()) break;
-			else { node = nodeStack.top(); nodeStack.pop(); continue; }
+			if (nodeStack.empty())
+			{
+				break;
+			}
+			else
+			{
+				node = nodeStack.top(); nodeStack.pop(); continue;
+			}
 		}
 
 		auto count2 = primitiveCount - count1;
@@ -353,12 +375,19 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 		if (count1 > 2)
 		{
 			node = node1;
-			if (count2 > 2) nodeStack.push(node2);
+			if (count2 > 2)
+				nodeStack.push(node2);
 			continue;
 		}
 
-		if (nodeStack.empty()) break;
-		else { node = nodeStack.top(); nodeStack.pop(); continue; }
+		if (nodeStack.empty())
+		{
+			break;
+		}
+		else
+		{
+			node = nodeStack.top(); nodeStack.pop(); continue;
+		}
 	}
 
 	nodes.resize(nodeCount);
@@ -374,7 +403,8 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb,
 
 	primitives.resize(aabbCount);
 	auto primitiveData = primitives.data();
-	for (uint32 i = 0; i < aabbCount; i++) primitiveData[i] = i;
+	for (uint32 i = 0; i < aabbCount; i++)
+		primitiveData[i] = i;
 
 	const float3* centroidData;
 	if (!_centroids)
@@ -389,7 +419,10 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb,
 			data[i] = aabb.getPosition();
 		}
 	}
-	else centroidData = _centroids;
+	else
+	{
+		centroidData = _centroids;
+	}
 
 	auto nodeData = nodes.data();
 	auto nodeCount = (uint32)1;
@@ -411,22 +444,36 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb,
 		auto nodeCost = node->getAabb().getArea() * primitiveCount;
 		if (cost >= nodeCost)
 		{
-			if (nodeStack.empty()) break;
-			else { node = nodeStack.top();  nodeStack.pop(); continue; }
+			if (nodeStack.empty())
+			{
+				break;
+			}
+			else
+			{
+				node = nodeStack.top();  nodeStack.pop(); continue;
+			}
 		}
 
 		auto i = firstPrimitive, j = i + primitiveCount - 1;
 		while (i <= j)
 		{
-			if (centroidData[primitiveData[i]][axis] < split) i++;
-			else std::swap(primitiveData[i], primitiveData[j--]);
+			if (centroidData[primitiveData[i]][axis] < split)
+				i++;
+			else
+				std::swap(primitiveData[i], primitiveData[j--]);
 		}
 
 		auto count1 = i - firstPrimitive;
 		if (count1 == 0 || count1 == primitiveCount)
 		{
-			if (nodeStack.empty()) break;
-			else { node = nodeStack.top(); nodeStack.pop(); continue; }
+			if (nodeStack.empty())
+			{
+				break;
+			}
+			else
+			{
+				node = nodeStack.top(); nodeStack.pop(); continue;
+			}
 		}
 
 		auto count2 = primitiveCount - count1;
@@ -455,12 +502,19 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb,
 		if (count1 > 2)
 		{
 			node = node1;
-			if (count2 > 2) nodeStack.push(node2);
+			if (count2 > 2)
+				nodeStack.push(node2);
 			continue;
 		}
 
-		if (nodeStack.empty()) break;
-		else { node = nodeStack.top(); nodeStack.pop(); continue; }
+		if (nodeStack.empty())
+		{
+			break;
+		}
+		else
+		{
+			node = nodeStack.top(); nodeStack.pop(); continue;
+		}
 	}
 
 	nodes.resize(nodeCount);

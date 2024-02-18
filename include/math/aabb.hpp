@@ -244,54 +244,63 @@ static bool isIntersected(const float3& center,
 	auto a = float3(0.0f, -f0.z, f0.y);
 	auto p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
 	auto r = extent.y * std::abs(f0.z) + extent.z * std::abs(f0.y);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r) return false;
+	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+		return false;
 
 	a = float3(0.0f, -f1.z, f1.y);
 	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
 	r = extent.y * std::abs(f1.z) + extent.z * std::abs(f1.y);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r) return false;
+	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+		return false;
 
 	a = float3(0.0f, -f2.z, f2.y);
 	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
 	r = extent.y * std::abs(f2.z) + extent.z * std::abs(f2.y);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r) return false;
+	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+		return false;
 
 	a = float3(f0.z, 0.0f, -f0.x);
 	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
 	r = extent.x * std::abs(f0.z) + extent.z * std::abs(f0.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r) return false;
+	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+		return false;
 
 	a = float3(f1.z, 0.0f, -f1.x);
 	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
 	r = extent.x * std::abs(f1.z) + extent.z * std::abs(f1.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r) return false;
+	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+		return false;
 
 	a = float3(f2.z, 0.0f, -f2.x);
 	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
 	r = extent.x * std::abs(f2.z) + extent.z * std::abs(f2.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r) return false;
+	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+		return false;
 
 	a = float3(-f0.y, f0.x, 0.0f);
 	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
 	r = extent.x * std::abs(f0.y) + extent.y * std::abs(f0.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r) return false;
+	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+		return false;
 
 	a = float3(-f1.y, f1.x, 0.0f);
 	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
 	r = extent.x * std::abs(f1.y) + extent.y * std::abs(f1.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r) return false;
+	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+		return false;
 
 	a = float3(-f2.y, f2.x, 0.0f);
 	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
 	r = extent.x * std::abs(f2.y) + extent.y * std::abs(f2.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r) return false;
+	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+		return false;
 
-	if (max(v0.x, v1.x, v2.x) < -extent.x ||
-		min(v0.x, v1.x, v2.x) > extent.x) return false;
-	if (max(v0.y, v1.y, v2.y) < -extent.y ||
-		min(v0.y, v1.y, v2.y) > extent.y) return false;
-	if (max(v0.z, v1.z, v2.z) < -extent.z ||
-		min(v0.z, v1.z, v2.z) > extent.z) return false;
+	if (max(v0.x, v1.x, v2.x) < -extent.x || min(v0.x, v1.x, v2.x) > extent.x)
+		return false;
+	if (max(v0.y, v1.y, v2.y) < -extent.y || min(v0.y, v1.y, v2.y) > extent.y)
+		return false;
+	if (max(v0.z, v1.z, v2.z) < -extent.z || min(v0.z, v1.z, v2.z) > extent.z)
+		return false;
 
 	auto normal = cross(f0, f1);
 	auto distance = std::abs(dot(normal, v0));
@@ -344,4 +353,4 @@ static bool isBehindFrustum(const Aabb& aabb, const float4x4& model,
 	return false;
 }
 
-} // math
+} // namespace math

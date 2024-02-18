@@ -192,8 +192,10 @@ static void rotateSh3Bands(const float shw[SH_COEF_COUNT],
 //------------------------------------------------------------------------------------------------------------
 static float sincWindow(int32 l, float w)
 {
-	if (l == 0) return 1.0f;
-	else if (l >= w) return 0.0f;
+	if (l == 0)
+		return 1.0f;
+	else if (l >= w)
+		return 0.0f;
 	auto x = ((float)M_PI * l) / w;
 	x = std::sin(x) / x;
 	return x * x * x * x;
@@ -260,7 +262,8 @@ static float shmin(float shw[SH_COEF_COUNT])
 			z = z - dz;
 		} while (std::abs(z) <= 1.0 && std::abs(dz) > 1e-5f);
 
-		if (std::abs(z) > 1.0f) minimum = std::min(a + b + c, a - b + c);
+		if (std::abs(z) > 1.0f)
+			minimum = std::min(a + b + c, a - b + c);
 	}
 
 	return minimum;
@@ -284,8 +287,10 @@ static void deringingSH(float4 sh[SH_COEF_COUNT])
 		{
 			float m = 0.5f * (l + r);
 			windowing(shw, m);
-			if (shmin(shw) < 0.0f) r = m;
-			else l = m;
+			if (shmin(shw) < 0.0f)
+				r = m;
+			else
+				l = m;
 			cutoff = std::min(cutoff, l);
 		}
 	}
@@ -323,4 +328,4 @@ static void shaderPreprocessSH(float4 sh[SH_COEF_COUNT])
 		sh[i] *= ca[i];
 }
 
-} // math::sh
+} // namespace math::sh

@@ -50,4 +50,4 @@ static float3 importanceSamplingNdfDggx(float2 u, float a)
     return float3(sinTheta * std::cos(phi), sinTheta * std::sin(phi), cosTheta);
 }
 
-} // math::brdf
+} // namespace math::brdf

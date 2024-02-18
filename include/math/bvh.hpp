@@ -84,4 +84,4 @@ public:
 		uint32 aabbCount, const float3* centroids = nullptr);
 };
 
-} // math
+} // namespace math

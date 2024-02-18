@@ -52,4 +52,4 @@ static float3 coordsToDir(const int3& coords, float invDim)
 	return stToDir(st, coords.z);
 }
 
-} // math::ibl
+} // namespace math::ibl

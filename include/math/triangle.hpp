@@ -57,7 +57,8 @@ static bool isInside(const Triangle& triangle, const float3& point) noexcept
 	auto p1 = triangle.points[1] - point;
 	auto p2 = triangle.points[2] - point;
 	auto u = cross(p1, p2), v = cross(p2, p0), w = cross(p0, p1);
-	if (dot(u, v) < 0.0f || dot(u, w) < 0.0f) return false;
+	if (dot(u, v) < 0.0f || dot(u, w) < 0.0f)
+		return false;
 	return true;
 }
 
@@ -76,4 +77,4 @@ static float3 barycentric(const Triangle& triangle, const float3& point) noexcep
 	return float3(1.0f - v - w, v, w);
 }
 
-} // math
+} // namespace math

@@ -60,4 +60,4 @@ static float3 closestPoint(const Line& line, const float3& point, float& t) noex
 	return a + v * std::clamp(t, 0.0f, 1.0f);
 }
 
-} // math
+} // namespace math

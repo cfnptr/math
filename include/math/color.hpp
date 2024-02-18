@@ -137,4 +137,4 @@ static bool isBinaryLess(Color a, Color b) noexcept {
 
 // TODO: color conversion functions.
 
-} // math
+} // namespace math

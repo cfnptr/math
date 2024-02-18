@@ -33,4 +33,4 @@ typedef uint64_t uint64;
 
 typedef size_t psize;
 
-} // math
+} // namespace math

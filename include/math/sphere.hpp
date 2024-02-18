@@ -60,4 +60,4 @@ static bool isIntersected(const Sphere& a, const Aabb& b) noexcept
 	return d2 < a.radius * a.radius;
 }
 
-} // math
+} // namespace math

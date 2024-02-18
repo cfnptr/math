@@ -36,23 +36,28 @@ public:
 	Plane(const float3& normal = float3::top,
 		float distance = 0.0f, bool normalize = true) noexcept
 	{
-		if (normalize) this->normal = math::normalize(normal);
-		else this->normal = normal;
+		if (normalize)
+			this->normal = math::normalize(normal);
+		else
+			this->normal = normal;
 		this->distance = distance;
 	}
 	Plane(const Triangle& triangle) noexcept
 	{
 		normal = cross(triangle.points[1] - triangle.points[0],
 			triangle.points[2] - triangle.points[0]);
-		if (length(normal) > 0.0f) normal = normalize(normal);
+		if (length(normal) > 0.0f)
+			normal = normalize(normal);
 		distance = dot(normal, triangle.points[0]);
 	}
 
 	const float3& getNormal() const noexcept { return normal; }
 	void setNormal(const float3& normal, bool normalize = true) noexcept
 	{
-		if (normalize) this->normal = math::normalize(normal);
-		else this->normal = normal;
+		if (normalize)
+			this->normal = math::normalize(normal);
+		else
+			this->normal = normal;
 	}
 
 	static const Plane left, right, bottom, top, back, front;
@@ -68,7 +73,9 @@ static float3 closestPoint(const Plane& plane, const float3& point) noexcept {
 static float3 closestPoint(const Triangle& triangle, const float3& point) noexcept
 {
     auto p = closestPoint(Plane(triangle), point);
-    if (isInside(triangle, p)) return p;
+    if (isInside(triangle, p))
+		return p;
+
     auto ab = Line(triangle.points[0], triangle.points[1]);
     auto bc = Line(triangle.points[1], triangle.points[2]);
     auto ca = Line(triangle.points[2], triangle.points[0]);
@@ -79,8 +86,10 @@ static float3 closestPoint(const Triangle& triangle, const float3& point) noexce
     auto m1 = length2(p - c1);
     auto m2 = length2(p - c2);
     auto m = min(m0, m1, m2);
-    if (m == m0) return c0;
-    if (m == m1) return c1;
+    if (m == m0)
+		return c0;
+    if (m == m1)
+		return c1;
     return c2;
 }
 
@@ -118,4 +127,4 @@ static void normalizeFrustumPlanes(Plane* planes) noexcept
 	planes[5].setNormal(normal / l, false); planes[5].distance /= l;
 }
 
-} // math
+} // namespace math

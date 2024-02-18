@@ -546,4 +546,4 @@ static quat lookAtQuat(const float3& direction, const float3& up = float3::top)
 	return extractQuat(m);
 }
 
-} // math
+} // namespace math

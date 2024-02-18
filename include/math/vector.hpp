@@ -529,13 +529,16 @@ static int32 max(int32 a, int32 b, int32 c) { return std::max(std::max(a, b), c)
 
 static float repeat(float v) noexcept
 {
-    if (v < 0.0f) return 1.0f - std::fmod(-v, 1.0f);
-    if (v >= 1.0f) return std::fmod(v, 1.0f);
+    if (v < 0.0f)
+		return 1.0f - std::fmod(-v, 1.0f);
+    if (v >= 1.0f)
+		return std::fmod(v, 1.0f);
 	return v;
 }
 static float sign(float v) noexcept
 {
-	if (v == 0.0f) return 0.0f;
+	if (v == 0.0f)
+		return 0.0f;
 	return std::signbit(v) ? -1.0f : 1.0f;
 }
 static float lerp(float a, float b, float t) noexcept
@@ -1192,4 +1195,4 @@ static int3 calcSizeAtMip(const int3& sizeAt0, uint8 mip)
 	return max(sizeAt0 / (int32)std::exp2((float)mip), int3(1));
 }
 
-} // math
+} // namespace math

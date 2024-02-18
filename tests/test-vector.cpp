@@ -23,11 +23,8 @@ int main()
 	auto b = float3(0.4f, 0.5f, 0.6f);
 	auto c = a + b;
 
-	if (c.x != 1.4f || c.y != 2.5f || c.z != 3.6f ||
-		c != float3(1.4f, 2.5f, 3.6f))
-	{
+	if (c.x != 1.4f || c.y != 2.5f || c.z != 3.6f || c != float3(1.4f, 2.5f, 3.6f))
 		throw runtime_error("Bad vector test value.");
-	}
 
 	auto d = int3(10);
 	auto e = d / 2;

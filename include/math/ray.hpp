@@ -32,16 +32,20 @@ public:
 	Ray(const float3& origin = float3(0.0f),
 		const float3& direction = float3::front, bool normalize = true) noexcept
 	{
-		if (normalize) this->direction = math::normalize(direction);
-		else this->direction = direction;
+		if (normalize)
+			this->direction = math::normalize(direction);
+		else
+			this->direction = direction;
 		this->origin = origin;
 	}
 
 	const float3& getDirection() const noexcept {return direction; }
 	void setDirection(const float3& direction, bool normalize = true) noexcept
 	{
-		if (normalize) this->direction = math::normalize(direction);
-		else this->direction = direction;
+		if (normalize)
+			this->direction = math::normalize(direction);
+		else
+			this->direction = direction;
 	}
 
 	Ray operator*(const float3& v) const noexcept { return Ray(origin * v, direction * v); }
@@ -67,4 +71,4 @@ static float3 closestPoint(const Ray& ray, const float3& point) noexcept
 	return a + ray.getDirection() * std::max(t, 0.0f);
 }
 
-} // math
+} // namespace math

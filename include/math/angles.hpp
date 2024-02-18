@@ -49,4 +49,4 @@ static float4 degrees(const float4& radians) noexcept
 		degrees(radians.z), degrees(radians.w));
 }
 
-}; // math
+}; // namespace math
