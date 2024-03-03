@@ -77,15 +77,15 @@ struct Version
 	}
 	string toString3() const noexcept
 	{
-		return to_string(major) + "." + to_string(minor) + "." + to_string(patch) + ".";
+		return to_string(major) + "." + to_string(minor) + "." + to_string(patch);
 	}
 	string toString2() const noexcept
 	{
-		return to_string(major) + "." + to_string(minor) + ".";
+		return to_string(major) + "." + to_string(minor);
 	}
 	string toString1() const noexcept
 	{
-		return to_string(major) + ".";
+		return to_string(major);
 	}
 };
 
