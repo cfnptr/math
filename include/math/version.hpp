@@ -18,6 +18,7 @@
 #include "math/types.hpp"
 
 #include <string>
+#include <cstring>
 #include <cassert>
 
 namespace math
