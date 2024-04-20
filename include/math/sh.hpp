@@ -32,7 +32,7 @@ using namespace math::ibl;
 #define M_SQRT15   3.87298334620741688517926539978239961
 
 // Precomputed for the 3 band SH.
-static const float ki[SH_COEF_COUNT] =
+static const float ki[shCoefCount] =
 {
 	(float)0.886226925452757940959713778283912688,
 	(float)1.02332670794648827872208585176849738,
@@ -45,15 +45,15 @@ static const float ki[SH_COEF_COUNT] =
 	(float)0.143014255134963907956091588857816532
 };
 
-static int32 shIndex(int32 m, int32 l)
+static int32 shIndex(int32 m, int32 l) noexcept
 {
 	return l * (l + 1) + m;
 }
-static float sphereQuadrantArea(float x, float y)
+static float sphereQuadrantArea(float x, float y) noexcept
 {
 	return atan2(x * y, length(float3(x, y, 1.0f)));
 }
-static float calcSolidAngle(float2 st, float invDim)
+static float calcSolidAngle(float2 st, float invDim) noexcept
 {
 	auto v0 = st - invDim, v1 = st + invDim;
 
@@ -62,12 +62,12 @@ static float calcSolidAngle(float2 st, float invDim)
 }
 
 //------------------------------------------------------------------------------------------------------------
-static void computeShBasis(const float3& s, float shb[SH_COEF_COUNT])
+static void computeShBasis(const float3& s, float shb[shCoefCount]) noexcept
 {
 	auto pml2 = 0.0f, pml1 = 1.0f;
 	shb[0] = pml1;
 
-	for (int32 l = 1; l < SH_BAND_COUNT; l++)
+	for (int32 l = 1; l < shBandCount; l++)
 	{
 		auto pml = ((2 * l - 1) * pml1 * s.z - (l - 1) * pml2) / l;
 		pml2 = pml1; pml1 = pml;
@@ -75,7 +75,7 @@ static void computeShBasis(const float3& s, float shb[SH_COEF_COUNT])
 	}
 
 	auto pmm = 1.0f;
-	for (int32 m = 1; m < SH_BAND_COUNT; m++)
+	for (int32 m = 1; m < shBandCount; m++)
 	{
 		pmm = (1 - 2 * m) * pmm;
 		pml2 = pmm; pml1 = (2 * m + 1) * pmm * s.z;
@@ -83,7 +83,7 @@ static void computeShBasis(const float3& s, float shb[SH_COEF_COUNT])
 		shb[shIndex(-m, m)] = pml2;
 		shb[shIndex( m, m)] = pml2;
 
-		if (m + 1 < SH_BAND_COUNT)
+		if (m + 1 < shBandCount)
 		{
 			shb[shIndex(-m, m + 1)] = pml1;
 			shb[shIndex( m, m + 1)] = pml1;
@@ -91,9 +91,9 @@ static void computeShBasis(const float3& s, float shb[SH_COEF_COUNT])
 	}
 
 	auto cm = s.x, sm = s.y;
-	for (int32 m = 1; m <= SH_BAND_COUNT; m++)
+	for (int32 m = 1; m <= shBandCount; m++)
 	{
-		for (int32 l = m; l < SH_BAND_COUNT; l++)
+		for (int32 l = m; l < shBandCount; l++)
 		{
 			shb[shIndex(-m, l)] *= sm;
 			shb[shIndex( m, l)] *= cm;
@@ -106,7 +106,7 @@ static void computeShBasis(const float3& s, float shb[SH_COEF_COUNT])
 }
 
 //------------------------------------------------------------------------------------------------------------
-static void projectVecToSH2K(const float3& s, float r[5])
+static void projectVecToSH2K(const float3& s, float r[5]) noexcept
 {
 	r[0] = s.y * s.x;
 	r[1] = -(s.y * s.z);
@@ -114,7 +114,7 @@ static void projectVecToSH2K(const float3& s, float r[5])
 	r[3] = -(s.z * s.x);
 	r[4] = 0.5f * (s.x * s.x - s.y * s.y);
 }
-static void multiply(const float m[25], const float v[5], float r[5])
+static void multiply(const float m[25], const float v[5], float r[5]) noexcept
 {
 	r[0] = m[0] * v[0] + m[5] * v[1] + m[10] * v[2] + m[15] * v[3] + m[20] * v[4];
 	r[1] = m[1] * v[0] + m[6] * v[1] + m[11] * v[2] + m[16] * v[3] + m[21] * v[4];
@@ -124,7 +124,7 @@ static void multiply(const float m[25], const float v[5], float r[5])
 }
 
 //------------------------------------------------------------------------------------------------------------
-static float3 rotateSphericalHarmonicBand1(const float3& band1, const float3x3& m)
+static float3 rotateSphericalHarmonicBand1(const float3& band1, const float3x3& m) noexcept
 {
 	static const auto invA1TimesK = float3x3(
 		 0.0f, -1.0f,  0.0f,
@@ -144,8 +144,7 @@ static float3 rotateSphericalHarmonicBand1(const float3& band1, const float3x3& 
 
 	return r1OverK * (invA1TimesK * band1);
 }
-static void rotateSphericalHarmonicBand2(
-	const float band2[5], const float3x3& m, float r[5])
+static void rotateSphericalHarmonicBand2(const float band2[5], const float3x3& m, float r[5]) noexcept
 {
 	static const float invATimesK[25] =
 	{
@@ -177,8 +176,7 @@ static void rotateSphericalHarmonicBand2(
 
 	multiply(rOverK, invATimesKTimesBand2, r);
 }
-static void rotateSh3Bands(const float shw[SH_COEF_COUNT],
-	const float3x3& m, float r[SH_COEF_COUNT])
+static void rotateSh3Bands(const float shw[shCoefCount], const float3x3& m, float r[shCoefCount]) noexcept
 {
 	auto b0 = shw[0];
 	auto band1 = float3(shw[1], shw[2], shw[3]);
@@ -190,7 +188,7 @@ static void rotateSh3Bands(const float shw[SH_COEF_COUNT],
 }
 
 //------------------------------------------------------------------------------------------------------------
-static float sincWindow(int32 l, float w)
+static float sincWindow(int32 l, float w) noexcept
 {
 	if (l == 0)
 		return 1.0f;
@@ -200,9 +198,9 @@ static float sincWindow(int32 l, float w)
 	x = std::sin(x) / x;
 	return x * x * x * x;
 }
-static void windowing(float shw[SH_COEF_COUNT], float cutoff)
+static void windowing(float shw[shCoefCount], float cutoff) noexcept
 {
-	for (int32 l = 0; l < SH_BAND_COUNT; l++)
+	for (int32 l = 0; l < shBandCount; l++)
 	{
 		auto w = sincWindow(l, cutoff);
 		shw[shIndex(0, l)] *= w;
@@ -214,9 +212,9 @@ static void windowing(float shw[SH_COEF_COUNT], float cutoff)
 		}
 	}
 }
-static float shmin(float shw[SH_COEF_COUNT])
+static float shmin(float shw[shCoefCount]) noexcept
 {
-	static const float ca[SH_COEF_COUNT] =
+	static const float ca[shCoefCount] =
 	{
 		(float)( 1.0      / (2.0 * M_SQRT_PI)),
 		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI)),
@@ -270,17 +268,17 @@ static float shmin(float shw[SH_COEF_COUNT])
 }
 
 //------------------------------------------------------------------------------------------------------------
-static void deringingSH(float4 sh[SH_COEF_COUNT])
+static void deringingSH(float4 sh[shCoefCount]) noexcept
 {
-	auto cutoff = (float)(SH_BAND_COUNT * 4 + 1);
-	float shw[SH_COEF_COUNT];
+	auto cutoff = (float)(shBandCount * 4 + 1);
+	float shw[shCoefCount];
 
 	for (uint32 channel = 0; channel < 3; channel++)
 	{
-		for (uint32 i = 0; i < SH_COEF_COUNT; i++)
+		for (uint32 i = 0; i < shCoefCount; i++)
 			shw[i] = sh[i][channel];
 
-		float l = SH_BAND_COUNT;
+		float l = shBandCount;
 		float r = cutoff;
 
 		for (uint32 i = 0; i < 16 && l + 0.1f < r; i++)
@@ -295,7 +293,7 @@ static void deringingSH(float4 sh[SH_COEF_COUNT])
 		}
 	}
 
-	for (int32 l = 0; l < SH_BAND_COUNT; l++)
+	for (int32 l = 0; l < shBandCount; l++)
 	{
 		float w = sincWindow(l, cutoff);
 		sh[shIndex(0, l)] *= w;
@@ -309,9 +307,9 @@ static void deringingSH(float4 sh[SH_COEF_COUNT])
 }
 
 //------------------------------------------------------------------------------------------------------------
-static void shaderPreprocessSH(float4 sh[SH_COEF_COUNT])
+static void shaderPreprocessSH(float4 sh[shCoefCount]) noexcept
 {
-	static const float ca[SH_COEF_COUNT] =
+	static const float ca[shCoefCount] =
 	{
 		(float)( 1.0      / (2.0 * M_SQRT_PI) * M_1_PI),
 		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI) * M_1_PI),
@@ -324,7 +322,7 @@ static void shaderPreprocessSH(float4 sh[SH_COEF_COUNT])
 		(float)( M_SQRT15 / (4.0 * M_SQRT_PI) * M_1_PI)
 	};
 	
-	for (uint32 i = 0; i < SH_COEF_COUNT; i++)
+	for (uint32 i = 0; i < shCoefCount; i++)
 		sh[i] *= ca[i];
 }
 

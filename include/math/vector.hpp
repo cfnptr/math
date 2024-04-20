@@ -17,11 +17,15 @@
 #pragma once
 #include "math/types.hpp"
 
+#define _USE_MATH_DEFINES
 #include <cmath>
+
+#define NOMINMAX
+#include <algorithm>
+
 #include <string>
 #include <cassert>
 #include <cstring>
-#include <algorithm>
 #include <stdexcept>
 
 namespace math

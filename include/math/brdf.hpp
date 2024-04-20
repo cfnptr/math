@@ -25,12 +25,12 @@ namespace math::brdf
 
 using namespace math;
 
-static float ggx(float noh, float roughness)
+static float ggx(float noh, float roughness) noexcept
 {
     auto f = (roughness - 1.0f) * ((roughness + 1.0f) * (noh * noh)) + 1.0f;
     return (roughness * roughness) / ((float)M_PI * f * f);
 }
-static float2 hammersley(uint32 index, float invSampleCount)
+static float2 hammersley(uint32 index, float invSampleCount) noexcept
 {
     const auto tof = 0.5f / 0x80000000U;
     auto bits = index;
@@ -41,7 +41,7 @@ static float2 hammersley(uint32 index, float invSampleCount)
     bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
     return float2(index * invSampleCount, bits * tof);
 }
-static float3 importanceSamplingNdfDggx(float2 u, float a)
+static float3 importanceSamplingNdfDggx(float2 u, float a) noexcept
 {
     auto phi = 2.0f * (float)M_PI * u.x;
     auto cosTheta2 = (1.0f - u.y) / (1.0f + (a + 1.0f) * ((a - 1.0f) * u.y));
