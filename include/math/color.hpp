@@ -15,11 +15,11 @@
 //------------------------------------------------------------------------------------------------------------
 
 #pragma once
+#include "math/hex.hpp"
 #include "math/vector.hpp"
 
 namespace math
 {
-
 
 using namespace std;
 
@@ -33,28 +33,71 @@ struct Color
 	Color(uint8 r, uint8 g, uint8 b, uint8 a) noexcept {
 		this->r = r; this->g = g; this->b = b; this->a = a; }
 
+	explicit Color(uint32 data)
+	{
+		*(uint32*)this = data;
+	}
+	explicit Color(const string& hex)
+	{
+		assert(hex.length() == 8 || hex.length() == 6);
+		r = toInt32(string(hex.c_str(), 2));
+		g = toInt32(string(hex.c_str() + 2, 2));
+		b = toInt32(string(hex.c_str() + 4, 2));
+
+		if (hex.length() == 8)
+			a = toInt32(string(hex.c_str() + 6, 2));
+	}
+	
+	explicit Color(const float2& normRg)
+	{
+		const auto mul = 255.0f;
+		r = std::min(normRg.x, 1.0f) * mul;
+		g = std::min(normRg.y, 1.0f) * mul;
+		b = a = 0;
+	}
+	explicit Color(const float3& normRgb)
+	{
+		const auto mul = 255.0f;
+		r = std::min(normRgb.x, 1.0f) * mul;
+		g = std::min(normRgb.y, 1.0f) * mul;
+		b = std::min(normRgb.z, 1.0f) * mul;
+		a = 0;
+	}
 	explicit Color(const float4& normRgba)
 	{
 		const auto mul = 255.0f;
-		r = normRgba.x * mul; g = normRgba.y * mul;
-		b = normRgba.z * mul; a = normRgba.w * mul;
+		r = std::min(normRgba.x, 1.0f) * mul;
+		g = std::min(normRgba.y, 1.0f) * mul;
+		b = std::min(normRgba.z, 1.0f) * mul;
+		a = std::min(normRgba.w, 1.0f) * mul;
 	}
 
-	float2 toNormFloat2() const noexcept
+	string toHex() const
+	{
+		auto hex = math::toHex(r);
+		hex += math::toHex(g);
+		hex += math::toHex(b);
+		hex += math::toHex(a);
+		return hex;
+	}
+	
+	explicit operator float2() const noexcept
 	{
 		const auto mul = (1.0f / 255.0f);
 		return float2(r * mul, g * mul);
 	}
-	float3 toNormFloat3() const noexcept
+	explicit operator float3() const noexcept
 	{
 		const auto mul = (1.0f / 255.0f);
 		return float3(r * mul, g * mul, b * mul);
 	}
-	float4 toNormFloat4() const noexcept
+	explicit operator float4() const noexcept
 	{
 		const auto mul = (1.0f / 255.0f);
 		return float4(r * mul, g * mul, b * mul, a * mul);
 	}
+
+	explicit operator uint32() const noexcept { return *(const uint32*)this; }
 
 //------------------------------------------------------------------------------------------------------------
 	Color operator+(Color c) const noexcept { 
