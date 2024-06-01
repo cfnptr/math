@@ -1,6 +1,8 @@
-# MATH ![CI](https://github.com/cfnptr/math/actions/workflows/cmake.yml/badge.svg)
+# Math
 
-A library providing common linear algebra math operations.
+A [library](https://github.com/cfnptr/math) providing common linear algebra math operations.
+
+See the [documentation](https://cfnptr.github.io/math).
 
 ## Features
 
@@ -17,15 +19,17 @@ A library providing common linear algebra math operations.
 
 ## Supported operating systems
 
-* Ubuntu
-* MacOS
 * Windows
+* macOS
+* Ubuntu (Linux)
 
 ## Build requirements
 
 * C++17 compiler
 * [Git 2.30+](https://git-scm.com/)
 * [CMake 3.16+](https://cmake.org/)
+
+Use building [instructions](BUILDING.md) to install all required tools and libraries.
 
 ### CMake options
 
@@ -34,11 +38,23 @@ A library providing common linear algebra math operations.
 | MATH_BUILD_SHARED | Build Math shared library | `ON`          |
 | MATH_BUILD_TESTS  | Build Math library tests  | `ON`          |
 
+### CMake targets
+
+| Name        | Description          | Windows | macOS    | Linux |
+|-------------|----------------------|---------|----------|-------|
+| math-static | Static Math library  | `.lib`  | `.a`     | `.a`  |
+| math-shared | Dynamic Math library | `.dll`  | `.dylib` | `.so` |
+
 ## Cloning
 
 ```
 git clone https://github.com/cfnptr/math
 ```
+
+## Building ![CI](https://github.com/cfnptr/math/actions/workflows/cmake.yml/badge.svg)
+
+* Windows: ```./scripts/build-release.bat```
+* macOS / Ubuntu: ```./scripts/build-release.sh```
 
 ### Inspired by
 

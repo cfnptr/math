@@ -1,4 +1,3 @@
-#---------------------------------------------------------------------------------------------------
 # Copyright 2022-2024 Nikita Fediuchin. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#---------------------------------------------------------------------------------------------------
 
 cmake_minimum_required(VERSION 3.16)
 
@@ -24,7 +22,7 @@ if(TARGET math-static)
 	return()
 endif()
 
-project(math VERSION 1.0.0 LANGUAGES CXX
+project(math VERSION 0.0.1 LANGUAGES CXX
 	DESCRIPTION "Linear algebra mathematics library."
 	HOMEPAGE_URL "https://github.com/cfnptr/math")
 

@@ -1,4 +1,3 @@
-//------------------------------------------------------------------------------------------------------------
 // Copyright 2022-2024 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +14,6 @@
 //
 // Bidirectional Reflectance Distribution Function
 // Based on this: https://google.github.io/filament/Filament.html
-//------------------------------------------------------------------------------------------------------------
 
 #pragma once
 #include "math/vector.hpp"

@@ -1,4 +1,3 @@
-//------------------------------------------------------------------------------------------------------------
 // Copyright 2022-2024 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +14,6 @@
 //
 // Bounding Volume Hierarchy
 // Based on this: https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/
-//--------------------------------------------------------------------------------------------------
 
 #include "math/bvh.hpp"
 

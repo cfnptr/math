@@ -1,4 +1,3 @@
-//------------------------------------------------------------------------------------------------------------
 // Copyright 2022-2024 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//------------------------------------------------------------------------------------------------------------
 
 // Coordinate system: X-right, Y-up, Z-forward (Left handed)
 // Matrices are column-major. (OpenGL, Vulkan like)
@@ -329,11 +327,11 @@ static float4x4 translate(const float3& t) noexcept
 		0.0f, 0.0f, 1.0f, t.z,
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
-static float3 getTranslation(const float4x4& m)
+static float3 getTranslation(const float4x4& m) noexcept
 {
 	return float3(m.c3.x, m.c3.y, m.c3.z);
 }
-static void setTranslation(float4x4& m, const float3& t)
+static void setTranslation(float4x4& m, const float3& t) noexcept
 {
 	m.c3.x = t.x; m.c3.y = t.y; m.c3.z = t.z;
 }
@@ -349,7 +347,7 @@ static float4x4 scale(const float3& s) noexcept
 		0.0f, 0.0f, s.z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
-static float3 extractScale(const float4x4& m)
+static float3 extractScale(const float4x4& m) noexcept
 {
 	return float3(length((float3)m.c0),
 		length((float3)m.c1), length((float3)m.c2));
@@ -369,7 +367,7 @@ static float4x4 rotate(const quat& q) noexcept
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
 static float4x4 rotate(const float3& lookFrom,
-	const float3& lookTo, const float3& up = float3::top)
+	const float3& lookTo, const float3& up = float3::top) noexcept
 {
 	auto f = normalize(lookTo - lookFrom);
 	auto s = normalize(cross(up, f));
@@ -381,7 +379,7 @@ static float4x4 rotate(const float3& lookFrom,
 		f.x, f.y, f.z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
-static float4x4 rotate(const float3& front, const float3& up = float3::top)
+static float4x4 rotate(const float3& front, const float3& up = float3::top) noexcept
 {
 	auto f = front;
 	auto s = normalize(cross(up, f));
@@ -393,7 +391,7 @@ static float4x4 rotate(const float3& front, const float3& up = float3::top)
 		f.x, f.y, f.z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
-static float4x4 extractRotation(const float4x4& m)
+static float4x4 extractRotation(const float4x4& m) noexcept
 {
 	auto invScale = 1.0f / extractScale(m);
 	auto c0 = (float3)m.c0 * invScale.x;
@@ -411,7 +409,7 @@ static float4x4 calcModel(const float3& position,
 }
 
 //------------------------------------------------------------------------------------------------------------
-static quat extractQuat(const float3x3& m)
+static quat extractQuat(const float3x3& m) noexcept
 {
 	auto fourXSquaredMinus1 = m.c0.x - m.c1.y - m.c2.z;
 	auto fourYSquaredMinus1 = m.c1.y - m.c0.x - m.c2.z;
@@ -452,7 +450,7 @@ static quat extractQuat(const float3x3& m)
 	default: abort();
 	}
 }
-static quat extractQuat(const float4x4& m)
+static quat extractQuat(const float4x4& m) noexcept
 {
 	return extractQuat((float3x3)m);
 }
@@ -464,8 +462,7 @@ static quat extractQuat(const float4x4& m)
 
 //------------------------------------------------------------------------------------------------------------
 // Infinite Reversed Z Perspective Projection
-static float4x4 calcPerspProjInfRevZ(float fieldOfView,
-	float aspectRatio, float nearPlane)
+static float4x4 calcPerspProjInfRevZ(float fieldOfView, float aspectRatio, float nearPlane) noexcept
 {
 	float tanHalfFov = std::tan(fieldOfView * 0.5f);
 
@@ -476,8 +473,7 @@ static float4x4 calcPerspProjInfRevZ(float fieldOfView,
 		0.0f, 0.0f, 1.0f, 0.0f);
 }
 // Reversed Z Perspective Projection
-static float4x4 calcPerspProjRevZ(float fieldOfView,
-	float aspectRatio, float nearPlane, float farPlane)
+static float4x4 calcPerspProjRevZ(float fieldOfView, float aspectRatio, float nearPlane, float farPlane) noexcept
 {
 	float tanHalfFov = std::tan(fieldOfView * 0.5f);
 
@@ -489,8 +485,7 @@ static float4x4 calcPerspProjRevZ(float fieldOfView,
 		0.0f, 0.0f, 1.0f, 0.0f);
 }
 // Common Perspective Projection
-static float4x4 calcPerspProj(float fieldOfView,
-	float aspectRatio, float nearPlane, float farPlane)
+static float4x4 calcPerspProj(float fieldOfView, float aspectRatio, float nearPlane, float farPlane) noexcept
 {
 	float tanHalfFov = std::tan(fieldOfView * 0.5f);
 
@@ -504,7 +499,7 @@ static float4x4 calcPerspProj(float fieldOfView,
 
 //------------------------------------------------------------------------------------------------------------
 // Reversed Z Orthographic Projection
-static float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth)
+static float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth) noexcept
 {
 	return float4x4(
 		2.0f / (width.y - width.x), 0.0f, 0.0f, -(width.y + width.x) / (width.y - width.x),
@@ -513,7 +508,7 @@ static float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth)
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
 // Common Orthographic Projection
-static float4x4 calcOrthoProj(float2 width, float2 height, float2 depth)
+static float4x4 calcOrthoProj(float2 width, float2 height, float2 depth) noexcept
 {
 	return float4x4(
 		2.0f / (width.y - width.x), 0.0f, 0.0f, -(width.y + width.x) / (width.y - width.x),
@@ -523,8 +518,7 @@ static float4x4 calcOrthoProj(float2 width, float2 height, float2 depth)
 }
 
 //------------------------------------------------------------------------------------------------------------
-static float4x4 lookAt(const float3& from,
-	const float3& to, const float3& up = float3::top)
+static float4x4 lookAt(const float3& from, const float3& to, const float3& up = float3::top) noexcept
 {
 	auto f = normalize(to - from);
 	auto s = normalize(cross(up, f));
@@ -537,7 +531,7 @@ static float4x4 lookAt(const float3& from,
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-static quat lookAtQuat(const float3& direction, const float3& up = float3::top)
+static quat lookAtQuat(const float3& direction, const float3& up = float3::top) noexcept
 {
 	auto right = cross(up, direction);
 	auto c0 = right * (1.0f / std::sqrt(std::max(0.00001f, dot(right, right))));
