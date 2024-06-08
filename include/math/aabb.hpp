@@ -31,7 +31,8 @@ public:
 	Aabb(const float3& min = float3(0.0f), const float3& max = float3(0.0f)) noexcept
 	{
 		assert(min <= max);
-		this->min = min; this->max = max;
+		this->min = min;
+		this->max = max;
 	}
 
 	const float3& getMin() const noexcept { return min; }
@@ -45,6 +46,12 @@ public:
 	void setMax(const float3& max) noexcept
 	{
 		assert(max >= this->min);
+		this->max = max;
+	}
+	void set(const float3& min, const float3& max) noexcept
+	{
+		assert(min <= max);
+		this->min = min;
 		this->max = max;
 	}
 	
