@@ -451,7 +451,7 @@ struct float4
 	float4(float x, float y, float2 zw) noexcept {
 		this->x = x; this->y = y; this->z = zw.x; this->w = zw.y; }
 	float4(float2 xy, float2 zw) noexcept {
-		this->x = xy.x; this->y = xy.x; this->z = zw.x; this->w = zw.y; }
+		this->x = xy.x; this->y = xy.y; this->z = zw.x; this->w = zw.y; }
 	float4(const float3& xyz, float w) noexcept {
 		this->x = xyz.x; this->y = xyz.y; this->z = xyz.z; this->w = w; }
 	float4(float x, const float3& yzw) noexcept {
