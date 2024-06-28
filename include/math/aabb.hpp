@@ -22,6 +22,7 @@ namespace math
 
 using namespace std;
 
+//**********************************************************************************************************************
 // Axis Aligned Bounding Box
 struct Aabb
 {
@@ -66,7 +67,7 @@ public:
 	float3 getSize() const noexcept { return max - min; }
 	float3 getPosition() const noexcept { return (min + max) * 0.5f; }
 
-//------------------------------------------------------------------------------------------------------------
+	//******************************************************************************************************************
 	void setExtent(const float3& extent, const float3& position = float3(0.0f)) noexcept
 	{
 		assert(extent >= 0.0f);
@@ -97,18 +98,12 @@ public:
 		return extent.x * extent.y + extent.y * extent.z + extent.z * extent.x;
 	}
 
-	bool operator==(const Aabb& v) const noexcept {
-		return memcmp(this, &v, sizeof(float3) * 2) == 0; }
-	bool operator!=(const Aabb& v) const noexcept {
-		return memcmp(this, &v, sizeof(float3) * 2) != 0; }
-	bool operator<(const Aabb& v) const noexcept {
-		return min < v.min && max < v.max; }
-	bool operator>(const Aabb& v) const noexcept {
-		return min > v.min && max > v.max; }
-	bool operator<=(const Aabb& v) const noexcept {
-		return min <= v.min && max <= v.max; }
-	bool operator>=(const Aabb& v) const noexcept {
-		return min >= v.min && max >= v.max; }
+	bool operator==(const Aabb& v) const noexcept { return memcmp(this, &v, sizeof(float3) * 2) == 0; }
+	bool operator!=(const Aabb& v) const noexcept { return memcmp(this, &v, sizeof(float3) * 2) != 0; }
+	bool operator<(const Aabb& v) const noexcept { return min < v.min && max < v.max; }
+	bool operator>(const Aabb& v) const noexcept { return min > v.min && max > v.max; }
+	bool operator<=(const Aabb& v) const noexcept { return min <= v.min && max <= v.max; }
+	bool operator>=(const Aabb& v) const noexcept { return min >= v.min && max >= v.max; }
 
 	Aabb operator*(const float3& v) const noexcept { return Aabb(min * v, max * v); }
 	Aabb operator/(const float3& v) const noexcept { return Aabb(min / v, max / v); }
@@ -123,10 +118,9 @@ public:
 	static const Aabb zero, one, two, half;
 };
 
-static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept {
-	return memcmp(&a, &b, sizeof(float3) * 2) < 0; }
+static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(&a, &b, sizeof(float3) * 2) < 0; }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 // Returns true if point is inside AABB.
 static bool isInside(const Aabb& aabb, const float3& point) noexcept
 {
@@ -138,7 +132,6 @@ static float3 closestPoint(const Aabb& aabb, const float3& point) noexcept
 	return clamp(point, aabb.getMin(), aabb.getMax());
 }
 
-//------------------------------------------------------------------------------------------------------------
 // Returns distance to the intersection points.
 static float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept
 {
@@ -153,10 +146,8 @@ static float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept
    	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
    	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
 
-	auto tMin = std::max(std::max(std::min(t1, t2), 
-		std::min(t3, t4)), std::min(t5, t6));
-   	auto tMax = std::min(std::min(std::max(t1, t2), 
-		std::max(t3, t4)), std::max(t5, t6));
+	auto tMin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
+   	auto tMax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
 	return float2(tMin, tMax);
 }
 static float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept
@@ -172,14 +163,12 @@ static float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept
    	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
    	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
 
-	auto tMin = std::max(std::max(std::min(t1, t2), 
-		std::min(t3, t4)), std::min(t5, t6));
-   	auto tMax = std::min(std::min(std::max(t1, t2), 
-		std::max(t3, t4)), std::max(t5, t6));
+	auto tMin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
+   	auto tMax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
 	return float2(tMin, tMax);
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 // Returns distance to the first intersection point.
 static float raycast1(const Aabb& aabb, const Ray& ray) noexcept
 {
@@ -194,8 +183,7 @@ static float raycast1(const Aabb& aabb, const Ray& ray) noexcept
    	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
    	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
 
-	return std::max(std::max(std::min(t1, t2), 
-		std::min(t3, t4)), std::min(t5, t6));
+	return std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
 }
 static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
 {
@@ -210,11 +198,9 @@ static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
    	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
    	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
 
-	return std::max(std::max(std::min(t1, t2), 
-		std::min(t3, t4)), std::min(t5, t6));
+	return std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
 }
 
-//------------------------------------------------------------------------------------------------------------
 static bool isIntersected(float2 raycastPoints) noexcept
 {
 	// If tMax < 0.0f, ray is intersecting AABB, but whole AABB is behind us.
@@ -237,9 +223,8 @@ static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 	return aMin <= bMax && aMax >= bMin;
 }
 
-//------------------------------------------------------------------------------------------------------------
-static bool isIntersected(const float3& center,
-	const float3& extent, const Triangle& triangle) noexcept
+//**********************************************************************************************************************
+static bool isIntersected(const float3& center, const float3& extent, const Triangle& triangle) noexcept
 {
 	auto v0 = triangle.points[0] - center;
 	auto v1 = triangle.points[1] - center;
@@ -309,13 +294,11 @@ static bool isIntersected(const float3& center,
 
 	auto normal = cross(f0, f1);
 	auto distance = std::abs(dot(normal, v0));
-	r = extent.x * std::abs(normal.x) +
-		extent.y * std::abs(normal.y) +
-		extent.z * std::abs(normal.z);
+	r = extent.x * std::abs(normal.x) + extent.y * std::abs(normal.y) + extent.z * std::abs(normal.z);
 	return distance <= r;
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static bool isBehindFrustum(const Aabb& aabb, const float4x4& model,
 	const Plane* planes, uint8 planeCount = frustumPlaneCount) noexcept
 {

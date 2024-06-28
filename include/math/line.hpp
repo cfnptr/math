@@ -20,13 +20,13 @@ namespace math
 
 using namespace std;
 
+//**********************************************************************************************************************
 struct Line
 {
 	float3 start;
 	float3 end;
 
-	Line(const float3& start, const float3& end) noexcept {
-		this->start = start; this->end = end; }
+	Line(const float3& start, const float3& end) noexcept { this->start = start; this->end = end; }
 	Line() = default;
 
 	float3 getVector() const noexcept { return end - start; }
@@ -42,7 +42,7 @@ struct Line
 	Line& operator-=(const float3& v) noexcept { start -= v; end -= v; return *this; }
 };
 
-//------------------------------------------------------------------------------------------------------------
+
 static float3 closestPoint(const Line& line, const float3& point) noexcept
 {
 	auto a = line.start;

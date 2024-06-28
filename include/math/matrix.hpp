@@ -22,13 +22,13 @@
 namespace math
 {
 
+//**********************************************************************************************************************
 struct float2x2
 {
 	float2 c0, c1;
 
 	explicit float2x2(float v = 0.0f) noexcept { this->c0 = v; this->c1 = v; }
-	float2x2(float2 c0, float2 c1)
-		noexcept { this->c0 = c0; this->c1 = c1; }
+	float2x2(float2 c0, float2 c1) noexcept { this->c0 = c0; this->c1 = c1; }
 	float2x2(
 		float c0r0, float c1r0,
 		float c0r1, float c1r1) noexcept
@@ -63,23 +63,22 @@ struct float2x2
 	}
 	float2x2& operator*=(const float2x2& m) noexcept { return *this = *this * m; }
 
-	bool operator==(const float2x2& v) const noexcept {
-		return memcmp(this, &v, sizeof(float) * 2 * 2) == 0; }
-	bool operator!=(const float2x2& v) const noexcept {
-		return memcmp(this, &v, sizeof(float) * 2 * 2) != 0; }
+	bool operator==(const float2x2& v) const noexcept { return memcmp(this, &v, sizeof(float) * 2 * 2) == 0; }
+	bool operator!=(const float2x2& v) const noexcept { return memcmp(this, &v, sizeof(float) * 2 * 2) != 0; }
 
 	static const float2x2 identity;
 };
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 struct float3x3
 {
 	float3 c0, c1, c2;
 
-	explicit float3x3(float v = 0.0f) noexcept {
-		this->c0 = v; this->c1 = v; this->c2 = v; }
-	float3x3(const float3& c0, const float3& c1, const float3& c2)
-		noexcept { this->c0 = c0; this->c1 = c1; this->c2 = c2; }
+	explicit float3x3(float v = 0.0f) noexcept { this->c0 = v; this->c1 = v; this->c2 = v; }
+	float3x3(const float3& c0, const float3& c1, const float3& c2) noexcept
+	{
+		this->c0 = c0; this->c1 = c1; this->c2 = c2;
+	}
 	float3x3(
 		float c0r0, float c1r0, float c2r0,
 		float c0r1, float c1r1, float c2r1,
@@ -101,8 +100,7 @@ struct float3x3
 		return ((float3*)this)[i];
 	}
 
-	float3x3 operator*(float v) const noexcept {
-		return float3x3(c0 * v, c1 * v, c2 * v); }
+	float3x3 operator*(float v) const noexcept { return float3x3(c0 * v, c1 * v, c2 * v); }
 	float3x3 operator*(const float3x3& m) const noexcept
 	{
 		return float3x3(
@@ -119,23 +117,22 @@ struct float3x3
 	}
 	float3x3& operator*=(const float3x3& m) noexcept { return *this = *this * m; }
 
-	bool operator==(const float3x3& v) const noexcept {
-		return memcmp(this, &v, sizeof(float) * 3 * 3) == 0; }
-	bool operator!=(const float3x3& v) const noexcept {
-		return memcmp(this, &v, sizeof(float) * 3 * 3) != 0; }
+	bool operator==(const float3x3& v) const noexcept { return memcmp(this, &v, sizeof(float) * 3 * 3) == 0; }
+	bool operator!=(const float3x3& v) const noexcept { return memcmp(this, &v, sizeof(float) * 3 * 3) != 0; }
 
 	static const float3x3 identity;
 };
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 struct float4x4
 {
 	float4 c0, c1, c2, c3;
 
-	explicit float4x4(float v = 0.0f) noexcept {
-		this->c0 = v; this->c1 = v; this->c2 = v; this->c3 = v; }
-	float4x4(const float4& c0, const float4& c1, const float4& c2, const float4& c3)
-		noexcept { this->c0 = c0; this->c1 = c1; this->c2 = c2; this->c3 = c3; }
+	explicit float4x4(float v = 0.0f) noexcept { this->c0 = v; this->c1 = v; this->c2 = v; this->c3 = v; }
+	float4x4(const float4& c0, const float4& c1, const float4& c2, const float4& c3) noexcept
+	{
+		this->c0 = c0; this->c1 = c1; this->c2 = c2; this->c3 = c3;
+	}
 	float4x4(
 		float c0r0, float c1r0, float c2r0, float c3r0,
 		float c0r1, float c1r1, float c2r1, float c3r1,
@@ -148,10 +145,8 @@ struct float4x4
 		this->c3 = float4(c3r0, c3r1, c3r2, c3r3);
 	}
 
-	explicit operator float3x3() const noexcept {
-		return float3x3((float3)c0, (float3)c1, (float3)c2); }
-	explicit operator float2x2() const noexcept {
-		return float2x2((float2)c0, (float2)c1); }
+	explicit operator float3x3() const noexcept { return float3x3((float3)c0, (float3)c1, (float3)c2); }
+	explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
 		
 	float4& operator[](psize i) noexcept
 	{
@@ -164,8 +159,7 @@ struct float4x4
 		return ((float4*)this)[i];
 	}
 
-	float4x4 operator*(float v) const noexcept {
-		return float4x4(c0 * v, c1 * v, c2 * v, c3 * v); }
+	float4x4 operator*(float v) const noexcept { return float4x4(c0 * v, c1 * v, c2 * v, c3 * v); }
 	float4x4 operator*(const float4x4& m) const noexcept
 	{
 		return float4x4(
@@ -184,15 +178,13 @@ struct float4x4
 	}
 	float4x4& operator*=(const float4x4& m) noexcept { return *this = *this * m; }
 
-	bool operator==(const float4x4& v) const noexcept {
-		return memcmp(this, &v, sizeof(float) * 4 * 4) == 0; }
-	bool operator!=(const float4x4& v) const noexcept {
-		return memcmp(this, &v, sizeof(float) * 4 * 4) != 0; }
+	bool operator==(const float4x4& v) const noexcept { return memcmp(this, &v, sizeof(float) * 4 * 4) == 0; }
+	bool operator!=(const float4x4& v) const noexcept { return memcmp(this, &v, sizeof(float) * 4 * 4) != 0; }
 
 	static const float4x4 identity;
 };
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static float2 operator*(float2 v, const float2x2& m) noexcept
 {
 	return float2(
@@ -208,16 +200,11 @@ static float2x2 transpose(const float2x2& m) noexcept
 static float2x2 inverse(const float2x2& matrix) noexcept
 {
 	auto m = matrix;
-	auto oneOverDeterminant = 1.0f /
-		(m.c0.x * m.c1.y - m.c1.x * m.c0.y);
-	return float2x2(
-		m.c1.y * oneOverDeterminant,
-		-m.c0.y * oneOverDeterminant,
-		-m.c1.x * oneOverDeterminant,
-		m.c0.x * oneOverDeterminant);
+	auto oneOverDeterminant = 1.0f / (m.c0.x * m.c1.y - m.c1.x * m.c0.y);
+	return float2x2(m.c1.y * oneOverDeterminant, -m.c0.y * oneOverDeterminant,
+		-m.c1.x * oneOverDeterminant, m.c0.x * oneOverDeterminant);
 }
 
-//------------------------------------------------------------------------------------------------------------
 static float3 operator*(const float3& v, const float3x3& m) noexcept
 {
 	return float3(
@@ -251,7 +238,7 @@ static float3x3 inverse(const float3x3& matrix) noexcept
 		(m.c0.x * m.c2.y - m.c1.x * m.c0.y) * oneOverDeterminant);
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static float4 operator*(const float4& v, const float4x4& m) noexcept
 {
 	return float4(
@@ -316,9 +303,11 @@ static float4x4 inverse(const float4x4& matrix) noexcept
 	return i * (1.0f / d1);
 }
 
-//------------------------------------------------------------------------------------------------------------
-static float4x4 translate(const float4x4& m, const float3& t) noexcept {
-	return float4x4(m.c0, m.c1, m.c2, m.c0 * t.x + m.c1 * t.y + m.c2 * t.z + m.c3); }
+//**********************************************************************************************************************
+static float4x4 translate(const float4x4& m, const float3& t) noexcept
+{
+	return float4x4(m.c0, m.c1, m.c2, m.c0 * t.x + m.c1 * t.y + m.c2 * t.z + m.c3);
+}
 static float4x4 translate(const float3& t) noexcept
 {
 	return float4x4(
@@ -336,9 +325,10 @@ static void setTranslation(float4x4& m, const float3& t) noexcept
 	m.c3.x = t.x; m.c3.y = t.y; m.c3.z = t.z;
 }
 
-//------------------------------------------------------------------------------------------------------------
-static float4x4 scale(const float4x4& m, const float3& s) noexcept {
-	return float4x4(m.c0 * s.x, m.c1 * s.y, m.c2 * s.z, m.c3); }
+static float4x4 scale(const float4x4& m, const float3& s) noexcept
+{
+	return float4x4(m.c0 * s.x, m.c1 * s.y, m.c2 * s.z, m.c3);
+}
 static float4x4 scale(const float3& s) noexcept
 {
 	return float4x4(
@@ -349,11 +339,10 @@ static float4x4 scale(const float3& s) noexcept
 }
 static float3 extractScale(const float4x4& m) noexcept
 {
-	return float3(length((float3)m.c0),
-		length((float3)m.c1), length((float3)m.c2));
+	return float3(length((float3)m.c0), length((float3)m.c1), length((float3)m.c2));
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static float4x4 rotate(const quat& q) noexcept
 {
 	auto xx = q.x * q.x, yy = q.y * q.y, zz = q.z * q.z;
@@ -398,17 +387,15 @@ static float4x4 extractRotation(const float4x4& m) noexcept
 	auto c1 = (float3)m.c1 * invScale.y;
 	auto c2 = (float3)m.c2 * invScale.z;
 
-	return float4x4(float4(c0, 0.0f), float4(c1, 0.0f),
-		float4(c2, 0.0f), float4(0.0f, 0.0f, 0.0f, 1.0f));
+	return float4x4(float4(c0, 0.0f), float4(c1, 0.0f), float4(c2, 0.0f), float4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
-static float4x4 calcModel(const float3& position,
-	const quat& rotation, const float3& scale) noexcept
+static float4x4 calcModel(const float3& position, const quat& rotation, const float3& scale) noexcept
 {
 	return translate(position) * rotate(normalize(rotation)) * math::scale(scale);
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static quat extractQuat(const float3x3& m) noexcept
 {
 	auto fourXSquaredMinus1 = m.c0.x - m.c1.y - m.c2.z;
@@ -439,14 +426,10 @@ static quat extractQuat(const float3x3& m) noexcept
 
 	switch(biggestIndex)
 	{
-	case 0: return quat((m.c1.z - m.c2.y) * mult,
-		(m.c2.x - m.c0.z) * mult, (m.c0.y - m.c1.x) * mult, biggestVal);
-	case 1: return quat(biggestVal, (m.c0.y + m.c1.x) * mult,
-		(m.c2.x + m.c0.z) * mult, (m.c1.z - m.c2.y) * mult);
-	case 2: return quat((m.c0.y + m.c1.x) * mult, biggestVal,
-		(m.c1.z + m.c2.y) * mult, (m.c2.x - m.c0.z) * mult);
-	case 3: return quat((m.c2.x + m.c0.z) * mult,
-		(m.c1.z + m.c2.y) * mult, biggestVal, (m.c0.y - m.c1.x) * mult);
+	case 0: return quat((m.c1.z - m.c2.y) * mult, (m.c2.x - m.c0.z) * mult, (m.c0.y - m.c1.x) * mult, biggestVal);
+	case 1: return quat(biggestVal, (m.c0.y + m.c1.x) * mult, (m.c2.x + m.c0.z) * mult, (m.c1.z - m.c2.y) * mult);
+	case 2: return quat((m.c0.y + m.c1.x) * mult, biggestVal, (m.c1.z + m.c2.y) * mult, (m.c2.x - m.c0.z) * mult);
+	case 3: return quat((m.c2.x + m.c0.z) * mult, (m.c1.z + m.c2.y) * mult, biggestVal, (m.c0.y - m.c1.x) * mult);
 	default: abort();
 	}
 }
@@ -455,12 +438,12 @@ static quat extractQuat(const float4x4& m) noexcept
 	return extractQuat((float3x3)m);
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 // These projections are fixed for the Vulkan NDC space.
 // http://matthewwellings.com/blog/the-new-vulkan-coordinate-system/
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 // Infinite Reversed Z Perspective Projection
 static float4x4 calcPerspProjInfRevZ(float fieldOfView, float aspectRatio, float nearPlane) noexcept
 {
@@ -497,7 +480,6 @@ static float4x4 calcPerspProj(float fieldOfView, float aspectRatio, float nearPl
 		0.0f, 0.0f, 1.0f, 0.0f);
 }
 
-//------------------------------------------------------------------------------------------------------------
 // Reversed Z Orthographic Projection
 static float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth) noexcept
 {
@@ -517,7 +499,7 @@ static float4x4 calcOrthoProj(float2 width, float2 height, float2 depth) noexcep
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static float4x4 lookAt(const float3& from, const float3& to, const float3& up = float3::top) noexcept
 {
 	auto f = normalize(to - from);

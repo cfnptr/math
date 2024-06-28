@@ -20,6 +20,7 @@ namespace math
 
 using namespace std;
 
+//**********************************************************************************************************************
 struct Ray
 {
 private:
@@ -27,8 +28,7 @@ private:
 public:
 	float3 origin;
 
-	Ray(const float3& origin = float3(0.0f),
-		const float3& direction = float3::front, bool normalize = true) noexcept
+	Ray(const float3& origin = float3(0.0f), const float3& direction = float3::front, bool normalize = true) noexcept
 	{
 		if (normalize)
 			this->direction = math::normalize(direction);
@@ -59,7 +59,6 @@ public:
 	static const Ray left, right, bottom, top, back, front;
 };
 
-//------------------------------------------------------------------------------------------------------------
 static float3 closestPoint(const Ray& ray, const float3& point) noexcept
 {
 	auto a = ray.origin;

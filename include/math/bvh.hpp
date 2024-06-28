@@ -23,6 +23,7 @@ namespace math
 
 using namespace std;
 
+//**********************************************************************************************************************
 // Bounding Volume Hierarchy
 struct Bvh
 {
@@ -55,8 +56,7 @@ struct Bvh
 		
 		bool isLeaf() const noexcept { return base.primitiveCount; }
 		Aabb getAabb() const noexcept { return Aabb(base.min, base.max); }
-		void setAabb(const Aabb& aabb) noexcept
-		{ base.min = aabb.getMin(), base.max = aabb.getMax(); }
+		void setAabb(const Aabb& aabb) noexcept { base.min = aabb.getMin(), base.max = aabb.getMax(); }
 	};
 private:
 	vector<Node> nodes;
@@ -64,22 +64,18 @@ private:
 	vector<float3> centroids;
 	stack<Node*> nodeStack;
 public:
-	Bvh(const uint8* vertices, const uint8* indices,
-		const Aabb& aabb, uint32 indexCount,uint32 vertexSize,
-		uint32 indexSize, const float3* centroids = nullptr);
-	Bvh(const Aabb* aabbs, const Aabb& aabb,
-		uint32 aabbCount, const float3* centroids = nullptr);
+	Bvh(const uint8* vertices, const uint8* indices, const Aabb& aabb, uint32 indexCount,
+		uint32 vertexSize, uint32 indexSize, const float3* centroids = nullptr);
+	Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const float3* centroids = nullptr);
 	Bvh() = default;
 	
 	const vector<Node>& getNodes() const noexcept { return nodes; }
 	const vector<uint32>& getPrimitives() const noexcept { return primitives; }
 	const vector<float3>& getCentroids() const noexcept { return centroids; }
 
-	void recreate(const uint8* vertices, const uint8* indices,
-		const Aabb& aabb, uint32 indexCount, uint32 vertexSize,
-		uint32 indexSize, const float3* centroids = nullptr);
-	void recreate(const Aabb* aabbs, const Aabb& aabb,
-		uint32 aabbCount, const float3* centroids = nullptr);
+	void recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb, uint32 indexCount,
+		uint32 vertexSize, uint32 indexSize, const float3* centroids = nullptr);
+	void recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const float3* centroids = nullptr);
 };
 
 } // namespace math

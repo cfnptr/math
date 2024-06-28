@@ -22,10 +22,9 @@
 
 using namespace math;
 
-//--------------------------------------------------------------------------------------------------
-static Aabb calculateNodeAabb(const Bvh::Node* node,
-	const uint8* vertices, const uint8* indices, const uint32* primitives, 
-	uint32 vertexSize, uint32 indexSize, function<uint32(const uint8*)> getIndex)
+//**********************************************************************************************************************
+static Aabb calculateNodeAabb(const Bvh::Node* node, const uint8* vertices, const uint8* indices,
+	const uint32* primitives, uint32 vertexSize, uint32 indexSize, function<uint32(const uint8*)> getIndex)
 {
 	auto lastPrimitive = node->leaf.firstPrimitive + node->base.primitiveCount;
 	float3 min = float3(FLT_MAX), max = float3(-FLT_MAX);
@@ -45,9 +44,7 @@ static Aabb calculateNodeAabb(const Bvh::Node* node,
 	return Aabb(min, max);
 }
 
-//--------------------------------------------------------------------------------------------------
-static Aabb calculateNodeAabb(const Bvh::Node* node,
-	const Aabb* aabbs, const uint32* primitives)
+static Aabb calculateNodeAabb(const Bvh::Node* node, const Aabb* aabbs, const uint32* primitives)
 {
 	auto lastPrimitive = node->leaf.firstPrimitive + node->base.primitiveCount;
 	float3 min = float3(FLT_MAX), max = float3(-FLT_MAX);
@@ -60,12 +57,11 @@ static Aabb calculateNodeAabb(const Bvh::Node* node,
 	return Aabb(min, max);
 }
 
-//--------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 #define BIN_COUNT 8
 
-static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
-	uint32 vertexSize, uint32 indexSize, const uint8* vertices, const uint8* indices,
-	const uint32* primitives, const float3* centroids,
+static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, uint32 vertexSize, uint32 indexSize,
+	const uint8* vertices, const uint8* indices, const uint32* primitives, const float3* centroids,
 	function<uint32(const uint8*)> getIndex, int32& axis, float& split, float& cost)
 {
 	auto bestAxis = 0;
@@ -151,10 +147,9 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
 	cost = bestCost;
 }
 
-//--------------------------------------------------------------------------------------------------
-static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
-	const Aabb* aabbs, const uint32* primitives, const float3* centroids,
-	int32& axis, float& split, float& cost)
+//**********************************************************************************************************************
+static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, const Aabb* aabbs,
+	const uint32* primitives, const float3* centroids, int32& axis, float& split, float& cost)
 {
 	auto bestAxis = 0;
 	auto bestSplit = 0.0f, bestCost = FLT_MAX;
@@ -232,7 +227,7 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive,
 	cost = bestCost;
 }
 
-//--------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 Bvh::Bvh(const uint8* vertices, const uint8* indices, const Aabb& aabb,
 	uint32 indexCount, uint32 vertexSize, uint32 indexSize, const float3* _centroids)
 {
@@ -243,10 +238,8 @@ Bvh::Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const float3* _c
 	recreate(aabbs, aabb, aabbCount, _centroids);
 }
 
-//--------------------------------------------------------------------------------------------------
-void Bvh::recreate(const uint8* vertices, const uint8* indices,
-	const Aabb& aabb, uint32 indexCount, uint32 vertexSize,
-	uint32 indexSize, const float3* _centroids)
+void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb,
+	uint32 indexCount, uint32 vertexSize, uint32 indexSize, const float3* _centroids)
 {
 	assert(vertices);
 	assert(indices);
@@ -260,10 +253,9 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 	auto primitiveData = primitives.data();
 	for (uint32 i = 0; i < primitiveCount; i++) primitiveData[i] = i;
 
-	function getIndex16 = [](const uint8* data)
-	{ return (uint32)*(const uint16*)data; };
-	function getIndex32 = [](const uint8* data)
-	{ return *(const uint32*)data; };
+	function getIndex16 = [](const uint8* data) { return (uint32)*(const uint16*)data; };
+	function getIndex32 = [](const uint8* data) { return *(const uint32*)data; };
+
 	auto getIndex = getIndex32;
 	if (indexSize == sizeof(uint16))
 		getIndex = getIndex16;
@@ -391,9 +383,8 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices,
 	nodes.resize(nodeCount);
 }
 
-//--------------------------------------------------------------------------------------------------
-void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb,
-	uint32 aabbCount, const float3* _centroids)
+//**********************************************************************************************************************
+void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const float3* _centroids)
 {
 	assert(aabbs);
 	assert(aabbCount > 0);

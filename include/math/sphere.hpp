@@ -20,19 +20,21 @@ namespace math
 
 using namespace std;
 
+//**********************************************************************************************************************
 struct Sphere
 {
 	float3 position;
 	float radius;
 
-	Sphere(float radius, const float3& position = float3(0.0f)) noexcept {
-		this->position = position; this->radius = radius; }
+	Sphere(float radius, const float3& position = float3(0.0f)) noexcept
+	{
+		this->position = position; this->radius = radius;
+	}
 	Sphere() = default;
 
 	static const Sphere one, two, half;
 };
 
-//------------------------------------------------------------------------------------------------------------
 static bool isInside(const Sphere& sphere, const float3& point) noexcept
 {
 	auto difference = sphere.position - point;

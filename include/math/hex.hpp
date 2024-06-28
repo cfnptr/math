@@ -21,6 +21,7 @@ namespace math
 
 using namespace std;
 
+//**********************************************************************************************************************
 template <typename T>
 static string toHex(T value, psize length = sizeof(T) << 1)
 {

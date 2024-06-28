@@ -24,7 +24,7 @@ namespace math
 
 using namespace std;
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 struct Version
 {
 	uint8 major = 0;
@@ -47,8 +47,7 @@ struct Version
 
 	explicit operator uint32() const noexcept
 	{
-		return ((uint32)major << 24u) | ((uint32)minor << 16u) | 
-			((uint32)patch << 8u) | (uint32)build;
+		return ((uint32)major << 24u) | ((uint32)minor << 16u) | ((uint32)patch << 8u) | (uint32)build;
 	}
 
 	uint8& operator[](psize i) noexcept
@@ -71,8 +70,7 @@ struct Version
 		
 	string toString4() const noexcept
 	{
-		return to_string(major) + "." + to_string(minor) + "." +
-			to_string(patch) + "." + to_string(build);
+		return to_string(major) + "." + to_string(minor) + "." + to_string(patch) + "." + to_string(build);
 	}
 	string toString3() const noexcept
 	{

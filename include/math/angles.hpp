@@ -25,26 +25,27 @@ namespace math
 
 using namespace std;
 
+//**********************************************************************************************************************
 static float radians(float degrees) noexcept { return degrees * ((float)M_PI / 180.0f); }
-static float2 radians(float2 degrees) noexcept {
-	return float2(radians(degrees.x), radians(degrees.y)); }
-static float3 radians(const float3& degrees) noexcept {
-	return float3(radians(degrees.x), radians(degrees.y), radians(degrees.z)); }
+static float2 radians(float2 degrees) noexcept { return float2(radians(degrees.x), radians(degrees.y)); }
+static float3 radians(const float3& degrees) noexcept
+{
+	return float3(radians(degrees.x), radians(degrees.y), radians(degrees.z));
+}
 static float4 radians(const float4& degrees) noexcept
 {
-	return float4(radians(degrees.x), radians(degrees.y),
-		radians(degrees.z), radians(degrees.w));
+	return float4(radians(degrees.x), radians(degrees.y), radians(degrees.z), radians(degrees.w));
 }
 
 static float degrees(float radians) noexcept { return radians * (180.0f / (float)M_PI); }
-static float2 degrees(float2 radians) noexcept {
-	return float2(degrees(radians.x), degrees(radians.y)); }
-static float3 degrees(const float3& radians) noexcept {
-	return float3(degrees(radians.x), degrees(radians.y), degrees(radians.z)); }
+static float2 degrees(float2 radians) noexcept { return float2(degrees(radians.x), degrees(radians.y)); }
+static float3 degrees(const float3& radians) noexcept
+{
+	return float3(degrees(radians.x), degrees(radians.y), degrees(radians.z));
+}
 static float4 degrees(const float4& radians) noexcept
 {
-	return float4(degrees(radians.x), degrees(radians.y),
-		degrees(radians.z), degrees(radians.w));
+	return float4(degrees(radians.x), degrees(radians.y), degrees(radians.z), degrees(radians.w));
 }
 
 }; // namespace math

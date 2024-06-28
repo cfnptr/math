@@ -25,6 +25,7 @@ const int32 shCoefCount = 9; // 3 * 3
 
 using namespace math;
 
+//**********************************************************************************************************************
 static float2 coordsToST(int2 coords, float invDim) noexcept
 {
 	return fma(1.0f - ((float2)coords + 0.5f) * invDim, float2(2.0f), float2(-1.0f));

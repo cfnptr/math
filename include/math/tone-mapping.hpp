@@ -18,6 +18,7 @@
 namespace math
 {
 
+//**********************************************************************************************************************
 #define DEFAULT_GAMMA 2.2f
 
 static float3 gammaCorrection(const float3& color, float invGamma)

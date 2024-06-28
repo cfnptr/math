@@ -22,33 +22,27 @@ const int32 trianglePointCount = 3;
 
 using namespace std;
 
+//**********************************************************************************************************************
 struct Triangle
 {
 	float3 points[trianglePointCount];
-	Triangle(const float3& point0, const float3& point1, const float3& point2) noexcept {
-		points[0] = point0; points[1] = point1; points[2] = point2; }
+	Triangle(const float3& point0, const float3& point1, const float3& point2) noexcept
+	{
+		points[0] = point0; points[1] = point1; points[2] = point2;
+	}
 	Triangle() = default;
 
-	Triangle operator*(const float3& v) const noexcept {
-		return Triangle(points[0] * v, points[1] * v, points[2] * v); }
-	Triangle operator/(const float3& v) const noexcept {
-		return Triangle(points[0] / v, points[1] / v, points[2] / v); }
-	Triangle operator+(const float3& v) const noexcept {
-		return Triangle(points[0] + v, points[1] + v, points[2] + v); }
-	Triangle operator-(const float3& v) const noexcept {
-		return Triangle(points[0] - v, points[1] - v, points[2] - v); }
+	Triangle operator*(const float3& v) const noexcept { return Triangle(points[0] * v, points[1] * v, points[2] * v); }
+	Triangle operator/(const float3& v) const noexcept { return Triangle(points[0] / v, points[1] / v, points[2] / v); }
+	Triangle operator+(const float3& v) const noexcept { return Triangle(points[0] + v, points[1] + v, points[2] + v); }
+	Triangle operator-(const float3& v) const noexcept { return Triangle(points[0] - v, points[1] - v, points[2] - v); }
 
-	Triangle& operator*=(const float3& v) noexcept {
-		points[0] *= v; points[1] *= v; points[2] *= v; return *this; }
-	Triangle& operator/=(const float3& v) noexcept {
-		points[0] /= v; points[1] /= v; points[2] /= v; return *this; }
-	Triangle& operator+=(const float3& v) noexcept {
-		points[0] += v; points[1] += v; points[2] += v; return *this; }
-	Triangle& operator-=(const float3& v) noexcept {
-		points[0] -= v; points[1] -= v; points[2] -= v; return *this; }
+	Triangle& operator*=(const float3& v) noexcept { points[0] *= v; points[1] *= v; points[2] *= v; return *this; }
+	Triangle& operator/=(const float3& v) noexcept { points[0] /= v; points[1] /= v; points[2] /= v; return *this; }
+	Triangle& operator+=(const float3& v) noexcept { points[0] += v; points[1] += v; points[2] += v; return *this; }
+	Triangle& operator-=(const float3& v) noexcept { points[0] -= v; points[1] -= v; points[2] -= v; return *this; }
 };
 
-//------------------------------------------------------------------------------------------------------------
 static bool isInside(const Triangle& triangle, const float3& point) noexcept
 {
 	auto p0 = triangle.points[0] - point;

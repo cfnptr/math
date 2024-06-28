@@ -23,7 +23,7 @@ namespace math::sh
 using namespace math;
 using namespace math::ibl;
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 #define M_SQRT_PI  1.77245385090551602729816748334114518
 #define M_SQRT3    1.73205080756887729352744634150587237
 #define M_SQRT5    2.23606797749978969640917366873127624
@@ -59,7 +59,7 @@ static float calcSolidAngle(float2 st, float invDim) noexcept
 		sphereQuadrantArea(v1.x, v0.y) + sphereQuadrantArea(v1.x, v1.y);
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static void computeShBasis(const float3& s, float shb[shCoefCount]) noexcept
 {
 	auto pml2 = 0.0f, pml1 = 1.0f;
@@ -103,7 +103,6 @@ static void computeShBasis(const float3& s, float shb[shCoefCount]) noexcept
 	}
 }
 
-//------------------------------------------------------------------------------------------------------------
 static void projectVecToSH2K(const float3& s, float r[5]) noexcept
 {
 	r[0] = s.y * s.x;
@@ -121,25 +120,12 @@ static void multiply(const float m[25], const float v[5], float r[5]) noexcept
 	r[4] = m[4] * v[0] + m[9] * v[1] + m[14] * v[2] + m[19] * v[3] + m[24] * v[4];
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static float3 rotateSphericalHarmonicBand1(const float3& band1, const float3x3& m) noexcept
 {
-	static const auto invA1TimesK = float3x3(
-		 0.0f, -1.0f,  0.0f,
-		 0.0f,  0.0f,  1.0f,
-		-1.0f,  0.0f,  0.0f
-	);
-
-    auto mn0 = m[0];
-    auto mn1 = m[1];
-    auto mn2 = m[2];
-
-	auto r1OverK = float3x3(
-		-mn0.y, mn0.z, -mn0.x,
-		-mn1.y, mn1.z, -mn1.x,
-		-mn2.y, mn2.z, -mn2.x
-	);
-
+	static const auto invA1TimesK = float3x3(0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f);
+    auto mn0 = m[0], mn1 = m[1], mn2 = m[2];
+	auto r1OverK = float3x3(-mn0.y, mn0.z, -mn0.x, -mn1.y, mn1.z, -mn1.x, -mn2.y, mn2.z, -mn2.x);
 	return r1OverK * (invA1TimesK * band1);
 }
 static void rotateSphericalHarmonicBand2(const float band2[5], const float3x3& m, float r[5]) noexcept
@@ -185,7 +171,7 @@ static void rotateSh3Bands(const float shw[shCoefCount], const float3x3& m, floa
 	r[4] = b2[0]; r[5] = b2[1]; r[6] = b2[2]; r[7] = b2[3]; r[8] = b2[4];
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static float sincWindow(int32 l, float w) noexcept
 {
 	if (l == 0)
@@ -252,9 +238,8 @@ static float shmin(float shw[shCoefCount]) noexcept
 		do
 		{
 			minimum = (a * z * z + b * z + c) + (d * z * std::sqrt(1.0f - z * z));
-			dz = (z * z - 1.0f) * (d - 2.0f * d * z * z + (b + 2.0f * a * z) *
-				std::sqrt(1.0f - z * z)) / (3.0f * d * z - 2.0f * d * z * z * z -
-				2.0f * a * std::pow(1.0f - z * z, 1.5f));
+			dz = (z * z - 1.0f) * (d - 2.0f * d * z * z + (b + 2.0f * a * z) * std::sqrt(1.0f - z * z)) / 
+				(3.0f * d * z - 2.0f * d * z * z * z - 2.0f * a * std::pow(1.0f - z * z, 1.5f));
 			z = z - dz;
 		} while (std::abs(z) <= 1.0 && std::abs(dz) > 1e-5f);
 
@@ -265,7 +250,7 @@ static float shmin(float shw[shCoefCount]) noexcept
 	return minimum;
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static void deringingSH(float4 sh[shCoefCount]) noexcept
 {
 	auto cutoff = (float)(shBandCount * 4 + 1);
@@ -304,7 +289,6 @@ static void deringingSH(float4 sh[shCoefCount]) noexcept
 	}
 }
 
-//------------------------------------------------------------------------------------------------------------
 static void shaderPreprocessSH(float4 sh[shCoefCount]) noexcept
 {
 	static const float ca[shCoefCount] =

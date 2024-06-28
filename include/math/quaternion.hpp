@@ -22,6 +22,7 @@ namespace math
 
 using namespace std;
 
+//**********************************************************************************************************************
 struct quat : public float4
 {
 	quat(float x, float y, float z, float w) noexcept : float4(x, y, z, w) { }
@@ -75,17 +76,14 @@ struct quat : public float4
 
 		return std::atan2(yy, xx);
 	}
-	float getYaw() const noexcept {
-		return std::asin(std::clamp(-2.0f * (x * z - w * y), -1.0f, 1.0f)); }
-	float getRoll() const noexcept {
-		return std::atan2(2.0f * (x * y + w * z), w * w + x * x - y * y - z * z); }
-	float3 toEulerAngles() const noexcept {
-		return float3(getPitch(), getYaw(), getRoll()); }
+	float getYaw() const noexcept { return std::asin(std::clamp(-2.0f * (x * z - w * y), -1.0f, 1.0f)); }
+	float getRoll() const noexcept { return std::atan2(2.0f * (x * y + w * z), w * w + x * x - y * y - z * z); }
+	float3 toEulerAngles() const noexcept { return float3(getPitch(), getYaw(), getRoll()); }
 
 	static const quat identity;
 };
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 static quat normalize(const quat& q) noexcept
 {
 	auto l = length(q);
@@ -106,14 +104,12 @@ static quat slerp(const quat& a, const quat& b, float t) noexcept
 
 	if (cosTheta > 1.0f - numeric_limits<float>::epsilon())
 	{
-		return quat(lerp(a.x, c.x, t), lerp(a.y, c.y, t),
-			lerp(a.z, c.z, t), lerp(a.w, c.w, t));
+		return quat(lerp(a.x, c.x, t), lerp(a.y, c.y, t), lerp(a.z, c.z, t), lerp(a.w, c.w, t));
 	}
 	else
 	{
 		auto angle = std::acos(cosTheta);
-		return (a * std::sin((1.0f - t) * angle) + 
-			c * std::sin(t * angle)) / std::sin(angle);
+		return (a * std::sin((1.0f - t) * angle) +  c * std::sin(t * angle)) / std::sin(angle);
 	}
 }
 

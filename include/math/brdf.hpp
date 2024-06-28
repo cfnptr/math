@@ -23,6 +23,7 @@ namespace math::brdf
 
 using namespace math;
 
+//**********************************************************************************************************************
 static float ggx(float noh, float roughness) noexcept
 {
     auto f = (roughness - 1.0f) * ((roughness + 1.0f) * (noh * noh)) + 1.0f;

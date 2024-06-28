@@ -24,6 +24,7 @@ const uint8 frustumPlaneCount = 6;
 
 using namespace std;
 
+//**********************************************************************************************************************
 struct Plane
 {
 private:
@@ -31,8 +32,7 @@ private:
 public:
 	float distance;
 
-	Plane(const float3& normal = float3::top,
-		float distance = 0.0f, bool normalize = true) noexcept
+	Plane(const float3& normal = float3::top, float distance = 0.0f, bool normalize = true) noexcept
 	{
 		if (normalize)
 			this->normal = math::normalize(normal);
@@ -61,12 +61,16 @@ public:
 	static const Plane left, right, bottom, top, back, front;
 };
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 // Returns distance to the plane.
-static float distance(const Plane& plane, const float3& point) noexcept {
-	return dot(plane.getNormal(), point) + plane.distance; }
-static float3 closestPoint(const Plane& plane, const float3& point) noexcept {
-	return point - plane.getNormal() * distance(plane, point); }
+static float distance(const Plane& plane, const float3& point) noexcept
+{
+	return dot(plane.getNormal(), point) + plane.distance;
+}
+static float3 closestPoint(const Plane& plane, const float3& point) noexcept
+{
+	return point - plane.getNormal() * distance(plane, point);
+}
 
 static float3 closestPoint(const Triangle& triangle, const float3& point) noexcept
 {
@@ -84,6 +88,7 @@ static float3 closestPoint(const Triangle& triangle, const float3& point) noexce
     auto m1 = length2(p - c1);
     auto m2 = length2(p - c2);
     auto m = min(m0, m1, m2);
+
     if (m == m0)
 		return c0;
     if (m == m1)
@@ -91,7 +96,7 @@ static float3 closestPoint(const Triangle& triangle, const float3& point) noexce
     return c2;
 }
 
-//------------------------------------------------------------------------------------------------------------
+//**********************************************************************************************************************
 // Returns unnormalized plane normals.
 static void extractFrustumPlanes(const float4x4& frustum, Plane* planes) noexcept
 {
