@@ -9,13 +9,20 @@ See the [documentation](https://cfnptr.github.io/math).
 * Vector (float2/3/4, int2/3/4)
 * Matrix (float2x2/3x3/4x4)
 * Quaternion (float4)
-* Euler Angles, Radians
-* Axis Aligned Bounding Box (AABB)
-* Ray, Line, Plane, Triangle, Sphere
-* BRDF, IBL, Spherical Harmonics
-* Bounding Volume Hierarchy (BVH)
-* Pespective, Orthographics projection.
-* Matrix translate, scale, rotate.
+* Euler angles, radians conversion
+* Matrix translate, scale, rotate
+* Pespective, orthographics projection
+* Ray, line, plane, triangle, sphere...
+* Axis aligned bounding box (AABB)
+* Bounding volume hierarchy (BVH)
+* Color conversion (RGBA, linear)
+* Version (major, minor, patch, build)
+* Hexadecimal string conversion
+* Tone mapping, gamma correction
+* Image based lighting (IBL, BRDF)
+* Spherical harmonics (SH)
+* Enum class flags declaration
+* Simplified integer types (uint32, int8, etc)
 
 ## Supported operating systems
 
