@@ -341,6 +341,10 @@ static float3 extractScale(const float4x4& m) noexcept
 {
 	return float3(length((float3)m.c0), length((float3)m.c1), length((float3)m.c2));
 }
+static float2 extractScale2(const float4x4& m) noexcept
+{
+	return float2(length((float3)m.c0), length((float3)m.c1));
+}
 
 //**********************************************************************************************************************
 static float4x4 rotate(const quat& q) noexcept
