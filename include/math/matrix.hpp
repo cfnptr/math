@@ -66,7 +66,7 @@ struct float2x2
 	bool operator==(const float2x2& v) const noexcept { return memcmp(this, &v, sizeof(float) * 2 * 2) == 0; }
 	bool operator!=(const float2x2& v) const noexcept { return memcmp(this, &v, sizeof(float) * 2 * 2) != 0; }
 
-	static const float2x2 identity;
+	static const float2x2 zero, one, minusOne, identity;
 };
 
 //**********************************************************************************************************************
@@ -120,7 +120,7 @@ struct float3x3
 	bool operator==(const float3x3& v) const noexcept { return memcmp(this, &v, sizeof(float) * 3 * 3) == 0; }
 	bool operator!=(const float3x3& v) const noexcept { return memcmp(this, &v, sizeof(float) * 3 * 3) != 0; }
 
-	static const float3x3 identity;
+	static const float3x3 zero, one, minusOne, identity;
 };
 
 //**********************************************************************************************************************
@@ -181,7 +181,7 @@ struct float4x4
 	bool operator==(const float4x4& v) const noexcept { return memcmp(this, &v, sizeof(float) * 4 * 4) == 0; }
 	bool operator!=(const float4x4& v) const noexcept { return memcmp(this, &v, sizeof(float) * 4 * 4) != 0; }
 
-	static const float4x4 identity;
+	static const float4x4 zero, one, minusOne, identity;
 };
 
 //**********************************************************************************************************************
@@ -394,7 +394,8 @@ static float4x4 extractRotation(const float4x4& m) noexcept
 	return float4x4(float4(c0, 0.0f), float4(c1, 0.0f), float4(c2, 0.0f), float4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
-static float4x4 calcModel(const float3& position, const quat& rotation, const float3& scale) noexcept
+static float4x4 calcModel(const float3& position = float3(0.0f),
+	const quat& rotation = quat::identity, const float3& scale = float3(1.0f)) noexcept
 {
 	return translate(position) * rotate(normalize(rotation)) * math::scale(scale);
 }

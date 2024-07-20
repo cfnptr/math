@@ -93,7 +93,7 @@ struct int2
 	bool operator>=(int2 v) const noexcept { return x >= v.x && y >= v.y; }
 	string toString() const noexcept { return to_string(x) + " " + to_string(y); }
 
-	static const int2 left, right, bottom, top;
+	static const int2 zero, one, minusOne, left, right, bottom, top;
 };
 
 //**********************************************************************************************************************
@@ -141,7 +141,7 @@ struct float2
 	bool operator>=(float2 v) const noexcept { return x >= v.x && y >= v.y; }
 	string toString() const noexcept { return to_string(x) + " " + to_string(y); }
 
-	static const float2 left, right, bottom, top;
+	static const float2 zero, one, minusOne, left, right, bottom, top;
 };
 
 //**********************************************************************************************************************
@@ -209,7 +209,7 @@ struct int3
 	bool operator>=(const int3& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z; }
 	string toString() const noexcept { return to_string(x) + " " + to_string(y) + " " + to_string(z); }
 
-	static const int3 left, right, bottom, top, back, front;
+	static const int3 zero, one, minusOne, left, right, bottom, top, back, front;
 };
 
 //**********************************************************************************************************************
@@ -261,7 +261,7 @@ struct float3
 	bool operator>=(const float3& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z; }
 	string toString() const noexcept { return to_string(x) + " " + to_string(y) + " " + to_string(z); }
 
-	static const float3 left, right, bottom, top, back, front;
+	static const float3 zero, one, minusOne, left, right, bottom, top, back, front;
 };
 
 //**********************************************************************************************************************
@@ -337,6 +337,8 @@ struct int4
 	{
 		return to_string(x) + " " + to_string(y) + " " + to_string(z) + " " + to_string(w);
 	}
+
+	static const int4 zero, one, minusOne;
 };
 
 //**********************************************************************************************************************
@@ -400,6 +402,8 @@ struct float4
 	{
 		return to_string(x) + " " + to_string(y) + " " + to_string(z) + " " + to_string(w);
 	}
+
+	static const float4 zero, one, minusOne;
 };
 
 //**********************************************************************************************************************

@@ -15,13 +15,24 @@
 #include "math/matrix.hpp"
 using namespace math;
 
+const float2x2 float2x2::zero = float2x2(0.0f);
+const float2x2 float2x2::one = float2x2(1.0f);
+const float2x2 float2x2::minusOne = float2x2(-1.0f);
 const float2x2 float2x2::identity = float2x2(
 	1.0f, 0.0f,
 	0.0f, 1.0f);
+
+const float3x3 float3x3::zero = float3x3(0.0f);
+const float3x3 float3x3::one = float3x3(1.0f);
+const float3x3 float3x3::minusOne = float3x3(-1.0f);
 const float3x3 float3x3::identity = float3x3(
 	1.0f, 0.0f, 0.0f,
 	0.0f, 1.0f, 0.0f,
 	0.0f, 0.0f, 1.0f);
+
+const float4x4 float4x4::zero = float4x4(0.0f);
+const float4x4 float4x4::one = float4x4(1.0f);
+const float4x4 float4x4::minusOne = float4x4(-1.0f);
 const float4x4 float4x4::identity = float4x4(
 	1.0f, 0.0f, 0.0f, 0.0f,
 	0.0f, 1.0f, 0.0f, 0.0f,

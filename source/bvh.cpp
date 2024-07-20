@@ -24,7 +24,7 @@ using namespace math;
 
 //**********************************************************************************************************************
 static Aabb calculateNodeAabb(const Bvh::Node* node, const uint8* vertices, const uint8* indices,
-	const uint32* primitives, uint32 vertexSize, uint32 indexSize, function<uint32(const uint8*)> getIndex)
+	const uint32* primitives, uint32 vertexSize, uint32 indexSize, const function<uint32(const uint8*)>& getIndex)
 {
 	auto lastPrimitive = node->leaf.firstPrimitive + node->base.primitiveCount;
 	float3 min = float3(FLT_MAX), max = float3(-FLT_MAX);
@@ -62,7 +62,7 @@ static Aabb calculateNodeAabb(const Bvh::Node* node, const Aabb* aabbs, const ui
 
 static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, uint32 vertexSize, uint32 indexSize,
 	const uint8* vertices, const uint8* indices, const uint32* primitives, const float3* centroids,
-	function<uint32(const uint8*)> getIndex, int32& axis, float& split, float& cost)
+	const function<uint32(const uint8*)>& getIndex, int32& axis, float& split, float& cost)
 {
 	auto bestAxis = 0;
 	auto bestSplit = 0.0f, bestCost = FLT_MAX;
