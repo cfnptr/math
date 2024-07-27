@@ -443,6 +443,13 @@ static quat extractQuat(const float4x4& m) noexcept
 	return extractQuat((float3x3)m);
 }
 
+static void extractTransform(const float4x4& m, float3& position, float3& scale, quat& rotation) noexcept
+{
+	position = getTranslation(m);
+	scale = extractScale(m);
+	rotation = extractQuat(extractRotation(m));
+}
+
 //**********************************************************************************************************************
 // These projections are fixed for the Vulkan NDC space.
 // http://matthewwellings.com/blog/the-new-vulkan-coordinate-system/
