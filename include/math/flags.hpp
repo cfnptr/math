@@ -19,16 +19,28 @@ namespace math
 {
 
 /***********************************************************************************************************************
- * @brief Declares enum class common operators. (|, &, |=, &=, hasAnyFlag, hasOneFlag)
+ * @brief Declares enum class common operators. (|, &, |=, &=, !, ~, ^, hasAnyFlag, hasOneFlag)
  */
 #define DECLARE_ENUM_CLASS_FLAG_OPERATORS(enumType)           \
 static enumType operator|(enumType a, enumType b) noexcept    \
 {                                                             \
-	return (enumType)((uint64)(a) | (uint64)(b));             \
+	return (enumType)((uint64)a | (uint64)b);                 \
 }                                                             \
 static enumType operator&(enumType a, enumType b) noexcept    \
 {                                                             \
-	return (enumType)((uint64)(a) & (uint64)(b));             \
+	return (enumType)((uint64)a & (uint64)b);                 \
+}                                                             \
+static enumType operator^(enumType a, enumType b) noexcept    \
+{                                                             \
+	return (enumType)((uint64)a ^ (uint64)b);                 \
+}                                                             \
+static enumType operator!(enumType a) noexcept                \
+{                                                             \
+	return (enumType)!((uint64)a);                            \
+}                                                             \
+static enumType operator~(enumType a) noexcept                \
+{                                                             \
+	return (enumType)~((uint64)a);                            \
 }                                                             \
 static enumType& operator|=(enumType& a, enumType b) noexcept \
 {                                                             \
@@ -37,6 +49,10 @@ static enumType& operator|=(enumType& a, enumType b) noexcept \
 static enumType& operator&=(enumType& a, enumType b) noexcept \
 {                                                             \
 	return a = a & b;                                         \
+}                                                             \
+static enumType& operator^=(enumType& a, enumType b) noexcept \
+{                                                             \
+	return a = a ^ b;                                         \
 }                                                             \
 static bool hasAnyFlag(enumType a, enumType flags) noexcept   \
 {                                                             \
