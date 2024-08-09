@@ -432,6 +432,10 @@ static float lerp(float a, float b, float t) noexcept
 	assert(t <= 1.0f);
 	return a + t * (b - a);
 }
+static float lerpDelta(float a, float b, float f, float dt) noexcept
+{
+	return a + (1.0f - std::pow(f, dt)) * (b - a);
+}
 static float gain(float x, float k) noexcept
 {
 	auto a = 0.5f * std::pow(2.0f * ((x < 0.5f) ? x : 1.0f - x), k);
@@ -526,6 +530,10 @@ static float2 lerp(float2 a, float2 b, float t) noexcept
 	assert(t >= 0.0f);
 	assert(t <= 1.0f);
 	return a * (1.0f - t) + b * t;
+}
+static float2 lerpDelta(float2 a, float2 b, float f, float dt) noexcept
+{
+	return a + (1.0f - std::pow(f, dt)) * (b - a);
 }
 static float2 gain(float2 x, float2 k) noexcept
 {
@@ -692,6 +700,10 @@ static float3 lerp(const float3& a, const float3& b, float t) noexcept
 	assert(t >= 0.0f);
 	assert(t <= 1.0f);
 	return a * (1.0f - t) + b * t;
+}
+static float3 lerpDelta(const float3& a, const float3& b, float f, float dt) noexcept
+{
+	return a + (1.0f - std::pow(f, dt)) * (b - a);
 }
 static float3 gain(const float3& x, const float3& k) noexcept
 {
@@ -939,6 +951,10 @@ static float4 lerp(const float4& a, const float4& b, float t) noexcept
 	assert(t >= 0.0f);
 	assert(t <= 1.0f);
 	return a * (1.0f - t) + b * t;
+}
+static float4 lerpDelta(const float4& a, const float4& b, float f, float dt) noexcept
+{
+	return a + (1.0f - std::pow(f, dt)) * (b - a);
 }
 static float4 gain(const float4& x, const float4& k) noexcept
 {
