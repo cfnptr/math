@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "math/quaternion.hpp"
+
 using namespace math;
 
 const quat quat::identity = quat(0.0f, 0.0f, 0.0f, 1.0f);

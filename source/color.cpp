@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "math/color.hpp"
+
 using namespace math;
 
 const Color Color::white = Color(255, 255, 255, 255);

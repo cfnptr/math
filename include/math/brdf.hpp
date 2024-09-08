@@ -15,6 +15,15 @@
 // Bidirectional Reflectance Distribution Function
 // Based on this: https://google.github.io/filament/Filament.html
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Common Bidirectional Reflectance Distribution Function functions. (BRDF)
+ * 
+ * @details
+ * BRDF is a model used in physically based rendering (PBR) to simulate how light interacts with rough surfaces.
+ * Based on this project: https://google.github.io/filament/Filament.html
+ */
+
 #pragma once
 #include "math/vector.hpp"
 
@@ -23,12 +32,33 @@ namespace math::brdf
 
 using namespace math;
 
-//**********************************************************************************************************************
+/**
+ * @brief GGX microfacet distribution function. (Ground Glass Model)
+ * 
+ * @details 
+ * The GGX distribution is effective for rendering realistic reflections, especially on surfaces that have varying 
+ * degrees of roughness, such as metals, plastics, and other materials with glossy or shiny finishes.
+ * 
+ * @param noh dot product between the surface normal (n) and the half-vector (h)
+ * @param roughness spread of microfacets on a surface (0.0-1.0 / smooth-rough)
+ */
 static float ggx(float noh, float roughness) noexcept
 {
     auto f = (roughness - 1.0f) * ((roughness + 1.0f) * (noh * noh)) + 1.0f;
     return (roughness * roughness) / ((float)M_PI * f * f);
 }
+
+/**
+ * @brief Hammersley sampling function.
+ *
+ * @details
+ * The sampling techniques for generating well-distributed points on a surface or within a volume. It is widely 
+ * applied in global illumination, ray tracing, and other areas of computer graphics where importance sampling or 
+ * quasi-random sampling is needed to improve the efficiency of rendering.
+ *
+ * @param index target index of the sample
+ * @param invSampleCount iversed sample count (1.0f / sampleCount)
+ */
 static float2 hammersley(uint32 index, float invSampleCount) noexcept
 {
     const auto tof = 0.5f / 0x80000000U;
@@ -40,6 +70,17 @@ static float2 hammersley(uint32 index, float invSampleCount) noexcept
     bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
     return float2(index * invSampleCount, bits * tof);
 }
+/**
+ * @brief DGGX NDF importance sampling function.
+ *
+ * @details
+ * The importance sampling technique applied to the Normal Distribution Function (NDF) of the GGX microfacet model. 
+ * This technique is widely used in physically based rendering (PBR) to sample directions for reflection more 
+ * efficiently, particularly for materials that exhibit specular reflections.
+ *
+ * @param u spherical coordinates
+ * @param a roughness value
+ */
 static float3 importanceSamplingNdfDggx(float2 u, float a) noexcept
 {
     auto phi = 2.0f * (float)M_PI * u.x;

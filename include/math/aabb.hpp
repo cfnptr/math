@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Axis Aligned Bounding Box functions.
+ */
+
 #pragma once
 #include "math/ray.hpp"
 #include "math/plane.hpp"
@@ -22,13 +27,27 @@ namespace math
 
 using namespace std;
 
-//**********************************************************************************************************************
-// Axis Aligned Bounding Box
+/**
+ * @brief Axis Aligned Bounding Box structure. (AABB)
+ * 
+ * @details
+ * A simple and efficient way to represent the boundaries of a 3D or 2D object for collision detection or 
+ * spatial queries in game development and computer graphics. The sides of the bounding box are aligned with the 
+ * coordinate axes (e.g., X, Y, and Z axes in 3D space). This means that the edges of the box do not rotate with 
+ * the object but remain parallel to the axes. Bounding box defines a rectangular (2D) or cuboid (3D) volume that 
+ * surrounds an object, used to approximate the object's shape for efficient calculations.
+ */
 struct Aabb
 {
 private:
 	float3 min, max;
 public:
+	/**
+	 * @brief Creates a new Axis Aligned Bounding Box. (AABB)
+	 * 
+	 * @param[in] min minimum bounding box corner position in the space
+	 * @param[in] max maximum bounding box corner position in the space
+	 */
 	Aabb(const float3& min = float3(0.0f), const float3& max = float3(0.0f)) noexcept
 	{
 		assert(min <= max);
@@ -36,19 +55,44 @@ public:
 		this->max = max;
 	}
 
+	/**
+	 * @brief Returns minimum AABB corner position in the space.
+	 * @details The point that has the smallest values for all axes.
+	 */
 	const float3& getMin() const noexcept { return min; }
+	/**
+	 * @brief Returns maximum AABB corner position in the space.
+	 * @details The point that has the biggest values for all axes.
+	 */
 	const float3& getMax() const noexcept { return max; }
 
+	/**
+	 * @brief Sets minimum AABB corner position in the space.
+	 * @details See the @ref getMin().
+	 * @param[in] min minimum bounding box corner position in the space
+	 */
 	void setMin(const float3& min) noexcept
 	{
 		assert(min <= this->max);
 		this->min = min;
 	}
+	/**
+	 * @brief Sets maximum AABB corner position in the space.
+	 * @details See the @ref setMax().
+	 * @param[in] max maximum bounding box corner position in the space
+	 */
 	void setMax(const float3& max) noexcept
 	{
 		assert(max >= this->min);
 		this->max = max;
 	}
+	/**
+	 * @brief Sets minimum and maximum AABB corner position in the space.
+	 * @details See the @ref getMin() and @ref getMax().
+	 * 
+	 * @param[in] min minimum bounding box corner position in the space
+	 * @param[in] max maximum bounding box corner position in the space
+	 */
 	void set(const float3& min, const float3& max) noexcept
 	{
 		assert(min <= max);
@@ -56,6 +100,12 @@ public:
 		this->max = max;
 	}
 	
+	/**
+	 * @brief Sets size and position of the bounding box.
+	 * 
+	 * @param[in] size target size of the bounding box
+	 * @param[in] position target position of the bounding box in space
+	 */
 	void setSize(const float3& size, const float3& position = float3(0.0f)) noexcept
 	{
 		assert(size >= 0.0f);
@@ -64,35 +114,67 @@ public:
 		max = position + extent;
 	}
 
+	/**
+	 * @brief Returns size of the bounding box.
+	 */
 	float3 getSize() const noexcept { return max - min; }
+	/**
+	 * @brief Returns position of the bounding box.
+	 */
 	float3 getPosition() const noexcept { return (min + max) * 0.5f; }
 
-	//******************************************************************************************************************
+	/*******************************************************************************************************************
+	 * @brief Sets extent and position of the bounding box.
+	 * 
+	 * @param[in] extent target extent of the bounding box (half size)
+	 * @param[in] position target position of the bounding box in space
+	 */
 	void setExtent(const float3& extent, const float3& position = float3(0.0f)) noexcept
 	{
 		assert(extent >= 0.0f);
 		min = position - extent;
 		max = position + extent;
 	}
+
+	/**
+	 * @brief Returns extent and position of the bounding box.
+	 * 
+	 * @param[out] extent target extent of the bounding box (half size)
+	 * @param[out] position target position of the bounding box in space
+	 */
 	void getExtent(float3& extent, float3& position) const noexcept
 	{
 		extent = (max - min) * 0.5f;
 		position = min + extent;
 	}
+	/**
+	 * @brief Returns extent of the bounding box. (half size)
+	 */
 	float3 getExtent() const noexcept { return (max - min) * 0.5f; }
 
+	/**
+	 * @brief Extends bounding box min and max corner positions.
+	 * @param[in] point target point to include into the bounding box
+	 */
 	void extend(const float3& point) noexcept
 	{
 		min = math::min(min, point);
 		max = math::max(max, point); 
 	}
+	/**
+	 * @brief Extends bounding box min and max corner positions.
+	 * @param[in] aabb target AABB to include into the bounding box
+	 */
 	void extend(const Aabb& aabb) noexcept
 	{
 		min = math::min(min, aabb.min);
 		max = math::max(max, aabb.max); 
 	}
 
-	float getArea() const noexcept
+	/**
+	 * @brief Calculates area of the AABB.
+	 */
+	float calcArea() const noexcept
 	{
 		auto extent = max - min;
 		return extent.x * extent.y + extent.y * extent.z + extent.z * extent.x;
@@ -118,104 +200,107 @@ public:
 	static const Aabb zero, one, two, half;
 };
 
+/**
+ * @brief Returns true if first AABB binary representation is less than the second.
+ * 
+ * @param[in] a first AABB to binary compare
+ * @param[in] b secong AABB to binary compare
+ */
 static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(&a, &b, sizeof(float3) * 2) < 0; }
 
-//**********************************************************************************************************************
-// Returns true if point is inside AABB.
+/***********************************************************************************************************************
+ * @brief Returns true if point is inside the AABB.
+ * 
+ * @param[in] aabb target AABB to check
+ * @param[in] point target point in the space
+ */
 static bool isInside(const Aabb& aabb, const float3& point) noexcept
 {
 	auto min = aabb.getMin(), max = aabb.getMax();
 	return point >= min && point <= max;
 }
+/**
+ * @brief Returns closest point inside AABB to the specified one.
+ *
+ * @param[in] aabb target AABB to use
+ * @param[in] point target point in the space
+ */
 static float3 closestPoint(const Aabb& aabb, const float3& point) noexcept
 {
 	return clamp(point, aabb.getMin(), aabb.getMax());
 }
 
-// Returns distance to the intersection points.
-static float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept
-{
-	auto origin = ray.origin;
-	auto directionInv = float3(1.0f) / ray.getDirection();
-	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
+/**
+ * @brief Calculates where ray intersects the AABB.
+ * @return Distance to the intersection points.
+ *
+ * @param[in] aabb target AABB to raycast
+ * @param[in] ray target ray in the space
+ */
+static float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept;
+/**
+ * @brief Calculates where ray intersects the AABB. (Ray is inversed!)
+ * @return Distance to the intersection points.
+ *
+ * @param[in] aabb target AABB to raycast
+ * @param[in] ray target ray in the space (inversed)
+ */
+static float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept;
 
-	auto t1 = (aabbMin.x - origin.x) * directionInv.x;
-   	auto t2 = (aabbMax.x - origin.x) * directionInv.x;
-   	auto t3 = (aabbMin.y - origin.y) * directionInv.y;
-   	auto t4 = (aabbMax.y - origin.y) * directionInv.y;
-   	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
-   	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
+/**
+ * @brief Calculates where ray intersects the AABB.
+ * @return Distance to the first intersection point.
+ *
+ * @param[in] aabb target AABB to raycast
+ * @param[in] ray target ray in the space
+ */
+static float raycast1(const Aabb& aabb, const Ray& ray) noexcept;
+/**
+ * @brief Calculates where ray intersects the AABB. (Ray is inversed!)
+ * @return Distance to the first intersection point.
+ *
+ * @param[in] aabb target AABB to raycast
+ * @param[in] ray target ray in the space (inversed)
+ */
+static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept;
 
-	auto tMin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
-   	auto tMax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
-	return float2(tMin, tMax);
-}
-static float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept
-{
-	auto origin = ray.origin;
-	auto directionInv = ray.getDirection();
-	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
-
-	auto t1 = (aabbMin.x - origin.x) * directionInv.x;
-   	auto t2 = (aabbMax.x - origin.x) * directionInv.x;
-   	auto t3 = (aabbMin.y - origin.y) * directionInv.y;
-   	auto t4 = (aabbMax.y - origin.y) * directionInv.y;
-   	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
-   	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
-
-	auto tMin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
-   	auto tMax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
-	return float2(tMin, tMax);
-}
-
-//**********************************************************************************************************************
-// Returns distance to the first intersection point.
-static float raycast1(const Aabb& aabb, const Ray& ray) noexcept
-{
-	auto origin = ray.origin;
-	auto directionInv = float3(1.0f) / ray.getDirection();
-	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
-	
-	auto t1 = (aabbMin.x - origin.x) * directionInv.x;
-   	auto t2 = (aabbMax.x - origin.x) * directionInv.x;
-   	auto t3 = (aabbMin.y - origin.y) * directionInv.y;
-   	auto t4 = (aabbMax.y - origin.y) * directionInv.y;
-   	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
-   	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
-
-	return std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
-}
-static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
-{
-	auto origin = ray.origin;
-	auto directionInv = ray.getDirection();
-	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
-	
-	auto t1 = (aabbMin.x - origin.x) * directionInv.x;
-   	auto t2 = (aabbMax.x - origin.x) * directionInv.x;
-   	auto t3 = (aabbMin.y - origin.y) * directionInv.y;
-   	auto t4 = (aabbMax.y - origin.y) * directionInv.y;
-   	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
-   	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
-
-	return std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
-}
-
-static bool isIntersected(float2 raycastPoints) noexcept
+/**
+ * @brief Returns true if ray is intersecting the AABB.
+ * @param raycastDists resulting raycast distances
+ */
+static bool isAabbIntersected(float2 raycastDists) noexcept
 {
 	// If tMax < 0.0f, ray is intersecting AABB, but whole AABB is behind us.
-	return raycastPoints.x <= raycastPoints.y && raycastPoints.y >= 0.0f;
+	return raycastDists.x <= raycastDists.y && raycastDists.y >= 0.0f;
 }
 
+/**
+ * @brief Returns true if ray intersects the AABB.
+ * 
+ * @param[in] aabb target AABB to raycast
+ * @param[in] ray target ray in the space
+ */
 static bool raycast(const Aabb& aabb, const Ray& ray) noexcept
 {
-	return isIntersected(raycast2(aabb, ray));
+	return isAabbIntersected(raycast2(aabb, ray));
 }
+/**
+ * @brief Returns true if ray intersects the AABB. (Ray is inversed!)
+ *
+ * @param[in] aabb target AABB to raycast
+ * @param[in] ray target ray in the space (inversed)
+ */
 static bool raycastI(const Aabb& aabb, const Ray& ray) noexcept
 {
-	return isIntersected(raycast2I(aabb, ray));
+	return isAabbIntersected(raycast2I(aabb, ray));
 }
 
+/**
+ * @brief Returns true if one AABB intersects another.
+ *
+ * @param[in] a first AABB to check
+ * @param[in] b second AABB to chech
+ */
 static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 {
 	auto aMin = a.getMin(), aMax = a.getMax();
@@ -223,122 +308,31 @@ static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 	return aMin <= bMax && aMax >= bMin;
 }
 
-//**********************************************************************************************************************
-static bool isIntersected(const float3& center, const float3& extent, const Triangle& triangle) noexcept
-{
-	auto v0 = triangle.points[0] - center;
-	auto v1 = triangle.points[1] - center;
-	auto v2 = triangle.points[2] - center;
-	auto f0 = v1 - v0, f1 = v2 - v1, f2 = v0 - v2;
+/**
+ * @brief Returns true if triangle intersects the AABB.
+ * @details Usefull for a fast 3D model voxelization.
+ *
+ * @param[in] center target AABB center point in the space
+ * @param[in] extent target AABB extent (half size)
+ * @param[in] triangle target triangle in the space
+ */
+static bool isAabbIntersected(const float3& center, const float3& extent, const Triangle& triangle) noexcept;
 
-	auto a = float3(0.0f, -f0.z, f0.y);
-	auto p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	auto r = extent.y * std::abs(f0.z) + extent.z * std::abs(f0.y);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
-		return false;
-
-	a = float3(0.0f, -f1.z, f1.y);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.y * std::abs(f1.z) + extent.z * std::abs(f1.y);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
-		return false;
-
-	a = float3(0.0f, -f2.z, f2.y);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.y * std::abs(f2.z) + extent.z * std::abs(f2.y);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
-		return false;
-
-	a = float3(f0.z, 0.0f, -f0.x);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f0.z) + extent.z * std::abs(f0.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
-		return false;
-
-	a = float3(f1.z, 0.0f, -f1.x);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f1.z) + extent.z * std::abs(f1.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
-		return false;
-
-	a = float3(f2.z, 0.0f, -f2.x);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f2.z) + extent.z * std::abs(f2.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
-		return false;
-
-	a = float3(-f0.y, f0.x, 0.0f);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f0.y) + extent.y * std::abs(f0.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
-		return false;
-
-	a = float3(-f1.y, f1.x, 0.0f);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f1.y) + extent.y * std::abs(f1.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
-		return false;
-
-	a = float3(-f2.y, f2.x, 0.0f);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f2.y) + extent.y * std::abs(f2.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
-		return false;
-
-	if (max(v0.x, v1.x, v2.x) < -extent.x || min(v0.x, v1.x, v2.x) > extent.x)
-		return false;
-	if (max(v0.y, v1.y, v2.y) < -extent.y || min(v0.y, v1.y, v2.y) > extent.y)
-		return false;
-	if (max(v0.z, v1.z, v2.z) < -extent.z || min(v0.z, v1.z, v2.z) > extent.z)
-		return false;
-
-	auto normal = cross(f0, f1);
-	auto distance = std::abs(dot(normal, v0));
-	r = extent.x * std::abs(normal.x) + extent.y * std::abs(normal.y) + extent.z * std::abs(normal.z);
-	return distance <= r;
-}
-
-//**********************************************************************************************************************
+/**
+ * @brief Returns true if AABB is behind the frustum planes.
+ * 
+ * @details
+ * Usefull for a fast view frustum culling. It is a technique used in 3D rendering and game engines to improve 
+ * performance by avoiding the rendering of objects that are outside the camera's view, or view frustum. The view 
+ * frustum is a truncated pyramid-shaped volume that represents everything the camera can potentially see in the 
+ * scene, based on its position, orientation, and field of view.
+ *
+ * @param[in] aabb target AABB to check
+ * @param[in] model AABB transformation matrix
+ * @param[in] planes target frustum planes
+ * @param[in] planeCount frustum plane count
+ */
 static bool isBehindFrustum(const Aabb& aabb, const float4x4& model,
-	const Plane* planes, uint8 planeCount = frustumPlaneCount) noexcept
-{
-	auto min = aabb.getMin(), max = aabb.getMax();
-	auto v0 = model * float4(min, 1.0f);
-	auto v1 = model * float4(min.x, min.y, max.z, 1.0f);
-	auto v2 = model * float4(min.x, max.y, min.z, 1.0f);
-	auto v3 = model * float4(min.x, max.y, max.z, 1.0f);
-	auto v4 = model * float4(max.x, min.y, min.z, 1.0f);
-	auto v5 = model * float4(max.x, min.y, max.z, 1.0f);
-	auto v6 = model * float4(max.x, max.y, min.z, 1.0f);
-	auto v7 = model * float4(max, 1.0f);
-
-	auto p0 = (float3)v0, p1 = (float3)v1;
-	auto p2 = (float3)v2, p3 = (float3)v3;
-	auto p4 = (float3)v4, p5 = (float3)v5;
-	auto p6 = (float3)v6, p7 = (float3)v7;
-
-	for (uint8 i = 0; i < planeCount; i++)
-	{
-		auto plane = planes[i];
-		auto distance0 = distance(plane, p0);
-		auto distance1 = distance(plane, p1);
-		auto distance2 = distance(plane, p2);
-		auto distance3 = distance(plane, p3);
-		auto distance4 = distance(plane, p4);
-		auto distance5 = distance(plane, p5);
-		auto distance6 = distance(plane, p6);
-		auto distance7 = distance(plane, p7);
-
-		if (distance0 < 0.0f && distance1 < 0.0f &&
-			distance2 < 0.0f && distance3 < 0.0f &&
-			distance4 < 0.0f && distance5 < 0.0f &&
-			distance6 < 0.0f && distance7 < 0.0f)
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
+	const Plane* planes, uint8 planeCount = Plane::frustumCount) noexcept;
 
 } // namespace math

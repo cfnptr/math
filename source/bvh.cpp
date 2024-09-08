@@ -30,7 +30,7 @@ static Aabb calculateNodeAabb(const Bvh::Node* node, const uint8* vertices, cons
 	float3 min = float3(FLT_MAX), max = float3(-FLT_MAX);
 	for (uint32 i = node->leaf.firstPrimitive; i < lastPrimitive; i++)
 	{
-		auto offset = primitives[i] * trianglePointCount;
+		auto offset = primitives[i] * Triangle::pointCount;
 		auto i0 = getIndex(indices + (offset    ) * indexSize);
 		auto i1 = getIndex(indices + (offset + 1) * indexSize);
 		auto i2 = getIndex(indices + (offset + 2) * indexSize);
@@ -91,7 +91,7 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, uint
 		for (uint32 i = firstPrimitive; i < lastPrimitive; i++)
 		{
 			auto index = primitives[i];
-			auto offset = index * trianglePointCount;
+			auto offset = index * Triangle::pointCount;
 			auto i0 = getIndex(indices + (offset    ) * indexSize);
 			auto i1 = getIndex(indices + (offset + 1) * indexSize);
 			auto i2 = getIndex(indices + (offset + 2) * indexSize);
@@ -120,12 +120,12 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, uint
 			leftCount[i] = leftSum;
 			leftMin = min(leftMin, bins[i].min);
 			leftMax = max(leftMax, bins[i].max);
-			leftArea[i] = Aabb(leftMin, leftMax).getArea();
+			leftArea[i] = Aabb(leftMin, leftMax).calcArea();
 			rightSum += bins[(BIN_COUNT - 1) - i].primitiveCount;
 			rightCount[(BIN_COUNT - 2) - i] = rightSum;
 			rightMin = min(rightMin, bins[(BIN_COUNT - 1) - i].min);
 			rightMax = max(rightMax, bins[(BIN_COUNT - 1) - i].max);
-			rightArea[(BIN_COUNT - 2) - i] = Aabb(rightMin, rightMax).getArea();
+			rightArea[(BIN_COUNT - 2) - i] = Aabb(rightMin, rightMax).calcArea();
 		}
 
 		scale = (boundsMax - boundsMin) / BIN_COUNT;
@@ -200,12 +200,12 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, cons
 			leftCount[i] = leftSum;
 			leftMin = min(leftMin, bins[i].min);
 			leftMax = max(leftMax, bins[i].max);
-			leftArea[i] = Aabb(leftMin, leftMax).getArea();
+			leftArea[i] = Aabb(leftMin, leftMax).calcArea();
 			rightSum += bins[(BIN_COUNT - 1) - i].primitiveCount;
 			rightCount[(BIN_COUNT - 2) - i] = rightSum;
 			rightMin = min(rightMin, bins[(BIN_COUNT - 1) - i].min);
 			rightMax = max(rightMax, bins[(BIN_COUNT - 1) - i].max);
-			rightArea[(BIN_COUNT - 2) - i] = Aabb(rightMin, rightMax).getArea();
+			rightArea[(BIN_COUNT - 2) - i] = Aabb(rightMin, rightMax).calcArea();
 		}
 
 		scale = (boundsMax - boundsMin) / BIN_COUNT;
@@ -247,7 +247,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 	assert(vertexSize > 0);
 	assert(indexSize > 0);
 
-	auto primitiveCount = indexCount / trianglePointCount;
+	auto primitiveCount = indexCount / Triangle::pointCount;
 	nodes.resize(primitiveCount * 2 - 1);
 	primitives.resize(primitiveCount);
 	auto primitiveData = primitives.data();
@@ -270,7 +270,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 
 		for (uint32 i = 0; i < primitiveCount; i++)
 		{
-			auto offset = i * trianglePointCount;
+			auto offset = i * Triangle::pointCount;
 			auto i0 = getIndex(indices + (offset    ) * indexSize);
 			auto i1 = getIndex(indices + (offset + 1) * indexSize);
 			auto i2 = getIndex(indices + (offset + 2) * indexSize);
@@ -302,7 +302,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 		findBestSplitPlane(firstPrimitive, lastPrimitive, vertexSize, indexSize,
 			vertices, indices, primitiveData, centroidData, getIndex, axis, split, cost);
 
-		auto nodeCost = node->getAabb().getArea() * primitiveCount;
+		auto nodeCost = node->getAabb().calcArea() * primitiveCount;
 		if (cost >= nodeCost)
 		{
 			if (nodeStack.empty())
@@ -430,7 +430,7 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const 
 		findBestSplitPlane(firstPrimitive, lastPrimitive, aabbs,
 			primitiveData, centroidData, axis, split, cost);
 
-		auto nodeCost = node->getAabb().getArea() * primitiveCount;
+		auto nodeCost = node->getAabb().calcArea() * primitiveCount;
 		if (cost >= nodeCost)
 		{
 			if (nodeStack.empty())

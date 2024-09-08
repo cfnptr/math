@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "math/sphere.hpp"
+
 using namespace math;
 
 const Sphere Sphere::one = Sphere(0.5f);

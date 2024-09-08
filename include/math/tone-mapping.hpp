@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Common tone mapping functions.
+ */
+
 #pragma once
 #include "math/vector.hpp"
 
@@ -19,7 +24,7 @@ namespace math
 {
 
 //**********************************************************************************************************************
-#define DEFAULT_GAMMA 2.2f
+const float defaultGamma = 2.2f;
 
 static float3 gammaCorrection(const float3& color, float invGamma)
 {
@@ -27,7 +32,7 @@ static float3 gammaCorrection(const float3& color, float invGamma)
 }
 static float3 gammaCorrection(const float3& color)
 {
-	return pow(color, float3(1.0f / DEFAULT_GAMMA));
+	return pow(color, float3(1.0f / defaultGamma));
 }
 
 } // namespace math

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "math/ray.hpp"
+
 using namespace math;
 
 const Ray Ray::left = Ray(float3(0.0f), float3(-1.0f, 0.0f, 0.0f), false);

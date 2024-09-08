@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "math/vector.hpp"
+
 using namespace math;
 
 const int2 int2::zero = int2(0);

@@ -12,6 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Common vector functions.
+ * 
+ * @details
+ * Vector is a mathematical concept used to represent points, positions, directions, velocities, sizes, colors, and 
+ * forces in 2D and 3D space. For example, a 3D vector might represent an object's position relative to the origin or a 
+ * direction of motion. Vectors are essential for operations like transformations, lighting, and physics calculations.
+ * 
+ * Based on this project: https://github.com/g-truc/glm
+ */
+
 #pragma once
 #include "math/types.hpp"
 
@@ -34,7 +46,8 @@ using namespace std;
 //**********************************************************************************************************************
 struct int2
 {
-	int32 x, y;
+	int32 x; /**< First vector component. */
+	int32 y; /**< Second vector component. */
 
 	explicit int2(int32 xy = 0) noexcept { this->x = xy; this->y = xy; }
 	int2(int32 x, int32 y) noexcept { this->x = x; this->y = y; }

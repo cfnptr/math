@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "math/plane.hpp"
+
 using namespace math;
 
 const Plane Plane::left = Plane(float3(-1.0f, 0.0f, 0.0f), 0.0f, false);
@@ -21,3 +22,27 @@ const Plane Plane::bottom = Plane(float3(0.0f, -1.0f, 0.0f), 0.0f, false);
 const Plane Plane::top = Plane(float3(0.0f, 1.0f, 0.0f), 0.0f, false);
 const Plane Plane::back = Plane(float3(0.0f, 0.0f, -1.0f), 0.0f, false);
 const Plane Plane::front = Plane(float3(0.0f, 0.0f, 1.0f), 0.0f, false);
+
+float3 closestPoint(const Triangle& triangle, const float3& point) noexcept
+{
+    auto p = closestPoint(Plane(triangle), point);
+    if (isInside(triangle, p))
+        return p;
+
+    auto ab = Line(triangle.points[0], triangle.points[1]);
+    auto bc = Line(triangle.points[1], triangle.points[2]);
+    auto ca = Line(triangle.points[2], triangle.points[0]);
+    auto c0 = closestPoint(ab, p);
+    auto c1 = closestPoint(bc, p);
+    auto c2 = closestPoint(ca, p);
+    auto m0 = length2(p - c0);
+    auto m1 = length2(p - c1);
+    auto m2 = length2(p - c2);
+    auto m = min(m0, m1, m2);
+
+    if (m == m0)
+        return c0;
+    if (m == m1)
+        return c1;
+    return c2;
+}

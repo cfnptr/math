@@ -12,6 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Common spherical harmonics functions.
+ * 
+ * @details
+ * Spherical harmonics (SH) are used to represent functions on the surface of a sphere, particularly for lighting and 
+ * shading. SH allows for efficient approximations of complex lighting environments, such as image-based lighting 
+ * (IBL), by encoding diffuse light and low-frequency details. SH are commonly used in precomputed radiance transfer 
+ * (PRT) to achieve realistic lighting with low computational cost, especially for dynamic and global illumination in 
+ * 3D scenes, enabling real-time performance in games.
+ * 
+ * Based on this project: https://google.github.io/filament/Filament.html
+ */
+
 #pragma once
 #include "math/ibl.hpp"
 #include "math/matrix.hpp"
@@ -24,12 +38,14 @@ using namespace math;
 using namespace math::ibl;
 
 //**********************************************************************************************************************
-#define M_SQRT_PI  1.77245385090551602729816748334114518
-#define M_SQRT3    1.73205080756887729352744634150587237
-#define M_SQRT5    2.23606797749978969640917366873127624
-#define M_SQRT15   3.87298334620741688517926539978239961
+#define M_SQRT_PI 1.77245385090551602729816748334114518
+#define M_SQRT3   1.73205080756887729352744634150587237
+#define M_SQRT5   2.23606797749978969640917366873127624
+#define M_SQRT15  3.87298334620741688517926539978239961
 
-// Precomputed for the 3 band SH.
+/**
+ * @brief Precomputed KI coefficients for the 3 band spherical harmonics.
+ */
 static const float ki[shCoefCount] =
 {
 	(float)0.886226925452757940959713778283912688,

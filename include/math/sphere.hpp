@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Common sphere functions.
+ */
+
 #pragma once
 #include "math/aabb.hpp"
 
@@ -20,7 +25,10 @@ namespace math
 
 using namespace std;
 
-//**********************************************************************************************************************
+/**
+ * @brief Sphere structure. (In 3D space)
+ * @details Defined by a position point and radius.
+ */
 struct Sphere
 {
 	float3 position;

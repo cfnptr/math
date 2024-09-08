@@ -12,20 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Common triangle (polygon) functions.
+ */
+
 #pragma once
 #include "math/vector.hpp"
 
 namespace math
 {
 
-const int32 trianglePointCount = 3;
-
 using namespace std;
 
-//**********************************************************************************************************************
+/**
+ * @brief Triangle or polygon structure. (In 3D space)
+ * @details Defined by three points in 3D space.
+ */
 struct Triangle
 {
-	float3 points[trianglePointCount];
+	/**
+	 * @brief Triangle point count. (Polygon)
+	 */
+	inline static const int32 pointCount = 3;
+
+	/**
+	 * @brief Triangle point array.
+	 */
+	float3 points[pointCount];
+
+
 	Triangle(const float3& point0, const float3& point1, const float3& point2) noexcept
 	{
 		points[0] = point0; points[1] = point1; points[2] = point2;

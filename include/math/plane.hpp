@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Common infinite plane functions.
+ */
+
 #pragma once
 #include "math/line.hpp"
 #include "math/matrix.hpp"
@@ -20,18 +25,34 @@
 namespace math
 {
 
-const uint8 frustumPlaneCount = 6;
-
 using namespace std;
 
-//**********************************************************************************************************************
+/**
+ * @brief Infinite plane container. (In 3D space)
+ * @details Defined by a normal vector and distance to the plane.
+ */
 struct Plane
 {
+public:
+	/**
+	 * @brief Frustum plane count. (Box side count)
+	 */
+	inline static const uint8 frustumCount = 6;
 private:
 	float3 normal;
 public:
+	/**
+	 * @brief Distance to the plane in 3D space.
+	 */
 	float distance;
 
+	/**
+	 * @brief Creates a new plane structure.
+	 * 
+	 * @param[in] normal target plane normal vector
+	 * @param distance target distance to the plane
+	 * @param normalize is normal vector should be normalized
+	 */
 	Plane(const float3& normal = float3::top, float distance = 0.0f, bool normalize = true) noexcept
 	{
 		if (normalize)
@@ -40,16 +61,29 @@ public:
 			this->normal = normal;
 		this->distance = distance;
 	}
+	/**
+	 * @brief Calculates a new plane from the triangle. (Polygon)
+	 * @param[in] triangle target triangle (polygon)
+	 */
 	Plane(const Triangle& triangle) noexcept
 	{
 		normal = cross(triangle.points[1] - triangle.points[0],
 			triangle.points[2] - triangle.points[0]);
 		if (length(normal) > 0.0f)
-			normal = normalize(normal);
+			normal = math::normalize(normal);
 		distance = dot(normal, triangle.points[0]);
 	}
 
+	/**
+	 * @brief Returns plane normal vector.
+	 */
 	const float3& getNormal() const noexcept { return normal; }
+	/**
+	 * @brief Sets plane normal vector.
+	 * 
+	 * @param[in] normal target plane normal vector
+	 * @param normalize is normal vectorshould be normalized
+	 */
 	void setNormal(const float3& normal, bool normalize = true) noexcept
 	{
 		if (normalize)
@@ -57,47 +91,55 @@ public:
 		else
 			this->normal = normal;
 	}
+	/**
+	 * @brief Normalizes plane normal vector.
+	 */
+	void normalize() noexcept
+	{
+		auto l = length(normal);
+		normal /= l;
+		distance /= l;
+	}
 
 	static const Plane left, right, bottom, top, back, front;
 };
 
-//**********************************************************************************************************************
-// Returns distance to the plane.
+/***********************************************************************************************************************
+ * @brief Calculates distance between plane and point in 3D space.
+ * 
+ * @param[in] plane target plane to use
+ * @param[in] point target point in 3D space
+ */
 static float distance(const Plane& plane, const float3& point) noexcept
 {
 	return dot(plane.getNormal(), point) + plane.distance;
 }
+/**
+ * @brief Calculates closest point on the plane to specified one.
+ *
+ * @param[in] plane target plane to use
+ * @param[in] point target point in 3D space
+ */
 static float3 closestPoint(const Plane& plane, const float3& point) noexcept
 {
 	return point - plane.getNormal() * distance(plane, point);
 }
 
-static float3 closestPoint(const Triangle& triangle, const float3& point) noexcept
-{
-    auto p = closestPoint(Plane(triangle), point);
-    if (isInside(triangle, p))
-		return p;
+/**
+ * @brief Calculates closest point on the triangle to specified one.
+ *
+ * @param[in] plane target plane to use
+ * @param[in] point target point in 3D space
+ */
+static float3 closestPoint(const Triangle& triangle, const float3& point) noexcept;
 
-    auto ab = Line(triangle.points[0], triangle.points[1]);
-    auto bc = Line(triangle.points[1], triangle.points[2]);
-    auto ca = Line(triangle.points[2], triangle.points[0]);
-    auto c0 = closestPoint(ab, p);
-    auto c1 = closestPoint(bc, p);
-    auto c2 = closestPoint(ca, p);
-    auto m0 = length2(p - c0);
-    auto m1 = length2(p - c1);
-    auto m2 = length2(p - c2);
-    auto m = min(m0, m1, m2);
-
-    if (m == m0)
-		return c0;
-    if (m == m1)
-		return c1;
-    return c2;
-}
-
-//**********************************************************************************************************************
-// Returns unnormalized plane normals.
+/***********************************************************************************************************************
+ * @brief Extracts projection matrix frustum planes.
+ * @warning Returned planes are unnormalized! Use @ref normalizePlanes().
+ *
+ * @param[in] frustum target projection matrix
+ * @param[out] planes frustum plane array (6 planes)
+ */
 static void extractFrustumPlanes(const float4x4& frustum, Plane* planes) noexcept
 {
 	// Gribb & Hartmann method
@@ -106,28 +148,24 @@ static void extractFrustumPlanes(const float4x4& frustum, Plane* planes) noexcep
 	planes[1] = Plane(float3(frustum.c0.w - frustum.c0.x, frustum.c1.w - frustum.c1.x,
 		frustum.c2.w - frustum.c2.x), frustum.c3.w - frustum.c3.x, false);
 	planes[2] = Plane(float3(frustum.c0.w - frustum.c0.y, frustum.c1.w - frustum.c1.y,
-		frustum.c2.w - frustum.c2.y), frustum.c3.w - frustum.c3.y, false); // Flipped Vulkan NDC
+		frustum.c2.w - frustum.c2.y), frustum.c3.w - frustum.c3.y, false); // Flipped Vulkan NDC!
 	planes[3] = Plane(float3(frustum.c0.w + frustum.c0.y, frustum.c1.w + frustum.c1.y,
-		frustum.c2.w + frustum.c2.y), frustum.c3.w + frustum.c3.y, false); // Flipped Vulkan NDC
+		frustum.c2.w + frustum.c2.y), frustum.c3.w + frustum.c3.y, false); // Flipped Vulkan NDC!
 	planes[4] = Plane(float3(frustum.c0.z,
 		frustum.c1.z, frustum.c2.z), frustum.c3.z, false);
 	planes[5] = Plane(float3(frustum.c0.w - frustum.c0.z, frustum.c1.w - frustum.c1.z,
 		frustum.c2.w - frustum.c2.z), frustum.c3.w - frustum.c3.z, false);
 }
-static void normalizeFrustumPlanes(Plane* planes) noexcept
+/**
+ * @brief Normalizes specified planes.
+ *
+ * @param[out] planes target plane array
+ * @param planeCount plane array size
+ */
+static void normalizePlanes(Plane* planes, psize planeCount) noexcept
 {
-	auto normal = planes[0].getNormal(); auto l = length(normal);
-	planes[0].setNormal(normal / l, false); planes[0].distance /= l;
-	normal = planes[1].getNormal(); l = length(normal);
-	planes[1].setNormal(normal / l, false); planes[1].distance /= l;
-	normal = planes[2].getNormal(); l = length(normal);
-	planes[2].setNormal(normal / l, false); planes[2].distance /= l;
-	normal = planes[3].getNormal(); l = length(normal);
-	planes[3].setNormal(normal / l, false); planes[3].distance /= l;
-	normal = planes[4].getNormal(); l = length(normal);
-	planes[4].setNormal(normal / l, false); planes[4].distance /= l;
-	normal = planes[5].getNormal(); l = length(normal);
-	planes[5].setNormal(normal / l, false); planes[5].distance /= l;
+	for (psize i = 0; i < planeCount; i++)
+		planes[i].normalize();
 }
 
 } // namespace math
