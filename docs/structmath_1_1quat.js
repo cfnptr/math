@@ -1,0 +1,28 @@
+var structmath_1_1quat =
+[
+    [ "quat", "structmath_1_1quat.html#ad8dcd0a8630c3a20fe143c085b1af1e5", null ],
+    [ "quat", "structmath_1_1quat.html#af2045ddd73942c6c4a687116daf74614", null ],
+    [ "quat", "structmath_1_1quat.html#a9994a2b8a06c86b93e61b84bfad2d1ec", null ],
+    [ "quat", "structmath_1_1quat.html#adb6dcfc4523c652924fecc6820e45e99", null ],
+    [ "operator*", "structmath_1_1quat.html#a2faf8cf1587a6b9f004a304f14305acf", null ],
+    [ "operator*", "structmath_1_1quat.html#a6d49df115a48293797480f4c3859c4f5", null ],
+    [ "operator*=", "structmath_1_1quat.html#af11594ce05f33a91a24b82da311bba91", null ],
+    [ "getPitch", "structmath_1_1quat.html#ab7bd260a576f736a96a64f386d6532b6", null ],
+    [ "getYaw", "structmath_1_1quat.html#ae5c8f37992842125637918eec874c344", null ],
+    [ "getRoll", "structmath_1_1quat.html#a59c85d41a4c53983a25d1080f0b4cf49", null ],
+    [ "toEulerAngles", "structmath_1_1quat.html#ac1d3161de38f0c3149d7132f8ee877c7", null ],
+    [ "operator[]", "structmath_1_1quat.html#aeccd51d095c36911d7e114495bfed733", null ],
+    [ "operator[]", "structmath_1_1quat.html#a7b1e2bfa084b1859994a1ff707f6074d", null ],
+    [ "operator int4", "structmath_1_1quat.html#ae222b910ec7ed3adf58e097ff7141c67", null ],
+    [ "operator int3", "structmath_1_1quat.html#a1d7cdc4cd7a06b7d76d60e27e4fbf266", null ],
+    [ "operator int2", "structmath_1_1quat.html#a9b1d40a42049c554ce9bee8e1917c73e", null ],
+    [ "operator int32", "structmath_1_1quat.html#a9b4aa1c0887731602d431a5e24997caa", null ],
+    [ "operator float3", "structmath_1_1quat.html#ab4ec3ae79a8af4067424557dd98ca512", null ],
+    [ "operator float2", "structmath_1_1quat.html#a6e51eeecdfcfb7130a6a96762e96067f", null ],
+    [ "operator float", "structmath_1_1quat.html#a9162438cc1113db09f0b20ce2fbcd854", null ],
+    [ "toString", "structmath_1_1quat.html#a3526d6515caf3255db8267ef956efa90", null ],
+    [ "x", "structmath_1_1quat.html#ad0da36b2558901e21e7a30f6c227a45e", null ],
+    [ "y", "structmath_1_1quat.html#aa4f0d3eebc3c443f9be81bf48561a217", null ],
+    [ "z", "structmath_1_1quat.html#af73583b1e980b0aa03f9884812e9fd4d", null ],
+    [ "w", "structmath_1_1quat.html#a56eca241e2896b9f57a79589e76fd24b", null ]
+];

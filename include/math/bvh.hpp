@@ -15,6 +15,7 @@
 /***********************************************************************************************************************
  * @file
  * @brief Common Bounding Volume Hierarchy functions. (BVH)
+ * @details Based on this: https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/
  */
 
 #pragma once
@@ -87,7 +88,7 @@ struct Bvh
 		Node() : leaf() { }
 		
 		/**
-		 * @breaf Returns true if this is leaf node. (Contain the actual geometric objects)
+		 * @brief Returns true if this is leaf node. (Contain the actual geometric objects)
 		 */
 		bool isLeaf() const noexcept { return base.primitiveCount; }
 		/**

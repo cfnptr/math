@@ -32,8 +32,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 option(MATH_BUILD_SHARED "Build Math shared library" ON)
 option(MATH_BUILD_TESTS "Build Math library tests" ON)
 
-set(MATH_SOURCES source/aabb.cpp source/bvh.cpp source/color.cpp source/matrix.cpp
-	source/plane.cpp source/quaternion.cpp source/ray.cpp source/sphere.cpp source/vector.cpp)
+set(MATH_SOURCES source/aabb.cpp source/bvh.cpp)
 
 add_library(math-static STATIC ${MATH_SOURCES})
 target_include_directories(math-static PUBLIC ${PROJECT_SOURCE_DIR}/include)

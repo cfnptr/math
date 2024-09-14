@@ -84,7 +84,7 @@ struct Color
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized RGB channels.
-	 * @param[in] normRg target normalized RGB channel color values
+	 * @param[in] normRgb target normalized RGB channel color values
 	 */
 	explicit Color(const float3& normRgb)
 	{
@@ -96,7 +96,7 @@ struct Color
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized RGBA channels.
-	 * @param[in] normRg target normalized RGBA channel color values
+	 * @param[in] normRgba target normalized RGBA channel color values
 	 */
 	explicit Color(const float4& normRgba)
 	{
@@ -107,7 +107,7 @@ struct Color
 		a = std::min(normRgba.w, 1.0f) * mul;
 	}
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Converts color to the hexadecimal string.
 	 */
 	string toHex() const noexcept
@@ -148,8 +148,14 @@ struct Color
 	 * @brief Returns color binary data.
 	 */
 	explicit operator uint32() const noexcept { return *(const uint32*)this; }
+	/**
+	 * @brief Converts color to the string. (space separated)
+	 */
+	string toString() const noexcept
+	{
+		return to_string(r) + " " + to_string(g) + " " + to_string(b) + " " + to_string(a);
+	}
 
-	//******************************************************************************************************************
 	Color operator+(Color c) const noexcept { return Color(r + c.r, g + c.g, b + c.b, a + c.a); }
 	Color operator-(Color c) const noexcept { return Color(r - c.r, g - c.g, b - c.b, a - c.a); }
 	Color operator*(Color c) const noexcept { return Color(r * c.r, g * c.g, b * c.b, a * c.a); }
@@ -170,16 +176,19 @@ struct Color
 	bool operator<=(Color c) const noexcept { return r <= c.r && g <= c.g && b <= c.b && a <= c.a; }
 	bool operator>=(Color c) const noexcept { return r >= c.r && g >= c.g && b >= c.b && a >= c.a; }
 
-	/**
-	 * @brief Converts color to the string. (space separated)
-	 */
-	string toString() const noexcept
-	{
-		return to_string(r) + " " + to_string(g) + " " + to_string(b) + " " + to_string(a);
-	}
-
 	static const Color white, black, grey, transparent, red, green, blue, cyan, magenta, yellow;
 };
+
+inline const Color Color::white = Color(255, 255, 255, 255);
+inline const Color Color::black = Color(0, 0, 0, 255);
+inline const Color Color::grey = Color(127, 127, 127, 255);
+inline const Color Color::transparent = Color(0, 0, 0, 0);
+inline const Color Color::red = Color(255, 0, 0, 255);
+inline const Color Color::green = Color(0, 255, 0, 255);
+inline const Color Color::blue = Color(0, 0, 255, 255);
+inline const Color Color::cyan = Color(0, 255, 255, 255);
+inline const Color Color::magenta = Color(255, 0, 255, 255);
+inline const Color Color::yellow = Color(255, 255, 0, 255);
 
 //**********************************************************************************************************************
 static Color operator+(Color c, uint8 n) noexcept { return Color(c.r + n, c.g + n, c.b + n, c.a + n); }

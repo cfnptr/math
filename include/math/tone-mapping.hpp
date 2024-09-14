@@ -18,18 +18,41 @@
  */
 
 #pragma once
-#include "math/vector.hpp"
+#include "math/common.hpp"
 
 namespace math
 {
 
-//**********************************************************************************************************************
+/**
+ * @brief Default gamma correction value.
+ * 
+ * @details
+ * The default gamma correction value of 2.2 is chosen because it approximates the natural response curve of CRT 
+ * monitors, which were the most common display technology when gamma correction became standard. Modern displays 
+ * have inherited this standard, as it closely matches how human vision perceives brightness non-linearly.
+ */
 const float defaultGamma = 2.2f;
 
+/**
+ * @brief Applies gamma correction to the specified color.
+ * 
+ * @details
+ * Gamma correction is used to adjust the brightness of an image or display to match the 
+ * nonlinear response of display devices, such as monitors. It compensates for the fact that 
+ * displays do not linearly represent the light intensity of a color.
+ * 
+ * @param[in] color target color to gamma correct
+ * @param invGamma inverse gamma correction value (1.0/x)
+ */
 static float3 gammaCorrection(const float3& color, float invGamma)
 {
 	return pow(color, float3(invGamma));
 }
+/**
+ * @brief Applies gamma correction to the specified color.
+ * @details See the @ref gammaCorrection().
+ * @param[in] color target color to gamma correct
+ */
 static float3 gammaCorrection(const float3& color)
 {
 	return pow(color, float3(1.0f / defaultGamma));

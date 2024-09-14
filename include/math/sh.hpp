@@ -30,7 +30,6 @@
 #include "math/ibl.hpp"
 #include "math/matrix.hpp"
 
-// Spherical Harmonics
 namespace math::sh
 {
 

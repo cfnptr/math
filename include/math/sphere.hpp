@@ -15,6 +15,7 @@
 /***********************************************************************************************************************
  * @file
  * @brief Common sphere functions.
+ * @details Based on this: https://gdbooks.gitbooks.io/3dcollisions/content/
  */
 
 #pragma once
@@ -32,35 +33,72 @@ using namespace std;
 struct Sphere
 {
 	float3 position;
-	float radius;
+	float radius = 0.0f;
 
+	/**
+	 * @brief Creates a new sphere structure.
+	 *
+	 * @param radius target sphere radius
+	 * @param[in] position sphere position in 3D space
+	 */
 	Sphere(float radius, const float3& position = float3(0.0f)) noexcept
 	{
 		this->position = position; this->radius = radius;
 	}
+	/**
+	 * @brief Creates a new zero size sphere structure.
+	 */
 	Sphere() = default;
 
 	static const Sphere one, two, half;
 };
 
+inline const Sphere Sphere::one = Sphere(0.5f);
+inline const Sphere Sphere::two = Sphere(1.0f);
+inline const Sphere Sphere::half = Sphere(0.25f);
+
+/**
+ * @brief Returns true if point is inside the sphere.
+ *
+ * @param[in] sphere target sphere to check
+ * @param[in] point target point in the space
+ */
 static bool isInside(const Sphere& sphere, const float3& point) noexcept
 {
 	auto difference = sphere.position - point;
   	return length2(difference) < sphere.radius * sphere.radius;
 }
 
+/**
+ * @brief Calculates closest point on sphere to the specified one.
+ *
+ * @param[in] sphere target sphere to use
+ * @param[in] point target point in 3D space
+ */
 static float3 closestPoint(const Sphere& sphere, const float3& point) noexcept
 {
     auto sphereToPoint = normalize(point - sphere.position);
     return sphere.position + sphereToPoint * sphere.radius;
 }
 
+/**
+ * @brief Returns true if one sphere intersects another.
+ *
+ * @param[in] a first sphere to check
+ * @param[in] b second sphere to chech
+ */
 static bool isIntersected(const Sphere& a, const Sphere& b) noexcept
 {
     auto d = a.position - b.position;
     auto s = a.radius + b.radius;
     return length2(d) <= s * s;
 }
+/**
+ * @brief Returns true if sphere intersects AABB.
+ *
+ * @param[in] a target sphere to check
+ * @param[in] b target AABB to chech
+ */
 static bool isIntersected(const Sphere& a, const Aabb& b) noexcept
 {
 	auto c = closestPoint(b, a.position);

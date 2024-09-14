@@ -13,11 +13,12 @@
 // limitations under the License.
 
 #pragma once
-#include "math/vector.hpp"
+#include "math/common.hpp"
 
 /***********************************************************************************************************************
  * @file
  * @brief Common line functions.
+ * @details Based on this: https://gdbooks.gitbooks.io/3dcollisions/content/
  */
 
 namespace math

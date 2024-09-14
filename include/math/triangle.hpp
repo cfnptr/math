@@ -15,6 +15,7 @@
 /***********************************************************************************************************************
  * @file
  * @brief Common triangle (polygon) functions.
+ * @details Based on this: https://gdbooks.gitbooks.io/3dcollisions/content/
  */
 
 #pragma once
@@ -41,11 +42,20 @@ struct Triangle
 	 */
 	float3 points[pointCount];
 
-
+	/**
+	 * @brief Creates a new triangle (polygon) structure.
+	 *
+	 * @param[in] point0 first triangle vertex position in 3D space
+	 * @param[in] point1 second triangle vertex position in 3D space
+	 * @param[in] point2 third triangle vertex position in 3D space
+	 */
 	Triangle(const float3& point0, const float3& point1, const float3& point2) noexcept
 	{
 		points[0] = point0; points[1] = point1; points[2] = point2;
 	}
+	/**
+	 * @brief Creates a new zero size triangle (polygon) structure.
+	 */
 	Triangle() = default;
 
 	Triangle operator*(const float3& v) const noexcept { return Triangle(points[0] * v, points[1] * v, points[2] * v); }
@@ -59,6 +69,12 @@ struct Triangle
 	Triangle& operator-=(const float3& v) noexcept { points[0] -= v; points[1] -= v; points[2] -= v; return *this; }
 };
 
+/**
+ * @brief Returns true if point is inside the triangle.
+ *
+ * @param[in] sphere target triangle to check
+ * @param[in] point target point in the space
+ */
 static bool isInside(const Triangle& triangle, const float3& point) noexcept
 {
 	auto p0 = triangle.points[0] - point;
@@ -70,7 +86,14 @@ static bool isInside(const Triangle& triangle, const float3& point) noexcept
 	return true;
 }
 
-static float3 barycentric(const Triangle& triangle, const float3& point) noexcept
+/**
+ * @brief Calculates triangle barycentric.
+ * @details Way of expressing the position of a point relative to a triangle.
+ *
+ * @param[in] triangle target triangle to use
+ * @param[in] point target point in space
+ */
+static float3 calcBarycentric(const Triangle& triangle, const float3& point) noexcept
 {
 	// Cramer's rule
 	auto p0 = triangle.points[0];

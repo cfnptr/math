@@ -15,12 +15,12 @@
 /***********************************************************************************************************************
  * @file
  * @brief Axis Aligned Bounding Box functions.
+ * @details Based on this: https://gdbooks.gitbooks.io/3dcollisions/content/
  */
 
 #pragma once
 #include "math/ray.hpp"
 #include "math/plane.hpp"
-#include "math/triangle.hpp"
 
 namespace math
 {
@@ -200,6 +200,11 @@ public:
 	static const Aabb zero, one, two, half;
 };
 
+inline const Aabb Aabb::zero = Aabb(float3(0.0f), float3(0.0f));
+inline const Aabb Aabb::one = Aabb(float3(-0.5f), float3(0.5f));
+inline const Aabb Aabb::two = Aabb(float3(-1.0f), float3(1.0f));
+inline const Aabb Aabb::half = Aabb(float3(-0.25f), float3(0.25f));
+
 /**
  * @brief Returns true if first AABB binary representation is less than the second.
  * 
@@ -216,8 +221,7 @@ static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(
  */
 static bool isInside(const Aabb& aabb, const float3& point) noexcept
 {
-	auto min = aabb.getMin(), max = aabb.getMax();
-	return point >= min && point <= max;
+	return point >= aabb.getMin() && point <= aabb.getMax();
 }
 /**
  * @brief Returns closest point inside AABB to the specified one.
@@ -237,7 +241,7 @@ static float3 closestPoint(const Aabb& aabb, const float3& point) noexcept
  * @param[in] aabb target AABB to raycast
  * @param[in] ray target ray in the space
  */
-static float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept;
+float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept;
 /**
  * @brief Calculates where ray intersects the AABB. (Ray is inversed!)
  * @return Distance to the intersection points.
@@ -245,7 +249,7 @@ static float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept;
  * @param[in] aabb target AABB to raycast
  * @param[in] ray target ray in the space (inversed)
  */
-static float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept;
+float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept;
 
 /**
  * @brief Calculates where ray intersects the AABB.
@@ -254,7 +258,7 @@ static float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept;
  * @param[in] aabb target AABB to raycast
  * @param[in] ray target ray in the space
  */
-static float raycast1(const Aabb& aabb, const Ray& ray) noexcept;
+float raycast1(const Aabb& aabb, const Ray& ray) noexcept;
 /**
  * @brief Calculates where ray intersects the AABB. (Ray is inversed!)
  * @return Distance to the first intersection point.
@@ -262,7 +266,7 @@ static float raycast1(const Aabb& aabb, const Ray& ray) noexcept;
  * @param[in] aabb target AABB to raycast
  * @param[in] ray target ray in the space (inversed)
  */
-static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept;
+float raycast1I(const Aabb& aabb, const Ray& ray) noexcept;
 
 /**
  * @brief Returns true if ray is intersecting the AABB.
@@ -303,9 +307,7 @@ static bool raycastI(const Aabb& aabb, const Ray& ray) noexcept
  */
 static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 {
-	auto aMin = a.getMin(), aMax = a.getMax();
-	auto bMin = b.getMin(), bMax = b.getMax();
-	return aMin <= bMax && aMax >= bMin;
+	return a.getMin() <= b.getMax() && a.getMax() >= b.getMin();
 }
 
 /**
@@ -316,7 +318,7 @@ static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
  * @param[in] extent target AABB extent (half size)
  * @param[in] triangle target triangle in the space
  */
-static bool isAabbIntersected(const float3& center, const float3& extent, const Triangle& triangle) noexcept;
+bool isAabbIntersected(const float3& center, const float3& extent, const Triangle& triangle) noexcept;
 
 /**
  * @brief Returns true if AABB is behind the frustum planes.
@@ -332,7 +334,7 @@ static bool isAabbIntersected(const float3& center, const float3& extent, const 
  * @param[in] planes target frustum planes
  * @param[in] planeCount frustum plane count
  */
-static bool isBehindFrustum(const Aabb& aabb, const float4x4& model,
+bool isBehindFrustum(const Aabb& aabb, const float4x4& model,
 	const Plane* planes, uint8 planeCount = Plane::frustumCount) noexcept;
 
 } // namespace math

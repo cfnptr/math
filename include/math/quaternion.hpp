@@ -27,7 +27,7 @@
  */
 
 #pragma once
-#include "math/vector.hpp"
+#include "math/common.hpp"
 
 namespace math
 {
@@ -146,6 +146,8 @@ struct quat : public float4
 	 */
 	static const quat identity;
 };
+
+inline const quat quat::identity = quat(0.0f, 0.0f, 0.0f, 1.0f);
 
 /***********************************************************************************************************************
  * @brief Normalizes quaternion.

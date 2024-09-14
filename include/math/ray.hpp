@@ -14,7 +14,8 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common ray functions.
+ * @brief Common infinite ray functions.
+ * @details Based on this: https://gdbooks.gitbooks.io/3dcollisions/content/
  */
 
 #pragma once
@@ -90,6 +91,13 @@ public:
 	
 	static const Ray left, right, bottom, top, back, front;
 };
+
+inline const Ray Ray::left = Ray(float3(0.0f), float3(-1.0f, 0.0f, 0.0f), false);
+inline const Ray Ray::right = Ray(float3(0.0f), float3(1.0f, 0.0f, 0.0f), false);
+inline const Ray Ray::bottom = Ray(float3(0.0f), float3(0.0f, -1.0f, 0.0f), false);
+inline const Ray Ray::top = Ray(float3(0.0f), float3(0.0f, 1.0f, 0.0f), false);
+inline const Ray Ray::back = Ray(float3(0.0f), float3(0.0f, 0.0f, -1.0f), false);
+inline const Ray Ray::front = Ray(float3(0.0f), float3(0.0f, 0.0f, 1.0f), false);
 
 /**
  * @brief Calculates closest point on ray to the specified one.
