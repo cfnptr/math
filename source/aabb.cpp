@@ -13,13 +13,9 @@
 // limitations under the License.
 
 #include "math/aabb.hpp"
+#include "math/common.hpp"
 
 using namespace math;
-
-const Aabb Aabb::zero = Aabb(float3(0.0f), float3(0.0f));
-const Aabb Aabb::one = Aabb(float3(-0.5f), float3(0.5f));
-const Aabb Aabb::two = Aabb(float3(-1.0f), float3(1.0f));
-const Aabb Aabb::half = Aabb(float3(-0.25f), float3(0.25f));
 
 //**********************************************************************************************************************
 float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept
