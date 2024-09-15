@@ -27,7 +27,7 @@
  */
 
 #pragma once
-#include "math/common.hpp"
+#include "math/vector/float.hpp"
 
 namespace math
 {

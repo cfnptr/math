@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #pragma once
-#include "math/common.hpp"
+#include "math/vector.hpp"
 
 /***********************************************************************************************************************
  * @file
@@ -58,7 +58,7 @@ const int32 shCoefCount = 9;
  * @param coords target texture coordinates.
  * @param invDim inverted texture dimension (size)
  */
-static float2 coordsToST(int2 coords, float invDim) noexcept
+static float2 coordsToST(uint2 coords, float invDim) noexcept
 {
 	return fma(1.0f - ((float2)coords + 0.5f) * invDim, float2(2.0f), float2(-1.0f));
 }
@@ -89,9 +89,9 @@ static float3 stToDir(float2 st, uint32 face) noexcept
  * @param coords target texture coordinates.
  * @param invDim inverted texture dimension (size)
  */
-static float3 coordsToDir(const int3& coords, float invDim) noexcept
+static float3 coordsToDir(const uint3& coords, float invDim) noexcept
 {
-	auto st = coordsToST((int2)coords, invDim);
+	auto st = coordsToST((uint2)coords, invDim);
 	return stToDir(st, coords.z);
 }
 

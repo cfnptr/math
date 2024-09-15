@@ -70,7 +70,7 @@ $(function(){initNavTree('structmath_1_1float2.html',''); initResizable(true); }
 <p>Floating point 2 component vector structure.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;vector.hpp&gt;</code></p>
+<p><code>#include &lt;float.hpp&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -80,6 +80,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac5ce8892243e778f93a02c2f3b3c2443" id="r_ac5ce8892243e778f93a02c2f3b3c2443"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5ce8892243e778f93a02c2f3b3c2443">float2</a> (float <a class="el" href="#ad0da36b2558901e21e7a30f6c227a45e">x</a>, float <a class="el" href="#aa4f0d3eebc3c443f9be81bf48561a217">y</a>) noexcept</td></tr>
 <tr class="memdesc:ac5ce8892243e778f93a02c2f3b3c2443"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new floating point 2 component vector structure.  <br /></td></tr>
 <tr class="separator:ac5ce8892243e778f93a02c2f3b3c2443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a0e92fb59449c4a6454ae98a948d3a2" id="r_a2a0e92fb59449c4a6454ae98a948d3a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a0e92fb59449c4a6454ae98a948d3a2">float2</a> (<a class="el" href="structmath_1_1uint2.html">uint2</a> xy) noexcept</td></tr>
+<tr class="memdesc:a2a0e92fb59449c4a6454ae98a948d3a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new floating point 2 component vector structure.  <br /></td></tr>
+<tr class="separator:a2a0e92fb59449c4a6454ae98a948d3a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f6a5b027847f6223ff776a9ea5ce3fc" id="r_a7f6a5b027847f6223ff776a9ea5ce3fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f6a5b027847f6223ff776a9ea5ce3fc">float2</a> (<a class="el" href="structmath_1_1int2.html">int2</a> xy) noexcept</td></tr>
 <tr class="memdesc:a7f6a5b027847f6223ff776a9ea5ce3fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new floating point 2 component vector structure.  <br /></td></tr>
 <tr class="separator:a7f6a5b027847f6223ff776a9ea5ce3fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -89,10 +92,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7b1e2bfa084b1859994a1ff707f6074d" id="r_a7b1e2bfa084b1859994a1ff707f6074d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b1e2bfa084b1859994a1ff707f6074d">operator[]</a> (<a class="el" href="types_8hpp.html#ac290a685f46e9b8c6f443e6181661036">psize</a> i) const noexcept</td></tr>
 <tr class="memdesc:a7b1e2bfa084b1859994a1ff707f6074d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns vector component by index.  <br /></td></tr>
 <tr class="separator:a7b1e2bfa084b1859994a1ff707f6074d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96a7e84a0f90bcb675c5c24d82054d03" id="r_a96a7e84a0f90bcb675c5c24d82054d03"><td class="memItemLeft" align="right" valign="top"><a id="a96a7e84a0f90bcb675c5c24d82054d03" name="a96a7e84a0f90bcb675c5c24d82054d03"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator uint2</b> () const noexcept</td></tr>
+<tr class="memdesc:a96a7e84a0f90bcb675c5c24d82054d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns first and second vector components as uint. (xy) <br /></td></tr>
+<tr class="separator:a96a7e84a0f90bcb675c5c24d82054d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b1d40a42049c554ce9bee8e1917c73e" id="r_a9b1d40a42049c554ce9bee8e1917c73e"><td class="memItemLeft" align="right" valign="top"><a id="a9b1d40a42049c554ce9bee8e1917c73e" name="a9b1d40a42049c554ce9bee8e1917c73e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>operator int2</b> () const noexcept</td></tr>
 <tr class="memdesc:a9b1d40a42049c554ce9bee8e1917c73e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns first and second vector components as int. (xy) <br /></td></tr>
 <tr class="separator:a9b1d40a42049c554ce9bee8e1917c73e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe58b8647aa83a073c343bddc5b9a602" id="r_abe58b8647aa83a073c343bddc5b9a602"><td class="memItemLeft" align="right" valign="top"><a id="abe58b8647aa83a073c343bddc5b9a602" name="abe58b8647aa83a073c343bddc5b9a602"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator uint32</b> () const noexcept</td></tr>
+<tr class="memdesc:abe58b8647aa83a073c343bddc5b9a602"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns first vector component as uint. (x) <br /></td></tr>
+<tr class="separator:abe58b8647aa83a073c343bddc5b9a602"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b4aa1c0887731602d431a5e24997caa" id="r_a9b4aa1c0887731602d431a5e24997caa"><td class="memItemLeft" align="right" valign="top"><a id="a9b4aa1c0887731602d431a5e24997caa" name="a9b4aa1c0887731602d431a5e24997caa"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>operator int32</b> () const noexcept</td></tr>
 <tr class="memdesc:a9b4aa1c0887731602d431a5e24997caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns first vector component as int. (x) <br /></td></tr>
@@ -202,7 +213,7 @@ static const <a class="el" href="structmath_1_1float2.html">float2</a>&#160;</td
 <p>Commonly used to represent: points, positions, directions, velocities, etc. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a127eb4b13554e3719441b47b81bfc6d9" name="a127eb4b13554e3719441b47b81bfc6d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a127eb4b13554e3719441b47b81bfc6d9">&#9670;&#160;</a></span>float2() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a127eb4b13554e3719441b47b81bfc6d9">&#9670;&#160;</a></span>float2() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -235,7 +246,7 @@ static const <a class="el" href="structmath_1_1float2.html">float2</a>&#160;</td
 </div>
 </div>
 <a id="ac5ce8892243e778f93a02c2f3b3c2443" name="ac5ce8892243e778f93a02c2f3b3c2443"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5ce8892243e778f93a02c2f3b3c2443">&#9670;&#160;</a></span>float2() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5ce8892243e778f93a02c2f3b3c2443">&#9670;&#160;</a></span>float2() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -272,8 +283,41 @@ static const <a class="el" href="structmath_1_1float2.html">float2</a>&#160;</td
 
 </div>
 </div>
+<a id="a2a0e92fb59449c4a6454ae98a948d3a2" name="a2a0e92fb59449c4a6454ae98a948d3a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a0e92fb59449c4a6454ae98a948d3a2">&#9670;&#160;</a></span>float2() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmath_1_1float2.html">float2</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1uint2.html">uint2</a></td>          <td class="paramname"><span class="paramname"><em>xy</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new floating point 2 component vector structure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xy</td><td>target unsigned integer vector value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a7f6a5b027847f6223ff776a9ea5ce3fc" name="a7f6a5b027847f6223ff776a9ea5ce3fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f6a5b027847f6223ff776a9ea5ce3fc">&#9670;&#160;</a></span>float2() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f6a5b027847f6223ff776a9ea5ce3fc">&#9670;&#160;</a></span>float2() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -409,7 +453,7 @@ static const <a class="el" href="structmath_1_1float2.html">float2</a>&#160;</td
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>math</b></li><li class="navelem"><a class="el" href="structmath_1_1float2.html">float2</a></li>
-    <li class="footer">Generated on Sat Sep 14 2024 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sun Sep 15 2024 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

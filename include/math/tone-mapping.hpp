@@ -18,7 +18,7 @@
  */
 
 #pragma once
-#include "math/common.hpp"
+#include "math/vector.hpp"
 
 namespace math
 {

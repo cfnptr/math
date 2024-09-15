@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "math/aabb.hpp"
-#include "math/common.hpp"
 
 using namespace math;
 

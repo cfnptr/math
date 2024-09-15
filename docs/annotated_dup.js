@@ -19,6 +19,9 @@ var annotated_dup =
       [ "Ray", "structmath_1_1_ray.html", "structmath_1_1_ray" ],
       [ "Sphere", "structmath_1_1_sphere.html", "structmath_1_1_sphere" ],
       [ "Triangle", "structmath_1_1_triangle.html", "structmath_1_1_triangle" ],
+      [ "uint2", "structmath_1_1uint2.html", "structmath_1_1uint2" ],
+      [ "uint3", "structmath_1_1uint3.html", "structmath_1_1uint3" ],
+      [ "uint4", "structmath_1_1uint4.html", "structmath_1_1uint4" ],
       [ "Version", "structmath_1_1_version.html", "structmath_1_1_version" ]
     ] ]
 ];

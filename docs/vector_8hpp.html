@@ -58,54 +58,24 @@ $(function(){initNavTree('vector_8hpp.html',''); initResizable(true); });
 </script>
 <div id="doc-content">
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">vector.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Common vector functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="types_8hpp.html">math/types.hpp</a>&quot;</code><br />
-<code>#include &lt;<a class="elRef" href="https://en.cppreference.com/w/cpp/header/cmath.html">cmath</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" href="https://en.cppreference.com/w/cpp/header/algorithm.html">algorithm</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" href="https://en.cppreference.com/w/cpp/header/string.html">string</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" href="https://en.cppreference.com/w/cpp/header/cassert.html">cassert</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" href="https://en.cppreference.com/w/cpp/header/cstring.html">cstring</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" href="https://en.cppreference.com/w/cpp/header/stdexcept.html">stdexcept</a>&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1int2.html">int2</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signed integer 2 component vector structure.  <a href="structmath_1_1int2.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1float2.html">float2</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating point 2 component vector structure.  <a href="structmath_1_1float2.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1int3.html">int3</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signed integer 3 component vector structure.  <a href="structmath_1_1int3.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1float3.html">float3</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating point 3 component vector structure.  <a href="structmath_1_1float3.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1int4.html">int4</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signed integer 4 component vector structure.  <a href="structmath_1_1int4.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1float4.html">float4</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating point 4 component vector structure.  <a href="structmath_1_1float4.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><code>#include &quot;<a class="el" href="vector_2float_8hpp.html">math/vector/float.hpp</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Common vector functions. </p>
-<p>Vector is a mathematical concept used to represent points, positions, directions, velocities, sizes, colors, and forces in 2D and 3D space. For example, a 3D vector might represent an object's position relative to the origin or a direction of motion. Vectors are essential for operations like transformations, lighting, and physics calculations. </p>
+<p>Vector is a mathematical concept used to represent points, positions, directions, velocities, sizes, colors, and forces in 2D and 3D space. For example, a 3D vector might represent an object's position relative to the origin or a direction of motion. Vectors are essential for operations like transformations, lighting, and physics calculations.</p>
+<p>Based on this project: <a href="https://github.com/g-truc/glm">https://github.com/g-truc/glm</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fba38f648377aa56ae5d69782adf9e53.html">math</a></li><li class="navelem"><a class="el" href="vector_8hpp.html">vector.hpp</a></li>
-    <li class="footer">Generated on Sat Sep 14 2024 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+    <li class="footer">Generated on Sun Sep 15 2024 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
 </body>

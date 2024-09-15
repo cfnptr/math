@@ -23,5 +23,8 @@ var hierarchy =
     [ "Ray", "structmath_1_1_ray.html", null ],
     [ "Sphere", "structmath_1_1_sphere.html", null ],
     [ "Triangle", "structmath_1_1_triangle.html", null ],
+    [ "uint2", "structmath_1_1uint2.html", null ],
+    [ "uint3", "structmath_1_1uint3.html", null ],
+    [ "uint4", "structmath_1_1uint4.html", null ],
     [ "Version", "structmath_1_1_version.html", null ]
 ];

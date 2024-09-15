@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #pragma once
-#include "math/common.hpp"
+#include "math/vector.hpp"
 
 /***********************************************************************************************************************
  * @file

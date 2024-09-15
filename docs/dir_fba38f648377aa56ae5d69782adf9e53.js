@@ -1,6 +1,7 @@
 var dir_fba38f648377aa56ae5d69782adf9e53 =
 [
     [ "matrix", "dir_61efc3ca6933b02b951778ad7f15e87f.html", "dir_61efc3ca6933b02b951778ad7f15e87f" ],
+    [ "vector", "dir_38a288074a3050a7826d34b6a5bd7d48.html", "dir_38a288074a3050a7826d34b6a5bd7d48" ],
     [ "aabb.hpp", "aabb_8hpp.html", "aabb_8hpp" ],
     [ "angles.hpp", "angles_8hpp.html", null ],
     [ "brdf.hpp", "brdf_8hpp.html", null ],
@@ -9,7 +10,7 @@ var dir_fba38f648377aa56ae5d69782adf9e53 =
     [ "common.hpp", "common_8hpp.html", null ],
     [ "ibl.hpp", "ibl_8hpp.html", "ibl_8hpp" ],
     [ "line.hpp", "line_8hpp.html", "line_8hpp" ],
-    [ "matrix.hpp", "matrix_8hpp.html", "matrix_8hpp" ],
+    [ "matrix.hpp", "matrix_8hpp.html", null ],
     [ "plane.hpp", "plane_8hpp.html", "plane_8hpp" ],
     [ "quaternion.hpp", "quaternion_8hpp.html", "quaternion_8hpp" ],
     [ "ray.hpp", "ray_8hpp.html", "ray_8hpp" ],
@@ -18,6 +19,6 @@ var dir_fba38f648377aa56ae5d69782adf9e53 =
     [ "tone-mapping.hpp", "tone-mapping_8hpp.html", "tone-mapping_8hpp" ],
     [ "triangle.hpp", "triangle_8hpp.html", "triangle_8hpp" ],
     [ "types.hpp", "types_8hpp.html", "types_8hpp" ],
-    [ "vector.hpp", "vector_8hpp.html", "vector_8hpp" ],
+    [ "vector.hpp", "vector_8hpp.html", null ],
     [ "version.hpp", "version_8hpp.html", "version_8hpp" ]
 ];
