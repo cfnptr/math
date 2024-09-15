@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "math/matrix.hpp"
+#include <stdexcept>
+
 using namespace math;
 
 int main()
