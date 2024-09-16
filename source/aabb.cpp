@@ -14,10 +14,8 @@
 
 #include "math/aabb.hpp"
 
-using namespace math;
-
 //**********************************************************************************************************************
-float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept
+math::float2 math::raycast2(const Aabb& aabb, const Ray& ray) noexcept
 {
 	auto origin = ray.origin;
 	auto directionInv = float3(1.0f) / ray.getDirection();
@@ -34,7 +32,7 @@ float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept
 	auto tMax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
 	return float2(tMin, tMax);
 }
-float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept
+math::float2 math::raycast2I(const Aabb& aabb, const Ray& ray) noexcept
 {
 	auto origin = ray.origin;
 	auto directionInv = ray.getDirection();
@@ -52,7 +50,7 @@ float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept
 	return float2(tMin, tMax);
 }
 
-float raycast1(const Aabb& aabb, const Ray& ray) noexcept
+float math::raycast1(const Aabb& aabb, const Ray& ray) noexcept
 {
 	auto origin = ray.origin;
 	auto directionInv = float3(1.0f) / ray.getDirection();
@@ -67,7 +65,7 @@ float raycast1(const Aabb& aabb, const Ray& ray) noexcept
 
 	return std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
 }
-float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
+float math::raycast1I(const Aabb& aabb, const Ray& ray) noexcept
 {
 	auto origin = ray.origin;
 	auto directionInv = ray.getDirection();
@@ -84,7 +82,7 @@ float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
 }
 
 //**********************************************************************************************************************
-bool isAabbIntersected(const float3& center, const float3& extent, const Triangle& triangle) noexcept
+bool math::isAabbIntersected(const float3& center, const float3& extent, const Triangle& triangle) noexcept
 {
 	auto v0 = triangle.points[0] - center;
 	auto v1 = triangle.points[1] - center;
@@ -159,8 +157,7 @@ bool isAabbIntersected(const float3& center, const float3& extent, const Triangl
 }
 
 //**********************************************************************************************************************
-bool isBehindFrustum(const Aabb& aabb, const float4x4& model,
-	const Plane* planes, uint8 planeCount = Plane::frustumCount) noexcept
+bool math::isBehindFrustum(const Aabb& aabb, const float4x4& model, const Plane* planes, uint8 planeCount) noexcept
 {
 	auto min = aabb.getMin(), max = aabb.getMax();
 	auto v0 = model * float4(min, 1.0f);
