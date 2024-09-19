@@ -52,7 +52,7 @@ const int32 shBandCount = 3;
  */
 const int32 shCoefCount = 9;
 
-/**********************************************************************************************************************
+/***********************************************************************************************************************
  * @brief Converts texture coordinates to the clip space.
  * 
  * @param coords target texture coordinates.
