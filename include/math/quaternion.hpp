@@ -48,12 +48,12 @@ struct quat : public float4
 	 * @param z imaginary vector Z part.
 	 * @param w real scalar part.
 	 */
-	quat(float x, float y, float z, float w) noexcept : float4(x, y, z, w) { }
+	constexpr quat(float x, float y, float z, float w) noexcept : float4(x, y, z, w) { }
 	/**
 	 * @brief Creates a new identity quaternion structure.
 	 * @param[in] xyzw quaternion parts vector.
 	 */
-	quat(const float4& xyzw = quat::identity) noexcept : float4(xyzw) { }
+	constexpr quat(const float4& xyzw = quat::identity) noexcept : float4(xyzw) { }
 	/**
 	 * @brief Creates a new quaternion structure from the euler angles. (In radians)
 	 * @param[in] eulerAngles target euler angles vector
@@ -86,7 +86,7 @@ struct quat : public float4
 	 * @brief Rotates this quaternion by the specified one.
 	 * @param[in] q target quaternion to rotate by
 	 */
-	quat operator*(const quat& q) const noexcept
+	constexpr quat operator*(const quat& q) const noexcept
 	{
 		return quat(
 			w * q.x + x * q.w + y * q.z - z * q.y,

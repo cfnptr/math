@@ -40,7 +40,7 @@ struct Color
 	 * @brief Creates a new sRGB color structure.
 	 * @param rgba target color value for all RGBA channels.
 	 */
-	explicit Color(uint8 rgba = 0) noexcept { this->r = rgba; this->g = rgba; this->b = rgba; this->a = rgba; }
+	constexpr explicit Color(uint8 rgba = 0) noexcept : r(rgba), g(rgba), b(rgba), a(rgba) { }
 	/**
 	 * @brief Creates a new sRGB color structure.
 	 * 
@@ -49,13 +49,13 @@ struct Color
 	 * @param b blue channel color value
 	 * @param a alpha channel color value (transparency)
 	 */
-	Color(uint8 r, uint8 g, uint8 b, uint8 a) noexcept { this->r = r; this->g = g; this->b = b; this->a = a; }
+	constexpr Color(uint8 r, uint8 g, uint8 b, uint8 a) noexcept : r(r), g(g), b(b), a(a) { }
 
 	/**
 	 * @brief Creates a new sRGB color structure from the binary data.
 	 * @param data target binary color data
 	 */
-	explicit Color(uint32 data) { *(uint32*)this = data; }
+	constexpr explicit Color(uint32 data) { *(uint32*)this = data; }
 	/**
 	 * @brief Creates a new sRGB color structure from the hexadecimal string.
 	 * @param[in] hex target hexadecimal color string
@@ -75,9 +75,9 @@ struct Color
 	 * @brief Creates a new sRGB color structure from the normalized R and G channels.
 	 * @param[in] normRg target normalized R and G channel color values
 	 */
-	explicit Color(const float2& normRg)
+	constexpr explicit Color(const float2& normRg)
 	{
-		const auto mul = 255.0f;
+		constexpr auto mul = 255.0f;
 		r = std::min(normRg.x, 1.0f) * mul;
 		g = std::min(normRg.y, 1.0f) * mul;
 		b = a = 0;
@@ -86,9 +86,9 @@ struct Color
 	 * @brief Creates a new sRGB color structure from the normalized RGB channels.
 	 * @param[in] normRgb target normalized RGB channel color values
 	 */
-	explicit Color(const float3& normRgb)
+	constexpr explicit Color(const float3& normRgb)
 	{
-		const auto mul = 255.0f;
+		constexpr auto mul = 255.0f;
 		r = std::min(normRgb.x, 1.0f) * mul;
 		g = std::min(normRgb.y, 1.0f) * mul;
 		b = std::min(normRgb.z, 1.0f) * mul;
@@ -98,16 +98,52 @@ struct Color
 	 * @brief Creates a new sRGB color structure from the normalized RGBA channels.
 	 * @param[in] normRgba target normalized RGBA channel color values
 	 */
-	explicit Color(const float4& normRgba)
+	constexpr explicit Color(const float4& normRgba)
 	{
-		const auto mul = 255.0f;
+		constexpr auto mul = 255.0f;
 		r = std::min(normRgba.x, 1.0f) * mul;
 		g = std::min(normRgba.y, 1.0f) * mul;
 		b = std::min(normRgba.z, 1.0f) * mul;
 		a = std::min(normRgba.w, 1.0f) * mul;
 	}
+	
+	/*******************************************************************************************************************
+	 * @brief Converts color to the normalized RG vector.
+	 */
+	constexpr explicit operator float2() const noexcept
+	{
+		constexpr auto mul = (1.0f / 255.0f);
+		return float2(r * mul, g * mul);
+	}
+	/**
+	 * @brief Converts color to the normalized RGB vector.
+	 */
+	constexpr explicit operator float3() const noexcept
+	{
+		constexpr auto mul = (1.0f / 255.0f);
+		return float3(r * mul, g * mul, b * mul);
+	}
+	/**
+	 * @brief Converts color to the normalized RGBA vector.
+	 */
+	constexpr explicit operator float4() const noexcept
+	{
+		constexpr auto mul = (1.0f / 255.0f);
+		return float4(r * mul, g * mul, b * mul, a * mul);
+	}
+	/**
+	 * @brief Returns color binary data.
+	 */
+	constexpr explicit operator uint32() const noexcept { return *(const uint32*)this; }
 
 	/*******************************************************************************************************************
+	 * @brief Converts color to the string. (space separated)
+	 */
+	string toString() const noexcept
+	{
+		return to_string(r) + " " + to_string(g) + " " + to_string(b) + " " + to_string(a);
+	}
+	/**
 	 * @brief Converts color to the hexadecimal string.
 	 */
 	string toHex() const noexcept
@@ -118,48 +154,11 @@ struct Color
 		hex += math::toHex(a);
 		return hex;
 	}
-	
-	/**
-	 * @brief Converts color to the normalized RG vector.
-	 */
-	explicit operator float2() const noexcept
-	{
-		const auto mul = (1.0f / 255.0f);
-		return float2(r * mul, g * mul);
-	}
-	/**
-	 * @brief Converts color to the normalized RGB vector.
-	 */
-	explicit operator float3() const noexcept
-	{
-		const auto mul = (1.0f / 255.0f);
-		return float3(r * mul, g * mul, b * mul);
-	}
-	/**
-	 * @brief Converts color to the normalized RGBA vector.
-	 */
-	explicit operator float4() const noexcept
-	{
-		const auto mul = (1.0f / 255.0f);
-		return float4(r * mul, g * mul, b * mul, a * mul);
-	}
 
-	/**
-	 * @brief Returns color binary data.
-	 */
-	explicit operator uint32() const noexcept { return *(const uint32*)this; }
-	/**
-	 * @brief Converts color to the string. (space separated)
-	 */
-	string toString() const noexcept
-	{
-		return to_string(r) + " " + to_string(g) + " " + to_string(b) + " " + to_string(a);
-	}
-
-	Color operator+(Color c) const noexcept { return Color(r + c.r, g + c.g, b + c.b, a + c.a); }
-	Color operator-(Color c) const noexcept { return Color(r - c.r, g - c.g, b - c.b, a - c.a); }
-	Color operator*(Color c) const noexcept { return Color(r * c.r, g * c.g, b * c.b, a * c.a); }
-	Color operator/(Color c) const noexcept { return Color(r / c.r, g / c.g, b / c.b, a / c.a); }
+	constexpr Color operator+(Color c) const noexcept { return Color(r + c.r, g + c.g, b + c.b, a + c.a); }
+	constexpr Color operator-(Color c) const noexcept { return Color(r - c.r, g - c.g, b - c.b, a - c.a); }
+	constexpr Color operator*(Color c) const noexcept { return Color(r * c.r, g * c.g, b * c.b, a * c.a); }
+	constexpr Color operator/(Color c) const noexcept { return Color(r / c.r, g / c.g, b / c.b, a / c.a); }
 	Color& operator+=(Color c) noexcept { r += c.r; g += c.g; b += c.b; a += c.a; return *this; }
 	Color& operator-=(Color c) noexcept { r -= c.r; g -= c.g; b -= c.b; a -= c.a; return *this; }
 	Color& operator*=(Color c) noexcept { r *= c.r; g *= c.g; b *= c.b; a *= c.a; return *this; }
@@ -169,12 +168,12 @@ struct Color
 	Color& operator*=(uint8 n) noexcept { r *= n; g *= n; b *= n; a *= n; return *this; }
 	Color& operator/=(uint8 n) noexcept { r /= n; g /= n; b /= n; a /= n; return *this; }
 	Color& operator=(uint8 n) noexcept { r = n; g = n; b = n; a = n; return *this; }
-	bool operator==(Color c) const noexcept { return *((const uint32*)this) == *((const uint32*)&c); }
-	bool operator!=(Color c) const noexcept { return *((const uint32*)this) != *((const uint32*)&c); }
-	bool operator<(Color c) const noexcept { return r < c.r && g < c.g && b < c.b && a < c.a; }
-	bool operator>(Color c) const noexcept { return r > c.r && g > c.g && b > c.b && a > c.a; }
-	bool operator<=(Color c) const noexcept { return r <= c.r && g <= c.g && b <= c.b && a <= c.a; }
-	bool operator>=(Color c) const noexcept { return r >= c.r && g >= c.g && b >= c.b && a >= c.a; }
+	constexpr bool operator==(Color c) const noexcept { return r == c.r && g == c.g && b == c.b && a == c.a; }
+	constexpr bool operator!=(Color c) const noexcept { return r != c.r || g != c.g || b != c.b || a != c.a; }
+	constexpr bool operator<(Color c) const noexcept { return r < c.r && g < c.g && b < c.b && a < c.a; }
+	constexpr bool operator>(Color c) const noexcept { return r > c.r && g > c.g && b > c.b && a > c.a; }
+	constexpr bool operator<=(Color c) const noexcept { return r <= c.r && g <= c.g && b <= c.b && a <= c.a; }
+	constexpr bool operator>=(Color c) const noexcept { return r >= c.r && g >= c.g && b >= c.b && a >= c.a; }
 
 	static const Color white, black, grey, transparent, red, green, blue, cyan, magenta, yellow;
 };
@@ -191,27 +190,27 @@ inline const Color Color::magenta = Color(255, 0, 255, 255);
 inline const Color Color::yellow = Color(255, 255, 0, 255);
 
 //**********************************************************************************************************************
-static Color operator+(Color c, uint8 n) noexcept { return Color(c.r + n, c.g + n, c.b + n, c.a + n); }
-static Color operator-(Color c, uint8 n) noexcept { return Color(c.r - n, c.g - n, c.b - n, c.a - n); }
-static Color operator*(Color c, uint8 n) noexcept { return Color(c.r * n, c.g * n, c.b * n, c.a * n); }
-static Color operator/(Color c, uint8 n) noexcept { return Color(c.r / n, c.g / n, c.b / n, c.a / n); }
-static bool operator==(Color c, uint8 n) noexcept { return c == Color(n); }
-static bool operator!=(Color c, uint8 n) noexcept { return c != Color(n); }
-static bool operator<(Color c, uint8 n) noexcept { return c < Color(n); }
-static bool operator>(Color c, uint8 n) noexcept { return c > Color(n); }
-static bool operator<=(Color c, uint8 n) noexcept { return c <= Color(n); }
-static bool operator>=(Color c, uint8 n) noexcept { return c >= Color(n); }
+static constexpr Color operator+(Color c, uint8 n) noexcept { return Color(c.r + n, c.g + n, c.b + n, c.a + n); }
+static constexpr Color operator-(Color c, uint8 n) noexcept { return Color(c.r - n, c.g - n, c.b - n, c.a - n); }
+static constexpr Color operator*(Color c, uint8 n) noexcept { return Color(c.r * n, c.g * n, c.b * n, c.a * n); }
+static constexpr Color operator/(Color c, uint8 n) noexcept { return Color(c.r / n, c.g / n, c.b / n, c.a / n); }
+static constexpr bool operator==(Color c, uint8 n) noexcept { return c == Color(n); }
+static constexpr bool operator!=(Color c, uint8 n) noexcept { return c != Color(n); }
+static constexpr bool operator<(Color c, uint8 n) noexcept { return c < Color(n); }
+static constexpr bool operator>(Color c, uint8 n) noexcept { return c > Color(n); }
+static constexpr bool operator<=(Color c, uint8 n) noexcept { return c <= Color(n); }
+static constexpr bool operator>=(Color c, uint8 n) noexcept { return c >= Color(n); }
 
-static Color operator+(uint8 n, Color c) noexcept { return Color(n + c.r, n + c.g, n + c.b, n + c.a); }
-static Color operator-(uint8 n, Color c) noexcept { return Color(n - c.r, n - c.g, n - c.b, n - c.a); }
-static Color operator*(uint8 n, Color c) noexcept { return Color(n * c.r, n * c.g, n * c.b, n * c.a); }
-static Color operator/(uint8 n, Color c) noexcept { return Color(n / c.r, n / c.g, n / c.b, n / c.a); }
-static bool operator==(uint8 n, Color c) noexcept { return Color(n) == c; }
-static bool operator!=(uint8 n, Color c) noexcept { return Color(n) != c; }
-static bool operator<(uint8 n, Color c) noexcept { return Color(n) < c; }
-static bool operator>(uint8 n, Color c) noexcept { return Color(n) > c; }
-static bool operator<=(uint8 n, Color c) noexcept { return Color(n) <= c; }
-static bool operator>=(uint8 n, Color c) noexcept { return Color(n) >= c; }
+static constexpr Color operator+(uint8 n, Color c) noexcept { return Color(n + c.r, n + c.g, n + c.b, n + c.a); }
+static constexpr Color operator-(uint8 n, Color c) noexcept { return Color(n - c.r, n - c.g, n - c.b, n - c.a); }
+static constexpr Color operator*(uint8 n, Color c) noexcept { return Color(n * c.r, n * c.g, n * c.b, n * c.a); }
+static constexpr Color operator/(uint8 n, Color c) noexcept { return Color(n / c.r, n / c.g, n / c.b, n / c.a); }
+static constexpr bool operator==(uint8 n, Color c) noexcept { return Color(n) == c; }
+static constexpr bool operator!=(uint8 n, Color c) noexcept { return Color(n) != c; }
+static constexpr bool operator<(uint8 n, Color c) noexcept { return Color(n) < c; }
+static constexpr bool operator>(uint8 n, Color c) noexcept { return Color(n) > c; }
+static constexpr bool operator<=(uint8 n, Color c) noexcept { return Color(n) <= c; }
+static constexpr bool operator>=(uint8 n, Color c) noexcept { return Color(n) >= c; }
 
 /**
  * @brief Returns true if first color binary representation is less than the second.

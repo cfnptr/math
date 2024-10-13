@@ -45,7 +45,7 @@ using namespace math::ibl;
 /**
  * @brief Precomputed KI coefficients for the 3 band spherical harmonics.
  */
-static const float ki[shCoefCount] =
+constexpr float ki[shCoefCount] =
 {
 	(float)0.886226925452757940959713778283912688,
 	(float)1.02332670794648827872208585176849738,
@@ -138,14 +138,14 @@ static void multiply(const float m[25], const float v[5], float r[5]) noexcept
 //**********************************************************************************************************************
 static float3 rotateSphericalHarmonicBand1(const float3& band1, const float3x3& m) noexcept
 {
-	static const auto invA1TimesK = float3x3(0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f);
+	constexpr auto invA1TimesK = float3x3(0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f);
     auto mn0 = m[0], mn1 = m[1], mn2 = m[2];
 	auto r1OverK = float3x3(-mn0.y, mn0.z, -mn0.x, -mn1.y, mn1.z, -mn1.x, -mn2.y, mn2.z, -mn2.x);
 	return r1OverK * (invA1TimesK * band1);
 }
 static void rotateSphericalHarmonicBand2(const float band2[5], const float3x3& m, float r[5]) noexcept
 {
-	static const float invATimesK[25] =
+	static constexpr float invATimesK[25] =
 	{
 		 0.0f,           1.0f, 2.0f,  0.0f,  0.0f,
 		-1.0f,           0.0f, 0.0f,  0.0f, -2.0f,
@@ -213,7 +213,7 @@ static void windowing(float shw[shCoefCount], float cutoff) noexcept
 }
 static float shmin(float shw[shCoefCount]) noexcept
 {
-	static const float ca[shCoefCount] =
+	static constexpr float ca[shCoefCount] =
 	{
 		(float)( 1.0      / (2.0 * M_SQRT_PI)),
 		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI)),
@@ -306,7 +306,7 @@ static void deringingSH(float4 sh[shCoefCount]) noexcept
 
 static void shaderPreprocessSH(float4 sh[shCoefCount]) noexcept
 {
-	static const float ca[shCoefCount] =
+	static constexpr float ca[shCoefCount] =
 	{
 		(float)( 1.0      / (2.0 * M_SQRT_PI) * M_1_PI),
 		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI) * M_1_PI),

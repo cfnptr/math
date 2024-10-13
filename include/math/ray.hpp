@@ -47,14 +47,9 @@ public:
 	 * @param[in] direction ray direction vector in 3D space
 	 * @param normalize is direction vector should be normalized
 	 */
-	Ray(const float3& origin = float3(0.0f), const float3& direction = float3::front, bool normalize = true) noexcept
-	{
-		if (normalize)
-			this->direction = math::normalize(direction);
-		else
-			this->direction = direction;
-		this->origin = origin;
-	}
+	constexpr Ray(const float3& origin = float3(0.0f),
+		const float3& direction = float3::front, bool normalize = true) noexcept :
+		direction(normalize ? math::normalize(direction) : direction), origin(origin) { }
 
 	/**
 	 * @brief Returns ray direction vector in 3D space.
@@ -68,10 +63,7 @@ public:
 	 */
 	void setDirection(const float3& direction, bool normalize = true) noexcept
 	{
-		if (normalize)
-			this->direction = math::normalize(direction);
-		else
-			this->direction = direction;
+		this->direction = normalize ? math::normalize(direction) : direction;
 	}
 
 	/**
@@ -79,15 +71,16 @@ public:
 	 */
 	void normalize() noexcept { direction /= length(direction);  }
 
-	Ray operator*(const float3& v) const noexcept { return Ray(origin * v, direction * v); }
-	Ray operator/(const float3& v) const noexcept { return Ray(origin / v, direction / v); }
-	Ray operator+(const float3& v) const noexcept { return Ray(origin + v, direction + v); }
-	Ray operator-(const float3& v) const noexcept { return Ray(origin - v, direction - v); }
-
+	constexpr Ray operator*(const float3& v) const noexcept { return Ray(origin * v, direction * v); }
+	constexpr Ray operator/(const float3& v) const noexcept { return Ray(origin / v, direction / v); }
+	constexpr Ray operator+(const float3& v) const noexcept { return Ray(origin + v, direction + v); }
+	constexpr Ray operator-(const float3& v) const noexcept { return Ray(origin - v, direction - v); }
 	Ray& operator*=(const float3& v) noexcept { direction *= v; origin *= v; return *this; }
 	Ray& operator/=(const float3& v) noexcept { direction /= v; origin /= v; return *this; }
 	Ray& operator+=(const float3& v) noexcept { direction += v; origin += v; return *this; }
 	Ray& operator-=(const float3& v) noexcept { direction -= v; origin -= v; return *this; }
+	constexpr bool operator==(const Ray& r) const noexcept { return direction == r.direction && origin == r.origin; }
+	constexpr bool operator!=(const Ray& r) const noexcept { return direction != r.direction || origin != r.origin; }
 	
 	static const Ray left, right, bottom, top, back, front;
 };

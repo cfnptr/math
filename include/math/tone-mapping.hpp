@@ -31,7 +31,7 @@ namespace math
  * monitors, which were the most common display technology when gamma correction became standard. Modern displays 
  * have inherited this standard, as it closely matches how human vision perceives brightness non-linearly.
  */
-const float defaultGamma = 2.2f;
+constexpr float defaultGamma = 2.2f;
 
 /**
  * @brief Applies gamma correction to the specified color.

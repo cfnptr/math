@@ -34,7 +34,7 @@ using namespace std;
  * @brief Converts specified value in degrees to radians.
  * @param degrees target value in degrees
  */
-static float radians(float degrees) noexcept { return degrees * ((float)M_PI / 180.0f); }
+constexpr float radians(float degrees) noexcept { return degrees * ((float)M_PI / 180.0f); }
 /**
  * @brief Converts specified vector in degrees to radians.
  * @param degrees target vector in degrees
@@ -61,7 +61,7 @@ static float4 radians(const float4& degrees) noexcept
  * @brief Converts specified value in radians to degrees.
  * @param degrees target vector in radians
  */
-static float degrees(float radians) noexcept { return radians * (180.0f / (float)M_PI); }
+constexpr float degrees(float radians) noexcept { return radians * (180.0f / (float)M_PI); }
 /**
  * @brief Converts specified vector in radians to degrees.
  * @param degrees target vector in radians

@@ -47,30 +47,31 @@ struct Line
 	 * @param[in] start target line start point in the space
 	 * @param[in] end target line end point in the space
 	 */
-	Line(const float3& start, const float3& end) noexcept { this->start = start; this->end = end; }
+	constexpr Line(const float3& start, const float3& end) noexcept : start(start), end(end) { }
 	/**
 	 * @brief Creates a new zero size line structure.
 	 */
-	Line() = default;
+	constexpr Line() = default;
 
 	/**
 	 * @brief Returns line direction vector. (Unnormalized)
 	 */
-	float3 getVector() const noexcept { return end - start; }
+	constexpr float3 getVector() const noexcept { return end - start; }
 	/**
 	 * @brief Returns line direction vector. (Normalized)
 	 */
 	float3 getVectorNorm() const noexcept { return normalize(end - start); }
 
-	Line operator*(const float3& v) const noexcept { return Line(start * v, end * v); }
-	Line operator/(const float3& v) const noexcept { return Line(start / v, end / v); }
-	Line operator+(const float3& v) const noexcept { return Line(start + v, end + v); }
-	Line operator-(const float3& v) const noexcept { return Line(start - v, end - v); }
-
+	constexpr Line operator*(const float3& v) const noexcept { return Line(start * v, end * v); }
+	constexpr Line operator/(const float3& v) const noexcept { return Line(start / v, end / v); }
+	constexpr Line operator+(const float3& v) const noexcept { return Line(start + v, end + v); }
+	constexpr Line operator-(const float3& v) const noexcept { return Line(start - v, end - v); }
 	Line& operator*=(const float3& v) noexcept { start *= v; end *= v; return *this; }
 	Line& operator/=(const float3& v) noexcept { start /= v; end /= v; return *this; }
 	Line& operator+=(const float3& v) noexcept { start += v; end += v; return *this; }
 	Line& operator-=(const float3& v) noexcept { start -= v; end -= v; return *this; }
+	constexpr bool operator==(const Line& l) const noexcept { return start == l.start && end == l.end; }
+	constexpr bool operator!=(const Line& l) const noexcept { return start != l.start || end != l.end; }
 };
 
 /**

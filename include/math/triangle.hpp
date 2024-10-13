@@ -35,38 +35,35 @@ struct Triangle
 	/**
 	 * @brief Triangle point count. (Polygon)
 	 */
-	inline static const int32 pointCount = 3;
+	static constexpr int32 pointCount = 3;
 
-	/**
-	 * @brief Triangle point array.
-	 */
-	float3 points[pointCount];
+	float3 p0; /**< First triangle vertex position. */
+	float3 p1; /**< Second triangle vertex position. */
+	float3 p2; /**< Third triangle vertex position. */
 
 	/**
 	 * @brief Creates a new triangle (polygon) structure.
 	 *
-	 * @param[in] point0 first triangle vertex position in 3D space
-	 * @param[in] point1 second triangle vertex position in 3D space
-	 * @param[in] point2 third triangle vertex position in 3D space
+	 * @param[in] p0 first triangle vertex position in 3D space
+	 * @param[in] p1 second triangle vertex position in 3D space
+	 * @param[in] p2 third triangle vertex position in 3D space
 	 */
-	Triangle(const float3& point0, const float3& point1, const float3& point2) noexcept
-	{
-		points[0] = point0; points[1] = point1; points[2] = point2;
-	}
+	constexpr Triangle(const float3& p0, const float3& p1, const float3& p2) noexcept : p0(p0), p1(p1), p2(p2) { }
 	/**
 	 * @brief Creates a new zero size triangle (polygon) structure.
 	 */
-	Triangle() = default;
+	constexpr Triangle() = default;
 
-	Triangle operator*(const float3& v) const noexcept { return Triangle(points[0] * v, points[1] * v, points[2] * v); }
-	Triangle operator/(const float3& v) const noexcept { return Triangle(points[0] / v, points[1] / v, points[2] / v); }
-	Triangle operator+(const float3& v) const noexcept { return Triangle(points[0] + v, points[1] + v, points[2] + v); }
-	Triangle operator-(const float3& v) const noexcept { return Triangle(points[0] - v, points[1] - v, points[2] - v); }
-
-	Triangle& operator*=(const float3& v) noexcept { points[0] *= v; points[1] *= v; points[2] *= v; return *this; }
-	Triangle& operator/=(const float3& v) noexcept { points[0] /= v; points[1] /= v; points[2] /= v; return *this; }
-	Triangle& operator+=(const float3& v) noexcept { points[0] += v; points[1] += v; points[2] += v; return *this; }
-	Triangle& operator-=(const float3& v) noexcept { points[0] -= v; points[1] -= v; points[2] -= v; return *this; }
+	constexpr Triangle operator*(const float3& v) const noexcept { return Triangle(p0 * v, p1 * v, p2 * v); }
+	constexpr Triangle operator/(const float3& v) const noexcept { return Triangle(p0 / v, p1 / v, p2 / v); }
+	constexpr Triangle operator+(const float3& v) const noexcept { return Triangle(p0 + v, p1 + v, p2 + v); }
+	constexpr Triangle operator-(const float3& v) const noexcept { return Triangle(p0 - v, p1 - v, p2 - v); }
+	Triangle& operator*=(const float3& v) noexcept { p0 *= v; p1 *= v; p2 *= v; return *this; }
+	Triangle& operator/=(const float3& v) noexcept { p0 /= v; p1 /= v; p2 /= v; return *this; }
+	Triangle& operator+=(const float3& v) noexcept { p0 += v; p1 += v; p2 += v; return *this; }
+	Triangle& operator-=(const float3& v) noexcept { p0 -= v; p1 -= v; p2 -= v; return *this; }
+	constexpr bool operator==(const Triangle& t) const noexcept { return p0 == t.p0 && p1 == t.p1 && p2 == t.p2; }
+	constexpr bool operator!=(const Triangle& t) const noexcept { return p0 != t.p0 || p1 != t.p1 || p2 != t.p2; }
 };
 
 /**
@@ -77,9 +74,9 @@ struct Triangle
  */
 static bool isInside(const Triangle& triangle, const float3& point) noexcept
 {
-	auto p0 = triangle.points[0] - point;
-	auto p1 = triangle.points[1] - point;
-	auto p2 = triangle.points[2] - point;
+	auto p0 = triangle.p0 - point;
+	auto p1 = triangle.p1 - point;
+	auto p2 = triangle.p2 - point;
 	auto u = cross(p1, p2), v = cross(p2, p0), w = cross(p0, p1);
 	if (dot(u, v) < 0.0f || dot(u, w) < 0.0f)
 		return false;
@@ -96,9 +93,9 @@ static bool isInside(const Triangle& triangle, const float3& point) noexcept
 static float3 calcBarycentric(const Triangle& triangle, const float3& point) noexcept
 {
 	// Cramer's rule
-	auto p0 = triangle.points[0];
-	auto v0 = triangle.points[1] - p0;
-	auto v1 = triangle.points[2] - p0;
+	auto p0 = triangle.p0;
+	auto v0 = triangle.p1 - p0;
+	auto v1 = triangle.p2 - p0;
 	auto v2 = point - p0;
 	auto d00 = dot(v0, v0), d01 = dot(v0, v1), d11 = dot(v1, v1);
 	auto d20 = dot(v2, v0), d21 = dot(v2, v1);

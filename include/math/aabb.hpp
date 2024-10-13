@@ -39,7 +39,7 @@ using namespace std;
  */
 struct Aabb
 {
-private:
+protected:
 	float3 min, max;
 public:
 	/**
@@ -48,11 +48,9 @@ public:
 	 * @param[in] min minimum bounding box corner position in the space
 	 * @param[in] max maximum bounding box corner position in the space
 	 */
-	Aabb(const float3& min = float3(0.0f), const float3& max = float3(0.0f)) noexcept
+	constexpr Aabb(const float3& min = float3(0.0f), const float3& max = float3(0.0f)) noexcept : min(min), max(max)
 	{
 		assert(min <= max);
-		this->min = min;
-		this->max = max;
 	}
 
 	/**
@@ -117,11 +115,11 @@ public:
 	/**
 	 * @brief Returns size of the bounding box.
 	 */
-	float3 getSize() const noexcept { return max - min; }
+	constexpr float3 getSize() const noexcept { return max - min; }
 	/**
 	 * @brief Returns position of the bounding box.
 	 */
-	float3 getPosition() const noexcept { return (min + max) * 0.5f; }
+	constexpr float3 getPosition() const noexcept { return (min + max) * 0.5f; }
 
 	/*******************************************************************************************************************
 	 * @brief Sets extent and position of the bounding box.
@@ -150,7 +148,7 @@ public:
 	/**
 	 * @brief Returns extent of the bounding box. (half size)
 	 */
-	float3 getExtent() const noexcept { return (max - min) * 0.5f; }
+	constexpr float3 getExtent() const noexcept { return (max - min) * 0.5f; }
 
 	/**
 	 * @brief Extends bounding box min and max corner positions.
@@ -174,28 +172,26 @@ public:
 	/**
 	 * @brief Calculates area of the AABB.
 	 */
-	float calcArea() const noexcept
+	constexpr float calcArea() const noexcept
 	{
 		auto extent = max - min;
 		return extent.x * extent.y + extent.y * extent.z + extent.z * extent.x;
 	}
 
-	bool operator==(const Aabb& v) const noexcept { return memcmp(this, &v, sizeof(float3) * 2) == 0; }
-	bool operator!=(const Aabb& v) const noexcept { return memcmp(this, &v, sizeof(float3) * 2) != 0; }
-	bool operator<(const Aabb& v) const noexcept { return min < v.min && max < v.max; }
-	bool operator>(const Aabb& v) const noexcept { return min > v.min && max > v.max; }
-	bool operator<=(const Aabb& v) const noexcept { return min <= v.min && max <= v.max; }
-	bool operator>=(const Aabb& v) const noexcept { return min >= v.min && max >= v.max; }
-
-	Aabb operator*(const float3& v) const noexcept { return Aabb(min * v, max * v); }
-	Aabb operator/(const float3& v) const noexcept { return Aabb(min / v, max / v); }
-	Aabb operator+(const float3& v) const noexcept { return Aabb(min + v, max + v); }
-	Aabb operator-(const float3& v) const noexcept { return Aabb(min - v, max - v); }
-
+	constexpr Aabb operator*(const float3& v) const noexcept { return Aabb(min * v, max * v); }
+	constexpr Aabb operator/(const float3& v) const noexcept { return Aabb(min / v, max / v); }
+	constexpr Aabb operator+(const float3& v) const noexcept { return Aabb(min + v, max + v); }
+	constexpr Aabb operator-(const float3& v) const noexcept { return Aabb(min - v, max - v); }
 	Aabb& operator*=(const float3& v) noexcept { min *= v; max *= v; return *this; }
 	Aabb& operator/=(const float3& v) noexcept { min /= v; max /= v; return *this; }
 	Aabb& operator+=(const float3& v) noexcept { min += v; max += v; return *this; }
 	Aabb& operator-=(const float3& v) noexcept { min -= v; max -= v; return *this; }
+	constexpr bool operator==(const Aabb& v) const noexcept { return min == v.min && max == v.max; }
+	constexpr bool operator!=(const Aabb& v) const noexcept { return min != v.min || max != v.max; }
+	constexpr bool operator<(const Aabb& v) const noexcept { return min < v.min && max < v.max; }
+	constexpr bool operator>(const Aabb& v) const noexcept { return min > v.min && max > v.max; }
+	constexpr bool operator<=(const Aabb& v) const noexcept { return min <= v.min && max <= v.max; }
+	constexpr bool operator>=(const Aabb& v) const noexcept { return min >= v.min && max >= v.max; }
 	
 	static const Aabb zero, one, two, half;
 };

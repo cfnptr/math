@@ -42,31 +42,29 @@ struct float2x2
 	 * @brief Creates a new floating point 2x2 matrix structure.
 	 * @param v target value for all columns and rows
 	 */
-	explicit float2x2(float v = 0.0f) noexcept { this->c0 = v; this->c1 = v; }
+	constexpr explicit float2x2(float v = 0.0f) noexcept : c0(v), c1(v) { }
 	/**
 	 * @brief Creates a new floating point 2x2 matrix structure.
 	 * 
 	 * @param c0 first matrix column value
 	 * @param c1 second matrix column value
 	 */
-	float2x2(float2 c0, float2 c1) noexcept { this->c0 = c0; this->c1 = c1; }
+	constexpr float2x2(float2 c0, float2 c1) noexcept : c0(c0), c1(c1) { }
 	/**
 	 * @brief Creates a new floating point 2x2 matrix structure.
 	 * @details See the @ref float2x2.
 	 */
-	float2x2(
-		float c0r0, float c1r0, 
-		float c0r1, float c1r1) noexcept
-	{
-		this->c0 = float2(c0r0, c0r1);
-		this->c1 = float2(c1r0, c1r1);
-	}
+	constexpr float2x2(
+		float c0r0, float c1r0,
+		float c0r1, float c1r1) noexcept :
+		c0(float2(c0r0, c0r1)),
+		c1(float2(c1r0, c1r1)) { }
 	
 	/**
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	float2& operator[](psize i) noexcept
+	constexpr float2& operator[](psize i) noexcept
 	{
 		assert(i <= 1);
 		return ((float2*)this)[i];
@@ -75,13 +73,13 @@ struct float2x2
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	float2 operator[](psize i) const noexcept
+	constexpr float2 operator[](psize i) const noexcept
 	{
 		assert(i <= 1);
 		return ((float2*)this)[i];
 	}
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Multiplies all matrix columns by specified value.
 	 * @param v target multiplier value
 	 */
@@ -148,7 +146,7 @@ struct float3x3
 	 * @brief Creates a new floating point 3x3 matrix structure.
 	 * @param v target value for all columns and rows
 	 */
-	explicit float3x3(float v = 0.0f) noexcept { this->c0 = v; this->c1 = v; this->c2 = v; }
+	constexpr explicit float3x3(float v = 0.0f) noexcept : c0(v), c1(v), c2(v) { }
 	/**
 	 * @brief Creates a new floating point 3x3 matrix structure.
 	 *
@@ -156,34 +154,29 @@ struct float3x3
 	 * @param[in] c1 second matrix column value
 	 * @param[in] c2 third matrix column value
 	 */
-	float3x3(const float3& c0, const float3& c1, const float3& c2) noexcept
-	{
-		this->c0 = c0; this->c1 = c1; this->c2 = c2;
-	}
+	constexpr float3x3(const float3& c0, const float3& c1, const float3& c2) noexcept : c0(c0), c1(c1), c2(c2) { }
 	/**
 	 * @brief Creates a new floating point 3x3 matrix structure.
 	 * @details See the @ref float3x3.
 	 */
-	float3x3(
+	constexpr float3x3(
 		float c0r0, float c1r0, float c2r0,
 		float c0r1, float c1r1, float c2r1,
-		float c0r2, float c1r2, float c2r2) noexcept
-	{
-		this->c0 = float3(c0r0, c0r1, c0r2);
-		this->c1 = float3(c1r0, c1r1, c1r2);
-		this->c2 = float3(c2r0, c2r1, c2r2);
-	}
+		float c0r2, float c1r2, float c2r2) noexcept :
+		c0(float3(c0r0, c0r1, c0r2)),
+		c1(float3(c1r0, c1r1, c1r2)),
+		c2(float3(c2r0, c2r1, c2r2)) { }
 
 	/**
 	 * @brief Returns matrix 2x2 part.
 	 */
-	explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
+	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
 	
 	/**
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	float3& operator[](psize i) noexcept
+	constexpr float3& operator[](psize i) noexcept
 	{
 		assert(i <= 2);
 		return ((float3*)this)[i];
@@ -192,13 +185,13 @@ struct float3x3
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	const float3& operator[](psize i) const noexcept
+	constexpr const float3& operator[](psize i) const noexcept
 	{
 		assert(i <= 2);
 		return ((float3*)this)[i];
 	}
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Multiplies all matrix columns by specified value.
 	 * @param v target multiplier value
 	 */
@@ -269,7 +262,7 @@ struct float4x4
 	 * @brief Creates a new floating point 4x4 matrix structure.
 	 * @param v target value for all columns and rows
 	 */
-	explicit float4x4(float v = 0.0f) noexcept { this->c0 = v; this->c1 = v; this->c2 = v; this->c3 = v; }
+	constexpr explicit float4x4(float v = 0.0f) noexcept : c0(v), c1(v), c2(v), c3(v) { }
 	/**
 	 * @brief Creates a new floating point 4x4 matrix structure.
 	 *
@@ -278,40 +271,36 @@ struct float4x4
 	 * @param[in] c2 third matrix column value
 	 * @param[in] c3 fourth matrix column value
 	 */
-	float4x4(const float4& c0, const float4& c1, const float4& c2, const float4& c3) noexcept
-	{
-		this->c0 = c0; this->c1 = c1; this->c2 = c2; this->c3 = c3;
-	}
+	constexpr float4x4(const float4& c0, const float4& c1, const float4& c2, const float4& c3) noexcept : 
+		c0(c0), c1(c1), c2(c2), c3(c3) { }
 	/**
 	 * @brief Creates a new floating point 4x4 matrix structure.
 	 * @details See the @ref float4x4.
 	 */
-	float4x4(
+	constexpr float4x4(
 		float c0r0, float c1r0, float c2r0, float c3r0,
 		float c0r1, float c1r1, float c2r1, float c3r1,
 		float c0r2, float c1r2, float c2r2, float c3r2,
-		float c0r3, float c1r3, float c2r3, float c3r3) noexcept
-	{
-		this->c0 = float4(c0r0, c0r1, c0r2, c0r3);
-		this->c1 = float4(c1r0, c1r1, c1r2, c1r3);
-		this->c2 = float4(c2r0, c2r1, c2r2, c2r3);
-		this->c3 = float4(c3r0, c3r1, c3r2, c3r3);
-	}
+		float c0r3, float c1r3, float c2r3, float c3r3) noexcept :
+		c0(float4(c0r0, c0r1, c0r2, c0r3)),
+		c1(float4(c1r0, c1r1, c1r2, c1r3)),
+		c2(float4(c2r0, c2r1, c2r2, c2r3)),
+		c3(float4(c3r0, c3r1, c3r2, c3r3)) { }
 
 	/**
 	 * @brief Returns matrix 3x3 part.
 	 */
-	explicit operator float3x3() const noexcept { return float3x3((float3)c0, (float3)c1, (float3)c2); }
+	constexpr explicit operator float3x3() const noexcept { return float3x3((float3)c0, (float3)c1, (float3)c2); }
 	/**
 	 * @brief Returns matrix 2x2 part.
 	 */
-	explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
+	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
 
 	/**
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	float4& operator[](psize i) noexcept
+	constexpr float4& operator[](psize i) noexcept
 	{
 		assert(i <= 3);
 		return ((float4*)this)[i];
@@ -320,13 +309,13 @@ struct float4x4
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	const float4& operator[](psize i) const noexcept
+	constexpr const float4& operator[](psize i) const noexcept
 	{
 		assert(i <= 3);
 		return ((float4*)this)[i];
 	}
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Multiplies all matrix columns by specified value.
 	 * @param v target multiplier value
 	 */

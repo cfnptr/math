@@ -85,7 +85,7 @@ struct Bvh
 		BaseNode base;
 		ChildNode child;
 		LeafNode leaf;
-		Node() : leaf() { }
+		constexpr Node() : leaf() { }
 		
 		/**
 		 * @brief Returns true if this is leaf node. (Contain the actual geometric objects)
@@ -101,7 +101,7 @@ struct Bvh
 		 */
 		void setAabb(const Aabb& aabb) noexcept { base.min = aabb.getMin(), base.max = aabb.getMax(); }
 	};
-private:
+protected:
 	vector<Node> nodes;
 	vector<uint32> primitives;
 	vector<float3> centroids;

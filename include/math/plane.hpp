@@ -38,7 +38,7 @@ public:
 	/**
 	 * @brief Frustum plane count. (Box side count)
 	 */
-	inline static const uint8 frustumCount = 6;
+	static constexpr uint8 frustumCount = 6;
 private:
 	float3 normal;
 public:
@@ -54,25 +54,19 @@ public:
 	 * @param distance target distance to the plane
 	 * @param normalize is normal vector should be normalized
 	 */
-	Plane(const float3& normal = float3::top, float distance = 0.0f, bool normalize = true) noexcept
-	{
-		if (normalize)
-			this->normal = math::normalize(normal);
-		else
-			this->normal = normal;
-		this->distance = distance;
-	}
+	constexpr Plane(const float3& normal = float3::top, float distance = 0.0f, bool normalize = true) noexcept :
+		normal(normalize ? math::normalize(normal) : normal), distance(distance) { }
 	/**
 	 * @brief Calculates a new plane from the triangle. (Polygon)
 	 * @param[in] triangle target triangle (polygon)
 	 */
 	Plane(const Triangle& triangle) noexcept
 	{
-		normal = cross(triangle.points[1] - triangle.points[0],
-			triangle.points[2] - triangle.points[0]);
+		normal = cross(triangle.p1 - triangle.p0,
+			triangle.p2 - triangle.p0);
 		if (length(normal) > 0.0f)
 			normal = math::normalize(normal);
-		distance = dot(normal, triangle.points[0]);
+		distance = dot(normal, triangle.p0);
 	}
 
 	/**
@@ -87,10 +81,7 @@ public:
 	 */
 	void setNormal(const float3& normal, bool normalize = true) noexcept
 	{
-		if (normalize)
-			this->normal = math::normalize(normal);
-		else
-			this->normal = normal;
+		this->normal = normalize ? math::normalize(normal) : normal;
 	}
 	/**
 	 * @brief Normalizes plane normal vector.
@@ -101,6 +92,9 @@ public:
 		normal /= l;
 		distance /= l;
 	}
+
+	constexpr bool operator==(const Plane& p) const noexcept { return normal == p.normal && distance == p.distance; }
+	constexpr bool operator!=(const Plane& p) const noexcept { return normal != p.normal || distance != p.distance; }
 
 	static const Plane left, right, bottom, top, back, front;
 };
@@ -145,9 +139,9 @@ static float3 closestPoint(const Triangle& triangle, const float3& point) noexce
 	if (isInside(triangle, p))
 		return p;
 
-	auto ab = Line(triangle.points[0], triangle.points[1]);
-	auto bc = Line(triangle.points[1], triangle.points[2]);
-	auto ca = Line(triangle.points[2], triangle.points[0]);
+	auto ab = Line(triangle.p0, triangle.p1);
+	auto bc = Line(triangle.p1, triangle.p2);
+	auto ca = Line(triangle.p2, triangle.p0);
 	auto c0 = closestPoint(ab, p);
 	auto c1 = closestPoint(bc, p);
 	auto c2 = closestPoint(ca, p);

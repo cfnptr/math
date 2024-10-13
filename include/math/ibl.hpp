@@ -41,16 +41,16 @@ using namespace math;
  * This table is used to precompute certain values related to specular reflections and Fresnel effects, optimizing 
  * the real-time rendering of materials, especially those with varying roughness and reflectance.
  */
-const int32 iblDfgSize = 128;
+constexpr int32 iblDfgSize = 128;
 
 /**
  * @brief Spherical harmonics band count.
  */
-const int32 shBandCount = 3;
+constexpr int32 shBandCount = 3;
 /**
  * @brief Spherical harmonics coefficient count. (3 * 3)
  */
-const int32 shCoefCount = 9;
+constexpr int32 shCoefCount = 9;
 
 /***********************************************************************************************************************
  * @brief Converts texture coordinates to the clip space.

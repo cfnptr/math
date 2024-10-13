@@ -33,7 +33,7 @@ using namespace std;
 struct Sphere
 {
 	float3 position;
-	float radius = 0.0f;
+	float radius;
 
 	/**
 	 * @brief Creates a new sphere structure.
@@ -41,14 +41,11 @@ struct Sphere
 	 * @param radius target sphere radius
 	 * @param[in] position sphere position in 3D space
 	 */
-	Sphere(float radius, const float3& position = float3(0.0f)) noexcept
-	{
-		this->position = position; this->radius = radius;
-	}
-	/**
-	 * @brief Creates a new zero size sphere structure.
-	 */
-	Sphere() = default;
+	constexpr Sphere(float radius = 0.0f, const float3& position = float3(0.0f)) noexcept :
+		position(position), radius(radius) { }
+
+	constexpr bool operator==(const Sphere& s) const noexcept { return position == s.position && radius == s.radius; }
+	constexpr bool operator!=(const Sphere& s) const noexcept { return position != s.position || radius != s.radius; }
 
 	static const Sphere one, two, half;
 };

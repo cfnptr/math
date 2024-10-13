@@ -35,10 +35,10 @@ using namespace std;
  */
 struct Version
 {
-	uint8 major = 0; /**< Major version part. */
-	uint8 minor = 0; /**< Minor version part. */
-	uint8 patch = 0; /**< Patch version part. */
-	uint8 build = 0; /**< Build version part. */
+	uint8 major; /**< Major version part. */
+	uint8 minor; /**< Minor version part. */
+	uint8 patch; /**< Patch version part. */
+	uint8 build; /**< Build version part. */
 
 	/**
 	 * @brief Creates a new version structure.
@@ -48,27 +48,20 @@ struct Version
 	 * @param patch version patch part value
 	 * @param build version build part value
 	 */
-	Version(uint8 major = 0, uint8 minor = 0, uint8 patch = 0, uint8 build = 0)
-	{
-		this->major = major; this->minor = minor;
-		this->patch = patch; this->build = build;
-	}
+	constexpr Version(uint8 major = 0, uint8 minor = 0, uint8 patch = 0, uint8 build = 0) noexcept :
+		major(major), minor(minor), patch(patch), build(build) { }
 	/**
 	 * @brief Creates a new version structure from encoded data.
 	 * @param version target version encoded data
 	 */
-	Version(uint32 version)
-	{
-		this->major = (version >> 24u) & UINT8_MAX;
-		this->minor = (version >> 16u) & UINT8_MAX;
-		this->patch = (version >> 8u) & UINT8_MAX;
-		this->build = version & UINT8_MAX;
-	}
+	constexpr Version(uint32 version) noexcept :
+		major((version >> 24u) & UINT8_MAX), minor((version >> 16u) & UINT8_MAX),
+		patch((version >> 8u) & UINT8_MAX), build(version & UINT8_MAX) { }
 
 	/**
 	 * @brief Encodes version data to the integer value.
 	 */
-	explicit operator uint32() const noexcept
+	constexpr explicit operator uint32() const noexcept
 	{
 		return ((uint32)major << 24u) | ((uint32)minor << 16u) | ((uint32)patch << 8u) | (uint32)build;
 	}
@@ -77,7 +70,7 @@ struct Version
 	 * @brief Returns version part by the index.
 	 * @param i target version part index
 	 */
-	uint8& operator[](psize i) noexcept
+	constexpr uint8& operator[](psize i) noexcept
 	{
 		assert(i <= 3);
 		return ((uint8*)this)[i];
@@ -86,18 +79,18 @@ struct Version
 	 * @brief Returns version part by the index.
 	 * @param i target version part index
 	 */
-	uint8 operator[](psize i) const noexcept
+	constexpr uint8 operator[](psize i) const noexcept
 	{
 		assert(i <= 3);
 		return ((uint8*)this)[i];
 	}
 
-	bool operator==(Version v) const noexcept { return memcmp(this, &v, sizeof(Version)) == 0; }
-	bool operator!=(Version v) const noexcept { return memcmp(this, &v, sizeof(Version)) != 0; }
-	bool operator<(Version v) const noexcept { return (uint32)*this < (uint32)v; }
-	bool operator>(Version v) const noexcept { return (uint32)*this > (uint32)v; }
-	bool operator<=(Version v) const noexcept { return (uint32)*this <= (uint32)v; }
-	bool operator>=(Version v) const noexcept { return (uint32)*this >= (uint32)v; }
+	constexpr bool operator<(Version v) const noexcept { return (uint32)*this < (uint32)v; }
+	constexpr bool operator>(Version v) const noexcept { return (uint32)*this > (uint32)v; }
+	constexpr bool operator<=(Version v) const noexcept { return (uint32)*this <= (uint32)v; }
+	constexpr bool operator>=(Version v) const noexcept { return (uint32)*this >= (uint32)v; }
+	constexpr bool operator==(Version v) const noexcept { return (uint32)*this == (uint32)v; }
+	constexpr bool operator!=(Version v) const noexcept { return (uint32)*this != (uint32)v; }
 	
 	/**
 	 * @brief Creates a new version string. (X.X.X.X)

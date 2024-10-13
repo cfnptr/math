@@ -51,20 +51,20 @@ struct uint2
 	 * @brief Creates a new unsigned integer 2 component vector structure.
 	 * @param xy target value for all vector components
 	 */
-	explicit uint2(uint32 xy = 0u) noexcept { this->x = xy; this->y = xy; }
+	constexpr explicit uint2(uint32 xy = 0u) noexcept : x(xy), y(xy) { }
 	/**
 	 * @brief Creates a new unsigned integer 2 component vector structure.
 	 * 
 	 * @param x first vector component value
 	 * @param y second vector component value
 	 */
-	uint2(uint32 x, uint32 y) noexcept { this->x = x; this->y = y; }
+	constexpr uint2(uint32 x, uint32 y) noexcept : x(x), y(y) { }
 
 	/**
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	uint32& operator[](psize i) noexcept
+	constexpr uint32& operator[](psize i) noexcept
 	{
 		assert(i <= 1);
 		return ((uint32*)this)[i];
@@ -73,7 +73,7 @@ struct uint2
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	uint32 operator[](psize i) const noexcept
+	constexpr uint32 operator[](psize i) const noexcept
 	{
 		assert(i <= 1);
 		return ((uint32*)this)[i];
@@ -82,25 +82,26 @@ struct uint2
 	/**
 	 * @brief Returns first vector component. (x)
 	 */
-	explicit operator uint32() noexcept { return x; }
-	/**
+	constexpr explicit operator uint32() noexcept { return x; }
+
+	/*******************************************************************************************************************
 	 * @brief Converts vector to the string. (space separated)
 	 */
 	string toString() const noexcept { return to_string(x) + " " + to_string(y); }
 
-	uint2 operator+(uint2 v) const noexcept { return uint2(x + v.x, y + v.y); }
-	uint2 operator-(uint2 v) const noexcept { return uint2(x - v.x, y - v.y); }
-	uint2 operator*(uint2 v) const noexcept { return uint2(x * v.x, y * v.y); }
-	uint2 operator/(uint2 v) const noexcept { return uint2(x / v.x, y / v.y); }
-	uint2 operator%(uint2 v) const noexcept { return uint2(x % v.x, y % v.y); }
-	uint2 operator&(uint2 v) const noexcept { return uint2(x & v.x, y & v.y); }
-	uint2 operator|(uint2 v) const noexcept { return uint2(x | v.x, y | v.y); }
-	uint2 operator^(uint2 v) const noexcept { return uint2(x ^ v.x, y ^ v.y); }
-	uint2 operator>>(uint2 v) const noexcept { return uint2(x >> v.x, y >> v.y); }
-	uint2 operator<<(uint2 v) const noexcept { return uint2(x << v.x, y << v.y); }
-	uint2 operator-() const noexcept { return uint2(-x, -y); }
-	uint2 operator!() const noexcept { return uint2(!x, !y); }
-	uint2 operator~() const noexcept { return uint2(~x, ~y); }
+	constexpr uint2 operator+(uint2 v) const noexcept { return uint2(x + v.x, y + v.y); }
+	constexpr uint2 operator-(uint2 v) const noexcept { return uint2(x - v.x, y - v.y); }
+	constexpr uint2 operator*(uint2 v) const noexcept { return uint2(x * v.x, y * v.y); }
+	constexpr uint2 operator/(uint2 v) const noexcept { return uint2(x / v.x, y / v.y); }
+	constexpr uint2 operator%(uint2 v) const noexcept { return uint2(x % v.x, y % v.y); }
+	constexpr uint2 operator&(uint2 v) const noexcept { return uint2(x & v.x, y & v.y); }
+	constexpr uint2 operator|(uint2 v) const noexcept { return uint2(x | v.x, y | v.y); }
+	constexpr uint2 operator^(uint2 v) const noexcept { return uint2(x ^ v.x, y ^ v.y); }
+	constexpr uint2 operator>>(uint2 v) const noexcept { return uint2(x >> v.x, y >> v.y); }
+	constexpr uint2 operator<<(uint2 v) const noexcept { return uint2(x << v.x, y << v.y); }
+	constexpr uint2 operator-() const noexcept { return uint2(-x, -y); }
+	constexpr uint2 operator!() const noexcept { return uint2(!x, !y); }
+	constexpr uint2 operator~() const noexcept { return uint2(~x, ~y); }
 	uint2& operator+=(uint2 v) noexcept { x += v.x; y += v.y; return *this; }
 	uint2& operator-=(uint2 v) noexcept { x -= v.x; y -= v.y; return *this; }
 	uint2& operator*=(uint2 v) noexcept { x *= v.x; y *= v.y; return *this; }
@@ -122,12 +123,12 @@ struct uint2
 	uint2& operator>>=(uint32 n) noexcept { x >>= n; y >>= n; return *this; }
 	uint2& operator<<=(uint32 n) noexcept { x <<= n; y <<= n; return *this; }
 	uint2& operator=(uint32 n) noexcept { x = n; y = n; return *this; }
-	bool operator==(uint2 v) const noexcept { return *((uint64*)this) == *((uint64*)&v); }
-	bool operator!=(uint2 v) const noexcept { return *((uint64*)this) != *((uint64*)&v); }
-	bool operator<(uint2 v) const noexcept { return x < v.x && y < v.y; }
-	bool operator>(uint2 v) const noexcept { return x > v.x && y > v.y; }
-	bool operator<=(uint2 v) const noexcept { return x <= v.x && y <= v.y; }
-	bool operator>=(uint2 v) const noexcept { return x >= v.x && y >= v.y; }
+	constexpr bool operator==(uint2 v) const noexcept { return x == v.x && y == v.y; }
+	constexpr bool operator!=(uint2 v) const noexcept { return x != v.x || y != v.y; }
+	constexpr bool operator<(uint2 v) const noexcept { return x < v.x && y < v.y; }
+	constexpr bool operator>(uint2 v) const noexcept { return x > v.x && y > v.y; }
+	constexpr bool operator<=(uint2 v) const noexcept { return x <= v.x && y <= v.y; }
+	constexpr bool operator>=(uint2 v) const noexcept { return x >= v.x && y >= v.y; }
 
 	static const uint2 zero, one;
 };
@@ -149,7 +150,7 @@ struct uint3
 	 * @brief Creates a new unsigned integer 3 component vector structure.
 	 * @param xyz target value for all vector components
 	 */
-	explicit uint3(uint32 xyz = 0u) noexcept { this->x = xyz; this->y = xyz; this->z = xyz; }
+	constexpr explicit uint3(uint32 xyz = 0u) noexcept : x(xyz), y(xyz), z(xyz) { }
 	/**
 	 * @brief Creates a new unsigned integer 3 component vector structure.
 	 *
@@ -157,27 +158,27 @@ struct uint3
 	 * @param y second vector component value
 	 * @param z third vector component value
 	 */
-	uint3(uint32 x, uint32 y, uint32 z) noexcept { this->x = x; this->y = y; this->z = z; }
+	constexpr uint3(uint32 x, uint32 y, uint32 z) noexcept : x(x), y(y), z(z) { }
 	/**
 	 * @brief Creates a new unsigned integer 3 component vector structure.
 	 *
 	 * @param xy first and secind vector components value
 	 * @param z third vector component value
 	 */
-	uint3(uint2 xy, uint32 z) noexcept { this->x = xy.x; this->y = xy.y; this->z = z; }
+	constexpr uint3(uint2 xy, uint32 z) noexcept : x(xy.x), y(xy.y), z(z) { }
 	/**
 	 * @brief Creates a new unsigned integer 3 component vector structure.
 	 *
 	 * @param x first vector component value
 	 * @param yz second and third vector components value
 	 */
-	uint3(uint32 x, uint2 yz) noexcept { this->x = x; this->y = yz.x; this->z = yz.y; }
+	constexpr uint3(uint32 x, uint2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	uint32& operator[](psize i) noexcept
+	constexpr uint32& operator[](psize i) noexcept
 	{
 		assert(i <= 2);
 		return ((uint32*)this)[i];
@@ -186,7 +187,7 @@ struct uint3
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	uint32 operator[](psize i) const noexcept
+	constexpr uint32 operator[](psize i) const noexcept
 	{
 		assert(i <= 2);
 		return ((uint32*)this)[i];
@@ -195,28 +196,29 @@ struct uint3
 	/**
 	 * @brief Returns first and second vector components. (xy)
 	 */
-	explicit operator uint2() const noexcept { return uint2(x, y); }
+	constexpr explicit operator uint2() const noexcept { return uint2(x, y); }
 	/**
 	 * @brief Returns first vector component. (xy)
 	 */
-	explicit operator uint32() const noexcept { return x; }
+	constexpr explicit operator uint32() const noexcept { return x; }
+
 	/**
 	 * @brief Converts vector to the string. (space separated)
 	 */
 	string toString() const noexcept { return to_string(x) + " " + to_string(y) + " " + to_string(z); }
 
-	uint3 operator+(const uint3& v) const noexcept { return uint3(x + v.x, y + v.y, z + v.z); }
-	uint3 operator-(const uint3& v) const noexcept { return uint3(x - v.x, y - v.y, z - v.z); }
-	uint3 operator*(const uint3& v) const noexcept { return uint3(x * v.x, y * v.y, z * v.z); }
-	uint3 operator/(const uint3& v) const noexcept { return uint3(x / v.x, y / v.y, z / v.z); }
-	uint3 operator%(const uint3& v) const noexcept { return uint3(x % v.x, y % v.y, z % v.z); }
-	uint3 operator&(const uint3& v) const noexcept { return uint3(x & v.x, y & v.y, z & v.z); }
-	uint3 operator|(const uint3& v) const noexcept { return uint3(x | v.x, y | v.y, z | v.z); }
-	uint3 operator^(const uint3& v) const noexcept { return uint3(x ^ v.x, y ^ v.y, z ^ v.z); }
-	uint3 operator>>(const uint3& v) const noexcept { return uint3(x >> v.x, y >> v.y, z >> v.z); }
-	uint3 operator<<(const uint3& v) const noexcept { return uint3(x << v.x, y << v.y, z << v.z); }
-	uint3 operator-() const noexcept { return uint3(-x, -y, -z); }
-	uint3 operator!() const noexcept { return uint3(!x, !y, !z); }
+	constexpr uint3 operator+(const uint3& v) const noexcept { return uint3(x + v.x, y + v.y, z + v.z); }
+	constexpr uint3 operator-(const uint3& v) const noexcept { return uint3(x - v.x, y - v.y, z - v.z); }
+	constexpr uint3 operator*(const uint3& v) const noexcept { return uint3(x * v.x, y * v.y, z * v.z); }
+	constexpr uint3 operator/(const uint3& v) const noexcept { return uint3(x / v.x, y / v.y, z / v.z); }
+	constexpr uint3 operator%(const uint3& v) const noexcept { return uint3(x % v.x, y % v.y, z % v.z); }
+	constexpr uint3 operator&(const uint3& v) const noexcept { return uint3(x & v.x, y & v.y, z & v.z); }
+	constexpr uint3 operator|(const uint3& v) const noexcept { return uint3(x | v.x, y | v.y, z | v.z); }
+	constexpr uint3 operator^(const uint3& v) const noexcept { return uint3(x ^ v.x, y ^ v.y, z ^ v.z); }
+	constexpr uint3 operator>>(const uint3& v) const noexcept { return uint3(x >> v.x, y >> v.y, z >> v.z); }
+	constexpr uint3 operator<<(const uint3& v) const noexcept { return uint3(x << v.x, y << v.y, z << v.z); }
+	constexpr uint3 operator-() const noexcept { return uint3(-x, -y, -z); }
+	constexpr uint3 operator!() const noexcept { return uint3(!x, !y, !z); }
 	uint3 operator~() const noexcept { return uint3(~x, ~y, ~z); }
 	uint3& operator+=(const uint3& v) noexcept { x += v.x; y += v.y; z += v.z; return *this; }
 	uint3& operator-=(const uint3& v) noexcept { x -= v.x; y -= v.y; z -= v.z; return *this; }
@@ -239,12 +241,12 @@ struct uint3
 	uint3& operator>>=(uint32 n) noexcept { x >>= n; y >>= n; z >>= n; return *this; }
 	uint3& operator<<=(uint32 n) noexcept { x <<= n; y <<= n; z <<= n; return *this; }
 	uint3& operator=(uint32 n) noexcept { x = n; y = n; z = n; return *this; }
-	bool operator==(const uint3& v) const noexcept { return memcmp(this, &v, sizeof(uint32) * 3) == 0; }
-	bool operator!=(const uint3& v) const noexcept { return memcmp(this, &v, sizeof(uint32) * 3) != 0; }
-	bool operator<(const uint3& v) const noexcept {return x < v.x && y < v.y && z < v.z; }
-	bool operator>(const uint3& v) const noexcept {return x > v.x && y > v.y && z > v.z; }
-	bool operator<=(const uint3& v) const noexcept { return x <= v.x && y <= v.y && z <= v.z; }
-	bool operator>=(const uint3& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z; }
+	constexpr bool operator==(const uint3& v) const noexcept { return x == v.x && y == v.y && z == v.z; }
+	constexpr bool operator!=(const uint3& v) const noexcept { return x != v.x || y != v.y || z != v.z; }
+	constexpr bool operator<(const uint3& v) const noexcept {return x < v.x && y < v.y && z < v.z; }
+	constexpr bool operator>(const uint3& v) const noexcept {return x > v.x && y > v.y && z > v.z; }
+	constexpr bool operator<=(const uint3& v) const noexcept { return x <= v.x && y <= v.y && z <= v.z; }
+	constexpr bool operator>=(const uint3& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z; }
 
 	static const uint3 zero, one;
 };
@@ -267,7 +269,7 @@ struct uint4
 	 * @brief Creates a new unsigned integer 4 component vector structure.
 	 * @param xyzw target value for all vector components
 	 */
-	explicit uint4(uint32 xyzw = 0u) noexcept { this->x = xyzw; this->y = xyzw; this->z = xyzw; this->w = xyzw; }
+	constexpr explicit uint4(uint32 xyzw = 0u) noexcept : x(xyzw), y(xyzw), z(xyzw), w(xyzw) { }
 	/**
 	 * @brief Creates a new unsigned integer 4 component vector structure.
 	 *
@@ -276,7 +278,7 @@ struct uint4
 	 * @param z third vector component value
 	 * @param w fourth vector component value
 	 */
-	uint4(uint32 x, uint32 y, uint32 z, uint32 w) noexcept { this->x = x; this->y = y; this->z = z; this->w = w;}
+	constexpr uint4(uint32 x, uint32 y, uint32 z, uint32 w) noexcept : x(x), y(y), z(z), w(w) { }
 	/**
 	 * @brief Creates a new unsigned integer 4 component vector structure.
 	 *
@@ -284,7 +286,7 @@ struct uint4
 	 * @param z third vector component value
 	 * @param w fourth vector component value
 	 */
-	uint4(uint2 xy, uint32 z, uint32 w) noexcept { this->x = xy.x; this->y = xy.y; this->z = z; this->w = w; }
+	constexpr uint4(uint2 xy, uint32 z, uint32 w) noexcept : x(xy.x), y(xy.y), z(z), w(w) { }
 	/**
 	 * @brief Creates a new unsigned integer 4 component vector structure.
 	 *
@@ -292,7 +294,7 @@ struct uint4
 	 * @param yz second and third vector components value
 	 * @param w fourth vector component value
 	 */
-	uint4(uint32 x, uint2 yz, uint32 w) noexcept { this->x = x; this->y = yz.x; this->z = yz.y; this->w = w; }
+	constexpr uint4(uint32 x, uint2 yz, uint32 w) noexcept : x(x), y(yz.x), z(yz.y), w(w) { }
 	/**
 	 * @brief Creates a new unsigned integer 4 component vector structure.
 	 *
@@ -300,34 +302,34 @@ struct uint4
 	 * @param y second vector component value
 	 * @param zw third and fourth vector components value
 	 */
-	uint4(uint32 x, uint32 y, uint2 zw) noexcept { this->x = x; this->y = y; this->z = zw.x; this->w = zw.y; }
+	constexpr uint4(uint32 x, uint32 y, uint2 zw) noexcept : x(x), y(y), z(zw.x), w(zw.y) { }
 	/**
 	 * @brief Creates a new unsigned integer 4 component vector structure.
 	 *
 	 * @param xy first and second vector components value
 	 * @param zw third and fourth vector components value
 	 */
-	uint4(uint2 xy, uint2 zw) noexcept { this->x = xy.x; this->y = xy.x; this->z = zw.x; this->w = zw.y; }
+	constexpr uint4(uint2 xy, uint2 zw) noexcept : x(xy.x), y(xy.y), z(zw.x), w(zw.y) { }
 	/**
 	 * @brief Creates a new unsigned integer 4 component vector structure.
 	 *
 	 * @param[in] xyz first, second and third vector components value
 	 * @param w fourth vector component value
 	 */
-	uint4(const uint3& xyz, uint32 w) noexcept { this->x = xyz.x; this->y = xyz.y; this->z = xyz.z; this->w = w; }
+	constexpr uint4(const uint3& xyz, uint32 w) noexcept : x(xyz.x), y(xyz.y), z(xyz.z), w(w) { }
 	/**
 	 * @brief Creates a new unsigned integer 4 component vector structure.
 	 *
 	 * @param x first vector component value
 	 * @param[in] yzw second, third and fourth vector components value
 	 */
-	uint4(uint32 x, const uint3& yzw) noexcept { this->x = x; this->y = yzw.x; this->z = yzw.y; this->w = yzw.z; }
+	constexpr uint4(uint32 x, const uint3& yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
 
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	uint32& operator[](psize i) noexcept
+	constexpr uint32& operator[](psize i) noexcept
 	{
 		assert(i <= 3);
 		return ((uint32*)this)[i];
@@ -336,7 +338,7 @@ struct uint4
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	uint32 operator[](psize i) const noexcept
+	constexpr uint32 operator[](psize i) const noexcept
 	{
 		assert(i <= 3);
 		return ((uint32*)this)[i];
@@ -345,15 +347,16 @@ struct uint4
 	/**
 	 * @brief Returns first, second and third vector components. (xyz)
 	 */
-	explicit operator uint3() const noexcept { return uint3(x, y, z); }
+	constexpr explicit operator uint3() const noexcept { return uint3(x, y, z); }
 	/**
 	 * @brief Returns first and second vector components. (xy)
 	 */
-	explicit operator uint2() const noexcept { return uint2(x, y); }
+	constexpr explicit operator uint2() const noexcept { return uint2(x, y); }
 	/**
 	 * @brief Returns first vector component. (x)
 	 */
-	explicit operator uint32() const noexcept { return x; }
+	constexpr explicit operator uint32() const noexcept { return x; }
+
 	/**
 	 * @brief Converts vector to the string. (space separated)
 	 */
@@ -362,19 +365,19 @@ struct uint4
 		return to_string(x) + " " + to_string(y) + " " + to_string(z) + " " + to_string(w);
 	}
 
-	uint4 operator+(const uint4& v) const noexcept { return uint4(x + v.x, y + v.y, z + v.z, w + v.w); }
-	uint4 operator-(const uint4& v) const noexcept { return uint4(x - v.x, y - v.y, z - v.z, w - v.w); }
-	uint4 operator*(const uint4& v) const noexcept { return uint4(x * v.x, y * v.y, z * v.z, w * v.w); }
-	uint4 operator/(const uint4& v) const noexcept { return uint4(x / v.x, y / v.y, z / v.z, w / v.w); }
-	uint4 operator%(const uint4& v) const noexcept { return uint4(x % v.x, y % v.y, z % v.z, w % v.w); }
-	uint4 operator&(const uint4& v) const noexcept { return uint4(x & v.x, y & v.y, z & v.z, w & v.w); }
-	uint4 operator|(const uint4& v) const noexcept { return uint4(x | v.x, y | v.y, z | v.z, w | v.w); }
-	uint4 operator^(const uint4& v) const noexcept { return uint4(x ^ v.x, y ^ v.y, z ^ v.z, w ^ v.w); }
-	uint4 operator>>(const uint4& v) const noexcept { return uint4(x >> v.x, y >> v.y, z >> v.z, w >> v.w); }
-	uint4 operator<<(const uint4& v) const noexcept { return uint4(x << v.x, y << v.y, z << v.z, w << v.w); }
-	uint4 operator-() const noexcept { return uint4(-x, -y, -z, -w); }
-	uint4 operator!() const noexcept { return uint4(!x, !y, !z, !w); }
-	uint4 operator~() const noexcept { return uint4(~x, ~y, ~z, ~w); }
+	constexpr uint4 operator+(const uint4& v) const noexcept { return uint4(x + v.x, y + v.y, z + v.z, w + v.w); }
+	constexpr uint4 operator-(const uint4& v) const noexcept { return uint4(x - v.x, y - v.y, z - v.z, w - v.w); }
+	constexpr uint4 operator*(const uint4& v) const noexcept { return uint4(x * v.x, y * v.y, z * v.z, w * v.w); }
+	constexpr uint4 operator/(const uint4& v) const noexcept { return uint4(x / v.x, y / v.y, z / v.z, w / v.w); }
+	constexpr uint4 operator%(const uint4& v) const noexcept { return uint4(x % v.x, y % v.y, z % v.z, w % v.w); }
+	constexpr uint4 operator&(const uint4& v) const noexcept { return uint4(x & v.x, y & v.y, z & v.z, w & v.w); }
+	constexpr uint4 operator|(const uint4& v) const noexcept { return uint4(x | v.x, y | v.y, z | v.z, w | v.w); }
+	constexpr uint4 operator^(const uint4& v) const noexcept { return uint4(x ^ v.x, y ^ v.y, z ^ v.z, w ^ v.w); }
+	constexpr uint4 operator>>(const uint4& v) const noexcept { return uint4(x >> v.x, y >> v.y, z >> v.z, w >> v.w); }
+	constexpr uint4 operator<<(const uint4& v) const noexcept { return uint4(x << v.x, y << v.y, z << v.z, w << v.w); }
+	constexpr uint4 operator-() const noexcept { return uint4(-x, -y, -z, -w); }
+	constexpr uint4 operator!() const noexcept { return uint4(!x, !y, !z, !w); }
+	constexpr uint4 operator~() const noexcept { return uint4(~x, ~y, ~z, ~w); }
 	uint4& operator+=(const uint4& v) noexcept { x += v.x; y += v.y; z += v.z; w += v.w; return *this; }
 	uint4& operator-=(const uint4& v) noexcept { x -= v.x; y -= v.y; z -= v.z; w -= v.w; return *this; }
 	uint4& operator*=(const uint4& v) noexcept { x *= v.x; y *= v.y; z *= v.z; w *= v.w; return *this; }
@@ -396,12 +399,12 @@ struct uint4
 	uint4& operator>>=(uint32 n) noexcept { x >>= n; y >>= n; z >>= n; w >>= n; return *this; }
 	uint4& operator<<=(uint32 n) noexcept { x <<= n; y <<= n; z <<= n; w <<= n; return *this; }
 	uint4& operator=(uint32 n) noexcept { x = n; y = n; z = n; w = n; return *this; }
-	bool operator==(const uint4& v) const noexcept { return memcmp(this, &v, sizeof(uint32) * 4) == 0; }
-	bool operator!=(const uint4& v) const noexcept { return memcmp(this, &v, sizeof(uint32) * 4) != 0; }
-	bool operator<(const uint4& v) const noexcept { return x < v.x && y < v.y && z < v.z && w < v.w; }
-	bool operator>(const uint4& v) const noexcept { return x > v.x && y > v.y && z > v.z && w > v.w; }
-	bool operator<=(const uint4& v) const noexcept { return x <= v.x && y <= v.y && z <= v.z && w <= v.w; }
-	bool operator>=(const uint4& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z && w >= v.w; }
+	constexpr bool operator==(const uint4& v) const noexcept { return x == v.x && y == v.y && z == v.z && w == v.w; }
+	constexpr bool operator!=(const uint4& v) const noexcept { return x != v.x || y != v.y || z != v.z || w != v.w; }
+	constexpr bool operator<(const uint4& v) const noexcept { return x < v.x && y < v.y && z < v.z && w < v.w; }
+	constexpr bool operator>(const uint4& v) const noexcept { return x > v.x && y > v.y && z > v.z && w > v.w; }
+	constexpr bool operator<=(const uint4& v) const noexcept { return x <= v.x && y <= v.y && z <= v.z && w <= v.w; }
+	constexpr bool operator>=(const uint4& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z && w >= v.w; }
 
 	static const uint4 zero, one;
 };
@@ -410,39 +413,39 @@ inline const uint4 uint4::zero = uint4(0u);
 inline const uint4 uint4::one = uint4(1u);
 
 //**********************************************************************************************************************
-static uint2 operator+(uint2 v, uint32 n) noexcept { return uint2(v.x + n, v.y + n); }
-static uint2 operator-(uint2 v, uint32 n) noexcept { return uint2(v.x - n, v.y - n); }
-static uint2 operator*(uint2 v, uint32 n) noexcept { return uint2(v.x * n, v.y * n); }
-static uint2 operator/(uint2 v, uint32 n) noexcept { return uint2(v.x / n, v.y / n); }
-static uint2 operator%(uint2 v, uint32 n) noexcept { return uint2(v.x % n, v.y % n); }
-static uint2 operator&(uint2 v, uint32 n) noexcept { return uint2(v.x & n, v.y & n); }
-static uint2 operator|(uint2 v, uint32 n) noexcept { return uint2(v.x | n, v.y | n); }
-static uint2 operator^(uint2 v, uint32 n) noexcept { return uint2(v.x ^ n, v.y ^ n); }
-static uint2 operator>>(uint2 v, uint32 n) noexcept { return uint2(v.x >> n, v.y >> n); }
-static uint2 operator<<(uint2 v, uint32 n) noexcept { return uint2(v.x << n, v.y << n); }
-static bool operator==(uint2 v, uint32 n) noexcept { return v == uint2(n); }
-static bool operator!=(uint2 v, uint32 n) noexcept { return v != uint2(n); }
-static bool operator<(uint2 v, uint32 n) noexcept { return v < uint2(n); }
-static bool operator>(uint2 v, uint32 n) noexcept { return v > uint2(n); }
-static bool operator<=(uint2 v, uint32 n) noexcept { return v <= uint2(n); }
-static bool operator>=(uint2 v, uint32 n) noexcept { return v >= uint2(n); }
+static constexpr uint2 operator+(uint2 v, uint32 n) noexcept { return uint2(v.x + n, v.y + n); }
+static constexpr uint2 operator-(uint2 v, uint32 n) noexcept { return uint2(v.x - n, v.y - n); }
+static constexpr uint2 operator*(uint2 v, uint32 n) noexcept { return uint2(v.x * n, v.y * n); }
+static constexpr uint2 operator/(uint2 v, uint32 n) noexcept { return uint2(v.x / n, v.y / n); }
+static constexpr uint2 operator%(uint2 v, uint32 n) noexcept { return uint2(v.x % n, v.y % n); }
+static constexpr uint2 operator&(uint2 v, uint32 n) noexcept { return uint2(v.x & n, v.y & n); }
+static constexpr uint2 operator|(uint2 v, uint32 n) noexcept { return uint2(v.x | n, v.y | n); }
+static constexpr uint2 operator^(uint2 v, uint32 n) noexcept { return uint2(v.x ^ n, v.y ^ n); }
+static constexpr uint2 operator>>(uint2 v, uint32 n) noexcept { return uint2(v.x >> n, v.y >> n); }
+static constexpr uint2 operator<<(uint2 v, uint32 n) noexcept { return uint2(v.x << n, v.y << n); }
+static constexpr bool operator==(uint2 v, uint32 n) noexcept { return v == uint2(n); }
+static constexpr bool operator!=(uint2 v, uint32 n) noexcept { return v != uint2(n); }
+static constexpr bool operator<(uint2 v, uint32 n) noexcept { return v < uint2(n); }
+static constexpr bool operator>(uint2 v, uint32 n) noexcept { return v > uint2(n); }
+static constexpr bool operator<=(uint2 v, uint32 n) noexcept { return v <= uint2(n); }
+static constexpr bool operator>=(uint2 v, uint32 n) noexcept { return v >= uint2(n); }
 
-static uint2 operator+(uint32 n, uint2 v) noexcept { return uint2(n + v.x, n + v.y); }
-static uint2 operator-(uint32 n, uint2 v) noexcept { return uint2(n - v.x, n - v.y); }
-static uint2 operator*(uint32 n, uint2 v) noexcept { return uint2(n * v.x, n * v.y); }
-static uint2 operator/(uint32 n, uint2 v) noexcept { return uint2(n / v.x, n / v.y); }
-static uint2 operator%(uint32 n, uint2 v) noexcept { return uint2(n % v.x, n % v.y); }
-static uint2 operator&(uint32 n, uint2 v) noexcept { return uint2(n & v.x, n & v.y); }
-static uint2 operator|(uint32 n, uint2 v) noexcept { return uint2(n | v.x, n | v.y); }
-static uint2 operator^(uint32 n, uint2 v) noexcept { return uint2(n ^ v.x, n ^ v.y); }
-static uint2 operator>>(uint32 n, uint2 v) noexcept { return uint2(n >> v.x, n >> v.y); }
-static uint2 operator<<(uint32 n, uint2 v) noexcept { return uint2(n << v.x, n << v.y); }
-static bool operator==(uint32 n, uint2 v) noexcept { return uint2(n) == v; }
-static bool operator!=(uint32 n, uint2 v) noexcept { return uint2(n) != v; }
-static bool operator<(uint32 n, uint2 v) noexcept { return uint2(n) < v; }
-static bool operator>(uint32 n, uint2 v) noexcept { return uint2(n) > v; }
-static bool operator<=(uint32 n, uint2 v) noexcept { return uint2(n) <= v; }
-static bool operator>=(uint32 n, uint2 v) noexcept { return uint2(n) >= v; }
+static constexpr uint2 operator+(uint32 n, uint2 v) noexcept { return uint2(n + v.x, n + v.y); }
+static constexpr uint2 operator-(uint32 n, uint2 v) noexcept { return uint2(n - v.x, n - v.y); }
+static constexpr uint2 operator*(uint32 n, uint2 v) noexcept { return uint2(n * v.x, n * v.y); }
+static constexpr uint2 operator/(uint32 n, uint2 v) noexcept { return uint2(n / v.x, n / v.y); }
+static constexpr uint2 operator%(uint32 n, uint2 v) noexcept { return uint2(n % v.x, n % v.y); }
+static constexpr uint2 operator&(uint32 n, uint2 v) noexcept { return uint2(n & v.x, n & v.y); }
+static constexpr uint2 operator|(uint32 n, uint2 v) noexcept { return uint2(n | v.x, n | v.y); }
+static constexpr uint2 operator^(uint32 n, uint2 v) noexcept { return uint2(n ^ v.x, n ^ v.y); }
+static constexpr uint2 operator>>(uint32 n, uint2 v) noexcept { return uint2(n >> v.x, n >> v.y); }
+static constexpr uint2 operator<<(uint32 n, uint2 v) noexcept { return uint2(n << v.x, n << v.y); }
+static constexpr bool operator==(uint32 n, uint2 v) noexcept { return uint2(n) == v; }
+static constexpr bool operator!=(uint32 n, uint2 v) noexcept { return uint2(n) != v; }
+static constexpr bool operator<(uint32 n, uint2 v) noexcept { return uint2(n) < v; }
+static constexpr bool operator>(uint32 n, uint2 v) noexcept { return uint2(n) > v; }
+static constexpr bool operator<=(uint32 n, uint2 v) noexcept { return uint2(n) <= v; }
+static constexpr bool operator>=(uint32 n, uint2 v) noexcept { return uint2(n) >= v; }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -453,39 +456,39 @@ static bool operator>=(uint32 n, uint2 v) noexcept { return uint2(n) >= v; }
 static bool isBinaryLess(uint2 a, uint2 b) noexcept { return *((const uint64*)&a) < *((const uint64*)&b); }
 
 //**********************************************************************************************************************
-static uint3 operator+(const uint3& v, uint32 n) noexcept { return uint3(v.x + n, v.y + n, v.z + n); }
-static uint3 operator-(const uint3& v, uint32 n) noexcept { return uint3(v.x - n, v.y - n, v.z - n); }
-static uint3 operator*(const uint3& v, uint32 n) noexcept { return uint3(v.x * n, v.y * n, v.z * n); }
-static uint3 operator/(const uint3& v, uint32 n) noexcept { return uint3(v.x / n, v.y / n, v.z / n); }
-static uint3 operator%(const uint3& v, uint32 n) noexcept { return uint3(v.x % n, v.y % n, v.z % n); }
-static uint3 operator&(const uint3& v, uint32 n) noexcept { return uint3(v.x & n, v.y & n, v.z & n); }
-static uint3 operator|(const uint3& v, uint32 n) noexcept { return uint3(v.x | n, v.y | n, v.z | n); }
-static uint3 operator^(const uint3& v, uint32 n) noexcept { return uint3(v.x ^ n, v.y ^ n, v.z ^ n); }
-static uint3 operator>>(const uint3& v, uint32 n) noexcept { return uint3(v.x >> n, v.y >> n, v.z >> n); }
-static uint3 operator<<(const uint3& v, uint32 n) noexcept { return uint3(v.x << n, v.y << n, v.z << n); }
-static bool operator==(const uint3& v, uint32 n) noexcept { return v == uint3(n); }
-static bool operator!=(const uint3& v, uint32 n) noexcept { return v != uint3(n); }
-static bool operator<(const uint3& v, uint32 n) noexcept { return v < uint3(n); }
-static bool operator>(const uint3& v, uint32 n) noexcept { return v > uint3(n); }
-static bool operator<=(const uint3& v, uint32 n) noexcept { return v <= uint3(n); }
-static bool operator>=(const uint3& v, uint32 n) noexcept { return v >= uint3(n); }
+static constexpr uint3 operator+(const uint3& v, uint32 n) noexcept { return uint3(v.x + n, v.y + n, v.z + n); }
+static constexpr uint3 operator-(const uint3& v, uint32 n) noexcept { return uint3(v.x - n, v.y - n, v.z - n); }
+static constexpr uint3 operator*(const uint3& v, uint32 n) noexcept { return uint3(v.x * n, v.y * n, v.z * n); }
+static constexpr uint3 operator/(const uint3& v, uint32 n) noexcept { return uint3(v.x / n, v.y / n, v.z / n); }
+static constexpr uint3 operator%(const uint3& v, uint32 n) noexcept { return uint3(v.x % n, v.y % n, v.z % n); }
+static constexpr uint3 operator&(const uint3& v, uint32 n) noexcept { return uint3(v.x & n, v.y & n, v.z & n); }
+static constexpr uint3 operator|(const uint3& v, uint32 n) noexcept { return uint3(v.x | n, v.y | n, v.z | n); }
+static constexpr uint3 operator^(const uint3& v, uint32 n) noexcept { return uint3(v.x ^ n, v.y ^ n, v.z ^ n); }
+static constexpr uint3 operator>>(const uint3& v, uint32 n) noexcept { return uint3(v.x >> n, v.y >> n, v.z >> n); }
+static constexpr uint3 operator<<(const uint3& v, uint32 n) noexcept { return uint3(v.x << n, v.y << n, v.z << n); }
+static constexpr bool operator==(const uint3& v, uint32 n) noexcept { return v == uint3(n); }
+static constexpr bool operator!=(const uint3& v, uint32 n) noexcept { return v != uint3(n); }
+static constexpr bool operator<(const uint3& v, uint32 n) noexcept { return v < uint3(n); }
+static constexpr bool operator>(const uint3& v, uint32 n) noexcept { return v > uint3(n); }
+static constexpr bool operator<=(const uint3& v, uint32 n) noexcept { return v <= uint3(n); }
+static constexpr bool operator>=(const uint3& v, uint32 n) noexcept { return v >= uint3(n); }
 
-static uint3 operator+(uint32 n, const uint3& v) noexcept { return uint3(n + v.x, n + v.y, n + v.z); }
-static uint3 operator-(uint32 n, const uint3& v) noexcept { return uint3(n - v.x, n - v.y, n - v.z); }
-static uint3 operator*(uint32 n, const uint3& v) noexcept { return uint3(n * v.x, n * v.y, n * v.z); }
-static uint3 operator/(uint32 n, const uint3& v) noexcept { return uint3(n / v.x, n / v.y, n / v.z); }
-static uint3 operator%(uint32 n, const uint3& v) noexcept { return uint3(n % v.x, n % v.y, n % v.z); }
-static uint3 operator&(uint32 n, const uint3& v) noexcept { return uint3(n & v.x, n & v.y, n & v.z); }
-static uint3 operator|(uint32 n, const uint3& v) noexcept { return uint3(n | v.x, n | v.y, n | v.z); }
-static uint3 operator^(uint32 n, const uint3& v) noexcept { return uint3(n ^ v.x, n ^ v.y, n ^ v.z); }
-static uint3 operator>>(uint32 n, const uint3& v) noexcept { return uint3(n >> v.x, n >> v.y, n >> v.z); }
-static uint3 operator<<(uint32 n, const uint3& v) noexcept { return uint3(n << v.x, n << v.y, n << v.z); }
-static bool operator==(uint32 n, const uint3& v) noexcept { return uint3(n) == v; }
-static bool operator!=(uint32 n, const uint3& v) noexcept { return uint3(n) != v; }
-static bool operator<(uint32 n, const uint3& v) noexcept { return uint3(n) < v; }
-static bool operator>(uint32 n, const uint3& v) noexcept { return uint3(n) > v; }
-static bool operator<=(uint32 n, const uint3& v) noexcept { return uint3(n) <= v; }
-static bool operator>=(uint32 n, const uint3& v) noexcept { return uint3(n) >= v; }
+static constexpr uint3 operator+(uint32 n, const uint3& v) noexcept { return uint3(n + v.x, n + v.y, n + v.z); }
+static constexpr uint3 operator-(uint32 n, const uint3& v) noexcept { return uint3(n - v.x, n - v.y, n - v.z); }
+static constexpr uint3 operator*(uint32 n, const uint3& v) noexcept { return uint3(n * v.x, n * v.y, n * v.z); }
+static constexpr uint3 operator/(uint32 n, const uint3& v) noexcept { return uint3(n / v.x, n / v.y, n / v.z); }
+static constexpr uint3 operator%(uint32 n, const uint3& v) noexcept { return uint3(n % v.x, n % v.y, n % v.z); }
+static constexpr uint3 operator&(uint32 n, const uint3& v) noexcept { return uint3(n & v.x, n & v.y, n & v.z); }
+static constexpr uint3 operator|(uint32 n, const uint3& v) noexcept { return uint3(n | v.x, n | v.y, n | v.z); }
+static constexpr uint3 operator^(uint32 n, const uint3& v) noexcept { return uint3(n ^ v.x, n ^ v.y, n ^ v.z); }
+static constexpr uint3 operator>>(uint32 n, const uint3& v) noexcept { return uint3(n >> v.x, n >> v.y, n >> v.z); }
+static constexpr uint3 operator<<(uint32 n, const uint3& v) noexcept { return uint3(n << v.x, n << v.y, n << v.z); }
+static constexpr bool operator==(uint32 n, const uint3& v) noexcept { return uint3(n) == v; }
+static constexpr bool operator!=(uint32 n, const uint3& v) noexcept { return uint3(n) != v; }
+static constexpr bool operator<(uint32 n, const uint3& v) noexcept { return uint3(n) < v; }
+static constexpr bool operator>(uint32 n, const uint3& v) noexcept { return uint3(n) > v; }
+static constexpr bool operator<=(uint32 n, const uint3& v) noexcept { return uint3(n) <= v; }
+static constexpr bool operator>=(uint32 n, const uint3& v) noexcept { return uint3(n) >= v; }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -496,39 +499,39 @@ static bool operator>=(uint32 n, const uint3& v) noexcept { return uint3(n) >= v
 static bool isBinaryLess(const uint3& a, const uint3& b) noexcept { return memcmp(&a, &b, sizeof(uint32) * 3) < 0; }
 
 //**********************************************************************************************************************
-static uint4 operator+(const uint4& v, uint32 n) noexcept { return uint4(v.x + n, v.y + n, v.z + n, v.w + n); }
-static uint4 operator-(const uint4& v, uint32 n) noexcept { return uint4(v.x - n, v.y - n, v.z - n, v.w - n); }
-static uint4 operator*(const uint4& v, uint32 n) noexcept { return uint4(v.x * n, v.y * n, v.z * n, v.w * n); }
-static uint4 operator/(const uint4& v, uint32 n) noexcept { return uint4(v.x / n, v.y / n, v.z / n, v.w / n); }
-static uint4 operator%(const uint4& v, uint32 n) noexcept { return uint4(v.x % n, v.y % n, v.z % n, v.w % n); }
-static uint4 operator&(const uint4& v, uint32 n) noexcept { return uint4(v.x & n, v.y & n, v.z & n, v.w & n); }
-static uint4 operator|(const uint4& v, uint32 n) noexcept { return uint4(v.x | n, v.y | n, v.z | n, v.w | n); }
-static uint4 operator^(const uint4& v, uint32 n) noexcept { return uint4(v.x ^ n, v.y ^ n, v.z ^ n, v.w ^ n); }
-static uint4 operator>>(const uint4& v, uint32 n) noexcept { return uint4(v.x >> n, v.y >> n, v.z >> n, v.w >> n); }
-static uint4 operator<<(const uint4& v, uint32 n) noexcept { return uint4(v.x << n, v.y << n, v.z << n, v.w << n); }
-static bool operator==(const uint4& v, uint32 n) noexcept { return v == uint4(n); }
-static bool operator!=(const uint4& v, uint32 n) noexcept { return v != uint4(n); }
-static bool operator<(const uint4& v, uint32 n) noexcept { return v < uint4(n); }
-static bool operator>(const uint4& v, uint32 n) noexcept { return v > uint4(n); }
-static bool operator<=(const uint4& v, uint32 n) noexcept { return v <= uint4(n); }
-static bool operator>=(const uint4& v, uint32 n) noexcept { return v >= uint4(n); }
+static constexpr uint4 operator+(const uint4& v, uint32 n) noexcept { return uint4(v.x + n, v.y + n, v.z + n, v.w + n); }
+static constexpr uint4 operator-(const uint4& v, uint32 n) noexcept { return uint4(v.x - n, v.y - n, v.z - n, v.w - n); }
+static constexpr uint4 operator*(const uint4& v, uint32 n) noexcept { return uint4(v.x * n, v.y * n, v.z * n, v.w * n); }
+static constexpr uint4 operator/(const uint4& v, uint32 n) noexcept { return uint4(v.x / n, v.y / n, v.z / n, v.w / n); }
+static constexpr uint4 operator%(const uint4& v, uint32 n) noexcept { return uint4(v.x % n, v.y % n, v.z % n, v.w % n); }
+static constexpr uint4 operator&(const uint4& v, uint32 n) noexcept { return uint4(v.x & n, v.y & n, v.z & n, v.w & n); }
+static constexpr uint4 operator|(const uint4& v, uint32 n) noexcept { return uint4(v.x | n, v.y | n, v.z | n, v.w | n); }
+static constexpr uint4 operator^(const uint4& v, uint32 n) noexcept { return uint4(v.x ^ n, v.y ^ n, v.z ^ n, v.w ^ n); }
+static constexpr uint4 operator>>(const uint4& v, uint32 n) noexcept { return uint4(v.x >> n, v.y >> n, v.z >> n, v.w >> n); }
+static constexpr uint4 operator<<(const uint4& v, uint32 n) noexcept { return uint4(v.x << n, v.y << n, v.z << n, v.w << n); }
+static constexpr bool operator==(const uint4& v, uint32 n) noexcept { return v == uint4(n); }
+static constexpr bool operator!=(const uint4& v, uint32 n) noexcept { return v != uint4(n); }
+static constexpr bool operator<(const uint4& v, uint32 n) noexcept { return v < uint4(n); }
+static constexpr bool operator>(const uint4& v, uint32 n) noexcept { return v > uint4(n); }
+static constexpr bool operator<=(const uint4& v, uint32 n) noexcept { return v <= uint4(n); }
+static constexpr bool operator>=(const uint4& v, uint32 n) noexcept { return v >= uint4(n); }
 
-static uint4 operator+(uint32 n, const uint4& v) noexcept { return uint4(n + v.x, n + v.y, n + v.z, n + v.w); }
-static uint4 operator-(uint32 n, const uint4& v) noexcept { return uint4(n - v.x, n - v.y, n - v.z, n - v.w); }
-static uint4 operator*(uint32 n, const uint4& v) noexcept { return uint4(n * v.x, n * v.y, n * v.z, n * v.w); }
-static uint4 operator/(uint32 n, const uint4& v) noexcept { return uint4(n / v.x, n / v.y, n / v.z, n / v.w); }
-static uint4 operator%(uint32 n, const uint4& v) noexcept { return uint4(n % v.x, n % v.y, n % v.z, n % v.w); }
-static uint4 operator&(uint32 n, const uint4& v) noexcept { return uint4(n & v.x, n & v.y, n & v.z, n & v.w); }
-static uint4 operator|(uint32 n, const uint4& v) noexcept { return uint4(n | v.x, n | v.y, n | v.z, n | v.w); }
-static uint4 operator^(uint32 n, const uint4& v) noexcept { return uint4(n ^ v.x, n ^ v.y, n ^ v.z, n ^ v.w); }
-static uint4 operator>>(uint32 n, const uint4& v) noexcept { return uint4(n >> v.x, n >> v.y, n >> v.z, n >> v.w); }
-static uint4 operator<<(uint32 n, const uint4& v) noexcept { return uint4(n << v.x, n << v.y, n << v.z, n << v.w); }
-static bool operator==(uint32 n, const uint4& v) noexcept { return uint4(n) == v; }
-static bool operator!=(uint32 n, const uint4& v) noexcept { return uint4(n) != v; }
-static bool operator<(uint32 n, const uint4& v) noexcept { return uint4(n) < v; }
-static bool operator>(uint32 n, const uint4& v) noexcept { return uint4(n) > v; }
-static bool operator<=(uint32 n, const uint4& v) noexcept { return uint4(n) <= v; }
-static bool operator>=(uint32 n, const uint4& v) noexcept { return uint4(n) >= v; }
+static constexpr uint4 operator+(uint32 n, const uint4& v) noexcept { return uint4(n + v.x, n + v.y, n + v.z, n + v.w); }
+static constexpr uint4 operator-(uint32 n, const uint4& v) noexcept { return uint4(n - v.x, n - v.y, n - v.z, n - v.w); }
+static constexpr uint4 operator*(uint32 n, const uint4& v) noexcept { return uint4(n * v.x, n * v.y, n * v.z, n * v.w); }
+static constexpr uint4 operator/(uint32 n, const uint4& v) noexcept { return uint4(n / v.x, n / v.y, n / v.z, n / v.w); }
+static constexpr uint4 operator%(uint32 n, const uint4& v) noexcept { return uint4(n % v.x, n % v.y, n % v.z, n % v.w); }
+static constexpr uint4 operator&(uint32 n, const uint4& v) noexcept { return uint4(n & v.x, n & v.y, n & v.z, n & v.w); }
+static constexpr uint4 operator|(uint32 n, const uint4& v) noexcept { return uint4(n | v.x, n | v.y, n | v.z, n | v.w); }
+static constexpr uint4 operator^(uint32 n, const uint4& v) noexcept { return uint4(n ^ v.x, n ^ v.y, n ^ v.z, n ^ v.w); }
+static constexpr uint4 operator>>(uint32 n, const uint4& v) noexcept { return uint4(n >> v.x, n >> v.y, n >> v.z, n >> v.w); }
+static constexpr uint4 operator<<(uint32 n, const uint4& v) noexcept { return uint4(n << v.x, n << v.y, n << v.z, n << v.w); }
+static constexpr bool operator==(uint32 n, const uint4& v) noexcept { return uint4(n) == v; }
+static constexpr bool operator!=(uint32 n, const uint4& v) noexcept { return uint4(n) != v; }
+static constexpr bool operator<(uint32 n, const uint4& v) noexcept { return uint4(n) < v; }
+static constexpr bool operator>(uint32 n, const uint4& v) noexcept { return uint4(n) > v; }
+static constexpr bool operator<=(uint32 n, const uint4& v) noexcept { return uint4(n) <= v; }
+static constexpr bool operator>=(uint32 n, const uint4& v) noexcept { return uint4(n) >= v; }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
