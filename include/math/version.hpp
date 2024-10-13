@@ -70,7 +70,7 @@ struct Version
 	 * @brief Returns version part by the index.
 	 * @param i target version part index
 	 */
-	constexpr uint8& operator[](psize i) noexcept
+	uint8& operator[](psize i) noexcept
 	{
 		assert(i <= 3);
 		return ((uint8*)this)[i];
@@ -79,7 +79,7 @@ struct Version
 	 * @brief Returns version part by the index.
 	 * @param i target version part index
 	 */
-	constexpr uint8 operator[](psize i) const noexcept
+	uint8 operator[](psize i) const noexcept
 	{
 		assert(i <= 3);
 		return ((uint8*)this)[i];

@@ -57,7 +57,7 @@ struct int2
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr int32& operator[](psize i) noexcept
+	int32& operator[](psize i) noexcept
 	{
 		assert(i <= 1);
 		return ((int32*)this)[i];
@@ -66,7 +66,7 @@ struct int2
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr int32 operator[](psize i) const noexcept
+	int32 operator[](psize i) const noexcept
 	{
 		assert(i <= 1);
 		return ((int32*)this)[i];
@@ -189,7 +189,7 @@ struct int3
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr int32& operator[](psize i) noexcept
+	int32& operator[](psize i) noexcept
 	{
 		assert(i <= 2);
 		return ((int32*)this)[i];
@@ -198,7 +198,7 @@ struct int3
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr int32 operator[](psize i) const noexcept
+	int32 operator[](psize i) const noexcept
 	{
 		assert(i <= 2);
 		return ((int32*)this)[i];
@@ -365,7 +365,7 @@ struct int4
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr int32& operator[](psize i) noexcept
+	int32& operator[](psize i) noexcept
 	{
 		assert(i <= 3);
 		return ((int32*)this)[i];
@@ -374,7 +374,7 @@ struct int4
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr int32 operator[](psize i) const noexcept
+	int32 operator[](psize i) const noexcept
 	{
 		assert(i <= 3);
 		return ((int32*)this)[i];

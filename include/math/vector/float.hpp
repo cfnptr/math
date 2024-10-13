@@ -63,7 +63,7 @@ struct float2
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr float& operator[](psize i) noexcept
+	float& operator[](psize i) noexcept
 	{
 		assert(i <= 1);
 		return ((float*)this)[i];
@@ -72,7 +72,7 @@ struct float2
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr float operator[](psize i) const noexcept
+	float operator[](psize i) const noexcept
 	{
 		assert(i <= 1);
 		return ((float*)this)[i];
@@ -188,7 +188,7 @@ struct float3
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr float& operator[](psize i) noexcept
+	float& operator[](psize i) noexcept
 	{
 		assert(i <= 2);
 		return ((float*)this)[i];
@@ -197,7 +197,7 @@ struct float3
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr float operator[](psize i) const noexcept
+	float operator[](psize i) const noexcept
 	{
 		assert(i <= 2);
 		return ((float*)this)[i];
@@ -362,7 +362,7 @@ struct float4
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr float& operator[](psize i) noexcept
+	float& operator[](psize i) noexcept
 	{
 		assert(i <= 3);
 		return ((float*)this)[i];
@@ -371,7 +371,7 @@ struct float4
 	 * @brief Returns vector component by index.
 	 * @param i target component index
 	 */
-	constexpr float operator[](psize i) const noexcept
+	float operator[](psize i) const noexcept
 	{
 		assert(i <= 3);
 		return ((float*)this)[i];

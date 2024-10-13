@@ -64,7 +64,7 @@ struct float2x2
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	constexpr float2& operator[](psize i) noexcept
+	float2& operator[](psize i) noexcept
 	{
 		assert(i <= 1);
 		return ((float2*)this)[i];
@@ -73,7 +73,7 @@ struct float2x2
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	constexpr float2 operator[](psize i) const noexcept
+	float2 operator[](psize i) const noexcept
 	{
 		assert(i <= 1);
 		return ((float2*)this)[i];
@@ -83,13 +83,13 @@ struct float2x2
 	 * @brief Multiplies all matrix columns by specified value.
 	 * @param v target multiplier value
 	 */
-	float2x2 operator*(float v) const noexcept { return float2x2(c0 * v, c1 * v); }
+	constexpr float2x2 operator*(float v) const noexcept { return float2x2(c0 * v, c1 * v); }
 
 	/**
 	 * @brief Calculates dot product between two matrices.
 	 * @param[in] m target matrix to dot by
 	 */
-	float2x2 operator*(const float2x2& m) const noexcept
+	constexpr float2x2 operator*(const float2x2& m) const noexcept
 	{
 		return float2x2(
 			c0 * m.c0.x + c1 * m.c0.y,
@@ -99,7 +99,7 @@ struct float2x2
 	 * @brief Calculates dot product between matrix and vector.
 	 * @param v target vector to dot by
 	 */
-	float2 operator*(float2 v) const noexcept
+	constexpr float2 operator*(float2 v) const noexcept
 	{
 		return float2(
 			c0.x * v.x + c1.x * v.y,
@@ -176,7 +176,7 @@ struct float3x3
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	constexpr float3& operator[](psize i) noexcept
+	float3& operator[](psize i) noexcept
 	{
 		assert(i <= 2);
 		return ((float3*)this)[i];
@@ -185,7 +185,7 @@ struct float3x3
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	constexpr const float3& operator[](psize i) const noexcept
+	const float3& operator[](psize i) const noexcept
 	{
 		assert(i <= 2);
 		return ((float3*)this)[i];
@@ -195,13 +195,13 @@ struct float3x3
 	 * @brief Multiplies all matrix columns by specified value.
 	 * @param v target multiplier value
 	 */
-	float3x3 operator*(float v) const noexcept { return float3x3(c0 * v, c1 * v, c2 * v); }
+	constexpr float3x3 operator*(float v) const noexcept { return float3x3(c0 * v, c1 * v, c2 * v); }
 
 	/**
 	 * @brief Calculates dot product between two matrices.
 	 * @param[in] m target matrix to dot by
 	 */
-	float3x3 operator*(const float3x3& m) const noexcept
+	constexpr float3x3 operator*(const float3x3& m) const noexcept
 	{
 		return float3x3(
 			c0 * m.c0.x + c1 * m.c0.y + c2 * m.c0.z,
@@ -212,7 +212,7 @@ struct float3x3
 	 * @brief Calculates dot product between matrix and vector.
 	 * @param[in] v target vector to dot by
 	 */
-	float3 operator*(const float3& v) const noexcept
+	constexpr float3 operator*(const float3& v) const noexcept
 	{
 		return float3(
 			c0.x * v.x + c1.x * v.y + c2.x * v.z,
@@ -300,7 +300,7 @@ struct float4x4
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	constexpr float4& operator[](psize i) noexcept
+	float4& operator[](psize i) noexcept
 	{
 		assert(i <= 3);
 		return ((float4*)this)[i];
@@ -309,7 +309,7 @@ struct float4x4
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	constexpr const float4& operator[](psize i) const noexcept
+	const float4& operator[](psize i) const noexcept
 	{
 		assert(i <= 3);
 		return ((float4*)this)[i];
@@ -319,13 +319,13 @@ struct float4x4
 	 * @brief Multiplies all matrix columns by specified value.
 	 * @param v target multiplier value
 	 */
-	float4x4 operator*(float v) const noexcept { return float4x4(c0 * v, c1 * v, c2 * v, c3 * v); }
+	constexpr float4x4 operator*(float v) const noexcept { return float4x4(c0 * v, c1 * v, c2 * v, c3 * v); }
 
 	/**
 	 * @brief Calculates dot product between two matrices.
 	 * @param[in] m target matrix to dot by
 	 */
-	float4x4 operator*(const float4x4& m) const noexcept
+	constexpr float4x4 operator*(const float4x4& m) const noexcept
 	{
 		return float4x4(
 			c0 * m.c0.x + c1 * m.c0.y + c2 * m.c0.z + c3 * m.c0.w,
@@ -337,7 +337,7 @@ struct float4x4
 	 * @brief Calculates dot product between matrix and vector.
 	 * @param[in] v target vector to dot by
 	 */
-	float4 operator*(const float4& v) const noexcept
+	constexpr float4 operator*(const float4& v) const noexcept
 	{
 		return float4(
 			c0.x * v.x + c1.x * v.y + c2.x * v.z + c3.x * v.w,
