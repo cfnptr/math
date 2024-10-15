@@ -31,7 +31,7 @@ using namespace std;
 template <typename T>
 static string toHex(T value, psize length = sizeof(T) << 1) noexcept
 {
-	static constexpr char* digits = "0123456789ABCDEF";
+	constexpr const char* digits = "0123456789ABCDEF";
 	string hex(length, '0');
 	for (psize i = 0, j = (length - 1) * 4; i < length; i++, j -= 4)
 		hex[i] = digits[(value >> j) & 0x0f];
