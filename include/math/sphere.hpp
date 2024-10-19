@@ -24,8 +24,6 @@
 namespace math
 {
 
-using namespace std;
-
 /**
  * @brief Sphere structure. (In 3D space)
  * @details Defined by a position point and radius.

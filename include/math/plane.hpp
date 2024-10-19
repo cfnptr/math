@@ -26,8 +26,6 @@
 namespace math
 {
 
-using namespace std;
-
 /**
  * @brief Infinite plane container. (In 3D space)
  * @details Defined by a normal vector and distance to the plane.

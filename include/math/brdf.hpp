@@ -30,8 +30,6 @@
 namespace math::brdf
 {
 
-using namespace math;
-
 /**
  * @brief GGX microfacet distribution function. (Ground Glass Model)
  * 

@@ -27,8 +27,6 @@
 namespace math
 {
 
-using namespace std;
-
 /***********************************************************************************************************************
  * @brief Bounding Volume Hierarchy container. (BVH)
  * 

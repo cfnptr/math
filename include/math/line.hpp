@@ -24,8 +24,6 @@
 namespace math
 {
 
-using namespace std;
-
 /**
  * @brief Line structure. (In 3D space)
  * @details Defined by a start and end points in the space.

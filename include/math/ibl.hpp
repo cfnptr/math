@@ -32,8 +32,6 @@
 namespace math::ibl
 {
 
-using namespace math;
-
 /**
  * @brief Size of the Diffuse Fresnel Glossiness Look-Up Table in pixels. (DFG LUT)
  * 

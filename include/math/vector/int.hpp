@@ -24,8 +24,6 @@
 namespace math
 {
 
-using namespace std;
-
 /***********************************************************************************************************************
  * @brief Signed integer 2 component vector structure.
  * @details Commonly used to represent: points, positions, directions, velocities, etc.

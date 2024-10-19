@@ -25,8 +25,6 @@
 namespace math
 {
 
-using namespace std;
-
 /**
  * @brief Axis Aligned Bounding Box structure. (AABB)
  * 

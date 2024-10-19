@@ -24,8 +24,6 @@
 namespace math
 {
 
-using namespace std;
-
 /**
  * @brief Infinite ray structure. (In 3D space)
  * @details Defined by an origin point and direction vector.

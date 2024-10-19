@@ -32,8 +32,6 @@
 namespace math
 {
 
-using namespace std;
-
 /***********************************************************************************************************************
  * @brief Quaternion rotation container. (In 3D space)
  * @details Represents rotation using complex numbers, avoiding gimbal lock problem.

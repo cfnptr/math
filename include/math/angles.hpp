@@ -28,8 +28,6 @@
 namespace math
 {
 
-using namespace std;
-
 /***********************************************************************************************************************
  * @brief Converts specified value in degrees to radians.
  * @param degrees target value in degrees

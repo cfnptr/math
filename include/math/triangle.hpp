@@ -24,8 +24,6 @@
 namespace math
 {
 
-using namespace std;
-
 /**
  * @brief Triangle or polygon structure. (In 3D space)
  * @details Defined by three points in 3D space.
