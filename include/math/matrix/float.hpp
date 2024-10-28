@@ -248,6 +248,112 @@ inline const float3x3 float3x3::one = float3x3(1.0f);
 inline const float3x3 float3x3::minusOne = float3x3(-1.0f);
 
 /***********************************************************************************************************************
+ * @brief Floating point 4x3 matrix structure.
+ * @details Commonly used for basic transformations: translation, scale, rotation, etc.
+ */
+struct float4x3
+{
+	float3 c0; /**< First matrix column. */
+	float3 c1; /**< Second matrix column. */
+	float3 c2; /**< Third matrix column. */
+	float3 c3; /**< Fourth matrix column. */
+
+	/**
+	 * @brief Creates a new floating point 4x3 matrix structure.
+	 * @param v target value for all columns and rows
+	 */
+	constexpr explicit float4x3(float v = 0.0f) noexcept : c0(v), c1(v), c2(v), c3(v) { }
+	/**
+	 * @brief Creates a new floating point 4x3 matrix structure.
+	 *
+	 * @param[in] c0 first matrix column value
+	 * @param[in] c1 second matrix column value
+	 * @param[in] c2 third matrix column value
+	 */
+	constexpr float4x3(const float3& c0, const float3& c1, const float3& c2, const float3& c3)
+		noexcept : c0(c0), c1(c1), c2(c2), c3(c3) { }
+	/**
+	 * @brief Creates a new floating point 4x3 matrix structure.
+	 * @details See the @ref float3x3.
+	 */
+	constexpr float4x3(
+		float c0r0, float c1r0, float c2r0, float c3r0,
+		float c0r1, float c1r1, float c2r1, float c3r1,
+		float c0r2, float c1r2, float c2r2, float c3r2) noexcept :
+		c0(float3(c0r0, c0r1, c0r2)),
+		c1(float3(c1r0, c1r1, c1r2)),
+		c2(float3(c2r0, c2r1, c2r2)),
+		c3(float3(c3r0, c3r1, c3r2)) { }
+
+	/**
+	 * @brief Returns matrix 2x2 part.
+	 */
+	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
+	/**
+	 * @brief Returns matrix 3x3 part.
+	 */
+	constexpr explicit operator float3x3() const noexcept { return float3x3(c0, c1, c2); }
+
+	/**
+	 * @brief Returns matrix column by index.
+	 * @param i target column index
+	 */
+	float3& operator[](psize i) noexcept
+	{
+		assert(i <= 2);
+		return ((float3*)this)[i];
+	}
+	/**
+	 * @brief Returns matrix column by index.
+	 * @param i target column index
+	 */
+	const float3& operator[](psize i) const noexcept
+	{
+		assert(i <= 2);
+		return ((float3*)this)[i];
+	}
+
+	/*******************************************************************************************************************
+	 * @brief Multiplies all matrix columns by specified value.
+	 * @param v target multiplier value
+	 */
+	constexpr float4x3 operator*(float v) const noexcept { return float4x3(c0 * v, c1 * v, c2 * v, c3 * v); }
+
+	/**
+	 * @brief Calculates dot product between matrix and vector.
+	 * @param[in] v target vector to dot by
+	 */
+	constexpr float3 operator*(const float4& v) const noexcept
+	{
+		return float3(
+			c0.x * v.x + c1.x * v.y + c2.x * v.z + c3.x * v.w,
+			c0.y * v.x + c1.y * v.y + c2.y * v.z + c3.y * v.w,
+			c0.z * v.x + c1.z * v.y + c2.z * v.z + c3.z * v.w);
+	}
+
+	/**
+	 * @brief Returns true if matrices have the same values.
+	 * @param[in] m another matrix to compare with
+	 */
+	bool operator==(const float4x3& m) const noexcept { return memcmp(this, &m, sizeof(float4x3)) == 0; }
+	/**
+	 * @brief Returns true if matrices have different values.
+	 * @param[in] m another matrix to compare with
+	 */
+	bool operator!=(const float4x3& m) const noexcept { return memcmp(this, &m, sizeof(float4x3)) != 0; }
+
+	static const float4x3 zero, one, minusOne, identity;
+};
+
+inline const float4x3 float4x3::identity = float4x3(
+	1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f);
+inline const float4x3 float4x3::zero = float4x3(0.0f);
+inline const float4x3 float4x3::one = float4x3(1.0f);
+inline const float4x3 float4x3::minusOne = float4x3(-1.0f);
+
+/***********************************************************************************************************************
  * @brief Floating point 4x4 matrix structure.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
@@ -275,6 +381,16 @@ struct float4x4
 		c0(c0), c1(c1), c2(c2), c3(c3) { }
 	/**
 	 * @brief Creates a new floating point 4x4 matrix structure.
+	 *
+	 * @param[in] c0 first matrix column value
+	 * @param[in] c1 second matrix column value
+	 * @param[in] c2 third matrix column value
+	 * @param[in] c3 fourth matrix column value
+	 */
+	constexpr float4x4(const float4x3& m4x3, float c0, float c1, float c2, float c3) noexcept :
+		c0(float4(m4x3.c0, c0)), c1(float4(m4x3.c1, c1)), c2(float4(m4x3.c2, c2)), c3(float4(m4x3.c3, c3)) { }
+	/**
+	 * @brief Creates a new floating point 4x4 matrix structure.
 	 * @details See the @ref float4x4.
 	 */
 	constexpr float4x4(
@@ -287,6 +403,11 @@ struct float4x4
 		c2(float4(c2r0, c2r1, c2r2, c2r3)),
 		c3(float4(c3r0, c3r1, c3r2, c3r3)) { }
 
+	/**
+	 * @brief Returns matrix 4x3 part.
+	 */
+	constexpr explicit operator float4x3() const noexcept
+	{ return float4x3((float3)c0, (float3)c1, (float3)c2, (float3)c3); }
 	/**
 	 * @brief Returns matrix 3x3 part.
 	 */
