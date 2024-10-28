@@ -250,8 +250,9 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 	auto primitiveCount = indexCount / Triangle::pointCount;
 	nodes.resize(primitiveCount * 2 - 1);
 	primitives.resize(primitiveCount);
-	auto primitiveData = primitives.data();
-	for (uint32 i = 0; i < primitiveCount; i++) primitiveData[i] = i;
+
+	for (uint32 i = 0; i < primitiveCount; i++)
+		primitives[i] = i;
 
 	function getIndex16 = [](const uint8* data) { return (uint32)*(const uint16*)data; };
 	function getIndex32 = [](const uint8* data) { return *(const uint32*)data; };
@@ -266,7 +267,6 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 	{
 		centroids.resize(primitiveCount);
 		centroidData = centroids.data();
-		auto data = centroids.data();
 
 		for (uint32 i = 0; i < primitiveCount; i++)
 		{
@@ -277,7 +277,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 			auto v0 = (const float3*)(vertices + i0 * vertexSize);
 			auto v1 = (const float3*)(vertices + i1 * vertexSize);
 			auto v2 = (const float3*)(vertices + i2 * vertexSize);
-			data[i] = (*v0 + *v1 + *v2) * (1.0f / 3.0f);
+			centroids[i] = (*v0 + *v1 + *v2) * (1.0f / 3.0f);
 		}
 	}
 	else
@@ -285,9 +285,8 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 		centroidData = _centroids;
 	}
 
-	auto nodeData = nodes.data();
 	auto nodeCount = (uint32)1;
-	auto node = &nodeData[0];
+	auto node = &nodes[0];
 	node->setAabb(aabb);
 	node->leaf.primitiveCount = primitiveCount;
 	node->leaf.firstPrimitive = 0;
@@ -300,7 +299,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 
 		int32 axis; float split, cost;
 		findBestSplitPlane(firstPrimitive, lastPrimitive, vertexSize, indexSize,
-			vertices, indices, primitiveData, centroidData, getIndex, axis, split, cost);
+			vertices, indices, primitives.data(), centroidData, getIndex, axis, split, cost);
 
 		auto nodeCost = node->getAabb().calcArea() * primitiveCount;
 		if (cost >= nodeCost)
@@ -318,10 +317,10 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 		auto i = firstPrimitive, j = i + primitiveCount - 1;
 		while (i <= j)
 		{
-			if (centroidData[primitiveData[i]][axis] < split)
+			if (centroidData[primitives[i]][axis] < split)
 				i++;
 			else
-				std::swap(primitiveData[i], primitiveData[j--]);
+				std::swap(primitives[i], primitives[j--]);
 		}
 
 		auto count1 = i - firstPrimitive;
@@ -344,17 +343,17 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 		node->child.leftNode = leftNodeID;
 		node->child.primitiveCount = 0;
 	
-		auto node1 = &nodeData[leftNodeID];
+		auto node1 = &nodes[leftNodeID];
 		node1->leaf.firstPrimitive = firstPrimitive;
 		node1->leaf.primitiveCount = count1;
 		node1->setAabb(calculateNodeAabb(node1, vertices,
-			indices, primitiveData, vertexSize, indexSize, getIndex));
+			indices, primitives.data(), vertexSize, indexSize, getIndex));
 
-		auto node2 = &nodeData[rightNodeID];
+		auto node2 = &nodes[rightNodeID];
 		node2->leaf.firstPrimitive = i;
 		node2->leaf.primitiveCount = count2;
 		node2->setAabb(calculateNodeAabb(node2, vertices,
-			indices, primitiveData, vertexSize, indexSize, getIndex));
+			indices, primitives.data(), vertexSize, indexSize, getIndex));
 
 		if (count2 > count1)
 		{
@@ -400,12 +399,11 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const 
 	{
 		centroids.resize(aabbCount);
 		centroidData = centroids.data();
-		auto data = centroids.data();
 
 		for (uint32 i = 0; i < aabbCount; i++)
 		{
 			auto aabb = aabbs[i];
-			data[i] = aabb.getPosition();
+			centroids[i] = aabb.getPosition();
 		}
 	}
 	else
