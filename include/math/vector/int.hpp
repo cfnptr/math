@@ -593,58 +593,59 @@ static constexpr bool operator>=(int32 n, const int4& v) noexcept { return int4(
 static bool isBinaryLess(const int4& a, const int4& b) noexcept { return memcmp(&a, &b, sizeof(int32) * 4) < 0; }
 
 //**********************************************************************************************************************
-static int2 min(int2 a, int2 b) noexcept { return int2(std::min(a.x, b.x), std::min(a.y, b.y)); }
-static int2 max(int2 a, int2 b) noexcept { return int2(std::max(a.x, b.x), std::max(a.y, b.y)); }
-static int2 min(int2 a, int2 b, int2 c) noexcept { return min(min(a, b), c); }
-static int2 max(int2 a, int2 b, int2 c) noexcept { return max(max(a, b), c); }
-
-static int2 clamp(int2 v, int2 min, int2 max) noexcept
+static constexpr int2 min(int2 a, int2 b) noexcept { return int2(std::min(a.x, b.x), std::min(a.y, b.y)); }
+static constexpr int2 max(int2 a, int2 b) noexcept { return int2(std::max(a.x, b.x), std::max(a.y, b.y)); }
+static constexpr int2 min(int2 a, int2 b, int2 c) noexcept { return min(min(a, b), c); }
+static constexpr int2 max(int2 a, int2 b, int2 c) noexcept { return max(max(a, b), c); }
+static constexpr int2 clamp(int2 v, int2 min, int2 max) noexcept
 {
 	return int2(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y));
 }
-static int32 dot(int2 a, int2 b) noexcept { return a.x * b.x + a.y * b.y; }
-static int32 length2(int2 v) noexcept { return dot(v, v); }
-static int32 distance2(int2 a, int2 b) noexcept { return length2(a - b); }
+static constexpr int32 dot(int2 a, int2 b) noexcept { return a.x * b.x + a.y * b.y; }
+static constexpr int32 length2(int2 v) noexcept { return dot(v, v); }
+static constexpr int32 distance2(int2 a, int2 b) noexcept { return length2(a - b); }
 
 //**********************************************************************************************************************
-static int3 min(const int3& a, const int3& b) noexcept
+static constexpr int3 min(const int3& a, const int3& b) noexcept
 {
 	return int3(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z));
 }
-static int3 max(const int3& a, const int3& b) noexcept
+static constexpr int3 max(const int3& a, const int3& b) noexcept
 {
 	return int3(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z));
 }
-static int3 min(const int3& a, const int3& b, const int3& c) noexcept { return min(min(a, b), c); }
-static int3 max(const int3& a, const int3& b, const int3& c) noexcept { return max(max(a, b), c); }
-static int3 clamp(const int3& v, const int3& min, const int3& max) noexcept
+static constexpr int3 min(const int3& a, const int3& b, const int3& c) noexcept { return min(min(a, b), c); }
+static constexpr int3 max(const int3& a, const int3& b, const int3& c) noexcept { return max(max(a, b), c); }
+static constexpr int3 clamp(const int3& v, const int3& min, const int3& max) noexcept
 {
 	return int3(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y), std::clamp(v.z, min.z, max.z));
 }
 
-static int32 dot(const int3& a, const int3& b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z; }
-static int32 length2(const int3& v) noexcept { return dot(v, v); }
-static int32 distance2(const int3& a, const int3& b) noexcept { return length2(a - b); }
+static constexpr int32 dot(const int3& a, const int3& b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z; }
+static constexpr int32 length2(const int3& v) noexcept { return dot(v, v); }
+static constexpr int32 distance2(const int3& a, const int3& b) noexcept { return length2(a - b); }
 
 //**********************************************************************************************************************
-static int4 min(const int4& a, const int4& b) noexcept
+static constexpr int4 min(const int4& a, const int4& b) noexcept
 {
 	return int4(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z), std::min(a.w, b.w));
 }
-static int4 max(const int4& a, const int4& b) noexcept
+static constexpr int4 max(const int4& a, const int4& b) noexcept
 {
 	return int4(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z), std::max(a.w, b.w));
 }
-static int4 min(const int4& a, const int4& b, const int4& c) noexcept { return min(min(a, b), c); }
-static int4 max(const int4& a, const int4& b, const int4& c) noexcept { return max(max(a, b), c); }
-
-static int4 clamp(const int4& v, const int4& min, const int4& max) noexcept
+static constexpr int4 min(const int4& a, const int4& b, const int4& c) noexcept { return min(min(a, b), c); }
+static constexpr int4 max(const int4& a, const int4& b, const int4& c) noexcept { return max(max(a, b), c); }
+static constexpr int4 clamp(const int4& v, const int4& min, const int4& max) noexcept
 {
 	return int4(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y),
 		std::clamp(v.z, min.z, max.z), std::clamp(v.w, min.w, max.w));
 }
-static int32 dot(const int4& a, const int4& b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w; }
-static int32 length2(const int4& v) noexcept { return dot(v, v); }
-static int32 distance2(const int4& a, const int4& b) noexcept { return length2(a - b); }
+static constexpr int32 dot(const int4& a, const int4& b) noexcept
+{
+	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+}
+static constexpr int32 length2(const int4& v) noexcept { return dot(v, v); }
+static constexpr int32 distance2(const int4& a, const int4& b) noexcept { return length2(a - b); }
 
 } // namespace math

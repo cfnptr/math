@@ -78,7 +78,7 @@ struct Line
  * @param[in] line target line to use
  * @param[in] point target point in the space
  */
-static float3 closestPoint(const Line& line, const float3& point) noexcept
+static constexpr float3 closestPoint(const Line& line, const float3& point) noexcept
 {
 	auto a = line.start;
 	auto v = line.getVector();
@@ -92,7 +92,7 @@ static float3 closestPoint(const Line& line, const float3& point) noexcept
  * @param[in] point target point in the space
  * @param[out] t distance to the closest point
  */
-static float3 closestPoint(const Line& line, const float3& point, float& t) noexcept
+static constexpr float3 closestPoint(const Line& line, const float3& point, float& t) noexcept
 {
 	auto a = line.start;
 	auto v = line.getVector();

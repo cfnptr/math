@@ -544,7 +544,7 @@ static float4 operator*(const float4& v, const float4x4& m) noexcept
  * @brief Flips matrix over its diagonal, swapping rows and columns.
  * @param[in] m target matrix to transpose
  */
-static float2x2 transpose(const float2x2& m) noexcept
+static constexpr float2x2 transpose(const float2x2& m) noexcept
 {
 	return float2x2(
 		m.c0.x, m.c0.y,
@@ -554,7 +554,7 @@ static float2x2 transpose(const float2x2& m) noexcept
  * @brief Flips matrix over its diagonal, swapping rows and columns.
  * @param[in] m target matrix to transpose
  */
-static float3x3 transpose(const float3x3& m) noexcept
+static constexpr float3x3 transpose(const float3x3& m) noexcept
 {
 	return float3x3(
 		m.c0.x, m.c0.y, m.c0.z,
@@ -565,7 +565,7 @@ static float3x3 transpose(const float3x3& m) noexcept
  * @brief Flips matrix over its diagonal, swapping rows and columns.
  * @param[in] m target matrix to transpose
  */
-static float4x4 transpose(const float4x4& m) noexcept
+static constexpr float4x4 transpose(const float4x4& m) noexcept
 {
 	return float4x4(
 		m.c0.x, m.c0.y, m.c0.z, m.c0.w,
@@ -576,9 +576,9 @@ static float4x4 transpose(const float4x4& m) noexcept
 
 /***********************************************************************************************************************
  * @brief Calculates matrix inverse. (Usefull for undoing transformations)
- * @param[in] m target matrix to inverse
+ * @param[in] matrix target matrix to inverse
  */
-static float2x2 inverse(const float2x2& matrix) noexcept
+static constexpr float2x2 inverse(const float2x2& matrix) noexcept
 {
 	auto m = matrix;
 	auto oneOverDeterminant = 1.0f / (m.c0.x * m.c1.y - m.c1.x * m.c0.y);
@@ -587,9 +587,9 @@ static float2x2 inverse(const float2x2& matrix) noexcept
 }
 /**
  * @brief Calculates matrix inverse. (Usefull for undoing transformations)
- * @param[in] m target matrix to inverse
+ * @param[in] matrix target matrix to inverse
  */
-static float3x3 inverse(const float3x3& matrix) noexcept
+static constexpr float3x3 inverse(const float3x3& matrix) noexcept
 {
 	auto m = matrix;
 	auto oneOverDeterminant = 1.0f / (
@@ -609,9 +609,9 @@ static float3x3 inverse(const float3x3& matrix) noexcept
 }
 /**
  * @brief Calculates matrix inverse. (Usefull for undoing transformations)
- * @param[in] m target matrix to inverse
+ * @param[in] matrix target matrix to inverse
  */
-static float4x4 inverse(const float4x4& matrix) noexcept
+static constexpr float4x4 inverse(const float4x4& matrix) noexcept
 {
 	auto m = matrix;
 	auto c00 = m.c2.z * m.c3.w - m.c3.z * m.c2.w;

@@ -96,7 +96,7 @@ struct quat : public float4
 	 * @brief Rotates vector by this quaternion.
 	 * @param[in] v target vector to rotate
 	 */
-	float3 operator*(const float3& v) const noexcept
+	constexpr float3 operator*(const float3& v) const noexcept
 	{
 		auto q = float3(x, y, z);
 		auto cq = math::cross(q, v);
@@ -191,12 +191,12 @@ static quat slerp(const quat& a, const quat& b, float t) noexcept
  * @brief Inverts (undoes) quaternion rotation.
  * @param[in] q target quaternion to conjugate
  */
-static quat conjugate(const quat& q) noexcept { return quat(-q.x, -q.y, -q.z, q.w); }
+static constexpr quat conjugate(const quat& q) noexcept { return quat(-q.x, -q.y, -q.z, q.w); }
 /**
  * @brief Calculates inverse of the quaternion.
  * @param[in] q target quaternion to inverse
  */
-static quat inverse(const quat& q) noexcept { return conjugate(q) / dot(q, q);  }
+static constexpr quat inverse(const quat& q) noexcept { return conjugate(q) / dot(q, q);  }
 
 /**
  * @brief Rotates vector by the inversed quaternion.
@@ -204,6 +204,6 @@ static quat inverse(const quat& q) noexcept { return conjugate(q) / dot(q, q);  
  * @param[in] v target vector to rotate
  * @param[in] q target quaternion to use
  */
-static float3 operator*(const float3& v, const quat& q) noexcept { return inverse(q) * v; }
+static constexpr float3 operator*(const float3& v, const quat& q) noexcept { return inverse(q) * v; }
 
 } // namespace math

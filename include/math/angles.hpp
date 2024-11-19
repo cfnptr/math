@@ -32,17 +32,20 @@ namespace math
  * @brief Converts specified value in degrees to radians.
  * @param degrees target value in degrees
  */
-constexpr float radians(float degrees) noexcept { return degrees * ((float)M_PI / 180.0f); }
+static constexpr float radians(float degrees) noexcept { return degrees * ((float)M_PI / 180.0f); }
 /**
  * @brief Converts specified vector in degrees to radians.
  * @param degrees target vector in degrees
  */
-static float2 radians(float2 degrees) noexcept { return float2(radians(degrees.x), radians(degrees.y)); }
+static constexpr float2 radians(float2 degrees) noexcept
+{
+	return float2(radians(degrees.x), radians(degrees.y));
+}
 /**
  * @brief Converts specified vector in degrees to radians.
  * @param[in] degrees target vector in degrees
  */
-static float3 radians(const float3& degrees) noexcept
+static constexpr float3 radians(const float3& degrees) noexcept
 {
 	return float3(radians(degrees.x), radians(degrees.y), radians(degrees.z));
 }
@@ -59,17 +62,20 @@ static float4 radians(const float4& degrees) noexcept
  * @brief Converts specified value in radians to degrees.
  * @param degrees target vector in radians
  */
-constexpr float degrees(float radians) noexcept { return radians * (180.0f / (float)M_PI); }
+static constexpr float degrees(float radians) noexcept { return radians * (180.0f / (float)M_PI); }
 /**
  * @brief Converts specified vector in radians to degrees.
  * @param degrees target vector in radians
  */
-static float2 degrees(float2 radians) noexcept { return float2(degrees(radians.x), degrees(radians.y)); }
+static constexpr float2 degrees(float2 radians) noexcept
+{
+	return float2(degrees(radians.x), degrees(radians.y));
+}
 /**
  * @brief Converts specified vector in radians to degrees.
  * @param[in] degrees target vector in radians
  */
-static float3 degrees(const float3& radians) noexcept
+static constexpr float3 degrees(const float3& radians) noexcept
 {
 	return float3(degrees(radians.x), degrees(radians.y), degrees(radians.z));
 }
@@ -77,7 +83,7 @@ static float3 degrees(const float3& radians) noexcept
  * @brief Converts specified vector in radians to degrees.
  * @param[in] degrees target vector in radians
  */
-static float4 degrees(const float4& radians) noexcept
+static constexpr float4 degrees(const float4& radians) noexcept
 {
 	return float4(degrees(radians.x), degrees(radians.y), degrees(radians.z), degrees(radians.w));
 }

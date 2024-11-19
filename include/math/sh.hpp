@@ -57,7 +57,7 @@ constexpr float ki[shCoefCount] =
 	(float)0.143014255134963907956091588857816532
 };
 
-static int32 shIndex(int32 m, int32 l) noexcept
+static constexpr int32 shIndex(int32 m, int32 l) noexcept
 {
 	return l * (l + 1) + m;
 }

@@ -40,7 +40,7 @@ namespace math::brdf
  * @param noh dot product between the surface normal (n) and the half-vector (h)
  * @param roughness spread of microfacets on a surface (0.0-1.0 / smooth-rough)
  */
-static float ggx(float noh, float roughness) noexcept
+static constexpr float ggx(float noh, float roughness) noexcept
 {
     auto f = (roughness - 1.0f) * ((roughness + 1.0f) * (noh * noh)) + 1.0f;
     return (roughness * roughness) / ((float)M_PI * f * f);
@@ -57,7 +57,7 @@ static float ggx(float noh, float roughness) noexcept
  * @param index target index of the sample
  * @param invSampleCount iversed sample count (1.0f / sampleCount)
  */
-static float2 hammersley(uint32 index, float invSampleCount) noexcept
+static constexpr float2 hammersley(uint32 index, float invSampleCount) noexcept
 {
     constexpr auto tof = 0.5f / 0x80000000U;
     auto bits = index;

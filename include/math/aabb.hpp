@@ -213,7 +213,7 @@ static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(
  * @param[in] aabb target AABB to check
  * @param[in] point target point in the space
  */
-static bool isInside(const Aabb& aabb, const float3& point) noexcept
+static constexpr bool isInside(const Aabb& aabb, const float3& point) noexcept
 {
 	return point >= aabb.getMin() && point <= aabb.getMax();
 }
@@ -223,7 +223,7 @@ static bool isInside(const Aabb& aabb, const float3& point) noexcept
  * @param[in] aabb target AABB to use
  * @param[in] point target point in the space
  */
-static float3 closestPoint(const Aabb& aabb, const float3& point) noexcept
+static constexpr float3 closestPoint(const Aabb& aabb, const float3& point) noexcept
 {
 	return clamp(point, aabb.getMin(), aabb.getMax());
 }
@@ -266,7 +266,7 @@ float raycast1I(const Aabb& aabb, const Ray& ray) noexcept;
  * @brief Returns true if ray is intersecting the AABB.
  * @param raycastDists resulting raycast distances
  */
-static bool isAabbIntersected(float2 raycastDists) noexcept
+static constexpr bool isAabbIntersected(float2 raycastDists) noexcept
 {
 	// If tMax < 0.0f, ray is intersecting AABB, but whole AABB is behind us.
 	return raycastDists.x <= raycastDists.y && raycastDists.y >= 0.0f;

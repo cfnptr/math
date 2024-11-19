@@ -110,7 +110,7 @@ inline const Plane Plane::front = Plane(float3(0.0f, 0.0f, 1.0f), 0.0f, false);
  * @param[in] plane target plane to use
  * @param[in] point target point in 3D space
  */
-static float distance(const Plane& plane, const float3& point) noexcept
+static constexpr float distance(const Plane& plane, const float3& point) noexcept
 {
 	return dot(plane.getNormal(), point) + plane.distance;
 }
@@ -120,7 +120,7 @@ static float distance(const Plane& plane, const float3& point) noexcept
  * @param[in] plane target plane to use
  * @param[in] point target point in 3D space
  */
-static float3 closestPoint(const Plane& plane, const float3& point) noexcept
+static constexpr float3 closestPoint(const Plane& plane, const float3& point) noexcept
 {
 	return point - plane.getNormal() * distance(plane, point);
 }
@@ -131,7 +131,7 @@ static float3 closestPoint(const Plane& plane, const float3& point) noexcept
  * @param[in] plane target plane to use
  * @param[in] point target point in 3D space
  */
-static float3 closestPoint(const Triangle& triangle, const float3& point) noexcept
+static constexpr float3 closestPoint(const Triangle& triangle, const float3& point) noexcept
 {
 	auto p = closestPoint(Plane(triangle), point);
 	if (isInside(triangle, p))

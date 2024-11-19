@@ -34,10 +34,10 @@ namespace math
 
 using namespace std;
 
-static float min(float a, float b, float c) { return std::min(std::min(a, b), c); }
-static float max(float a, float b, float c) { return std::max(std::max(a, b), c); }
-static int32 min(int32 a, int32 b, int32 c) { return std::min(std::min(a, b), c); }
-static int32 max(int32 a, int32 b, int32 c) { return std::max(std::max(a, b), c); }
+static constexpr float min(float a, float b, float c) { return std::min(std::min(a, b), c); }
+static constexpr float max(float a, float b, float c) { return std::max(std::max(a, b), c); }
+static constexpr int32 min(int32 a, int32 b, int32 c) { return std::min(std::min(a, b), c); }
+static constexpr int32 max(int32 a, int32 b, int32 c) { return std::max(std::max(a, b), c); }
 
 static float repeat(float v) noexcept
 {

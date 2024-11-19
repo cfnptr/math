@@ -52,7 +52,7 @@ public:
 	/**
 	 * @brief Returns ray direction vector in 3D space.
 	 */
-	const float3& getDirection() const noexcept {return direction; }
+	const float3& getDirection() const noexcept { return direction; }
 	/**
 	 * @brief Sets ray direction vector in 3D space.
 	 * 
@@ -96,7 +96,7 @@ inline const Ray Ray::front = Ray(float3(0.0f), float3(0.0f, 0.0f, 1.0f), false)
  * @param[in] ray target ray to use
  * @param[in] point target point in 3D space
  */
-static float3 closestPoint(const Ray& ray, const float3& point) noexcept
+static constexpr float3 closestPoint(const Ray& ray, const float3& point) noexcept
 {
 	auto a = ray.origin;
 	auto b = ray.origin + ray.getDirection();

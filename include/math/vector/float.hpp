@@ -552,10 +552,10 @@ static bool isBinaryLess(const float4& a, const float4& b) noexcept { return mem
 //**********************************************************************************************************************
 // TODO: possibly add more specific math functions like remquo, sph_neumann or dFdx.
 
-static float2 min(float2 a, float2 b) noexcept { return float2(std::min(a.x, b.x), std::min(a.y, b.y)); }
-static float2 max(float2 a, float2 b) noexcept { return float2(std::max(a.x, b.x), std::max(a.y, b.y)); }
-static float2 min(float2 a, float2 b, float2 c) noexcept { return min(min(a, b), c); }
-static float2 max(float2 a, float2 b, float2 c) noexcept { return max(max(a, b), c); }
+static constexpr float2 min(float2 a, float2 b) noexcept { return float2(std::min(a.x, b.x), std::min(a.y, b.y)); }
+static constexpr float2 max(float2 a, float2 b) noexcept { return float2(std::max(a.x, b.x), std::max(a.y, b.y)); }
+static constexpr float2 min(float2 a, float2 b, float2 c) noexcept { return min(min(a, b), c); }
+static constexpr float2 max(float2 a, float2 b, float2 c) noexcept { return max(max(a, b), c); }
 static float2 abs(float2 v) noexcept { return float2(std::abs(v.x), std::abs(v.y)); }
 static float2 mod(float2 a, float2 b) noexcept { return float2(std::fmod(a.x, b.x), std::fmod(a.y, b.y)); }
 static float2 fma(float2 a, float2 b, float2 c) noexcept
@@ -591,16 +591,16 @@ static float2 asinh(float2 v) noexcept { return float2(std::asinh(v.x), std::asi
 static float2 acosh(float2 v) noexcept { return float2(std::acosh(v.x), std::acosh(v.y)); }
 static float2 atanh(float2 v) noexcept { return float2(std::atanh(v.x), std::atanh(v.y)); }
 
-static float2 clamp(float2 v, float2 min, float2 max) noexcept
+static constexpr float2 clamp(float2 v, float2 min, float2 max) noexcept
 {
 	return float2(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y));
 }
 static float2 repeat(float2 v) noexcept { return float2(repeat(v.x), repeat(v.y)); }
-static float dot(float2 a, float2 b) noexcept { return a.x * b.x + a.y * b.y; }
+static constexpr float dot(float2 a, float2 b) noexcept { return a.x * b.x + a.y * b.y; }
 static float length(float2 v) noexcept { return std::sqrt(dot(v, v)); }
-static float length2(float2 v) noexcept { return dot(v, v); }
+static constexpr float length2(float2 v) noexcept { return dot(v, v); }
 static float distance(float2 a, float2 b) noexcept { return length(a - b); }
-static float distance2(float2 a, float2 b) noexcept { return length2(a - b); }
+static constexpr float distance2(float2 a, float2 b) noexcept { return length2(a - b); }
 static float2 normalize(float2 v) noexcept
 {
 	auto l = length(v);
@@ -624,16 +624,16 @@ static float2 gain(float2 x, float2 k) noexcept
 }
 
 //**********************************************************************************************************************
-static float3 min(const float3& a, const float3& b) noexcept
+static constexpr float3 min(const float3& a, const float3& b) noexcept
 {
 	return float3(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z));
 }
-static float3 max(const float3& a, const float3& b) noexcept
+static constexpr float3 max(const float3& a, const float3& b) noexcept
 {
 	return float3(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z));
 }
-static float3 min(const float3& a, const float3& b, const float3& c) noexcept { return min(min(a, b), c); }
-static float3 max(const float3& a, const float3& b, const float3& c) noexcept { return max(max(a, b), c); }
+static constexpr float3 min(const float3& a, const float3& b, const float3& c) noexcept { return min(min(a, b), c); }
+static constexpr float3 max(const float3& a, const float3& b, const float3& c) noexcept { return max(max(a, b), c); }
 static float3 abs(const float3& v) noexcept { return float3(std::abs(v.x), std::abs(v.y), std::abs(v.z)); }
 static float3 mod(const float3& a, const float3& b) noexcept
 {
@@ -678,20 +678,20 @@ static float3 asinh(const float3& v) noexcept { return float3(std::asinh(v.x), s
 static float3 acosh(const float3& v) noexcept { return float3(std::acosh(v.x), std::acosh(v.y), std::acosh(v.z)); }
 static float3 atanh(const float3& v) noexcept { return float3(std::atanh(v.x), std::atanh(v.y), std::atanh(v.z)); }
 
-static float3 clamp(const float3& v, const float3& min, const float3& max) noexcept
+static constexpr float3 clamp(const float3& v, const float3& min, const float3& max) noexcept
 {
 	return float3(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y), std::clamp(v.z, min.z, max.z));
 }
 static float3 repeat(const float3& v) noexcept { return float3(repeat(v.x), repeat(v.y), repeat(v.z)); }
-static float dot(const float3& a, const float3& b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z; }
-static float3 cross(const float3& a, const float3& b) noexcept
+static constexpr float dot(const float3& a, const float3& b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z; }
+static constexpr float3 cross(const float3& a, const float3& b) noexcept
 {
 	return float3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }
 static float length(const float3& v) noexcept { return std::sqrt(dot(v, v)); }
-static float length2(const float3& v) noexcept { return dot(v, v); }
+static constexpr float length2(const float3& v) noexcept { return dot(v, v); }
 static float distance(const float3& a, const float3& b) noexcept { return length(a - b); }
-static float distance2(const float3& a, const float3& b) noexcept { return length2(a - b); }
+static constexpr float distance2(const float3& a, const float3& b) noexcept { return length2(a - b); }
 static float3 normalize(const float3& v) noexcept { return v * (1.0f / length(v)); }
 static float3 lerp(const float3& a, const float3& b, float t) noexcept
 {
@@ -710,16 +710,16 @@ static float3 gain(const float3& x, const float3& k) noexcept
 }
 
 //**********************************************************************************************************************
-static float4 min(const float4& a, const float4& b) noexcept
+static constexpr float4 min(const float4& a, const float4& b) noexcept
 {
 	return float4(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z), std::min(a.w, b.w));
 }
-static float4 max(const float4& a, const float4& b) noexcept
+static constexpr float4 max(const float4& a, const float4& b) noexcept
 {
 	return float4(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z), std::max(a.w, b.w));
 }
-static float4 min(const float4& a, const float4& b, const float4& c) noexcept { return min(min(a, b), c); }
-static float4 max(const float4& a, const float4& b, const float4& c) noexcept { return max(max(a, b), c); }
+static constexpr float4 min(const float4& a, const float4& b, const float4& c) noexcept { return min(min(a, b), c); }
+static constexpr float4 max(const float4& a, const float4& b, const float4& c) noexcept { return max(max(a, b), c); }
 static float4 abs(const float4& v) noexcept
 {
 	return float4(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w));
@@ -848,11 +848,14 @@ static float4 clamp(const float4& v, const float4& min, const float4& max) noexc
 		std::clamp(v.z, min.z, max.z), std::clamp(v.w, min.w, max.w));
 }
 static float4 repeat(const float4& v) noexcept { return float4(repeat(v.x), repeat(v.y), repeat(v.z), repeat(v.w)); }
-static float dot(const float4& a, const float4& b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w; }
+static constexpr float dot(const float4& a, const float4& b) noexcept
+{
+	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+}
 static float length(const float4& v) noexcept { return std::sqrt(dot(v, v)); }
-static float length2(const float4& v) noexcept { return dot(v, v); }
+static constexpr float length2(const float4& v) noexcept { return dot(v, v); }
 static float distance(const float4& a, const float4& b) noexcept { return length(a - b); }
-static float distance2(const float4& a, const float4& b) noexcept { return length2(a - b); }
+static constexpr float distance2(const float4& a, const float4& b) noexcept { return length2(a - b); }
 static float4 normalize(const float4& v) noexcept
 {
 	auto l = length(v);

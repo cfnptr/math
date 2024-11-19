@@ -70,7 +70,7 @@ struct Triangle
  * @param[in] sphere target triangle to check
  * @param[in] point target point in the space
  */
-static bool isInside(const Triangle& triangle, const float3& point) noexcept
+static constexpr bool isInside(const Triangle& triangle, const float3& point) noexcept
 {
 	auto p0 = triangle.p0 - point;
 	auto p1 = triangle.p1 - point;
@@ -88,7 +88,7 @@ static bool isInside(const Triangle& triangle, const float3& point) noexcept
  * @param[in] triangle target triangle to use
  * @param[in] point target point in space
  */
-static float3 calcBarycentric(const Triangle& triangle, const float3& point) noexcept
+static constexpr float3 calcBarycentric(const Triangle& triangle, const float3& point) noexcept
 {
 	// Cramer's rule
 	auto p0 = triangle.p0;

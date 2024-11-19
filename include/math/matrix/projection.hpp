@@ -93,7 +93,7 @@ static float4x4 calcPerspProj(float fieldOfView, float aspectRatio, float nearPl
  * @param height camera heght (ex. from -1.0 to 1.0)
  * @param depth camera depth (ex. from 0.0 to 1.0)
  */
-static float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth) noexcept
+static constexpr float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth) noexcept
 {
 	return float4x4(
 		2.0f / (width.y - width.x), 0.0f, 0.0f, -(width.y + width.x) / (width.y - width.x),
@@ -108,7 +108,7 @@ static float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth) noe
  * @param height camera heght (ex. from -1.0 to 1.0)
  * @param depth camera depth (ex. from 0.0 to 1.0)
  */
-static float4x4 calcOrthoProj(float2 width, float2 height, float2 depth) noexcept
+static constexpr float4x4 calcOrthoProj(float2 width, float2 height, float2 depth) noexcept
 {
 	return float4x4(
 		2.0f / (width.y - width.x), 0.0f, 0.0f, -(width.y + width.x) / (width.y - width.x),

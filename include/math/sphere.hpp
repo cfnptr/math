@@ -58,7 +58,7 @@ inline const Sphere Sphere::half = Sphere(0.25f);
  * @param[in] sphere target sphere to check
  * @param[in] point target point in the space
  */
-static bool isInside(const Sphere& sphere, const float3& point) noexcept
+static constexpr bool isInside(const Sphere& sphere, const float3& point) noexcept
 {
 	auto difference = sphere.position - point;
   	return length2(difference) < sphere.radius * sphere.radius;
@@ -82,7 +82,7 @@ static float3 closestPoint(const Sphere& sphere, const float3& point) noexcept
  * @param[in] a first sphere to check
  * @param[in] b second sphere to chech
  */
-static bool isIntersected(const Sphere& a, const Sphere& b) noexcept
+static constexpr bool isIntersected(const Sphere& a, const Sphere& b) noexcept
 {
     auto d = a.position - b.position;
     auto s = a.radius + b.radius;
