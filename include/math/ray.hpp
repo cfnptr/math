@@ -30,7 +30,7 @@ namespace math
  */
 struct Ray
 {
-private:
+protected:
 	float3 direction;
 public:
 	/**
@@ -52,7 +52,7 @@ public:
 	/**
 	 * @brief Returns ray direction vector in 3D space.
 	 */
-	const float3& getDirection() const noexcept { return direction; }
+	constexpr const float3& getDirection() const noexcept { return direction; }
 	/**
 	 * @brief Sets ray direction vector in 3D space.
 	 * 

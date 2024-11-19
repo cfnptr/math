@@ -55,12 +55,12 @@ public:
 	 * @brief Returns minimum AABB corner position in the space.
 	 * @details The point that has the smallest values for all axes.
 	 */
-	const float3& getMin() const noexcept { return min; }
+	constexpr const float3& getMin() const noexcept { return min; }
 	/**
 	 * @brief Returns maximum AABB corner position in the space.
 	 * @details The point that has the biggest values for all axes.
 	 */
-	const float3& getMax() const noexcept { return max; }
+	constexpr const float3& getMax() const noexcept { return max; }
 
 	/**
 	 * @brief Sets minimum AABB corner position in the space.

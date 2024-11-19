@@ -37,7 +37,7 @@ public:
 	 * @brief Frustum plane count. (Box side count)
 	 */
 	static constexpr uint8 frustumCount = 6;
-private:
+protected:
 	float3 normal;
 public:
 	/**
@@ -70,7 +70,7 @@ public:
 	/**
 	 * @brief Returns plane normal vector.
 	 */
-	const float3& getNormal() const noexcept { return normal; }
+	constexpr const float3& getNormal() const noexcept { return normal; }
 	/**
 	 * @brief Sets plane normal vector.
 	 * 
@@ -131,7 +131,7 @@ static constexpr float3 closestPoint(const Plane& plane, const float3& point) no
  * @param[in] plane target plane to use
  * @param[in] point target point in 3D space
  */
-static constexpr float3 closestPoint(const Triangle& triangle, const float3& point) noexcept
+static float3 closestPoint(const Triangle& triangle, const float3& point) noexcept
 {
 	auto p = closestPoint(Plane(triangle), point);
 	if (isInside(triangle, p))
