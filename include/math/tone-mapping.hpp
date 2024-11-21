@@ -44,7 +44,7 @@ constexpr float defaultGamma = 2.2f;
  * @param[in] color target color to gamma correct
  * @param invGamma inverse gamma correction value (1.0/x)
  */
-static float3 gammaCorrection(const float3& color, float invGamma)
+static float3 gammaCorrection(const float3& color, float invGamma) noexcept
 {
 	return pow(color, float3(invGamma));
 }
@@ -53,7 +53,7 @@ static float3 gammaCorrection(const float3& color, float invGamma)
  * @details See the @ref gammaCorrection().
  * @param[in] color target color to gamma correct
  */
-static float3 gammaCorrection(const float3& color)
+static float3 gammaCorrection(const float3& color) noexcept
 {
 	return pow(color, float3(1.0f / defaultGamma));
 }

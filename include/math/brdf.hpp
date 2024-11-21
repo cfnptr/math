@@ -88,4 +88,14 @@ static float3 importanceSamplingNdfDggx(float2 u, float a) noexcept
     return float3(sinTheta * std::cos(phi), sinTheta * std::sin(phi), cosTheta);
 }
 
+/**
+ * @brief Converts IOR value to the remapped reflectance.
+ * @param ior target index of refraction
+ */
+static float iorToReflectance(float ior) noexcept
+{
+    auto f0 = ((ior - 1.0f) * (ior - 1.0f)) / ((ior + 1.0f) * (ior + 1.0f));
+    return std::sqrt(f0 * (1.0f / 0.16f));
+}
+
 } // namespace math::brdf

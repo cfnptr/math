@@ -19,7 +19,7 @@
 
 #pragma once
 #include "math/hex.hpp"
-#include "math/vector.hpp"
+#include "math/color-space.hpp"
 
 namespace math
 {
@@ -32,11 +32,11 @@ struct Color
 	uint8 r = 0; /**< Red color channel value. */
 	uint8 g = 0; /**< Green color channel value. */
 	uint8 b = 0; /**< Blue color channel value. */
-	uint8 a = 0; /**< Alpha color channel value. (transparency) */
+	uint8 a = 0; /**< Alpha color channel value. (Transparency) */
 
 	/**
 	 * @brief Creates a new sRGB color structure.
-	 * @param rgba target color value for all RGBA channels.
+	 * @param rgba target color value for all RGBA channels
 	 */
 	constexpr explicit Color(uint8 rgba = 0) noexcept : r(rgba), g(rgba), b(rgba), a(rgba) { }
 	/**
@@ -70,43 +70,53 @@ struct Color
 	}
 	
 	/**
-	 * @brief Creates a new sRGB color structure from the normalized R and G channels.
-	 * @param[in] normRg target normalized R and G channel color values
+	 * @brief Creates a new sRGB color structure from the normalized R channel. (Red)
+	 * @param[in] normR target normalized R and G channel color values
 	 */
-	constexpr explicit Color(const float2& normRg)
+	constexpr explicit Color(float normR)
 	{
 		constexpr auto mul = 255.0f;
-		r = std::min(normRg.x, 1.0f) * mul;
-		g = std::min(normRg.y, 1.0f) * mul;
+		r = std::clamp(normR, 0.0f, 1.0f) * mul;
+		g = b = a = 0;
+	}
+	/**
+	 * @brief Creates a new sRGB color structure from the normalized R and G channels. (Red, Green)
+	 * @param[in] normRg target normalized R and G channel color values
+	 */
+	constexpr explicit Color(float2 normRg)
+	{
+		constexpr auto mul = 255.0f;
+		r = std::clamp(normRg.x, 0.0f, 1.0f) * mul;
+		g = std::clamp(normRg.y, 0.0f, 1.0f) * mul;
 		b = a = 0;
 	}
 	/**
-	 * @brief Creates a new sRGB color structure from the normalized RGB channels.
+	 * @brief Creates a new sRGB color structure from the normalized RGB channels. (Red, Green, Blue)
 	 * @param[in] normRgb target normalized RGB channel color values
 	 */
 	constexpr explicit Color(const float3& normRgb)
 	{
 		constexpr auto mul = 255.0f;
-		r = std::min(normRgb.x, 1.0f) * mul;
-		g = std::min(normRgb.y, 1.0f) * mul;
-		b = std::min(normRgb.z, 1.0f) * mul;
+		r = std::clamp(normRgb.x, 0.0f, 1.0f) * mul;
+		g = std::clamp(normRgb.y, 0.0f, 1.0f) * mul;
+		b = std::clamp(normRgb.z, 0.0f, 1.0f) * mul;
 		a = 0;
 	}
 	/**
-	 * @brief Creates a new sRGB color structure from the normalized RGBA channels.
+	 * @brief Creates a new sRGB color structure from the normalized RGBA channels. (Red, Green, Blue, Alpha)
 	 * @param[in] normRgba target normalized RGBA channel color values
 	 */
 	constexpr explicit Color(const float4& normRgba)
 	{
 		constexpr auto mul = 255.0f;
-		r = std::min(normRgba.x, 1.0f) * mul;
-		g = std::min(normRgba.y, 1.0f) * mul;
-		b = std::min(normRgba.z, 1.0f) * mul;
-		a = std::min(normRgba.w, 1.0f) * mul;
+		r = std::clamp(normRgba.x, 0.0f, 1.0f) * mul;
+		g = std::clamp(normRgba.y, 0.0f, 1.0f) * mul;
+		b = std::clamp(normRgba.z, 0.0f, 1.0f) * mul;
+		a = std::clamp(normRgba.w, 0.0f, 1.0f) * mul;
 	}
 	
 	/*******************************************************************************************************************
-	 * @brief Converts color to the normalized RG vector.
+	 * @brief Converts sRGB color to the normalized RG vector. (Red, Green)
 	 */
 	constexpr explicit operator float2() const noexcept
 	{
@@ -114,7 +124,7 @@ struct Color
 		return float2(r * mul, g * mul);
 	}
 	/**
-	 * @brief Converts color to the normalized RGB vector.
+	 * @brief Converts sRGB color to the normalized RGB vector. (Red, Green, Blue)
 	 */
 	constexpr explicit operator float3() const noexcept
 	{
@@ -122,7 +132,7 @@ struct Color
 		return float3(r * mul, g * mul, b * mul);
 	}
 	/**
-	 * @brief Converts color to the normalized RGBA vector.
+	 * @brief Converts sRGB color to the normalized RGBA vector. (Red, Green, Blue, Alpha)
 	 */
 	constexpr explicit operator float4() const noexcept
 	{
@@ -135,16 +145,63 @@ struct Color
 	constexpr explicit operator uint32() const noexcept { return *(const uint32*)this; }
 
 	/*******************************************************************************************************************
-	 * @brief Converts color to the string. (space separated)
+	 * @brief Returns sRGB color normalizer R channel. (Red)
 	 */
-	string toString() const noexcept
+	constexpr float getNormR() const noexcept { return r * (1.0f / 255.0f); }
+	/**
+	 * @brief Returns sRGB color normalizer G channel. (Green)
+	 */
+	constexpr float getNormG() const noexcept { return g * (1.0f / 255.0f); }
+	/**
+	 * @brief Returns sRGB color normalizer B channel. (Blue)
+	 */
+	constexpr float getNormB() const noexcept { return b * (1.0f / 255.0f); }
+	/**
+	 * @brief Returns sRGB color normalizer A channel. (Alpha)
+	 */
+	constexpr float getNormA() const noexcept { return a * (1.0f / 255.0f); }
+
+	/**
+	 * @brief Sets sRGB color normalizer R channel. (Red)
+	 */
+	constexpr void setNormR(float r) noexcept { this->r = std::clamp(r, 0.0f, 1.0f) * 255.0f; }
+	/**
+	 * @brief Sets sRGB color normalizer G channel. (Green)
+	 */
+	constexpr void setNormG(float g) noexcept { this->g = std::clamp(g, 0.0f, 1.0f) * 255.0f; }
+	/**
+	 * @brief Sets sRGB color normalizer B channel. (Blue)
+	 */
+	constexpr void setNormB(float b) noexcept { this->b = std::clamp(b, 0.0f, 1.0f) * 255.0f; }
+	/**
+	 * @brief Sets sRGB color normalizer A channel. (Alpha)
+	 */
+	constexpr void setNormA(float a) noexcept { this->a = std::clamp(a, 0.0f, 1.0f) * 255.0f; }
+
+	/*******************************************************************************************************************
+	 * @brief Converts sRGB color to the string. (Space separated)
+	 */
+	string toString4() const noexcept
 	{
 		return to_string(r) + " " + to_string(g) + " " + to_string(b) + " " + to_string(a);
 	}
-	/**
-	 * @brief Converts color to the hexadecimal string.
+	/***
+	 * @brief Converts sRGB color to the string. (Space separated)
 	 */
-	string toHex() const noexcept
+	string toString3() const noexcept { return to_string(r) + " " + to_string(g) + " " + to_string(b); }
+	/***
+	 * @brief Converts sRGB color to the string. (Space separated)
+	 */
+	string toString2() const noexcept { return to_string(r) + " " + to_string(g); }
+	/***
+	 * @brief Converts sRGB color to the string. (Space separated)
+	 */
+	string toString1() const noexcept { return to_string(r); }
+
+	/**
+	 * @brief Converts sRGB color to the RGB hexadecimal string.
+	 */
+	string toHex4() const noexcept
 	{
 		auto hex = math::toHex(r);
 		hex += math::toHex(g);
@@ -152,7 +209,44 @@ struct Color
 		hex += math::toHex(a);
 		return hex;
 	}
+	/**
+	 * @brief Converts sRGB color to the RGBA hexadecimal string.
+	 */
+	string toHex3() const noexcept
+	{
+		auto hex = math::toHex(r);
+		hex += math::toHex(g);
+		hex += math::toHex(b);
+		return hex;
+	}
 
+	/**
+	 * @brief Converts sRGB color to the normalized linear RGB color space.
+	 */
+	float4 toLinear4() const noexcept
+	{
+		auto srgb = (float4)*this;
+		return float4(srgbToRgb((float3)srgb), srgb.w);
+	}
+	/**
+	 * @brief Converts sRGB color to the normalized linear RGB color space.
+	 */
+	float3 toLinear3() const noexcept { return srgbToRgb((float3)*this); }
+
+	/**
+	 * @brief Converts normalized linear RGB color to the sRGB color space.
+	 */
+	void fromLinear(const float4& normRGBA) noexcept
+	{
+		auto srgb = rgbToSrgb((float3)normRGBA);
+		*this = Color(float4(srgb, normRGBA.w));
+	}
+	/**
+	 * @brief Converts normalized linear RGB color to the sRGB color space.
+	 */
+	void fromLinear(const float3& normRGB) noexcept { *this = Color(rgbToSrgb(normRGB)); }
+
+	//******************************************************************************************************************
 	constexpr Color operator+(Color c) const noexcept { return Color(r + c.r, g + c.g, b + c.b, a + c.a); }
 	constexpr Color operator-(Color c) const noexcept { return Color(r - c.r, g - c.g, b - c.b, a - c.a); }
 	constexpr Color operator*(Color c) const noexcept { return Color(r * c.r, g * c.g, b * c.b, a * c.a); }
