@@ -75,8 +75,7 @@ struct Color
 	 */
 	constexpr explicit Color(float normR)
 	{
-		constexpr auto mul = 255.0f;
-		r = std::clamp(normR, 0.0f, 1.0f) * mul;
+		r = (uint8)(std::clamp(normR, 0.0f, 1.0f) * 255.0f + 0.5f);
 		g = b = a = 0;
 	}
 	/**
@@ -85,9 +84,8 @@ struct Color
 	 */
 	constexpr explicit Color(float2 normRg)
 	{
-		constexpr auto mul = 255.0f;
-		r = std::clamp(normRg.x, 0.0f, 1.0f) * mul;
-		g = std::clamp(normRg.y, 0.0f, 1.0f) * mul;
+		r = (uint8)(std::clamp(normRg.x, 0.0f, 1.0f) * 255.0f + 0.5f);
+		g = (uint8)(std::clamp(normRg.y, 0.0f, 1.0f) * 255.0f + 0.5f);
 		b = a = 0;
 	}
 	/**
@@ -96,10 +94,9 @@ struct Color
 	 */
 	constexpr explicit Color(const float3& normRgb)
 	{
-		constexpr auto mul = 255.0f;
-		r = std::clamp(normRgb.x, 0.0f, 1.0f) * mul;
-		g = std::clamp(normRgb.y, 0.0f, 1.0f) * mul;
-		b = std::clamp(normRgb.z, 0.0f, 1.0f) * mul;
+		r = (uint8)(std::clamp(normRgb.x, 0.0f, 1.0f) * 255.0f + 0.5f);
+		g = (uint8)(std::clamp(normRgb.y, 0.0f, 1.0f) * 255.0f + 0.5f);
+		b = (uint8)(std::clamp(normRgb.z, 0.0f, 1.0f) * 255.0f + 0.5f);
 		a = 0;
 	}
 	/**
@@ -108,11 +105,10 @@ struct Color
 	 */
 	constexpr explicit Color(const float4& normRgba)
 	{
-		constexpr auto mul = 255.0f;
-		r = std::clamp(normRgba.x, 0.0f, 1.0f) * mul;
-		g = std::clamp(normRgba.y, 0.0f, 1.0f) * mul;
-		b = std::clamp(normRgba.z, 0.0f, 1.0f) * mul;
-		a = std::clamp(normRgba.w, 0.0f, 1.0f) * mul;
+		r = (uint8)(std::clamp(normRgba.x, 0.0f, 1.0f) * 255.0f + 0.5f);
+		g = (uint8)(std::clamp(normRgba.y, 0.0f, 1.0f) * 255.0f + 0.5f);
+		b = (uint8)(std::clamp(normRgba.z, 0.0f, 1.0f) * 255.0f + 0.5f);
+		a = (uint8)(std::clamp(normRgba.w, 0.0f, 1.0f) * 255.0f + 0.5f);
 	}
 	
 	/*******************************************************************************************************************
@@ -236,15 +232,18 @@ struct Color
 	/**
 	 * @brief Converts normalized linear RGB color to the sRGB color space.
 	 */
-	void fromLinear(const float4& normRGBA) noexcept
+	static Color fromLinear4(const float4& normRGBA) noexcept
 	{
 		auto srgb = rgbToSrgb((float3)normRGBA);
-		*this = Color(float4(srgb, normRGBA.w));
+		return Color(float4(srgb, normRGBA.w));
 	}
 	/**
 	 * @brief Converts normalized linear RGB color to the sRGB color space.
 	 */
-	void fromLinear(const float3& normRGB) noexcept { *this = Color(rgbToSrgb(normRGB)); }
+	static Color fromLinear3(const float3& normRGB) noexcept
+	{
+		return Color(rgbToSrgb(normRGB));
+	}
 
 	//******************************************************************************************************************
 	constexpr Color operator+(Color c) const noexcept { return Color(r + c.r, g + c.g, b + c.b, a + c.a); }
