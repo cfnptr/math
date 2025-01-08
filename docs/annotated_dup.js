@@ -9,6 +9,7 @@ var annotated_dup =
       [ "float3", "structmath_1_1float3.html", "structmath_1_1float3" ],
       [ "float3x3", "structmath_1_1float3x3.html", "structmath_1_1float3x3" ],
       [ "float4", "structmath_1_1float4.html", "structmath_1_1float4" ],
+      [ "float4x3", "structmath_1_1float4x3.html", "structmath_1_1float4x3" ],
       [ "float4x4", "structmath_1_1float4x4.html", "structmath_1_1float4x4" ],
       [ "int2", "structmath_1_1int2.html", "structmath_1_1int2" ],
       [ "int3", "structmath_1_1int3.html", "structmath_1_1int3" ],

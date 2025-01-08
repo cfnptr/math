@@ -12,6 +12,7 @@ var hierarchy =
     [ "float4", "structmath_1_1float4.html", [
       [ "quat", "structmath_1_1quat.html", null ]
     ] ],
+    [ "float4x3", "structmath_1_1float4x3.html", null ],
     [ "float4x4", "structmath_1_1float4x4.html", null ],
     [ "int2", "structmath_1_1int2.html", null ],
     [ "int3", "structmath_1_1int3.html", null ],

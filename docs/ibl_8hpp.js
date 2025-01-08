@@ -1,6 +1,6 @@
 var ibl_8hpp =
 [
-    [ "iblDfgSize", "ibl_8hpp.html#a989f3e527ebf1913e9e8a334b5549f33", null ],
-    [ "shBandCount", "ibl_8hpp.html#aec5e7ba763f23afe17dad01f2fa84723", null ],
-    [ "shCoefCount", "ibl_8hpp.html#a1fe3f20af18383b7c3bb64e35aeefc04", null ]
+    [ "iblDfgSize", "ibl_8hpp.html#a688ade2ead1c136e9856bfece308a98d", null ],
+    [ "shBandCount", "ibl_8hpp.html#a299eec1e598133b2f1ea706d58d352cd", null ],
+    [ "shCoefCount", "ibl_8hpp.html#a60005acb1ad7f5c7cb65992afe161d64", null ]
 ];

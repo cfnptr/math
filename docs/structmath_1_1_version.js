@@ -1,8 +1,8 @@
 var structmath_1_1_version =
 [
-    [ "Version", "structmath_1_1_version.html#a118a978d9c5e92d7c347f36d3cf6a4b5", null ],
-    [ "Version", "structmath_1_1_version.html#ac912de05f1b758aae9dca408e0c76ccd", null ],
-    [ "operator uint32", "structmath_1_1_version.html#abe58b8647aa83a073c343bddc5b9a602", null ],
+    [ "Version", "structmath_1_1_version.html#a5af01816d3499e968ecea06052049a7e", null ],
+    [ "Version", "structmath_1_1_version.html#a20f1500f883931b66ed67644f4700bfb", null ],
+    [ "operator uint32", "structmath_1_1_version.html#a7bbebaec687d4f6ed92c8d044a2a3e44", null ],
     [ "operator[]", "structmath_1_1_version.html#aa6a4b620ead50cd4395a3da332c98ff1", null ],
     [ "operator[]", "structmath_1_1_version.html#a8a6a0826ca33a3e0d46590b437fd798d", null ],
     [ "toString4", "structmath_1_1_version.html#a80f11dcf632ee4bf07c6450b379ccd4c", null ],
