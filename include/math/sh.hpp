@@ -44,7 +44,7 @@ using namespace math::ibl;
 /**
  * @brief Precomputed KI coefficients for the 3 band spherical harmonics.
  */
-constexpr float ki[shCoefCount] =
+constexpr float ki[shCoeffCount] =
 {
 	(float)0.886226925452757940959713778283912688,
 	(float)1.02332670794648827872208585176849738,
@@ -74,7 +74,7 @@ static float calcSolidAngle(float2 st, float invDim) noexcept
 }
 
 //**********************************************************************************************************************
-static void computeShBasis(const float3& s, float shb[shCoefCount]) noexcept
+static void computeShBasis(const float3& s, float shb[shCoeffCount]) noexcept
 {
 	auto pml2 = 0.0f, pml1 = 1.0f;
 	shb[0] = pml1;
@@ -174,7 +174,7 @@ static void rotateSphericalHarmonicBand2(const float band2[5], const float3x3& m
 
 	multiply(rOverK, invATimesKTimesBand2, r);
 }
-static void rotateSh3Bands(const float shw[shCoefCount], const float3x3& m, float r[shCoefCount]) noexcept
+static void rotateSh3Bands(const float shw[shCoeffCount], const float3x3& m, float r[shCoeffCount]) noexcept
 {
 	auto b0 = shw[0];
 	auto band1 = float3(shw[1], shw[2], shw[3]);
@@ -196,7 +196,7 @@ static float sincWindow(int32 l, float w) noexcept
 	x = std::sin(x) / x;
 	return x * x * x * x;
 }
-static void windowing(float shw[shCoefCount], float cutoff) noexcept
+static void windowing(float shw[shCoeffCount], float cutoff) noexcept
 {
 	for (int32 l = 0; l < shBandCount; l++)
 	{
@@ -210,9 +210,9 @@ static void windowing(float shw[shCoefCount], float cutoff) noexcept
 		}
 	}
 }
-static float shmin(float shw[shCoefCount]) noexcept
+static float shmin(float shw[shCoeffCount]) noexcept
 {
-	static constexpr float ca[shCoefCount] =
+	static constexpr float ca[shCoeffCount] =
 	{
 		(float)( 1.0      / (2.0 * M_SQRT_PI)),
 		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI)),
@@ -265,14 +265,14 @@ static float shmin(float shw[shCoefCount]) noexcept
 }
 
 //**********************************************************************************************************************
-static void deringingSH(float4 sh[shCoefCount]) noexcept
+static void deringingSH(float4 sh[shCoeffCount]) noexcept
 {
 	auto cutoff = (float)(shBandCount * 4 + 1);
-	float shw[shCoefCount];
+	float shw[shCoeffCount];
 
 	for (uint32 channel = 0; channel < 3; channel++)
 	{
-		for (uint32 i = 0; i < shCoefCount; i++)
+		for (uint32 i = 0; i < shCoeffCount; i++)
 			shw[i] = sh[i][channel];
 
 		float l = shBandCount;
@@ -303,9 +303,9 @@ static void deringingSH(float4 sh[shCoefCount]) noexcept
 	}
 }
 
-static void shaderPreprocessSH(float4 sh[shCoefCount]) noexcept
+static void shaderPreprocessSH(float4 sh[shCoeffCount]) noexcept
 {
-	static constexpr float ca[shCoefCount] =
+	static constexpr float ca[shCoeffCount] =
 	{
 		(float)( 1.0      / (2.0 * M_SQRT_PI) * M_1_PI),
 		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI) * M_1_PI),
@@ -318,7 +318,7 @@ static void shaderPreprocessSH(float4 sh[shCoefCount]) noexcept
 		(float)( M_SQRT15 / (4.0 * M_SQRT_PI) * M_1_PI)
 	};
 	
-	for (uint32 i = 0; i < shCoefCount; i++)
+	for (uint32 i = 0; i < shCoeffCount; i++)
 		sh[i] *= ca[i];
 }
 

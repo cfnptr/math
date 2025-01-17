@@ -48,7 +48,7 @@ constexpr int32 shBandCount = 3;
 /**
  * @brief Spherical harmonics coefficient count. (3 * 3)
  */
-constexpr int32 shCoefCount = 9;
+constexpr int32 shCoeffCount = 9;
 
 /***********************************************************************************************************************
  * @brief Converts texture coordinates to the clip space.
