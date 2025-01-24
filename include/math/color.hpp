@@ -307,7 +307,7 @@ static constexpr bool operator>=(uint8 n, Color c) noexcept { return Color(n) >=
  * @brief Returns true if first color binary representation is less than the second.
  *
  * @param a first color to binary compare
- * @param b secong color to binary compare
+ * @param b second color to binary compare
  */
 static bool isBinaryLess(Color a, Color b) noexcept { return  *((const uint32*)&a) < *((const uint32*)&b); }
 

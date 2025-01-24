@@ -162,7 +162,7 @@ struct uint3
 	/**
 	 * @brief Creates a new unsigned integer 3 component vector structure.
 	 *
-	 * @param xy first and secind vector components value
+	 * @param xy first and second vector components value
 	 * @param z third vector component value
 	 */
 	constexpr uint3(uint2 xy, uint32 z) noexcept : x(xy.x), y(xy.y), z(z) { }
@@ -451,7 +451,7 @@ static constexpr bool operator>=(uint32 n, uint2 v) noexcept { return uint2(n) >
  * @brief Returns true if first vector binary representation is less than the second.
  *
  * @param a first vector to binary compare
- * @param b secong vector to binary compare
+ * @param b second vector to binary compare
  */
 static bool isBinaryLess(uint2 a, uint2 b) noexcept { return *((const uint64*)&a) < *((const uint64*)&b); }
 
@@ -494,7 +494,7 @@ static constexpr bool operator>=(uint32 n, const uint3& v) noexcept { return uin
  * @brief Returns true if first vector binary representation is less than the second.
  *
  * @param[in] a first vector to binary compare
- * @param[in] b secong vector to binary compare
+ * @param[in] b second vector to binary compare
  */
 static bool isBinaryLess(const uint3& a, const uint3& b) noexcept { return memcmp(&a, &b, sizeof(uint32) * 3) < 0; }
 
@@ -537,7 +537,7 @@ static constexpr bool operator>=(uint32 n, const uint4& v) noexcept { return uin
  * @brief Returns true if first vector binary representation is less than the second.
  *
  * @param[in] a first vector to binary compare
- * @param[in] b secong vector to binary compare
+ * @param[in] b second vector to binary compare
  */
 static bool isBinaryLess(const uint4& a, const uint4& b) noexcept { return memcmp(&a, &b, sizeof(uint32) * 4) < 0; }
 

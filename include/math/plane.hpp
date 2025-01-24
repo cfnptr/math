@@ -75,7 +75,7 @@ public:
 	 * @brief Sets plane normal vector.
 	 * 
 	 * @param[in] normal target plane normal vector
-	 * @param normalize is normal vectorshould be normalized
+	 * @param normalize is normal vector should be normalized
 	 */
 	void setNormal(const float3& normal, bool normalize = true) noexcept
 	{

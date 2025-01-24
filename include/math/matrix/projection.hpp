@@ -90,7 +90,7 @@ static float4x4 calcPerspProj(float fieldOfView, float aspectRatio, float nearPl
  * @brief Calculates reversed Z orthographic projection matrix.
  *
  * @param width camera width (ex. from -1.0 to 1.0)
- * @param height camera heght (ex. from -1.0 to 1.0)
+ * @param height camera heIght (ex. from -1.0 to 1.0)
  * @param depth camera depth (ex. from 0.0 to 1.0)
  */
 static constexpr float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth) noexcept
@@ -105,7 +105,7 @@ static constexpr float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 
  * @brief Calculates orthographic projection matrix.
  *
  * @param width camera width (ex. from -1.0 to 1.0)
- * @param height camera heght (ex. from -1.0 to 1.0)
+ * @param height camera heIght (ex. from -1.0 to 1.0)
  * @param depth camera depth (ex. from 0.0 to 1.0)
  */
 static constexpr float4x4 calcOrthoProj(float2 width, float2 height, float2 depth) noexcept

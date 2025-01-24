@@ -203,7 +203,7 @@ inline const Aabb Aabb::half = Aabb(float3(-0.25f), float3(0.25f));
  * @brief Returns true if first AABB binary representation is less than the second.
  * 
  * @param[in] a first AABB to binary compare
- * @param[in] b secong AABB to binary compare
+ * @param[in] b second AABB to binary compare
  */
 static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(&a, &b, sizeof(float3) * 2) < 0; }
 
@@ -297,7 +297,7 @@ static bool raycastI(const Aabb& aabb, const Ray& ray) noexcept
  * @brief Returns true if one AABB intersects another.
  *
  * @param[in] a first AABB to check
- * @param[in] b second AABB to chech
+ * @param[in] b second AABB to check
  */
 static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 {

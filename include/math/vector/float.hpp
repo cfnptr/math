@@ -483,7 +483,7 @@ static constexpr bool operator>=(float n, float2 v) noexcept { return float2(n) 
  * @brief Returns true if first vector binary representation is less than the second.
  *
  * @param a first vector to binary compare
- * @param b secong vector to binary compare
+ * @param b second vector to binary compare
  */
 static bool isBinaryLess(float2 a, float2 b) noexcept { return *((const int64*)&a) < *((const int64*)&b); }
 
@@ -514,7 +514,7 @@ static constexpr bool operator>=(float n, const float3& v) noexcept { return flo
  * @brief Returns true if first vector binary representation is less than the second.
  *
  * @param[in] a first vector to binary compare
- * @param[in] b secong vector to binary compare
+ * @param[in] b second vector to binary compare
  */
 static bool isBinaryLess(const float3& a, const float3& b) noexcept { return memcmp(&a, &b, sizeof(float) * 3) < 0; }
 
@@ -545,7 +545,7 @@ static constexpr bool operator>=(float n, const float4& v) noexcept { return flo
  * @brief Returns true if first vector binary representation is less than the second.
  *
  * @param[in] a first vector to binary compare
- * @param[in] b secong vector to binary compare
+ * @param[in] b second vector to binary compare
  */
 static bool isBinaryLess(const float4& a, const float4& b) noexcept { return memcmp(&a, &b, sizeof(float) * 4) < 0; }
 

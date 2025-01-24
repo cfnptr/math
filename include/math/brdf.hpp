@@ -55,7 +55,7 @@ static constexpr float ggx(float noh, float roughness) noexcept
  * quasi-random sampling is needed to improve the efficiency of rendering.
  *
  * @param index target index of the sample
- * @param invSampleCount iversed sample count (1.0f / sampleCount)
+ * @param invSampleCount inversed sample count (1.0f / sampleCount)
  */
 static constexpr float2 hammersley(uint32 index, float invSampleCount) noexcept
 {

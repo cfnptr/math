@@ -80,7 +80,7 @@ static float3 closestPoint(const Sphere& sphere, const float3& point) noexcept
  * @brief Returns true if one sphere intersects another.
  *
  * @param[in] a first sphere to check
- * @param[in] b second sphere to chech
+ * @param[in] b second sphere to check
  */
 static constexpr bool isIntersected(const Sphere& a, const Sphere& b) noexcept
 {
@@ -92,7 +92,7 @@ static constexpr bool isIntersected(const Sphere& a, const Sphere& b) noexcept
  * @brief Returns true if sphere intersects AABB.
  *
  * @param[in] a target sphere to check
- * @param[in] b target AABB to chech
+ * @param[in] b target AABB to check
  */
 static bool isIntersected(const Sphere& a, const Aabb& b) noexcept
 {
