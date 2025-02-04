@@ -89,6 +89,23 @@ struct uint2
 	 */
 	string toString() const noexcept { return to_string(x) + " " + to_string(y); }
 
+	/**
+	 * @brief Returns true if all vector components are set true.
+	 */
+	constexpr bool areAllTrue() noexcept { return x & y; }
+	/**
+	 * @brief Returns false if all vector components are set false.
+	 */
+	constexpr bool areAllFalse() noexcept { return !(x | y); }
+	/**
+	 * @brief Returns true if any of vector components are set true.
+	 */
+	constexpr bool areAnyTrue() noexcept { return x | y; }
+	/**
+	 * @brief Returns false if any of vector components are set false.
+	 */
+	constexpr bool areAnyFalse() noexcept { return !(x & y); }
+
 	constexpr uint2 operator+(uint2 v) const noexcept { return uint2(x + v.x, y + v.y); }
 	constexpr uint2 operator-(uint2 v) const noexcept { return uint2(x - v.x, y - v.y); }
 	constexpr uint2 operator*(uint2 v) const noexcept { return uint2(x * v.x, y * v.y); }
@@ -125,10 +142,10 @@ struct uint2
 	uint2& operator=(uint32 n) noexcept { x = n; y = n; return *this; }
 	constexpr bool operator==(uint2 v) const noexcept { return x == v.x && y == v.y; }
 	constexpr bool operator!=(uint2 v) const noexcept { return x != v.x || y != v.y; }
-	constexpr bool operator<(uint2 v) const noexcept { return x < v.x && y < v.y; }
-	constexpr bool operator>(uint2 v) const noexcept { return x > v.x && y > v.y; }
-	constexpr bool operator<=(uint2 v) const noexcept { return x <= v.x && y <= v.y; }
-	constexpr bool operator>=(uint2 v) const noexcept { return x >= v.x && y >= v.y; }
+	constexpr uint2 operator<(uint2 v) const noexcept { return uint2(x < v.x, y < v.y); }
+	constexpr uint2 operator>(uint2 v) const noexcept { return uint2(x > v.x, y > v.y); }
+	constexpr uint2 operator<=(uint2 v) const noexcept { return uint2(x <= v.x, y <= v.y); }
+	constexpr uint2 operator>=(uint2 v) const noexcept { return uint2(x >= v.x, y >= v.y); }
 
 	static const uint2 zero, one;
 };
@@ -202,10 +219,27 @@ struct uint3
 	 */
 	constexpr explicit operator uint32() const noexcept { return x; }
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Converts vector to the string. (space separated)
 	 */
 	string toString() const noexcept { return to_string(x) + " " + to_string(y) + " " + to_string(z); }
+
+	/**
+	 * @brief Returns true if all vector components are set true.
+	 */
+	constexpr bool areAllTrue() noexcept { return x & y & z; }
+	/**
+	 * @brief Returns false if all vector components are set false.
+	 */
+	constexpr bool areAllFalse() noexcept { return !(x | y | z); }
+	/**
+	 * @brief Returns true if any of vector components are set true.
+	 */
+	constexpr bool areAnyTrue() noexcept { return x | y | z; }
+	/**
+	 * @brief Returns false if any of vector components are set false.
+	 */
+	constexpr bool areAnyFalse() noexcept { return !(x & y & z); }
 
 	constexpr uint3 operator+(const uint3& v) const noexcept { return uint3(x + v.x, y + v.y, z + v.z); }
 	constexpr uint3 operator-(const uint3& v) const noexcept { return uint3(x - v.x, y - v.y, z - v.z); }
@@ -243,10 +277,10 @@ struct uint3
 	uint3& operator=(uint32 n) noexcept { x = n; y = n; z = n; return *this; }
 	constexpr bool operator==(const uint3& v) const noexcept { return x == v.x && y == v.y && z == v.z; }
 	constexpr bool operator!=(const uint3& v) const noexcept { return x != v.x || y != v.y || z != v.z; }
-	constexpr bool operator<(const uint3& v) const noexcept {return x < v.x && y < v.y && z < v.z; }
-	constexpr bool operator>(const uint3& v) const noexcept {return x > v.x && y > v.y && z > v.z; }
-	constexpr bool operator<=(const uint3& v) const noexcept { return x <= v.x && y <= v.y && z <= v.z; }
-	constexpr bool operator>=(const uint3& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z; }
+	constexpr uint3 operator<(const uint3& v) const noexcept { return uint3(x < v.x, y < v.y, z < v.z); }
+	constexpr uint3 operator>(const uint3& v) const noexcept { return uint3(x > v.x, y > v.y, z > v.z); }
+	constexpr uint3 operator<=(const uint3& v) const noexcept { return uint3(x <= v.x, y <= v.y, z <= v.z); }
+	constexpr uint3 operator>=(const uint3& v) const noexcept { return uint3(x >= v.x, y >= v.y, z >= v.z); }
 
 	static const uint3 zero, one;
 };
@@ -357,13 +391,30 @@ struct uint4
 	 */
 	constexpr explicit operator uint32() const noexcept { return x; }
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Converts vector to the string. (space separated)
 	 */
 	string toString() const noexcept
 	{
 		return to_string(x) + " " + to_string(y) + " " + to_string(z) + " " + to_string(w);
 	}
+
+	/**
+	 * @brief Returns true if all vector components are set true.
+	 */
+	constexpr bool areAllTrue() noexcept { return x & y & z & w; }
+	/**
+	 * @brief Returns false if all vector components are set false.
+	 */
+	constexpr bool areAllFalse() noexcept { return !(x | y | z | w); }
+	/**
+	 * @brief Returns true if any of vector components are set true.
+	 */
+	constexpr bool areAnyTrue() noexcept { return x | y | z | w; }
+	/**
+	 * @brief Returns false if any of vector components are set false.
+	 */
+	constexpr bool areAnyFalse() noexcept { return !(x & y & z & w); }
 
 	constexpr uint4 operator+(const uint4& v) const noexcept { return uint4(x + v.x, y + v.y, z + v.z, w + v.w); }
 	constexpr uint4 operator-(const uint4& v) const noexcept { return uint4(x - v.x, y - v.y, z - v.z, w - v.w); }
@@ -401,10 +452,10 @@ struct uint4
 	uint4& operator=(uint32 n) noexcept { x = n; y = n; z = n; w = n; return *this; }
 	constexpr bool operator==(const uint4& v) const noexcept { return x == v.x && y == v.y && z == v.z && w == v.w; }
 	constexpr bool operator!=(const uint4& v) const noexcept { return x != v.x || y != v.y || z != v.z || w != v.w; }
-	constexpr bool operator<(const uint4& v) const noexcept { return x < v.x && y < v.y && z < v.z && w < v.w; }
-	constexpr bool operator>(const uint4& v) const noexcept { return x > v.x && y > v.y && z > v.z && w > v.w; }
-	constexpr bool operator<=(const uint4& v) const noexcept { return x <= v.x && y <= v.y && z <= v.z && w <= v.w; }
-	constexpr bool operator>=(const uint4& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z && w >= v.w; }
+	constexpr uint4 operator<(const uint4& v) const noexcept { return uint4(x < v.x, y < v.y, z < v.z, w < v.w); }
+	constexpr uint4 operator>(const uint4& v) const noexcept { return uint4(x > v.x, y > v.y, z > v.z, w > v.w); }
+	constexpr uint4 operator<=(const uint4& v) const noexcept { return uint4(x <= v.x, y <= v.y, z <= v.z, w <= v.w); }
+	constexpr uint4 operator>=(const uint4& v) const noexcept { return uint4(x >= v.x, y >= v.y, z >= v.z, w >= v.w); }
 
 	static const uint4 zero, one;
 };
@@ -425,10 +476,10 @@ static constexpr uint2 operator>>(uint2 v, uint32 n) noexcept { return uint2(v.x
 static constexpr uint2 operator<<(uint2 v, uint32 n) noexcept { return uint2(v.x << n, v.y << n); }
 static constexpr bool operator==(uint2 v, uint32 n) noexcept { return v == uint2(n); }
 static constexpr bool operator!=(uint2 v, uint32 n) noexcept { return v != uint2(n); }
-static constexpr bool operator<(uint2 v, uint32 n) noexcept { return v < uint2(n); }
-static constexpr bool operator>(uint2 v, uint32 n) noexcept { return v > uint2(n); }
-static constexpr bool operator<=(uint2 v, uint32 n) noexcept { return v <= uint2(n); }
-static constexpr bool operator>=(uint2 v, uint32 n) noexcept { return v >= uint2(n); }
+static constexpr uint2 operator<(uint2 v, uint32 n) noexcept { return v < uint2(n); }
+static constexpr uint2 operator>(uint2 v, uint32 n) noexcept { return v > uint2(n); }
+static constexpr uint2 operator<=(uint2 v, uint32 n) noexcept { return v <= uint2(n); }
+static constexpr uint2 operator>=(uint2 v, uint32 n) noexcept { return v >= uint2(n); }
 
 static constexpr uint2 operator+(uint32 n, uint2 v) noexcept { return uint2(n + v.x, n + v.y); }
 static constexpr uint2 operator-(uint32 n, uint2 v) noexcept { return uint2(n - v.x, n - v.y); }
@@ -442,10 +493,10 @@ static constexpr uint2 operator>>(uint32 n, uint2 v) noexcept { return uint2(n >
 static constexpr uint2 operator<<(uint32 n, uint2 v) noexcept { return uint2(n << v.x, n << v.y); }
 static constexpr bool operator==(uint32 n, uint2 v) noexcept { return uint2(n) == v; }
 static constexpr bool operator!=(uint32 n, uint2 v) noexcept { return uint2(n) != v; }
-static constexpr bool operator<(uint32 n, uint2 v) noexcept { return uint2(n) < v; }
-static constexpr bool operator>(uint32 n, uint2 v) noexcept { return uint2(n) > v; }
-static constexpr bool operator<=(uint32 n, uint2 v) noexcept { return uint2(n) <= v; }
-static constexpr bool operator>=(uint32 n, uint2 v) noexcept { return uint2(n) >= v; }
+static constexpr uint2 operator<(uint32 n, uint2 v) noexcept { return uint2(n) < v; }
+static constexpr uint2 operator>(uint32 n, uint2 v) noexcept { return uint2(n) > v; }
+static constexpr uint2 operator<=(uint32 n, uint2 v) noexcept { return uint2(n) <= v; }
+static constexpr uint2 operator>=(uint32 n, uint2 v) noexcept { return uint2(n) >= v; }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -454,6 +505,18 @@ static constexpr bool operator>=(uint32 n, uint2 v) noexcept { return uint2(n) >
  * @param b second vector to binary compare
  */
 static bool isBinaryLess(uint2 a, uint2 b) noexcept { return *((const uint64*)&a) < *((const uint64*)&b); }
+
+/**
+ * @brief Selects between two vector components based on the control vector values.
+ * 
+ * @param[in] c control vector (contains is true or false)
+ * @param[in] t contains components for true condition
+ * @param[in] f contains components for false condition
+ */
+static constexpr uint2 select(uint2 c, uint2 t, uint2 f) noexcept
+{
+	return uint2(c.x ? t.x : f.x, c.y ? t.y : f.y);
+}
 
 //**********************************************************************************************************************
 static constexpr uint3 operator+(const uint3& v, uint32 n) noexcept { return uint3(v.x + n, v.y + n, v.z + n); }
@@ -468,10 +531,10 @@ static constexpr uint3 operator>>(const uint3& v, uint32 n) noexcept { return ui
 static constexpr uint3 operator<<(const uint3& v, uint32 n) noexcept { return uint3(v.x << n, v.y << n, v.z << n); }
 static constexpr bool operator==(const uint3& v, uint32 n) noexcept { return v == uint3(n); }
 static constexpr bool operator!=(const uint3& v, uint32 n) noexcept { return v != uint3(n); }
-static constexpr bool operator<(const uint3& v, uint32 n) noexcept { return v < uint3(n); }
-static constexpr bool operator>(const uint3& v, uint32 n) noexcept { return v > uint3(n); }
-static constexpr bool operator<=(const uint3& v, uint32 n) noexcept { return v <= uint3(n); }
-static constexpr bool operator>=(const uint3& v, uint32 n) noexcept { return v >= uint3(n); }
+static constexpr uint3 operator<(const uint3& v, uint32 n) noexcept { return v < uint3(n); }
+static constexpr uint3 operator>(const uint3& v, uint32 n) noexcept { return v > uint3(n); }
+static constexpr uint3 operator<=(const uint3& v, uint32 n) noexcept { return v <= uint3(n); }
+static constexpr uint3 operator>=(const uint3& v, uint32 n) noexcept { return v >= uint3(n); }
 
 static constexpr uint3 operator+(uint32 n, const uint3& v) noexcept { return uint3(n + v.x, n + v.y, n + v.z); }
 static constexpr uint3 operator-(uint32 n, const uint3& v) noexcept { return uint3(n - v.x, n - v.y, n - v.z); }
@@ -485,10 +548,10 @@ static constexpr uint3 operator>>(uint32 n, const uint3& v) noexcept { return ui
 static constexpr uint3 operator<<(uint32 n, const uint3& v) noexcept { return uint3(n << v.x, n << v.y, n << v.z); }
 static constexpr bool operator==(uint32 n, const uint3& v) noexcept { return uint3(n) == v; }
 static constexpr bool operator!=(uint32 n, const uint3& v) noexcept { return uint3(n) != v; }
-static constexpr bool operator<(uint32 n, const uint3& v) noexcept { return uint3(n) < v; }
-static constexpr bool operator>(uint32 n, const uint3& v) noexcept { return uint3(n) > v; }
-static constexpr bool operator<=(uint32 n, const uint3& v) noexcept { return uint3(n) <= v; }
-static constexpr bool operator>=(uint32 n, const uint3& v) noexcept { return uint3(n) >= v; }
+static constexpr uint3 operator<(uint32 n, const uint3& v) noexcept { return uint3(n) < v; }
+static constexpr uint3 operator>(uint32 n, const uint3& v) noexcept { return uint3(n) > v; }
+static constexpr uint3 operator<=(uint32 n, const uint3& v) noexcept { return uint3(n) <= v; }
+static constexpr uint3 operator>=(uint32 n, const uint3& v) noexcept { return uint3(n) >= v; }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -497,6 +560,18 @@ static constexpr bool operator>=(uint32 n, const uint3& v) noexcept { return uin
  * @param[in] b second vector to binary compare
  */
 static bool isBinaryLess(const uint3& a, const uint3& b) noexcept { return memcmp(&a, &b, sizeof(uint32) * 3) < 0; }
+
+/**
+ * @brief Selects between two vector components based on the control vector values.
+ * 
+ * @param[in] c control vector (contains is true or false)
+ * @param[in] t contains components for true condition
+ * @param[in] f contains components for false condition
+ */
+static constexpr uint3 select(const uint3& c, const uint3& t, const uint3& f) noexcept
+{
+	return uint3(c.x ? t.x : f.x, c.y ? t.y : f.y, c.z ? t.z : f.z);
+}
 
 //**********************************************************************************************************************
 static constexpr uint4 operator+(const uint4& v, uint32 n) noexcept { return uint4(v.x + n, v.y + n, v.z + n, v.w + n); }
@@ -511,10 +586,10 @@ static constexpr uint4 operator>>(const uint4& v, uint32 n) noexcept { return ui
 static constexpr uint4 operator<<(const uint4& v, uint32 n) noexcept { return uint4(v.x << n, v.y << n, v.z << n, v.w << n); }
 static constexpr bool operator==(const uint4& v, uint32 n) noexcept { return v == uint4(n); }
 static constexpr bool operator!=(const uint4& v, uint32 n) noexcept { return v != uint4(n); }
-static constexpr bool operator<(const uint4& v, uint32 n) noexcept { return v < uint4(n); }
-static constexpr bool operator>(const uint4& v, uint32 n) noexcept { return v > uint4(n); }
-static constexpr bool operator<=(const uint4& v, uint32 n) noexcept { return v <= uint4(n); }
-static constexpr bool operator>=(const uint4& v, uint32 n) noexcept { return v >= uint4(n); }
+static constexpr uint4 operator<(const uint4& v, uint32 n) noexcept { return v < uint4(n); }
+static constexpr uint4 operator>(const uint4& v, uint32 n) noexcept { return v > uint4(n); }
+static constexpr uint4 operator<=(const uint4& v, uint32 n) noexcept { return v <= uint4(n); }
+static constexpr uint4 operator>=(const uint4& v, uint32 n) noexcept { return v >= uint4(n); }
 
 static constexpr uint4 operator+(uint32 n, const uint4& v) noexcept { return uint4(n + v.x, n + v.y, n + v.z, n + v.w); }
 static constexpr uint4 operator-(uint32 n, const uint4& v) noexcept { return uint4(n - v.x, n - v.y, n - v.z, n - v.w); }
@@ -528,10 +603,10 @@ static constexpr uint4 operator>>(uint32 n, const uint4& v) noexcept { return ui
 static constexpr uint4 operator<<(uint32 n, const uint4& v) noexcept { return uint4(n << v.x, n << v.y, n << v.z, n << v.w); }
 static constexpr bool operator==(uint32 n, const uint4& v) noexcept { return uint4(n) == v; }
 static constexpr bool operator!=(uint32 n, const uint4& v) noexcept { return uint4(n) != v; }
-static constexpr bool operator<(uint32 n, const uint4& v) noexcept { return uint4(n) < v; }
-static constexpr bool operator>(uint32 n, const uint4& v) noexcept { return uint4(n) > v; }
-static constexpr bool operator<=(uint32 n, const uint4& v) noexcept { return uint4(n) <= v; }
-static constexpr bool operator>=(uint32 n, const uint4& v) noexcept { return uint4(n) >= v; }
+static constexpr uint4 operator<(uint32 n, const uint4& v) noexcept { return uint4(n) < v; }
+static constexpr uint4 operator>(uint32 n, const uint4& v) noexcept { return uint4(n) > v; }
+static constexpr uint4 operator<=(uint32 n, const uint4& v) noexcept { return uint4(n) <= v; }
+static constexpr uint4 operator>=(uint32 n, const uint4& v) noexcept { return uint4(n) >= v; }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -540,6 +615,18 @@ static constexpr bool operator>=(uint32 n, const uint4& v) noexcept { return uin
  * @param[in] b second vector to binary compare
  */
 static bool isBinaryLess(const uint4& a, const uint4& b) noexcept { return memcmp(&a, &b, sizeof(uint32) * 4) < 0; }
+
+/**
+ * @brief Selects between two vector components based on the control vector values.
+ * 
+ * @param[in] c control vector (contains is true or false)
+ * @param[in] t contains components for true condition
+ * @param[in] f contains components for false condition
+ */
+static constexpr uint4 select(const uint4& c, const uint4& t, const uint4& f) noexcept
+{
+	return uint4(c.x ? t.x : f.x, c.y ? t.y : f.y, c.z ? t.z : f.z, c.w ? t.w : f.w);
+}
 
 //**********************************************************************************************************************
 static constexpr uint2 min(uint2 a, uint2 b) noexcept { return uint2(std::min(a.x, b.x), std::min(a.y, b.y)); }

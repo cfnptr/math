@@ -18,15 +18,15 @@
 math::float2 math::raycast2(const Aabb& aabb, const Ray& ray) noexcept
 {
 	auto origin = ray.origin;
-	auto directionInv = float3(1.0f) / ray.getDirection();
+	auto invDirection = float3(1.0f) / ray.getDirection();
 	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
 
-	auto t1 = (aabbMin.x - origin.x) * directionInv.x;
-	auto t2 = (aabbMax.x - origin.x) * directionInv.x;
-	auto t3 = (aabbMin.y - origin.y) * directionInv.y;
-	auto t4 = (aabbMax.y - origin.y) * directionInv.y;
-	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
-	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
+	auto t1 = (aabbMin.x - origin.x) * invDirection.x;
+	auto t2 = (aabbMax.x - origin.x) * invDirection.x;
+	auto t3 = (aabbMin.y - origin.y) * invDirection.y;
+	auto t4 = (aabbMax.y - origin.y) * invDirection.y;
+	auto t5 = (aabbMin.z - origin.z) * invDirection.z;
+	auto t6 = (aabbMax.z - origin.z) * invDirection.z;
 
 	auto tMin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
 	auto tMax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
@@ -35,15 +35,15 @@ math::float2 math::raycast2(const Aabb& aabb, const Ray& ray) noexcept
 math::float2 math::raycast2I(const Aabb& aabb, const Ray& ray) noexcept
 {
 	auto origin = ray.origin;
-	auto directionInv = ray.getDirection();
+	auto invDirection = ray.getDirection();
 	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
 
-	auto t1 = (aabbMin.x - origin.x) * directionInv.x;
-	auto t2 = (aabbMax.x - origin.x) * directionInv.x;
-	auto t3 = (aabbMin.y - origin.y) * directionInv.y;
-	auto t4 = (aabbMax.y - origin.y) * directionInv.y;
-	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
-	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
+	auto t1 = (aabbMin.x - origin.x) * invDirection.x;
+	auto t2 = (aabbMax.x - origin.x) * invDirection.x;
+	auto t3 = (aabbMin.y - origin.y) * invDirection.y;
+	auto t4 = (aabbMax.y - origin.y) * invDirection.y;
+	auto t5 = (aabbMin.z - origin.z) * invDirection.z;
+	auto t6 = (aabbMax.z - origin.z) * invDirection.z;
 
 	auto tMin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
 	auto tMax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
@@ -53,30 +53,30 @@ math::float2 math::raycast2I(const Aabb& aabb, const Ray& ray) noexcept
 float math::raycast1(const Aabb& aabb, const Ray& ray) noexcept
 {
 	auto origin = ray.origin;
-	auto directionInv = float3(1.0f) / ray.getDirection();
+	auto invDirection = float3(1.0f) / ray.getDirection();
 	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
 
-	auto t1 = (aabbMin.x - origin.x) * directionInv.x;
-	auto t2 = (aabbMax.x - origin.x) * directionInv.x;
-	auto t3 = (aabbMin.y - origin.y) * directionInv.y;
-	auto t4 = (aabbMax.y - origin.y) * directionInv.y;
-	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
-	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
+	auto t1 = (aabbMin.x - origin.x) * invDirection.x;
+	auto t2 = (aabbMax.x - origin.x) * invDirection.x;
+	auto t3 = (aabbMin.y - origin.y) * invDirection.y;
+	auto t4 = (aabbMax.y - origin.y) * invDirection.y;
+	auto t5 = (aabbMin.z - origin.z) * invDirection.z;
+	auto t6 = (aabbMax.z - origin.z) * invDirection.z;
 
 	return std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
 }
 float math::raycast1I(const Aabb& aabb, const Ray& ray) noexcept
 {
 	auto origin = ray.origin;
-	auto directionInv = ray.getDirection();
+	auto invDirection = ray.getDirection();
 	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
 
-	auto t1 = (aabbMin.x - origin.x) * directionInv.x;
-	auto t2 = (aabbMax.x - origin.x) * directionInv.x;
-	auto t3 = (aabbMin.y - origin.y) * directionInv.y;
-	auto t4 = (aabbMax.y - origin.y) * directionInv.y;
-	auto t5 = (aabbMin.z - origin.z) * directionInv.z;
-	auto t6 = (aabbMax.z - origin.z) * directionInv.z;
+	auto t1 = (aabbMin.x - origin.x) * invDirection.x;
+	auto t2 = (aabbMax.x - origin.x) * invDirection.x;
+	auto t3 = (aabbMin.y - origin.y) * invDirection.y;
+	auto t4 = (aabbMax.y - origin.y) * invDirection.y;
+	auto t5 = (aabbMin.z - origin.z) * invDirection.z;
+	auto t6 = (aabbMax.z - origin.z) * invDirection.z;
 
 	return std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
 }
@@ -177,19 +177,13 @@ bool math::isBehindFrustum(const Aabb& aabb, const float4x4& model, const Plane*
 	for (uint8 i = 0; i < planeCount; i++)
 	{
 		auto plane = planes[i];
-		auto distance0 = distance(plane, p0);
-		auto distance1 = distance(plane, p1);
-		auto distance2 = distance(plane, p2);
-		auto distance3 = distance(plane, p3);
-		auto distance4 = distance(plane, p4);
-		auto distance5 = distance(plane, p5);
-		auto distance6 = distance(plane, p6);
-		auto distance7 = distance(plane, p7);
+		auto distance0 = distance(plane, p0), distance1 = distance(plane, p1);
+		auto distance2 = distance(plane, p2), distance3 = distance(plane, p3);
+		auto distance4 = distance(plane, p4), distance5 = distance(plane, p5);
+		auto distance6 = distance(plane, p6), distance7 = distance(plane, p7);
 
-		if (distance0 < 0.0f && distance1 < 0.0f &&
-			distance2 < 0.0f && distance3 < 0.0f &&
-			distance4 < 0.0f && distance5 < 0.0f &&
-			distance6 < 0.0f && distance7 < 0.0f)
+		if (distance0 < 0.0f && distance1 < 0.0f && distance2 < 0.0f && distance3 < 0.0f &&
+			distance4 < 0.0f && distance5 < 0.0f && distance6 < 0.0f && distance7 < 0.0f)
 		{
 			return true;
 		}

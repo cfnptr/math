@@ -118,10 +118,10 @@ struct float2
 	float2& operator=(float n) noexcept { x = n; y = n; return *this; }
 	constexpr bool operator==(float2 v) const noexcept { return x == v.x && y == v.y; }
 	constexpr bool operator!=(float2 v) const noexcept { return x != v.x || y != v.y; }
-	constexpr bool operator<(float2 v) const noexcept { return x < v.x && y < v.y; }
-	constexpr bool operator>(float2 v) const noexcept { return x > v.x && y > v.y; }
-	constexpr bool operator<=(float2 v) const noexcept { return x <= v.x && y <= v.y; }
-	constexpr bool operator>=(float2 v) const noexcept { return x >= v.x && y >= v.y; }
+	constexpr uint2 operator<(float2 v) const noexcept { return uint2(x < v.x, y < v.y); }
+	constexpr uint2 operator>(float2 v) const noexcept { return uint2(x > v.x, y > v.y); }
+	constexpr uint2 operator<=(float2 v) const noexcept { return uint2(x <= v.x, y <= v.y); }
+	constexpr uint2 operator>=(float2 v) const noexcept { return uint2(x >= v.x, y >= v.y); }
 
 	static const float2 zero, one, minusOne, left, right, bottom, top;
 };
@@ -255,10 +255,10 @@ struct float3
 	float3& operator=(float n) noexcept { x = n; y = n; z = n; return *this; }
 	constexpr bool operator==(const float3& v) const noexcept { return x == v.x && y == v.y && z == v.z; }
 	constexpr bool operator!=(const float3& v) const noexcept { return x != v.x || y != v.y || z != v.z; }
-	constexpr bool operator<(const float3& v) const noexcept { return x < v.x && y < v.y && z < v.z; }
-	constexpr bool operator>(const float3& v) const noexcept { return x > v.x && y > v.y && z > v.z; }
-	constexpr bool operator<=(const float3& v) const noexcept { return x <= v.x && y <= v.y && z <= v.z; }
-	constexpr bool operator>=(const float3& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z; }
+	constexpr uint3 operator<(const float3& v) const noexcept { return uint3(x < v.x, y < v.y, z < v.z); }
+	constexpr uint3 operator>(const float3& v) const noexcept { return uint3(x > v.x, y > v.y, z > v.z); }
+	constexpr uint3 operator<=(const float3& v) const noexcept { return uint3(x <= v.x, y <= v.y, z <= v.z); }
+	constexpr uint3 operator>=(const float3& v) const noexcept { return uint3(x >= v.x, y >= v.y, z >= v.z); }
 
 	static const float3 zero, one, minusOne, left, right, bottom, top, back, front;
 };
@@ -444,10 +444,10 @@ struct float4
 	float4& operator=(float n) noexcept { x = n; y = n; z = n; w = n; return *this; }
 	constexpr bool operator==(const float4& v) const noexcept { return x == v.x && y == v.y && z == v.z && w == v.w; }
 	constexpr bool operator!=(const float4& v) const noexcept { return x != v.x || y != v.y || z != v.z || w != v.w; }
-	constexpr bool operator<(const float4& v) const noexcept { return x < v.x && y < v.y && z < v.z && w < v.w; }
-	constexpr bool operator>(const float4& v) const noexcept { return x > v.x && y > v.y && z > v.z && w > v.w; }
-	constexpr bool operator<=(const float4& v) const noexcept { return x <= v.x && y <= v.y && z <= v.z && w <= v.w; }
-	constexpr bool operator>=(const float4& v) const noexcept { return x >= v.x && y >= v.y && z >= v.z && w >= v.w; }
+	constexpr uint4 operator<(const float4& v) const noexcept { return uint4(x < v.x, y < v.y, z < v.z, w < v.w); }
+	constexpr uint4 operator>(const float4& v) const noexcept { return uint4(x > v.x, y > v.y, z > v.z, w > v.w); }
+	constexpr uint4 operator<=(const float4& v) const noexcept { return uint4(x <= v.x, y <= v.y, z <= v.z, w <= v.w); }
+	constexpr uint4 operator>=(const float4& v) const noexcept { return uint4(x >= v.x, y >= v.y, z >= v.z, w >= v.w); }
 
 	static const float4 zero, one, minusOne;
 };
@@ -463,10 +463,10 @@ static constexpr float2 operator*(float2 v, float n) noexcept { return float2(v.
 static constexpr float2 operator/(float2 v, float n) noexcept { return float2(v.x / n, v.y / n); }
 static constexpr bool operator==(float2 v, float n) noexcept { return v == float2(n); }
 static constexpr bool operator!=(float2 v, float n) noexcept { return v != float2(n); }
-static constexpr bool operator<(float2 v, float n) noexcept { return v < float2(n); }
-static constexpr bool operator>(float2 v, float n) noexcept { return v > float2(n); }
-static constexpr bool operator<=(float2 v, float n) noexcept { return v <= float2(n); }
-static constexpr bool operator>=(float2 v, float n) noexcept { return v >= float2(n); }
+static constexpr uint2 operator<(float2 v, float n) noexcept { return v < float2(n); }
+static constexpr uint2 operator>(float2 v, float n) noexcept { return v > float2(n); }
+static constexpr uint2 operator<=(float2 v, float n) noexcept { return v <= float2(n); }
+static constexpr uint2 operator>=(float2 v, float n) noexcept { return v >= float2(n); }
 
 static constexpr float2 operator+(float n, float2 v) noexcept { return float2(n + v.x, n + v.y); }
 static constexpr float2 operator-(float n, float2 v) noexcept { return float2(n - v.x, n - v.y); }
@@ -474,10 +474,10 @@ static constexpr float2 operator*(float n, float2 v) noexcept { return float2(n 
 static constexpr float2 operator/(float n, float2 v) noexcept { return float2(n / v.x, n / v.y); }
 static constexpr bool operator==(float n, float2 v) noexcept { return float2(n) == v; }
 static constexpr bool operator!=(float n, float2 v) noexcept { return float2(n) != v; }
-static constexpr bool operator<(float n, float2 v) noexcept { return float2(n) < v; }
-static constexpr bool operator>(float n, float2 v) noexcept { return float2(n) > v; }
-static constexpr bool operator<=(float n, float2 v) noexcept { return float2(n) <= v; }
-static constexpr bool operator>=(float n, float2 v) noexcept { return float2(n) >= v; }
+static constexpr uint2 operator<(float n, float2 v) noexcept { return float2(n) < v; }
+static constexpr uint2 operator>(float n, float2 v) noexcept { return float2(n) > v; }
+static constexpr uint2 operator<=(float n, float2 v) noexcept { return float2(n) <= v; }
+static constexpr uint2 operator>=(float n, float2 v) noexcept { return float2(n) >= v; }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -487,6 +487,18 @@ static constexpr bool operator>=(float n, float2 v) noexcept { return float2(n) 
  */
 static bool isBinaryLess(float2 a, float2 b) noexcept { return *((const int64*)&a) < *((const int64*)&b); }
 
+/**
+ * @brief Selects between two vector components based on the control vector values.
+ * 
+ * @param[in] c control vector (contains is true or false)
+ * @param[in] t contains components for true condition
+ * @param[in] f contains components for false condition
+ */
+static constexpr float2 select(uint2 c, float2 t, float2 f) noexcept
+{
+	return float2(c.x ? t.x : f.x, c.y ? t.y : f.y);
+}
+
 //**********************************************************************************************************************
 static constexpr float3 operator+(const float3& v, float n) noexcept { return float3(v.x + n, v.y + n, v.z + n); }
 static constexpr float3 operator-(const float3& v, float n) noexcept { return float3(v.x - n, v.y - n, v.z - n); }
@@ -494,10 +506,10 @@ static constexpr float3 operator*(const float3& v, float n) noexcept { return fl
 static constexpr float3 operator/(const float3& v, float n) noexcept { return float3(v.x / n, v.y / n, v.z / n); }
 static constexpr bool operator==(const float3& v, float n) noexcept { return v == float3(n); }
 static constexpr bool operator!=(const float3& v, float n) noexcept { return v != float3(n); }
-static constexpr bool operator<(const float3& v, float n) noexcept { return v < float3(n); }
-static constexpr bool operator>(const float3& v, float n) noexcept { return v > float3(n); }
-static constexpr bool operator<=(const float3& v, float n) noexcept { return v <= float3(n); }
-static constexpr bool operator>=(const float3& v, float n) noexcept { return v >= float3(n); }
+static constexpr uint3 operator<(const float3& v, float n) noexcept { return v < float3(n); }
+static constexpr uint3 operator>(const float3& v, float n) noexcept { return v > float3(n); }
+static constexpr uint3 operator<=(const float3& v, float n) noexcept { return v <= float3(n); }
+static constexpr uint3 operator>=(const float3& v, float n) noexcept { return v >= float3(n); }
 
 static constexpr float3 operator+(float n, const float3& v) noexcept { return float3(n + v.x, n + v.y, n + v.z); }
 static constexpr float3 operator-(float n, const float3& v) noexcept { return float3(n - v.x, n - v.y, n - v.z); }
@@ -505,10 +517,10 @@ static constexpr float3 operator*(float n, const float3& v) noexcept { return fl
 static constexpr float3 operator/(float n, const float3& v) noexcept { return float3(n / v.x, n / v.y, n / v.z); }
 static constexpr bool operator==(float n, const float3& v) noexcept { return float3(n) == v; }
 static constexpr bool operator!=(float n, const float3& v) noexcept { return float3(n) != v; }
-static constexpr bool operator<(float n, const float3& v) noexcept { return float3(n) < v; }
-static constexpr bool operator>(float n, const float3& v) noexcept { return float3(n) > v; }
-static constexpr bool operator<=(float n, const float3& v) noexcept { return float3(n) <= v; }
-static constexpr bool operator>=(float n, const float3& v) noexcept { return float3(n) >= v; }
+static constexpr uint3 operator<(float n, const float3& v) noexcept { return float3(n) < v; }
+static constexpr uint3 operator>(float n, const float3& v) noexcept { return float3(n) > v; }
+static constexpr uint3 operator<=(float n, const float3& v) noexcept { return float3(n) <= v; }
+static constexpr uint3 operator>=(float n, const float3& v) noexcept { return float3(n) >= v; }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -518,6 +530,18 @@ static constexpr bool operator>=(float n, const float3& v) noexcept { return flo
  */
 static bool isBinaryLess(const float3& a, const float3& b) noexcept { return memcmp(&a, &b, sizeof(float) * 3) < 0; }
 
+/**
+ * @brief Selects between two vector components based on the control vector values.
+ * 
+ * @param[in] c control vector (contains is true or false)
+ * @param[in] t contains components for true condition
+ * @param[in] f contains components for false condition
+ */
+static constexpr float3 select(const uint3& c, const float3& t, const float3& f) noexcept
+{
+	return float3(c.x ? t.x : f.x, c.y ? t.y : f.y, c.z ? t.z : f.z);
+}
+
 //**********************************************************************************************************************
 static constexpr float4 operator+(const float4& v, float n) noexcept { return float4(v.x + n, v.y + n, v.z + n, v.w + n); }
 static constexpr float4 operator-(const float4& v, float n) noexcept { return float4(v.x - n, v.y - n, v.z - n, v.w - n); }
@@ -525,10 +549,10 @@ static constexpr float4 operator*(const float4& v, float n) noexcept { return fl
 static constexpr float4 operator/(const float4& v, float n) noexcept { return float4(v.x / n, v.y / n, v.z / n, v.w / n); }
 static constexpr bool operator==(const float4& v, float n) noexcept { return v == float4(n); }
 static constexpr bool operator!=(const float4& v, float n) noexcept { return v != float4(n); }
-static constexpr bool operator<(const float4& v, float n) noexcept { return v < float4(n); }
-static constexpr bool operator>(const float4& v, float n) noexcept { return v > float4(n); }
-static constexpr bool operator<=(const float4& v, float n) noexcept { return v <= float4(n); }
-static constexpr bool operator>=(const float4& v, float n) noexcept { return v >= float4(n); }
+static constexpr uint4 operator<(const float4& v, float n) noexcept { return v < float4(n); }
+static constexpr uint4 operator>(const float4& v, float n) noexcept { return v > float4(n); }
+static constexpr uint4 operator<=(const float4& v, float n) noexcept { return v <= float4(n); }
+static constexpr uint4 operator>=(const float4& v, float n) noexcept { return v >= float4(n); }
 
 static constexpr float4 operator+(float n, const float4& v) noexcept { return float4(n + v.x, n + v.y, n + v.z, n + v.w); }
 static constexpr float4 operator-(float n, const float4& v) noexcept { return float4(n - v.x, n - v.y, n - v.z, n - v.w); }
@@ -536,10 +560,10 @@ static constexpr float4 operator*(float n, const float4& v) noexcept { return fl
 static constexpr float4 operator/(float n, const float4& v) noexcept { return float4(n / v.x, n / v.y, n / v.z, n / v.w); }
 static constexpr bool operator==(float n, const float4& v) noexcept { return float4(n) == v; }
 static constexpr bool operator!=(float n, const float4& v) noexcept { return float4(n) != v; }
-static constexpr bool operator<(float n, const float4& v) noexcept { return float4(n) < v; }
-static constexpr bool operator>(float n, const float4& v) noexcept { return float4(n) > v; }
-static constexpr bool operator<=(float n, const float4& v) noexcept { return float4(n) <= v; }
-static constexpr bool operator>=(float n, const float4& v) noexcept { return float4(n) >= v; }
+static constexpr uint4 operator<(float n, const float4& v) noexcept { return float4(n) < v; }
+static constexpr uint4 operator>(float n, const float4& v) noexcept { return float4(n) > v; }
+static constexpr uint4 operator<=(float n, const float4& v) noexcept { return float4(n) <= v; }
+static constexpr uint4 operator>=(float n, const float4& v) noexcept { return float4(n) >= v; }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -548,6 +572,18 @@ static constexpr bool operator>=(float n, const float4& v) noexcept { return flo
  * @param[in] b second vector to binary compare
  */
 static bool isBinaryLess(const float4& a, const float4& b) noexcept { return memcmp(&a, &b, sizeof(float) * 4) < 0; }
+
+/**
+ * @brief Selects between two vector components based on the control vector values.
+ * 
+ * @param[in] c control vector (contains is true or false)
+ * @param[in] t contains components for true condition
+ * @param[in] f contains components for false condition
+ */
+static constexpr float4 select(const uint4& c, const float4& t, const float4& f) noexcept
+{
+	return float4(c.x ? t.x : f.x, c.y ? t.y : f.y, c.z ? t.z : f.z, c.w ? t.w : f.w);
+}
 
 //**********************************************************************************************************************
 // TODO: possibly add more specific math functions like remquo, sph_neumann or dFdx.
@@ -619,8 +655,8 @@ static float2 lerpDelta(float2 a, float2 b, float f, float dt) noexcept
 }
 static float2 gain(float2 x, float2 k) noexcept
 {
-	auto a = float2(0.5f) * pow(2.0f * ((x < 0.5f) ? x : 1.0f - x), k);
-	return (x < 0.5f) ? a : 1.0f - a;
+	auto a = float2(0.5f) * pow(2.0f * select(x < 0.5f, x, 1.0f - x), k);
+	return select(x < 0.5f, a, 1.0f - a);
 }
 
 //**********************************************************************************************************************
@@ -705,8 +741,8 @@ static float3 lerpDelta(const float3& a, const float3& b, float f, float dt) noe
 }
 static float3 gain(const float3& x, const float3& k) noexcept
 {
-	auto a = float3(0.5f) * pow(2.0f * ((x < 0.5f) ? x : 1.0f - x), k);
-	return (x < 0.5f) ? a : 1.0f - a;
+	auto a = float3(0.5f) * pow(2.0f * select(x < 0.5f, x, 1.0f - x), k);
+	return select(x < 0.5f, a, 1.0f - a);
 }
 
 //**********************************************************************************************************************
@@ -874,8 +910,8 @@ static float4 lerpDelta(const float4& a, const float4& b, float f, float dt) noe
 }
 static float4 gain(const float4& x, const float4& k) noexcept
 {
-	auto a = float4(0.5f) * pow(2.0f * ((x < 0.5f) ? x : 1.0f - x), k);
-	return (x < 0.5f) ? a : 1.0f - a;
+	auto a = float4(0.5f) * pow(2.0f * select(x < 0.5f, x, 1.0f - x), k);
+	return select(x < 0.5f, a, 1.0f - a);
 }
 
 } // namespace math

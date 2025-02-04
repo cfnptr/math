@@ -48,7 +48,7 @@ public:
 	 */
 	constexpr Aabb(const float3& min = float3(0.0f), const float3& max = float3(0.0f)) noexcept : min(min), max(max)
 	{
-		assert(min <= max);
+		assert((min <= max).areAllTrue());
 	}
 
 	/**
@@ -69,7 +69,7 @@ public:
 	 */
 	void setMin(const float3& min) noexcept
 	{
-		assert(min <= this->max);
+		assert((min <= this->max).areAllTrue());
 		this->min = min;
 	}
 	/**
@@ -79,7 +79,7 @@ public:
 	 */
 	void setMax(const float3& max) noexcept
 	{
-		assert(max >= this->min);
+		assert((max >= this->min).areAllTrue());
 		this->max = max;
 	}
 	/**
@@ -91,7 +91,7 @@ public:
 	 */
 	void set(const float3& min, const float3& max) noexcept
 	{
-		assert(min <= max);
+		assert((min <= max).areAllTrue());
 		this->min = min;
 		this->max = max;
 	}
@@ -104,7 +104,7 @@ public:
 	 */
 	void setSize(const float3& size, const float3& position = float3(0.0f)) noexcept
 	{
-		assert(size >= 0.0f);
+		assert((size >= 0.0f).areAllTrue());
 		auto extent = size * 0.5f;
 		min = position - extent;
 		max = position + extent;
@@ -127,7 +127,7 @@ public:
 	 */
 	void setExtent(const float3& extent, const float3& position = float3(0.0f)) noexcept
 	{
-		assert(extent >= 0.0f);
+		assert((extent >= 0.0f).areAllTrue());
 		min = position - extent;
 		max = position + extent;
 	}
@@ -186,10 +186,23 @@ public:
 	Aabb& operator-=(const float3& v) noexcept { min -= v; max -= v; return *this; }
 	constexpr bool operator==(const Aabb& v) const noexcept { return min == v.min && max == v.max; }
 	constexpr bool operator!=(const Aabb& v) const noexcept { return min != v.min || max != v.max; }
-	constexpr bool operator<(const Aabb& v) const noexcept { return min < v.min && max < v.max; }
-	constexpr bool operator>(const Aabb& v) const noexcept { return min > v.min && max > v.max; }
-	constexpr bool operator<=(const Aabb& v) const noexcept { return min <= v.min && max <= v.max; }
-	constexpr bool operator>=(const Aabb& v) const noexcept { return min >= v.min && max >= v.max; }
+
+	constexpr bool operator<(const Aabb& v) const noexcept
+	{
+		return (min < v.min).areAllTrue() && (max < v.max).areAllTrue();
+	}
+	constexpr bool operator>(const Aabb& v) const noexcept
+	{ 
+		return (min > v.min).areAllTrue() && (max > v.max).areAllTrue();
+	}
+	constexpr bool operator<=(const Aabb& v) const noexcept
+	{
+		return (min <= v.min).areAllTrue() && (max <= v.max).areAllTrue();
+	}
+	constexpr bool operator>=(const Aabb& v) const noexcept
+	{
+		return (min >= v.min).areAllTrue() && (max >= v.max).areAllTrue();
+	}
 	
 	static const Aabb zero, one, two, half;
 };
@@ -215,7 +228,7 @@ static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(
  */
 static constexpr bool isInside(const Aabb& aabb, const float3& point) noexcept
 {
-	return point >= aabb.getMin() && point <= aabb.getMax();
+	return (aabb.getMin() <= point).areAllTrue() && (point <= aabb.getMax()).areAllTrue();
 }
 /**
  * @brief Returns closest point inside AABB to the specified one.
@@ -301,7 +314,7 @@ static bool raycastI(const Aabb& aabb, const Ray& ray) noexcept
  */
 static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 {
-	return a.getMin() <= b.getMax() && a.getMax() >= b.getMin();
+	return (a.getMin() <= b.getMax()).areAllTrue() && (b.getMin() <= a.getMax()).areAllTrue();
 }
 
 /**
