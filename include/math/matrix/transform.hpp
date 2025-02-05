@@ -52,13 +52,14 @@ static constexpr float4x4 translate(const float3& t) noexcept
 		0.0f, 0.0f, 1.0f, t.z,
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
+
 /**
  * @brief Returns total matrix translation transformation of an object in 3D space.
  * @param[in] m target model matrix to extract from
  */
 static constexpr float3 getTranslation(const float4x4& m) noexcept
 {
-	return float3(m.c3.x, m.c3.y, m.c3.z);
+	return (float3)m.c3;
 }
 /**
  * @brief Sets total matrix translation transformation of an object in 3D space.
@@ -68,7 +69,18 @@ static constexpr float3 getTranslation(const float4x4& m) noexcept
  */
 static constexpr void setTranslation(float4x4& m, const float3& t) noexcept
 {
-	m.c3.x = t.x; m.c3.y = t.y; m.c3.z = t.z;
+	m.c3 = float4(t, m.c3.w);
+}
+
+/**
+ * @brief Adds translation of an object in 3D space to the matrix.
+ * 
+ * @param[out] m target model matrix to use
+ * @param[in] t target object position to add
+ */
+static constexpr float4x4 addTranslation(const float4x4& m, const float3& t) noexcept
+{
+	return float4x4(m.c0, m.c1, m.c2, float4((float3)m.c3 + t, m.c3.w));
 }
 
 /***********************************************************************************************************************
@@ -93,6 +105,7 @@ static constexpr float4x4 scale(const float3& s) noexcept
 		0.0f, 0.0f, s.z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
+
 /**
  * @brief Extracts total matrix scale transformation of an object in 3D space.
  * @param[in] m target model matrix to extract from
@@ -163,6 +176,7 @@ static float4x4 rotate(const float3& front, const float3& up = float3::top) noex
 		f.x, f.y, f.z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
 }
+
 /**
  * @brief Extracts total matrix rotation transformation of an object in 3D space.
  * @param[in] m target model matrix to extract from
