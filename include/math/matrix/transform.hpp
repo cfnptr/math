@@ -78,9 +78,9 @@ static constexpr void setTranslation(float4x4& m, const float3& t) noexcept
  * @param[out] m target model matrix to use
  * @param[in] t target object position to add
  */
-static constexpr float4x4 addTranslation(const float4x4& m, const float3& t) noexcept
+static constexpr void addTranslation(float4x4& m, const float3& t) noexcept
 {
-	return float4x4(m.c0, m.c1, m.c2, float4((float3)m.c3 + t, m.c3.w));
+	m.c3 = float4((float3)m.c3 + t, m.c3.w);
 }
 
 /***********************************************************************************************************************
