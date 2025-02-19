@@ -32,7 +32,7 @@
 namespace math
 {
 
-/***********************************************************************************************************************
+/**
  * @brief Quaternion rotation container. (In 3D space)
  * @details Represents rotation using complex numbers, avoiding gimbal lock problem.
  */

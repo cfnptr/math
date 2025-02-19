@@ -42,7 +42,7 @@ typedef int32_t int32;
 typedef int64_t int64;
 
 /**
- * @brief Unsigned 8bit integer type. (0 to 256)
+ * @brief Unsigned 8bit integer type. (0 to 255)
  */
 typedef uint8_t uint8;
 /**

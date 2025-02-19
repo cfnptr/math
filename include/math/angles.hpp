@@ -28,7 +28,7 @@
 namespace math
 {
 
-/***********************************************************************************************************************
+/**
  * @brief Converts specified value in degrees to radians.
  * @param degrees target value in degrees
  */

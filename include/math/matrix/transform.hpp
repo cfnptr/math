@@ -30,7 +30,7 @@
 namespace math
 {
 
-/***********************************************************************************************************************
+/**
  * @brief Applies translation transformation to an object in 3D space.
  * 
  * @param[in] m target model matrix to translate

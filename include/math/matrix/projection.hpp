@@ -33,7 +33,7 @@
 namespace math
 {
 
-/***********************************************************************************************************************
+/**
  * @brief Calculates infinite reversed Z perspective projection matrix.
  *
  * @param fieldOfView camera field of view in radians

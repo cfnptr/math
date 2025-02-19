@@ -38,7 +38,7 @@ namespace math
 
 using namespace std;
 
-/***********************************************************************************************************************
+/**
  * @brief Unsigned integer 2 component vector structure.
  * @details Commonly used to represent: points, positions, etc.
  */

@@ -29,7 +29,7 @@
 namespace math
 {
 
-/***********************************************************************************************************************
+/**
  * @brief Floating point 2x2 matrix structure.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
