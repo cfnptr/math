@@ -33,7 +33,7 @@ using namespace std;
  * @brief Version information container.
  * @details Made of major, minor, patch and build parts.
  */
-struct Version
+struct [[nodiscard]] Version
 {
 	uint8 major; /**< Major version part. */
 	uint8 minor; /**< Minor version part. */

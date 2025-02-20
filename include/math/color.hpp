@@ -27,7 +27,7 @@ namespace math
 /**
  * @brief sRGB color container.
  */
-struct Color
+struct [[nodiscard]] Color
 {
 	uint8 r = 0; /**< Red color channel value. */
 	uint8 g = 0; /**< Green color channel value. */
@@ -71,7 +71,7 @@ struct Color
 	
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized R channel. (Red)
-	 * @param[in] normR target normalized R and G channel color values
+	 * @param normR target normalized R and G channel color values
 	 */
 	constexpr explicit Color(float normR)
 	{
@@ -80,7 +80,7 @@ struct Color
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized R and G channels. (Red, Green)
-	 * @param[in] normRg target normalized R and G channel color values
+	 * @param normRg target normalized R and G channel color values
 	 */
 	constexpr explicit Color(float2 normRg)
 	{
@@ -90,9 +90,9 @@ struct Color
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized RGB channels. (Red, Green, Blue)
-	 * @param[in] normRgb target normalized RGB channel color values
+	 * @param normRgb target normalized RGB channel color values
 	 */
-	constexpr explicit Color(const float3& normRgb)
+	constexpr explicit Color(float3 normRgb)
 	{
 		r = (uint8)(std::clamp(normRgb.x, 0.0f, 1.0f) * 255.0f + 0.5f);
 		g = (uint8)(std::clamp(normRgb.y, 0.0f, 1.0f) * 255.0f + 0.5f);
@@ -101,9 +101,9 @@ struct Color
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized RGBA channels. (Red, Green, Blue, Alpha)
-	 * @param[in] normRgba target normalized RGBA channel color values
+	 * @param normRgba target normalized RGBA channel color values
 	 */
-	constexpr explicit Color(const float4& normRgba)
+	constexpr explicit Color(float4 normRgba)
 	{
 		r = (uint8)(std::clamp(normRgba.x, 0.0f, 1.0f) * 255.0f + 0.5f);
 		g = (uint8)(std::clamp(normRgba.y, 0.0f, 1.0f) * 255.0f + 0.5f);
@@ -246,25 +246,18 @@ struct Color
 	}
 
 	//******************************************************************************************************************
-	constexpr Color operator+(Color c) const noexcept { return Color(r + c.r, g + c.g, b + c.b, a + c.a); }
-	constexpr Color operator-(Color c) const noexcept { return Color(r - c.r, g - c.g, b - c.b, a - c.a); }
-	constexpr Color operator*(Color c) const noexcept { return Color(r * c.r, g * c.g, b * c.b, a * c.a); }
-	constexpr Color operator/(Color c) const noexcept { return Color(r / c.r, g / c.g, b / c.b, a / c.a); }
-	Color& operator+=(Color c) noexcept { r += c.r; g += c.g; b += c.b; a += c.a; return *this; }
-	Color& operator-=(Color c) noexcept { r -= c.r; g -= c.g; b -= c.b; a -= c.a; return *this; }
-	Color& operator*=(Color c) noexcept { r *= c.r; g *= c.g; b *= c.b; a *= c.a; return *this; }
-	Color& operator/=(Color c) noexcept { r /= c.r; g /= c.g; b /= c.b; a /= c.a; return *this; }
-	Color& operator+=(uint8 n) noexcept { r += n; g += n; b += n; a += n; return *this; }
-	Color& operator-=(uint8 n) noexcept { r -= n; g -= n; b -= n; a -= n; return *this; }
-	Color& operator*=(uint8 n) noexcept { r *= n; g *= n; b *= n; a *= n; return *this; }
-	Color& operator/=(uint8 n) noexcept { r /= n; g /= n; b /= n; a /= n; return *this; }
-	Color& operator=(uint8 n) noexcept { r = n; g = n; b = n; a = n; return *this; }
 	constexpr bool operator==(Color c) const noexcept { return r == c.r && g == c.g && b == c.b && a == c.a; }
 	constexpr bool operator!=(Color c) const noexcept { return r != c.r || g != c.g || b != c.b || a != c.a; }
 	constexpr bool operator<(Color c) const noexcept { return r < c.r && g < c.g && b < c.b && a < c.a; }
 	constexpr bool operator>(Color c) const noexcept { return r > c.r && g > c.g && b > c.b && a > c.a; }
 	constexpr bool operator<=(Color c) const noexcept { return r <= c.r && g <= c.g && b <= c.b && a <= c.a; }
 	constexpr bool operator>=(Color c) const noexcept { return r >= c.r && g >= c.g && b >= c.b && a >= c.a; }
+	constexpr bool operator==(uint8 n) const noexcept { return r == n && g == n && b == n && a == n; }
+	constexpr bool operator!=(uint8 n) const noexcept { return r != n || g != n || b != n || a != n; }
+	constexpr bool operator<(uint8 n) const noexcept { return r < n && g < n && b < n && a < n; }
+	constexpr bool operator>(uint8 n) const noexcept { return r > n && g > n && b > n && a > n; }
+	constexpr bool operator<=(uint8 n) const noexcept { return r <= n && g <= n && b <= n && a <= n; }
+	constexpr bool operator>=(uint8 n) const noexcept { return r >= n && g >= n && b >= n && a >= n; }
 
 	static const Color white, black, grey, transparent, red, green, blue, cyan, magenta, yellow;
 };
@@ -280,22 +273,6 @@ inline const Color Color::cyan = Color(0, 255, 255, 255);
 inline const Color Color::magenta = Color(255, 0, 255, 255);
 inline const Color Color::yellow = Color(255, 255, 0, 255);
 
-//**********************************************************************************************************************
-static constexpr Color operator+(Color c, uint8 n) noexcept { return Color(c.r + n, c.g + n, c.b + n, c.a + n); }
-static constexpr Color operator-(Color c, uint8 n) noexcept { return Color(c.r - n, c.g - n, c.b - n, c.a - n); }
-static constexpr Color operator*(Color c, uint8 n) noexcept { return Color(c.r * n, c.g * n, c.b * n, c.a * n); }
-static constexpr Color operator/(Color c, uint8 n) noexcept { return Color(c.r / n, c.g / n, c.b / n, c.a / n); }
-static constexpr bool operator==(Color c, uint8 n) noexcept { return c == Color(n); }
-static constexpr bool operator!=(Color c, uint8 n) noexcept { return c != Color(n); }
-static constexpr bool operator<(Color c, uint8 n) noexcept { return c < Color(n); }
-static constexpr bool operator>(Color c, uint8 n) noexcept { return c > Color(n); }
-static constexpr bool operator<=(Color c, uint8 n) noexcept { return c <= Color(n); }
-static constexpr bool operator>=(Color c, uint8 n) noexcept { return c >= Color(n); }
-
-static constexpr Color operator+(uint8 n, Color c) noexcept { return Color(n + c.r, n + c.g, n + c.b, n + c.a); }
-static constexpr Color operator-(uint8 n, Color c) noexcept { return Color(n - c.r, n - c.g, n - c.b, n - c.a); }
-static constexpr Color operator*(uint8 n, Color c) noexcept { return Color(n * c.r, n * c.g, n * c.b, n * c.a); }
-static constexpr Color operator/(uint8 n, Color c) noexcept { return Color(n / c.r, n / c.g, n / c.b, n / c.a); }
 static constexpr bool operator==(uint8 n, Color c) noexcept { return Color(n) == c; }
 static constexpr bool operator!=(uint8 n, Color c) noexcept { return Color(n) != c; }
 static constexpr bool operator<(uint8 n, Color c) noexcept { return Color(n) < c; }

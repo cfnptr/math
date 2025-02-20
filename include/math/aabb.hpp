@@ -35,7 +35,7 @@ namespace math
  * the object but remain parallel to the axes. Bounding box defines a rectangular (2D) or cuboid (3D) volume that 
  * surrounds an object, used to approximate the object's shape for efficient calculations.
  */
-struct Aabb
+struct [[nodiscard]] Aabb
 {
 protected:
 	float3 min, max;
@@ -48,7 +48,7 @@ public:
 	 */
 	constexpr Aabb(const float3& min = float3(0.0f), const float3& max = float3(0.0f)) noexcept : min(min), max(max)
 	{
-		assert((min <= max).areAllTrue());
+		assert(areAllTrue(min <= max));
 	}
 
 	/**
@@ -69,7 +69,7 @@ public:
 	 */
 	void setMin(const float3& min) noexcept
 	{
-		assert((min <= this->max).areAllTrue());
+		assert(areAllTrue(min <= this->max));
 		this->min = min;
 	}
 	/**
@@ -79,7 +79,7 @@ public:
 	 */
 	void setMax(const float3& max) noexcept
 	{
-		assert((max >= this->min).areAllTrue());
+		assert(areAllTrue(max >= this->min));
 		this->max = max;
 	}
 	/**
@@ -91,7 +91,7 @@ public:
 	 */
 	void set(const float3& min, const float3& max) noexcept
 	{
-		assert((min <= max).areAllTrue());
+		assert(areAllTrue(min <= max));
 		this->min = min;
 		this->max = max;
 	}
@@ -104,7 +104,7 @@ public:
 	 */
 	void setSize(const float3& size, const float3& position = float3(0.0f)) noexcept
 	{
-		assert((size >= 0.0f).areAllTrue());
+		assert(areAllTrue(size >= 0.0f));
 		auto extent = size * 0.5f;
 		min = position - extent;
 		max = position + extent;
@@ -127,7 +127,7 @@ public:
 	 */
 	void setExtent(const float3& extent, const float3& position = float3(0.0f)) noexcept
 	{
-		assert((extent >= 0.0f).areAllTrue());
+		assert(areAllTrue(extent >= 0.0f));
 		min = position - extent;
 		max = position + extent;
 	}
@@ -189,19 +189,19 @@ public:
 
 	constexpr bool operator<(const Aabb& v) const noexcept
 	{
-		return (min < v.min).areAllTrue() && (max < v.max).areAllTrue();
+		return areAllTrue(min < v.min) && areAllTrue(max < v.max);
 	}
 	constexpr bool operator>(const Aabb& v) const noexcept
 	{ 
-		return (min > v.min).areAllTrue() && (max > v.max).areAllTrue();
+		return areAllTrue(min > v.min) && areAllTrue(max > v.max);
 	}
 	constexpr bool operator<=(const Aabb& v) const noexcept
 	{
-		return (min <= v.min).areAllTrue() && (max <= v.max).areAllTrue();
+		return areAllTrue(min <= v.min) && areAllTrue(max <= v.max);
 	}
 	constexpr bool operator>=(const Aabb& v) const noexcept
 	{
-		return (min >= v.min).areAllTrue() && (max >= v.max).areAllTrue();
+		return areAllTrue(min >= v.min) && areAllTrue(max >= v.max);
 	}
 	
 	static const Aabb zero, one, two, half;
@@ -228,7 +228,7 @@ static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(
  */
 static constexpr bool isInside(const Aabb& aabb, const float3& point) noexcept
 {
-	return (aabb.getMin() <= point).areAllTrue() && (point <= aabb.getMax()).areAllTrue();
+	return areAllTrue(aabb.getMin() <= point) && areAllTrue(point <= aabb.getMax());
 }
 /**
  * @brief Returns closest point inside AABB to the specified one.
@@ -314,7 +314,7 @@ static bool raycastI(const Aabb& aabb, const Ray& ray) noexcept
  */
 static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 {
-	return (a.getMin() <= b.getMax()).areAllTrue() && (b.getMin() <= a.getMax()).areAllTrue();
+	return areAllTrue(a.getMin() <= b.getMax()) && areAllTrue(b.getMin() <= a.getMax());
 }
 
 /**
@@ -325,7 +325,7 @@ static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
  * @param[in] extent target AABB extent (half size)
  * @param[in] triangle target triangle in the space
  */
-bool isAabbIntersected(const float3& center, const float3& extent, const Triangle& triangle) noexcept;
+bool isAabbIntersected(const float3& center, float3 extent, const Triangle& triangle) noexcept;
 
 /**
  * @brief Returns true if AABB is behind the frustum planes.

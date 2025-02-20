@@ -28,7 +28,7 @@ namespace math
  * @brief Infinite ray structure. (In 3D space)
  * @details Defined by an origin point and direction vector.
  */
-struct Ray
+struct [[nodiscard]] Ray
 {
 protected:
 	float3 direction;

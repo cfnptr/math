@@ -20,9 +20,7 @@
  * Vector is a mathematical concept used to represent points, positions, directions, velocities, sizes, colors, and 
  * forces in 2D and 3D space. For example, a 3D vector might represent an object's position relative to the origin or a 
  * direction of motion. Vectors are essential for operations like transformations, lighting, and physics calculations.
- * 
- * @details Based on this project: https://github.com/g-truc/glm
  */
 
 #pragma once
-#include "math/vector/float.hpp"
+#include "math/simd/vector/float.hpp"

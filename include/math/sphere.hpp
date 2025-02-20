@@ -28,7 +28,7 @@ namespace math
  * @brief Sphere structure. (In 3D space)
  * @details Defined by a position point and radius.
  */
-struct Sphere
+struct [[nodiscard]] Sphere
 {
 	float3 position;
 	float radius;

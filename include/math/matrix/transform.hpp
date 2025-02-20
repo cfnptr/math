@@ -34,17 +34,17 @@ namespace math
  * @brief Applies translation transformation to an object in 3D space.
  * 
  * @param[in] m target model matrix to translate
- * @param[in] t target object translation
+ * @param t target object translation
  */
-static constexpr float4x4 translate(const float4x4& m, const float3& t) noexcept
+static constexpr float4x4 translate(const float4x4& m, float3 t) noexcept
 {
 	return float4x4(m.c0, m.c1, m.c2, m.c0 * t.x + m.c1 * t.y + m.c2 * t.z + m.c3);
 }
 /**
  * @brief Creates a new matrix with a specified object position in 3D space.
- * @param[in] t target object translation
+ * @param t target object translation
  */
-static constexpr float4x4 translate(const float3& t) noexcept
+static constexpr float4x4 translate(float3 t) noexcept
 {
 	return float4x4(
 		1.0f, 0.0f, 0.0f, t.x,
@@ -65,9 +65,9 @@ static constexpr float3 getTranslation(const float4x4& m) noexcept
  * @brief Sets total matrix translation transformation of an object in 3D space.
  * 
  * @param[out] m target model matrix to set
- * @param[in] t target object position
+ * @param t target object position
  */
-static constexpr void setTranslation(float4x4& m, const float3& t) noexcept
+static constexpr void setTranslation(float4x4& m, float3 t) noexcept
 {
 	m.c3 = float4(t, m.c3.w);
 }
@@ -76,9 +76,9 @@ static constexpr void setTranslation(float4x4& m, const float3& t) noexcept
  * @brief Adds translation of an object in 3D space to the matrix.
  * 
  * @param[out] m target model matrix to use
- * @param[in] t target object position to add
+ * @param t target object position to add
  */
-static constexpr void addTranslation(float4x4& m, const float3& t) noexcept
+static constexpr void addTranslation(float4x4& m, float3 t) noexcept
 {
 	m.c3 = float4((float3)m.c3 + t, m.c3.w);
 }
@@ -87,17 +87,17 @@ static constexpr void addTranslation(float4x4& m, const float3& t) noexcept
  * @brief Applies scale transformation to an object in 3D space.
  *
  * @param[in] m target model matrix to scale
- * @param[in] s target object scale
+ * @param s target object scale
  */
-static constexpr float4x4 scale(const float4x4& m, const float3& s) noexcept
+static constexpr float4x4 scale(const float4x4& m, float3 s) noexcept
 {
 	return float4x4(m.c0 * s.x, m.c1 * s.y, m.c2 * s.z, m.c3);
 }
 /**
  * @brief Creates a new matrix with a specified object scale in 3D space.
- * @param[in] s target object scale
+ * @param s target object scale
  */
-static constexpr float4x4 scale(const float3& s) noexcept
+static constexpr float4x4 scale(float3 s) noexcept
 {
 	return float4x4(
 		s.x, 0.0f, 0.0f, 0.0f,
@@ -125,9 +125,9 @@ static float2 extractScale2(const float4x4& m) noexcept
 
 /***********************************************************************************************************************
  * @brief Creates a new matrix with a specified object rotation in 3D space.
- * @param[in] q target object rotation
+ * @param q target object rotation
  */
-static constexpr float4x4 rotate(const quat& q) noexcept
+static constexpr float4x4 rotate(quat q) noexcept
 {
 	auto xx = q.x * q.x, yy = q.y * q.y, zz = q.z * q.z;
 	auto xz = q.x * q.z, xy = q.x * q.y, yz = q.y * q.z;

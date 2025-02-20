@@ -25,9 +25,9 @@ namespace math
 
 /**
  * @brief Converts linear RGB color to the sRGB color space.
- * @param[in] rgb target linear RGB color
+ * @param rgb target linear RGB color
  */
-static float3 rgbToSrgb(const float3& rgb) noexcept
+static float3 rgbToSrgb(float3 rgb) noexcept
 {
 	constexpr auto c = 0.0031308f;
 	auto l = fma(pow(rgb, float3(1.0f / 2.4f)), float3(1.055f), float3(-0.055f));
@@ -36,9 +36,9 @@ static float3 rgbToSrgb(const float3& rgb) noexcept
 }
 /**
  * @brief Converts sRGB color to the linear RGB color space.
- * @param[in] srgb target sRGB color
+ * @param srgb target sRGB color
  */
-static float3 srgbToRgb(const float3& srgb) noexcept
+static float3 srgbToRgb(float3 srgb) noexcept
 {
 	constexpr auto c = 0.04045f;
 	auto l = pow((srgb + 0.055f) * (1.0f / 1.055f), float3(2.4f));
@@ -77,18 +77,18 @@ static float3 xyzToRgb(const float3& xyz) noexcept
 
 /**
  * @brief Converts XYZ color to the YXY color space.
- * @param[in] xyz target XYZ color
+ * @param xyz target XYZ color
  */
-static float3 xyzToYxy(const float3& xyz) noexcept
+static float3 xyzToYxy(float3 xyz) noexcept
 {
 	auto inv = 1.0f / dot(xyz, float3(1.0f));
 	return float3(xyz.y, xyz.x * inv, xyz.y * inv);
 }
 /**
  * @brief Converts YXY color to the XYZ color space.
- * @param[in] yxy target YXY color
+ * @param yxy target YXY color
  */
-static float3 yxyToXyz(const float3& yxy) noexcept
+static float3 yxyToXyz(float3 yxy) noexcept
 {
 	return float3(yxy.x * yxy.y / yxy.z, yxy.x, 
 		yxy.x * (1.0f - yxy.y - yxy.z) / yxy.z);

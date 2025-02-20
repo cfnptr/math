@@ -82,7 +82,7 @@ float math::raycast1I(const Aabb& aabb, const Ray& ray) noexcept
 }
 
 //**********************************************************************************************************************
-bool math::isAabbIntersected(const float3& center, const float3& extent, const Triangle& triangle) noexcept
+bool math::isAabbIntersected(const float3& center, float3 extent, const Triangle& triangle) noexcept
 {
 	auto v0 = triangle.p0 - center;
 	auto v1 = triangle.p1 - center;

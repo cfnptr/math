@@ -36,7 +36,7 @@ namespace math
  * @brief Quaternion rotation container. (In 3D space)
  * @details Represents rotation using complex numbers, avoiding gimbal lock problem.
  */
-struct quat : public float4
+struct [[nodiscard]] quat : public float4
 {
 	/**
 	 * @brief Creates a new quaternion structure.
@@ -69,9 +69,9 @@ struct quat : public float4
 	 * @brief Creates a new quaternion structure from the angle and axis. (In radians)
 	 * 
 	 * @param angle target rotation around axis in radians
-	 * @param[in] axis target axis to rotate around
+	 * @param axis target axis to rotate around
 	 */
-	quat(float angle, const float3& axis) noexcept
+	quat(float angle, float3 axis) noexcept
 	{
 		auto sinus = std::sin(angle * 0.5f);
 		x = axis.x * sinus;
@@ -82,9 +82,9 @@ struct quat : public float4
 
 	/**
 	 * @brief Rotates this quaternion by the specified one.
-	 * @param[in] q target quaternion to rotate by
+	 * @param q target quaternion to rotate by
 	 */
-	constexpr quat operator*(const quat& q) const noexcept
+	constexpr quat operator*(quat q) const noexcept
 	{
 		return quat(
 			w * q.x + x * q.w + y * q.z - z * q.y,
@@ -149,9 +149,9 @@ inline const quat quat::identity = quat(0.0f, 0.0f, 0.0f, 1.0f);
 
 /***********************************************************************************************************************
  * @brief Normalizes quaternion.
- * @param[in] q target quaternion to normalize
+ * @param q target quaternion to normalize
  */
-static quat normalize(const quat& q) noexcept
+static quat normalize(quat q) noexcept
 {
 	auto l = length(q);
 	assert(l > 0.0f);
@@ -161,14 +161,14 @@ static quat normalize(const quat& q) noexcept
 /**
  * @brief Quaternion spherical linear interpolation from a to b.
  * 
- * @param[in] a starting quaternion value
- * @param[in] a target quaternion value
+ * @param a starting quaternion value
+ * @param[in] b target quaternion value
  * @param t interpolation value (from 0.0 to 1.0)
  */
-static quat slerp(const quat& a, const quat& b, float t) noexcept
+static quat slerp(quat a, const quat& b, float t) noexcept
 {
 	auto cosTheta = dot(a, b);
-	auto c = b;
+	auto c = (float4)b;
 
 	if (cosTheta < 0.0f)
 	{
@@ -183,15 +183,16 @@ static quat slerp(const quat& a, const quat& b, float t) noexcept
 	else
 	{
 		auto angle = std::acos(cosTheta);
-		return (a * std::sin((1.0f - t) * angle) +  c * std::sin(t * angle)) / std::sin(angle);
+		return ((float4)a * std::sin((1.0f - t) * angle) + 
+			c * std::sin(t * angle)) / std::sin(angle);
 	}
 }
 
 /**
  * @brief Inverts (undoes) quaternion rotation.
- * @param[in] q target quaternion to conjugate
+ * @param q target quaternion to conjugate
  */
-static constexpr quat conjugate(const quat& q) noexcept { return quat(-q.x, -q.y, -q.z, q.w); }
+static constexpr quat conjugate(quat q) noexcept { return quat(-q.x, -q.y, -q.z, q.w); }
 /**
  * @brief Calculates inverse of the quaternion.
  * @param[in] q target quaternion to inverse

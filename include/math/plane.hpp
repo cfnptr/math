@@ -30,7 +30,7 @@ namespace math
  * @brief Infinite plane container. (In 3D space)
  * @details Defined by a normal vector and distance to the plane.
  */
-struct Plane
+struct [[nodiscard]] Plane
 {
 public:
 	/**

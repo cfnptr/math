@@ -21,8 +21,6 @@
  * shearing. These matrices are often 4x4 matrices in 3D graphics, allowing for efficient manipulation of objects in 
  * 3D space using homogeneous coordinates. Matrices enable combining multiple transformations into a single operation 
  * and are essential in rendering pipelines, skeletal animation or camera movements.
- * 
- * @details Based on this project: https://github.com/g-truc/glm
  */
 
 #pragma once

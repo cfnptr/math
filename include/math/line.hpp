@@ -28,7 +28,7 @@ namespace math
  * @brief Line structure. (In 3D space)
  * @details Defined by a start and end points in the space.
  */
-struct Line
+struct [[nodiscard]] Line
 {
 	/**
 	 * @brief Line start point in the space.

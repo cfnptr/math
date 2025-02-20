@@ -87,7 +87,7 @@ static float3 stToDir(float2 st, uint32 face) noexcept
  * @param coords target texture coordinates.
  * @param invDim inverted texture dimension (size)
  */
-static float3 coordsToDir(const uint3& coords, float invDim) noexcept
+static float3 coordsToDir(uint3 coords, float invDim) noexcept
 {
 	auto st = coordsToST((uint2)coords, invDim);
 	return stToDir(st, coords.z);

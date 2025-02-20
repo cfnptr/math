@@ -28,7 +28,7 @@ namespace math
  * @brief Triangle or polygon structure. (In 3D space)
  * @details Defined by three points in 3D space.
  */
-struct Triangle
+struct [[nodiscard]] Triangle
 {
 	/**
 	 * @brief Triangle point count. (Polygon)

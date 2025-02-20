@@ -29,7 +29,7 @@ namespace math
  * @brief Floating point 2 component vector structure.
  * @details Commonly used to represent: points, positions, directions, velocities, etc.
  */
-struct float2
+struct [[nodiscard]] float2
 {
 	float x; /**< First vector component. */
 	float y; /**< Second vector component. */
@@ -77,35 +77,35 @@ struct float2
 	}
 
 	/**
-	 * @brief Returns first and second vector components as uint. (xy)
+	 * @brief Returns as 2 component unsigned integer vector. (xy)
 	 */
 	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
 	/**
-	 * @brief Returns first and second vector components as int. (xy)
+	 * @brief Returns as 2 component signed integer vector. (xy)
 	 */
 	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
 	/**
-	 * @brief Returns first vector component as uint. (x)
+	 * @brief Returns first vector component as unsigned integer. (x)
 	 */
 	constexpr explicit operator uint32() const noexcept { return (uint32)x; }
 	/**
-	 * @brief Returns first vector component as int. (x)
+	 * @brief Returns first vector component as signed integer. (x)
 	 */
 	constexpr explicit operator int32() const noexcept { return (int32)x; }
 	/**
-	 * @brief Returns first vector component. (x)
+	 * @brief Returns first vector component value. (x)
 	 */
 	constexpr explicit operator float() const noexcept { return x; }
 
-	/*******************************************************************************************************************
-	 * @brief Converts vector to the string. (space separated)
-	 */
-	string toString() const noexcept { return to_string(x) + " " + to_string(y); }
-
+	//******************************************************************************************************************
 	constexpr float2 operator+(float2 v) const noexcept { return float2(x + v.x, y + v.y); }
 	constexpr float2 operator-(float2 v) const noexcept { return float2(x - v.x, y - v.y); }
 	constexpr float2 operator*(float2 v) const noexcept { return float2(x * v.x, y * v.y); }
 	constexpr float2 operator/(float2 v) const noexcept { return float2(x / v.x, y / v.y); }
+	constexpr float2 operator+(float n) const noexcept { return float2(x + n, y + n); }
+	constexpr float2 operator-(float n) const noexcept { return float2(x - n, y - n); }
+	constexpr float2 operator*(float n) const noexcept { return float2(x * n, y * n); }
+	constexpr float2 operator/(float n) const noexcept { return float2(x / n, y / n); }
 	constexpr float2 operator-() const noexcept { return float2(-x, -y); }
 	float2& operator+=(float2 v) noexcept { x += v.x; y += v.y; return *this; }
 	float2& operator-=(float2 v) noexcept { x -= v.x; y -= v.y; return *this; }
@@ -122,6 +122,12 @@ struct float2
 	constexpr uint2 operator>(float2 v) const noexcept { return uint2(x > v.x, y > v.y); }
 	constexpr uint2 operator<=(float2 v) const noexcept { return uint2(x <= v.x, y <= v.y); }
 	constexpr uint2 operator>=(float2 v) const noexcept { return uint2(x >= v.x, y >= v.y); }
+	constexpr bool operator==(float n) const noexcept { return x == n && y == n; }
+	constexpr bool operator!=(float n) const noexcept { return x != n || y != n; }
+	constexpr uint2 operator<(float n) const noexcept { return uint2(x < n, y < n); }
+	constexpr uint2 operator>(float n) const noexcept { return uint2(x > n, y > n); }
+	constexpr uint2 operator<=(float n) const noexcept { return uint2(x <= n, y <= n); }
+	constexpr uint2 operator>=(float n) const noexcept { return uint2(x >= n, y >= n); }
 
 	static const float2 zero, one, minusOne, left, right, bottom, top;
 };
@@ -138,7 +144,7 @@ inline const float2 float2::top = float2(0.0f, 1.0f);
  * @brief Floating point 3 component vector structure.
  * @details Commonly used to represent: points, positions, directions, velocities, etc.
  */
-struct float3
+struct [[nodiscard]] float3
 {
 	float x; /**< First vector component. */
 	float y; /**< Second vector component. */
@@ -173,14 +179,14 @@ struct float3
 	constexpr float3(float x, float2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 	/**
 	 * @brief Creates a new floating point 3 component vector structure.
-	 * @param[in] xyz target unsigned integer vector value
+	 * @param xyz target unsigned integer vector value
 	 */
-	constexpr float3(const uint3& xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(uint3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
 	/**
 	 * @brief Creates a new floating point 3 component vector structure.
-	 * @param[in] xyz target signed integer vector value
+	 * @param xyz target signed integer vector value
 	 */
-	constexpr float3(const int3& xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(int3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
 
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
@@ -202,63 +208,69 @@ struct float3
 	}
 
 	/**
-	 * @brief Returns first, second and third vector components as int. (xyz)
+	 * @brief Returns as 3 component signed integer vector. (xyz)
 	 */
 	constexpr explicit operator int3() const noexcept { return int3((int32)x, (int32)y, (int32)z); }
 	/**
-	 * @brief Returns first, second and third vector components as uint. (xyz)
+	 * @brief Returns as 3 component unsigned integer vector. (xyz)
 	 */
 	constexpr explicit operator uint3() const noexcept { return uint3((uint32)x, (uint32)y, (uint32)z); }
 	/**
-	 * @brief Returns first and second vector components as int. (xy)
+	 * @brief Returns as 2 component signed integer vector. (xy)
 	 */
 	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
 	/**
-	 * @brief Returns first and second vector components as uint. (xy)
+	 * @brief Returns as 2 component unsigned integer vector. (xy)
 	 */
 	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
 	/**
-	 * @brief Returns first vector component as uint. (x)
+	 * @brief Returns first vector component as unsigned integer. (x)
 	 */
 	constexpr explicit operator uint32() const noexcept { return (uint32)x; }
 	/**
-	 * @brief Returns first vector component as int. (x)
+	 * @brief Returns first vector component as signed integer. (x)
 	 */
 	constexpr explicit operator int32() const noexcept { return (int32)x; }
 	/**
-	 * @brief Returns first and second vector components. (xy)
+	 * @brief Returns as 2 component floating point vector. (xy)
 	 */
 	constexpr explicit operator float2() const noexcept { return float2(x, y); }
 	/**
-	 * @brief Returns first vector component. (x)
+	 * @brief Returns first vector component value. (x)
 	 */
 	constexpr explicit operator float() const noexcept { return x; }
 
-	/*******************************************************************************************************************
-	 * @brief Converts vector to the string. (space separated)
-	 */
-	string toString() const noexcept { return to_string(x) + " " + to_string(y) + " " + to_string(z); }
-
-	constexpr float3 operator+(const float3& v) const noexcept { return float3(x + v.x, y + v.y, z + v.z); }
-	constexpr float3 operator-(const float3& v) const noexcept { return float3(x - v.x, y - v.y, z - v.z); }
-	constexpr float3 operator*(const float3& v) const noexcept { return float3(x * v.x, y * v.y, z * v.z); }
-	constexpr float3 operator/(const float3& v) const noexcept { return float3(x / v.x, y / v.y, z / v.z); }
+	//******************************************************************************************************************
+	constexpr float3 operator+(float3 v) const noexcept { return float3(x + v.x, y + v.y, z + v.z); }
+	constexpr float3 operator-(float3 v) const noexcept { return float3(x - v.x, y - v.y, z - v.z); }
+	constexpr float3 operator*(float3 v) const noexcept { return float3(x * v.x, y * v.y, z * v.z); }
+	constexpr float3 operator/(float3 v) const noexcept { return float3(x / v.x, y / v.y, z / v.z); }
+	constexpr float3 operator+(float n) const noexcept { return float3(x + n, y + n, z + n); }
+	constexpr float3 operator-(float n) const noexcept { return float3(x - n, y - n, z - n); }
+	constexpr float3 operator*(float n) const noexcept { return float3(x * n, y * n, z * n); }
+	constexpr float3 operator/(float n) const noexcept { return float3(x / n, y / n, z / n); }
 	constexpr float3 operator-() const noexcept { return float3(-x, -y, -z); }
-	float3& operator+=(const float3& v) noexcept { x += v.x; y += v.y; z += v.z; return *this; }
-	float3& operator-=(const float3& v) noexcept { x -= v.x; y -= v.y; z -= v.z; return *this; }
-	float3& operator*=(const float3& v) noexcept { x *= v.x; y *= v.y; z *= v.z; return *this; }
-	float3& operator/=(const float3& v) noexcept { x /= v.x; y /= v.y; z /= v.z; return *this; }
+	float3& operator+=(float3 v) noexcept { x += v.x; y += v.y; z += v.z; return *this; }
+	float3& operator-=(float3 v) noexcept { x -= v.x; y -= v.y; z -= v.z; return *this; }
+	float3& operator*=(float3 v) noexcept { x *= v.x; y *= v.y; z *= v.z; return *this; }
+	float3& operator/=(float3 v) noexcept { x /= v.x; y /= v.y; z /= v.z; return *this; }
 	float3& operator+=(float n) noexcept { x += n; y += n; z += n; return *this; }
 	float3& operator-=(float n) noexcept { x -= n; y -= n; z -= n; return *this; }
 	float3& operator*=(float n) noexcept { x *= n; y *= n; z *= n; return *this; }
 	float3& operator/=(float n) noexcept { x /= n; y /= n; z /= n; return *this; }
 	float3& operator=(float n) noexcept { x = n; y = n; z = n; return *this; }
-	constexpr bool operator==(const float3& v) const noexcept { return x == v.x && y == v.y && z == v.z; }
-	constexpr bool operator!=(const float3& v) const noexcept { return x != v.x || y != v.y || z != v.z; }
-	constexpr uint3 operator<(const float3& v) const noexcept { return uint3(x < v.x, y < v.y, z < v.z); }
-	constexpr uint3 operator>(const float3& v) const noexcept { return uint3(x > v.x, y > v.y, z > v.z); }
-	constexpr uint3 operator<=(const float3& v) const noexcept { return uint3(x <= v.x, y <= v.y, z <= v.z); }
-	constexpr uint3 operator>=(const float3& v) const noexcept { return uint3(x >= v.x, y >= v.y, z >= v.z); }
+	constexpr bool operator==(float3 v) const noexcept { return x == v.x && y == v.y && z == v.z; }
+	constexpr bool operator!=(float3 v) const noexcept { return x != v.x || y != v.y || z != v.z; }
+	constexpr uint3 operator<(float3 v) const noexcept { return uint3(x < v.x, y < v.y, z < v.z); }
+	constexpr uint3 operator>(float3 v) const noexcept { return uint3(x > v.x, y > v.y, z > v.z); }
+	constexpr uint3 operator<=(float3 v) const noexcept { return uint3(x <= v.x, y <= v.y, z <= v.z); }
+	constexpr uint3 operator>=(float3 v) const noexcept { return uint3(x >= v.x, y >= v.y, z >= v.z); }
+	constexpr bool operator==(float n) const noexcept { return x == n && y == n && z == n; }
+	constexpr bool operator!=(float n) const noexcept { return x != n || y != n || z != n; }
+	constexpr uint3 operator<(float n) const noexcept { return uint3(x < n, y < n, z < n); }
+	constexpr uint3 operator>(float n) const noexcept { return uint3(x > n, y > n, z > n); }
+	constexpr uint3 operator<=(float n) const noexcept { return uint3(x <= n, y <= n, z <= n); }
+	constexpr uint3 operator>=(float n) const noexcept { return uint3(x >= n, y >= n, z >= n); }
 
 	static const float3 zero, one, minusOne, left, right, bottom, top, back, front;
 };
@@ -277,7 +289,7 @@ inline const float3 float3::front = float3(0.0f, 0.0f, 1.0f);
  * @brief Floating point 4 component vector structure.
  * @details Commonly used to represent: points, positions, directions, velocities, etc.
  */
-struct float4
+struct [[nodiscard]] float4
 {
 	float x; /**< First vector component. */
 	float y; /**< Second vector component. */
@@ -332,28 +344,28 @@ struct float4
 	/**
 	 * @brief Creates a new floating point 4 component vector structure.
 	 *
-	 * @param[in] xyz first, second and third vector components value
+	 * @param xyz first, second and third vector components value
 	 * @param w fourth vector component value
 	 */
-	constexpr float4(const float3& xyz, float w) noexcept : x(xyz.x), y(xyz.y), z(xyz.z), w(w) { }
+	constexpr float4(float3 xyz, float w) noexcept : x(xyz.x), y(xyz.y), z(xyz.z), w(w) { }
 	/**
 	 * @brief Creates a new floating point 4 component vector structure.
 	 *
 	 * @param x first vector component value
-	 * @param[in] yzw second, third and fourth vector components value
+	 * @param yzw second, third and fourth vector components value
 	 */
-	constexpr float4(float x, const float3& yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
+	constexpr float4(float x, float3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
 	/**
 	 * @brief Creates a new floating point 4 component vector structure.
-	 * @param[in] xyzw target unsigned integer vector value
+	 * @param xyzw target unsigned integer vector value
 	 */
-	constexpr float4(const uint4& xyzw) noexcept :
+	constexpr float4(uint4 xyzw) noexcept :
 		x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
 	/**
 	 * @brief Creates a new floating point 4 component vector structure.
-	 * @param[in] xyzw target signed integer vector value
+	 * @param xyzw target signed integer vector value
 	 */
-	constexpr float4(const int4& xyzw) noexcept :
+	constexpr float4(int4 xyzw) noexcept :
 		x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
 
 	/*******************************************************************************************************************
@@ -376,78 +388,81 @@ struct float4
 	}
 
 	/**
-	 * @brief Returns first, second, third and fourth vector components as uint. (xyzw)
-	 */
-	constexpr explicit operator uint4() const noexcept { return uint4((uint32)x, (uint32)y, (uint32)z, (uint32)w); }
-	/**
-	 * @brief Returns first, second, third and fourth vector components as int. (xyzw)
+	 * @brief Returns as 4 component signed integer vector. (xyzw)
 	 */
 	constexpr explicit operator int4() const noexcept { return int4((int32)x, (int32)y, (int32)z, (int32)w); }
 	/**
-	 * @brief Returns first, second and third vector components as int. (xyz)
+	 * @brief Returns as 4 component unsigned integer vector. (xyzw)
+	 */
+	constexpr explicit operator uint4() const noexcept { return uint4((uint32)x, (uint32)y, (uint32)z, (uint32)w); }
+	/**
+	 * @brief Returns as 3 component signed integer vector. (xyz)
 	 */
 	constexpr explicit operator int3() const noexcept { return int3((int32)x, (int32)y, (int32)z); }
 	/**
-	 * @brief Returns first, second and third vector components as uint. (xyz)
+	 * @brief Returns as 3 component unsigned integer vector. (xyz)
 	 */
 	constexpr explicit operator uint3() const noexcept { return uint3((uint32)x, (uint32)y, (uint32)z); }
 	/**
-	 * @brief Returns first and second vector components as int. (xy)
+	 * @brief Returns as 2 component signed integer vector. (xy)
 	 */
 	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
 	/**
-	 * @brief Returns first and second vector components as uint. (xy)
+	 * @brief Returns as 2 component unsigned integer vector. (xy)
 	 */
 	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
 	/**
-	 * @brief Returns first vector component as uint. (x)
+	 * @brief Returns first vector component as unsigned integer. (x)
 	 */
 	constexpr explicit operator uint32() const noexcept { return (uint32)x; }
 	/**
-	 * @brief Returns first vector component as int. (x)
+	 * @brief Returns first vector component as signed integer. (x)
 	 */
 	constexpr explicit operator int32() const noexcept { return (int32)x; }
 	/**
-	 * @brief Returns first, second and third vector components. (xyz)
+	 * @brief Returns as 3 component floating point vector. (xyz)
 	 */
 	constexpr explicit operator float3() const noexcept { return float3(x, y, z); }
 	/**
-	 * @brief Returns first and second vector components. (xy)
+	 * @brief Returns as 2 component floating point vector. (xy)
 	 */
 	constexpr explicit operator float2() const noexcept { return float2(x, y); }
 	/**
-	 * @brief Returns first vector component. (x)
+	 * @brief Returns first vector component value. (x)
 	 */
 	constexpr explicit operator float() const noexcept { return x; }
 
-	/*******************************************************************************************************************
-	 * @brief Converts vector to the string. (space separated)
-	 */
-	string toString() const noexcept
-	{
-		return to_string(x) + " " + to_string(y) + " " + to_string(z) + " " + to_string(w);
-	}
-
-	constexpr float4 operator+(const float4& v) const noexcept { return float4(x + v.x, y + v.y, z + v.z, w + v.w); }
-	constexpr float4 operator-(const float4& v) const noexcept { return float4(x - v.x, y - v.y, z - v.z, w - v.w); }
-	constexpr float4 operator*(const float4& v) const noexcept { return float4(x * v.x, y * v.y, z * v.z, w * v.w); }
-	constexpr float4 operator/(const float4& v) const noexcept { return float4(x / v.x, y / v.y, z / v.z, w / v.w); }
+	//******************************************************************************************************************
+	constexpr float4 operator+(float4 v) const noexcept { return float4(x + v.x, y + v.y, z + v.z, w + v.w); }
+	constexpr float4 operator-(float4 v) const noexcept { return float4(x - v.x, y - v.y, z - v.z, w - v.w); }
+	constexpr float4 operator*(float4 v) const noexcept { return float4(x * v.x, y * v.y, z * v.z, w * v.w); }
+	constexpr float4 operator/(float4 v) const noexcept { return float4(x / v.x, y / v.y, z / v.z, w / v.w); }
+	constexpr float4 operator+(float n) const noexcept { return float4(x + n, y + n, z + n, w + n); }
+	constexpr float4 operator-(float n) const noexcept { return float4(x - n, y - n, z - n, w - n); }
+	constexpr float4 operator*(float n) const noexcept { return float4(x * n, y * n, z * n, w * n); }
+	constexpr float4 operator/(float n) const noexcept { return float4(x / n, y / n, z / n, w / n); }
 	constexpr float4 operator-() const noexcept { return float4(-x, -y, -z, -w); }
-	float4& operator+=(const float4& v) noexcept { x += v.x; y += v.y; z += v.z; w += v.w; return *this; }
-	float4& operator-=(const float4& v) noexcept { x -= v.x; y -= v.y; z -= v.z; w -= v.w; return *this; }
-	float4& operator*=(const float4& v) noexcept { x *= v.x; y *= v.y; z *= v.z; w *= v.w; return *this; }
-	float4& operator/=(const float4& v) noexcept { x /= v.x; y /= v.y; z /= v.z; w /= v.w; return *this; }
+	float4& operator+=(float4 v) noexcept { x += v.x; y += v.y; z += v.z; w += v.w; return *this; }
+	float4& operator-=(float4 v) noexcept { x -= v.x; y -= v.y; z -= v.z; w -= v.w; return *this; }
+	float4& operator*=(float4 v) noexcept { x *= v.x; y *= v.y; z *= v.z; w *= v.w; return *this; }
+	float4& operator/=(float4 v) noexcept { x /= v.x; y /= v.y; z /= v.z; w /= v.w; return *this; }
 	float4& operator+=(float n) noexcept { x += n; y += n; z += n; w += n; return *this; }
 	float4& operator-=(float n) noexcept { x -= n; y -= n; z -= n; w -= n; return *this; }
 	float4& operator*=(float n) noexcept { x *= n; y *= n; z *= n; w *= n; return *this; }
 	float4& operator/=(float n) noexcept { x /= n; y /= n; z /= n; w /= n; return *this; }
 	float4& operator=(float n) noexcept { x = n; y = n; z = n; w = n; return *this; }
-	constexpr bool operator==(const float4& v) const noexcept { return x == v.x && y == v.y && z == v.z && w == v.w; }
-	constexpr bool operator!=(const float4& v) const noexcept { return x != v.x || y != v.y || z != v.z || w != v.w; }
-	constexpr uint4 operator<(const float4& v) const noexcept { return uint4(x < v.x, y < v.y, z < v.z, w < v.w); }
-	constexpr uint4 operator>(const float4& v) const noexcept { return uint4(x > v.x, y > v.y, z > v.z, w > v.w); }
-	constexpr uint4 operator<=(const float4& v) const noexcept { return uint4(x <= v.x, y <= v.y, z <= v.z, w <= v.w); }
-	constexpr uint4 operator>=(const float4& v) const noexcept { return uint4(x >= v.x, y >= v.y, z >= v.z, w >= v.w); }
+	constexpr bool operator==(float4 v) const noexcept { return x == v.x && y == v.y && z == v.z && w == v.w; }
+	constexpr bool operator!=(float4 v) const noexcept { return x != v.x || y != v.y || z != v.z || w != v.w; }
+	constexpr uint4 operator<(float4 v) const noexcept { return uint4(x < v.x, y < v.y, z < v.z, w < v.w); }
+	constexpr uint4 operator>(float4 v) const noexcept { return uint4(x > v.x, y > v.y, z > v.z, w > v.w); }
+	constexpr uint4 operator<=(float4 v) const noexcept { return uint4(x <= v.x, y <= v.y, z <= v.z, w <= v.w); }
+	constexpr uint4 operator>=(float4 v) const noexcept { return uint4(x >= v.x, y >= v.y, z >= v.z, w >= v.w); }
+	constexpr bool operator==(float n) const noexcept { return x == n && y == n && z == n && w == n; }
+	constexpr bool operator!=(float n) const noexcept { return x != n || y != n || z != n || w != n; }
+	constexpr uint4 operator<(float n) const noexcept { return uint4(x < n, y < n, z < n, w < n); }
+	constexpr uint4 operator>(float n) const noexcept { return uint4(x > n, y > n, z > n, w > n); }
+	constexpr uint4 operator<=(float n) const noexcept { return uint4(x <= n, y <= n, z <= n, w <= n); }
+	constexpr uint4 operator>=(float n) const noexcept { return uint4(x >= n, y >= n, z >= n, w >= n); }
 
 	static const float4 zero, one, minusOne;
 };
@@ -457,27 +472,22 @@ inline const float4 float4::one = float4(1.0f);
 inline const float4 float4::minusOne = float4(-1.0f);
 
 //**********************************************************************************************************************
-static constexpr float2 operator+(float2 v, float n) noexcept { return float2(v.x + n, v.y + n); }
-static constexpr float2 operator-(float2 v, float n) noexcept { return float2(v.x - n, v.y - n); }
-static constexpr float2 operator*(float2 v, float n) noexcept { return float2(v.x * n, v.y * n); }
-static constexpr float2 operator/(float2 v, float n) noexcept { return float2(v.x / n, v.y / n); }
-static constexpr bool operator==(float2 v, float n) noexcept { return v == float2(n); }
-static constexpr bool operator!=(float2 v, float n) noexcept { return v != float2(n); }
-static constexpr uint2 operator<(float2 v, float n) noexcept { return v < float2(n); }
-static constexpr uint2 operator>(float2 v, float n) noexcept { return v > float2(n); }
-static constexpr uint2 operator<=(float2 v, float n) noexcept { return v <= float2(n); }
-static constexpr uint2 operator>=(float2 v, float n) noexcept { return v >= float2(n); }
-
-static constexpr float2 operator+(float n, float2 v) noexcept { return float2(n + v.x, n + v.y); }
-static constexpr float2 operator-(float n, float2 v) noexcept { return float2(n - v.x, n - v.y); }
-static constexpr float2 operator*(float n, float2 v) noexcept { return float2(n * v.x, n * v.y); }
-static constexpr float2 operator/(float n, float2 v) noexcept { return float2(n / v.x, n / v.y); }
+static constexpr float2 operator+(float n, float2 v) noexcept { return float2(n) + v; }
+static constexpr float2 operator-(float n, float2 v) noexcept { return float2(n) - v; }
+static constexpr float2 operator*(float n, float2 v) noexcept { return float2(n) * v; }
+static constexpr float2 operator/(float n, float2 v) noexcept { return float2(n) / v; }
 static constexpr bool operator==(float n, float2 v) noexcept { return float2(n) == v; }
 static constexpr bool operator!=(float n, float2 v) noexcept { return float2(n) != v; }
 static constexpr uint2 operator<(float n, float2 v) noexcept { return float2(n) < v; }
 static constexpr uint2 operator>(float n, float2 v) noexcept { return float2(n) > v; }
 static constexpr uint2 operator<=(float n, float2 v) noexcept { return float2(n) <= v; }
 static constexpr uint2 operator>=(float n, float2 v) noexcept { return float2(n) >= v; }
+
+/**
+ * @brief Converts vector to the string. (space separated)
+ * @param v target vector to convert
+ */
+static string toString(float2 v) { return to_string(v.x) + " " + to_string(v.y); }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -490,9 +500,9 @@ static bool isBinaryLess(float2 a, float2 b) noexcept { return *((const int64*)&
 /**
  * @brief Selects between two vector components based on the control vector values.
  * 
- * @param[in] c control vector (contains is true or false)
- * @param[in] t contains components for true condition
- * @param[in] f contains components for false condition
+ * @param c control vector (contains is true or false)
+ * @param t contains components for true condition
+ * @param f contains components for false condition
  */
 static constexpr float2 select(uint2 c, float2 t, float2 f) noexcept
 {
@@ -500,27 +510,22 @@ static constexpr float2 select(uint2 c, float2 t, float2 f) noexcept
 }
 
 //**********************************************************************************************************************
-static constexpr float3 operator+(const float3& v, float n) noexcept { return float3(v.x + n, v.y + n, v.z + n); }
-static constexpr float3 operator-(const float3& v, float n) noexcept { return float3(v.x - n, v.y - n, v.z - n); }
-static constexpr float3 operator*(const float3& v, float n) noexcept { return float3(v.x * n, v.y * n, v.z * n); }
-static constexpr float3 operator/(const float3& v, float n) noexcept { return float3(v.x / n, v.y / n, v.z / n); }
-static constexpr bool operator==(const float3& v, float n) noexcept { return v == float3(n); }
-static constexpr bool operator!=(const float3& v, float n) noexcept { return v != float3(n); }
-static constexpr uint3 operator<(const float3& v, float n) noexcept { return v < float3(n); }
-static constexpr uint3 operator>(const float3& v, float n) noexcept { return v > float3(n); }
-static constexpr uint3 operator<=(const float3& v, float n) noexcept { return v <= float3(n); }
-static constexpr uint3 operator>=(const float3& v, float n) noexcept { return v >= float3(n); }
-
-static constexpr float3 operator+(float n, const float3& v) noexcept { return float3(n + v.x, n + v.y, n + v.z); }
-static constexpr float3 operator-(float n, const float3& v) noexcept { return float3(n - v.x, n - v.y, n - v.z); }
-static constexpr float3 operator*(float n, const float3& v) noexcept { return float3(n * v.x, n * v.y, n * v.z); }
-static constexpr float3 operator/(float n, const float3& v) noexcept { return float3(n / v.x, n / v.y, n / v.z); }
+static constexpr float3 operator+(float n, const float3& v) noexcept { return float3(n) + v; }
+static constexpr float3 operator-(float n, const float3& v) noexcept { return float3(n) - v; }
+static constexpr float3 operator*(float n, const float3& v) noexcept { return float3(n) * v; }
+static constexpr float3 operator/(float n, const float3& v) noexcept { return float3(n) / v; }
 static constexpr bool operator==(float n, const float3& v) noexcept { return float3(n) == v; }
 static constexpr bool operator!=(float n, const float3& v) noexcept { return float3(n) != v; }
 static constexpr uint3 operator<(float n, const float3& v) noexcept { return float3(n) < v; }
 static constexpr uint3 operator>(float n, const float3& v) noexcept { return float3(n) > v; }
 static constexpr uint3 operator<=(float n, const float3& v) noexcept { return float3(n) <= v; }
 static constexpr uint3 operator>=(float n, const float3& v) noexcept { return float3(n) >= v; }
+
+/**
+ * @brief Converts vector to the string. (space separated)
+ * @param v target vector to convert
+ */
+static string toString(float3 v) { return to_string(v.x) + " " + to_string(v.y) + " " + to_string(v.z); }
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -533,37 +538,35 @@ static bool isBinaryLess(const float3& a, const float3& b) noexcept { return mem
 /**
  * @brief Selects between two vector components based on the control vector values.
  * 
- * @param[in] c control vector (contains is true or false)
- * @param[in] t contains components for true condition
- * @param[in] f contains components for false condition
+ * @param c control vector (contains is true or false)
+ * @param t contains components for true condition
+ * @param f contains components for false condition
  */
-static constexpr float3 select(const uint3& c, const float3& t, const float3& f) noexcept
+static constexpr float3 select(uint3 c, float3 t, float3 f) noexcept
 {
 	return float3(c.x ? t.x : f.x, c.y ? t.y : f.y, c.z ? t.z : f.z);
 }
 
 //**********************************************************************************************************************
-static constexpr float4 operator+(const float4& v, float n) noexcept { return float4(v.x + n, v.y + n, v.z + n, v.w + n); }
-static constexpr float4 operator-(const float4& v, float n) noexcept { return float4(v.x - n, v.y - n, v.z - n, v.w - n); }
-static constexpr float4 operator*(const float4& v, float n) noexcept { return float4(v.x * n, v.y * n, v.z * n, v.w * n); }
-static constexpr float4 operator/(const float4& v, float n) noexcept { return float4(v.x / n, v.y / n, v.z / n, v.w / n); }
-static constexpr bool operator==(const float4& v, float n) noexcept { return v == float4(n); }
-static constexpr bool operator!=(const float4& v, float n) noexcept { return v != float4(n); }
-static constexpr uint4 operator<(const float4& v, float n) noexcept { return v < float4(n); }
-static constexpr uint4 operator>(const float4& v, float n) noexcept { return v > float4(n); }
-static constexpr uint4 operator<=(const float4& v, float n) noexcept { return v <= float4(n); }
-static constexpr uint4 operator>=(const float4& v, float n) noexcept { return v >= float4(n); }
-
-static constexpr float4 operator+(float n, const float4& v) noexcept { return float4(n + v.x, n + v.y, n + v.z, n + v.w); }
-static constexpr float4 operator-(float n, const float4& v) noexcept { return float4(n - v.x, n - v.y, n - v.z, n - v.w); }
-static constexpr float4 operator*(float n, const float4& v) noexcept { return float4(n * v.x, n * v.y, n * v.z, n * v.w); }
-static constexpr float4 operator/(float n, const float4& v) noexcept { return float4(n / v.x, n / v.y, n / v.z, n / v.w); }
+static constexpr float4 operator+(float n, const float4& v) noexcept { return float4(n) + v; }
+static constexpr float4 operator-(float n, const float4& v) noexcept { return float4(n) - v; }
+static constexpr float4 operator*(float n, const float4& v) noexcept { return float4(n) * v; }
+static constexpr float4 operator/(float n, const float4& v) noexcept { return float4(n) / v; }
 static constexpr bool operator==(float n, const float4& v) noexcept { return float4(n) == v; }
 static constexpr bool operator!=(float n, const float4& v) noexcept { return float4(n) != v; }
 static constexpr uint4 operator<(float n, const float4& v) noexcept { return float4(n) < v; }
 static constexpr uint4 operator>(float n, const float4& v) noexcept { return float4(n) > v; }
 static constexpr uint4 operator<=(float n, const float4& v) noexcept { return float4(n) <= v; }
 static constexpr uint4 operator>=(float n, const float4& v) noexcept { return float4(n) >= v; }
+
+/**
+ * @brief Converts vector to the string. (space separated)
+ * @param v target vector to convert
+ */
+static string toString(float4 v)
+{
+	return to_string(v.x) + " " + to_string(v.y) + " " + to_string(v.z) + " " + to_string(v.w);
+}
 
 /**
  * @brief Returns true if first vector binary representation is less than the second.
@@ -576,11 +579,11 @@ static bool isBinaryLess(const float4& a, const float4& b) noexcept { return mem
 /**
  * @brief Selects between two vector components based on the control vector values.
  * 
- * @param[in] c control vector (contains is true or false)
- * @param[in] t contains components for true condition
- * @param[in] f contains components for false condition
+ * @param c control vector (contains is true or false)
+ * @param t contains components for true condition
+ * @param f contains components for false condition
  */
-static constexpr float4 select(const uint4& c, const float4& t, const float4& f) noexcept
+static constexpr float4 select(uint4 c, float4 t, float4 f) noexcept
 {
 	return float4(c.x ? t.x : f.x, c.y ? t.y : f.y, c.z ? t.z : f.z, c.w ? t.w : f.w);
 }
@@ -660,67 +663,67 @@ static float2 gain(float2 x, float2 k) noexcept
 }
 
 //**********************************************************************************************************************
-static constexpr float3 min(const float3& a, const float3& b) noexcept
+static constexpr float3 min(float3 a, float3 b) noexcept
 {
 	return float3(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z));
 }
-static constexpr float3 max(const float3& a, const float3& b) noexcept
+static constexpr float3 max(float3 a, float3 b) noexcept
 {
 	return float3(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z));
 }
 static constexpr float3 min(const float3& a, const float3& b, const float3& c) noexcept { return min(min(a, b), c); }
 static constexpr float3 max(const float3& a, const float3& b, const float3& c) noexcept { return max(max(a, b), c); }
-static float3 abs(const float3& v) noexcept { return float3(std::abs(v.x), std::abs(v.y), std::abs(v.z)); }
-static float3 mod(const float3& a, const float3& b) noexcept
+static float3 abs(float3 v) noexcept { return float3(std::abs(v.x), std::abs(v.y), std::abs(v.z)); }
+static float3 mod(float3 a, float3 b) noexcept
 {
 	return float3(std::fmod(a.x, b.x), std::fmod(a.y, b.y), std::fmod(a.z, b.z));
 }
-static float3 fma(const float3& a, const float3& b, const float3& c) noexcept
+static float3 fma(float3 a, float3 b, float3 c) noexcept
 {
 	return float3(std::fma(a.x, b.x, c.x), std::fma(a.y, b.y, c.y), std::fma(a.z, b.z, c.z));
 }
-static float3 ceil(const float3& v) noexcept { return float3(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z)); }
-static float3 floor(const float3& v) noexcept { return float3(std::floor(v.x), std::floor(v.y), std::floor(v.z)); }
-static float3 trunc(const float3& v) noexcept { return float3(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z)); }
-static float3 round(const float3& v) noexcept { return float3(std::round(v.x), std::round(v.y), std::round(v.z)); }
-static float3 sign(const float3& v) noexcept { return float3(sign(v.x), sign(v.y), sign(v.z)); }
-static float3 exp(const float3& v) noexcept { return float3(std::exp(v.x), std::exp(v.y), std::exp(v.z)); }
-static float3 exp2(const float3& v) noexcept { return float3(std::exp2(v.x), std::exp2(v.y), std::exp2(v.z)); }
-static float3 expm1(const float3& v) noexcept { return float3(std::expm1(v.x), std::expm1(v.y), std::expm1(v.z)); }
-static float3 log(const float3& v) noexcept { return float3(std::log(v.x), std::log(v.y), std::log(v.z)); }
-static float3 log10(const float3& v) noexcept { return float3(std::log10(v.x), std::log10(v.y), std::log10(v.z)); }
-static float3 log2(const float3& v) noexcept { return float3(std::log2(v.x), std::log2(v.y), std::log2(v.z)); }
-static float3 log1p(const float3& v) noexcept { return float3(std::log1p(v.x), std::log1p(v.y), std::log1p(v.z)); }
-static float3 pow(const float3& a, const float3& b) noexcept
+static float3 ceil(float3 v) noexcept { return float3(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z)); }
+static float3 floor(float3 v) noexcept { return float3(std::floor(v.x), std::floor(v.y), std::floor(v.z)); }
+static float3 trunc(float3 v) noexcept { return float3(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z)); }
+static float3 round(float3 v) noexcept { return float3(std::round(v.x), std::round(v.y), std::round(v.z)); }
+static float3 sign(float3 v) noexcept { return float3(sign(v.x), sign(v.y), sign(v.z)); }
+static float3 exp(float3 v) noexcept { return float3(std::exp(v.x), std::exp(v.y), std::exp(v.z)); }
+static float3 exp2(float3 v) noexcept { return float3(std::exp2(v.x), std::exp2(v.y), std::exp2(v.z)); }
+static float3 expm1(float3 v) noexcept { return float3(std::expm1(v.x), std::expm1(v.y), std::expm1(v.z)); }
+static float3 log(float3 v) noexcept { return float3(std::log(v.x), std::log(v.y), std::log(v.z)); }
+static float3 log10(float3 v) noexcept { return float3(std::log10(v.x), std::log10(v.y), std::log10(v.z)); }
+static float3 log2(float3 v) noexcept { return float3(std::log2(v.x), std::log2(v.y), std::log2(v.z)); }
+static float3 log1p(float3 v) noexcept { return float3(std::log1p(v.x), std::log1p(v.y), std::log1p(v.z)); }
+static float3 pow(float3 a, float3 b) noexcept
 {
 	return float3(std::pow(a.x, b.x), std::pow(a.y, b.y), std::pow(a.z, b.z));
 }
-static float3 sqrt(const float3& v) noexcept { return float3(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z)); }
-static float3 cbrt(const float3& v) noexcept { return float3(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z)); }
-static float3 sin(const float3& v) noexcept { return float3(std::sin(v.x), std::sin(v.y), std::sin(v.z)); }
-static float3 cos(const float3& v) noexcept { return float3(std::cos(v.x), std::cos(v.y), std::cos(v.z)); }
-static float3 tan(const float3& v) noexcept { return float3(std::tan(v.x), std::tan(v.y), std::tan(v.z)); }
-static float3 asin(const float3& v) noexcept { return float3(std::asin(v.x), std::asin(v.y), std::asin(v.z)); }
-static float3 acos(const float3& v) noexcept { return float3(std::acos(v.x), std::acos(v.y), std::acos(v.z)); }
-static float3 atan(const float3& v) noexcept { return float3(std::atan(v.x), std::atan(v.y), std::atan(v.z)); }
-static float3 atan(const float3& a, const float3& b) noexcept
+static float3 sqrt(float3 v) noexcept { return float3(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z)); }
+static float3 cbrt(float3 v) noexcept { return float3(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z)); }
+static float3 sin(float3 v) noexcept { return float3(std::sin(v.x), std::sin(v.y), std::sin(v.z)); }
+static float3 cos(float3 v) noexcept { return float3(std::cos(v.x), std::cos(v.y), std::cos(v.z)); }
+static float3 tan(float3 v) noexcept { return float3(std::tan(v.x), std::tan(v.y), std::tan(v.z)); }
+static float3 asin(float3 v) noexcept { return float3(std::asin(v.x), std::asin(v.y), std::asin(v.z)); }
+static float3 acos(float3 v) noexcept { return float3(std::acos(v.x), std::acos(v.y), std::acos(v.z)); }
+static float3 atan(float3 v) noexcept { return float3(std::atan(v.x), std::atan(v.y), std::atan(v.z)); }
+static float3 atan(float3 a, float3 b) noexcept
 {
 	return float3(std::atan2(a.x, b.x), std::atan2(a.y, b.y), std::atan2(a.z, b.z));
 }
-static float3 sinh(const float3& v) noexcept { return float3(std::sinh(v.x), std::sinh(v.y), std::sinh(v.z)); }
-static float3 cosh(const float3& v) noexcept { return float3(std::cosh(v.x), std::cosh(v.y), std::cosh(v.z)); }
-static float3 tanh(const float3& v) noexcept { return float3(std::tanh(v.x), std::tanh(v.y), std::tanh(v.z)); }
-static float3 asinh(const float3& v) noexcept { return float3(std::asinh(v.x), std::asinh(v.y), std::asinh(v.z)); }
-static float3 acosh(const float3& v) noexcept { return float3(std::acosh(v.x), std::acosh(v.y), std::acosh(v.z)); }
-static float3 atanh(const float3& v) noexcept { return float3(std::atanh(v.x), std::atanh(v.y), std::atanh(v.z)); }
+static float3 sinh(float3 v) noexcept { return float3(std::sinh(v.x), std::sinh(v.y), std::sinh(v.z)); }
+static float3 cosh(float3 v) noexcept { return float3(std::cosh(v.x), std::cosh(v.y), std::cosh(v.z)); }
+static float3 tanh(float3 v) noexcept { return float3(std::tanh(v.x), std::tanh(v.y), std::tanh(v.z)); }
+static float3 asinh(float3 v) noexcept { return float3(std::asinh(v.x), std::asinh(v.y), std::asinh(v.z)); }
+static float3 acosh(float3 v) noexcept { return float3(std::acosh(v.x), std::acosh(v.y), std::acosh(v.z)); }
+static float3 atanh(float3 v) noexcept { return float3(std::atanh(v.x), std::atanh(v.y), std::atanh(v.z)); }
 
-static constexpr float3 clamp(const float3& v, const float3& min, const float3& max) noexcept
+static constexpr float3 clamp(float3 v, float3 min, float3 max) noexcept
 {
 	return float3(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y), std::clamp(v.z, min.z, max.z));
 }
-static float3 repeat(const float3& v) noexcept { return float3(repeat(v.x), repeat(v.y), repeat(v.z)); }
-static constexpr float dot(const float3& a, const float3& b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z; }
-static constexpr float3 cross(const float3& a, const float3& b) noexcept
+static float3 repeat(float3 v) noexcept { return float3(repeat(v.x), repeat(v.y), repeat(v.z)); }
+static constexpr float dot(float3 a, float3 b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z; }
+static constexpr float3 cross(float3 a, float3 b) noexcept
 {
 	return float3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }
@@ -746,145 +749,145 @@ static float3 gain(const float3& x, const float3& k) noexcept
 }
 
 //**********************************************************************************************************************
-static constexpr float4 min(const float4& a, const float4& b) noexcept
+static constexpr float4 min(float4 a, float4 b) noexcept
 {
 	return float4(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z), std::min(a.w, b.w));
 }
-static constexpr float4 max(const float4& a, const float4& b) noexcept
+static constexpr float4 max(float4 a, float4 b) noexcept
 {
 	return float4(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z), std::max(a.w, b.w));
 }
 static constexpr float4 min(const float4& a, const float4& b, const float4& c) noexcept { return min(min(a, b), c); }
 static constexpr float4 max(const float4& a, const float4& b, const float4& c) noexcept { return max(max(a, b), c); }
-static float4 abs(const float4& v) noexcept
+static float4 abs(float4 v) noexcept
 {
 	return float4(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w));
 }
-static float4 mod(const float4& a, const float4& b) noexcept
+static float4 mod(float4 a, float4 b) noexcept
 {
 	return float4(std::fmod(a.x, b.x), std::fmod(a.y, b.y), std::fmod(a.z, b.z), std::fmod(a.w, b.w));
 }
-static float4 fma(const float4& a, const float4& b, const float4& c) noexcept
+static float4 fma(float4 a, float4 b, float4 c) noexcept
 {
 	return float4(std::fma(a.x, b.x, c.x), std::fma(a.y, b.y, c.y), std::fma(a.z, b.z, c.z), std::fma(a.w, b.w, c.w));
 }
-static float4 ceil(const float4& v) noexcept
+static float4 ceil(float4 v) noexcept
 {
 	return float4(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z), std::ceil(v.w));
 }
-static float4 floor(const float4& v) noexcept
+static float4 floor(float4 v) noexcept
 {
 	return float4(std::floor(v.x), std::floor(v.y), std::floor(v.z), std::floor(v.w));
 }
-static float4 trunc(const float4& v) noexcept
+static float4 trunc(float4 v) noexcept
 {
 	return float4(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z), std::trunc(v.w));
 }
-static float4 round(const float4& v) noexcept
+static float4 round(float4 v) noexcept
 {
 	return float4(std::round(v.x), std::round(v.y), std::round(v.z), std::round(v.w));
 }
-static float4 sign(const float4& v) noexcept { return float4(sign(v.x), sign(v.y), sign(v.z), sign(v.w)); }
-static float4 exp(const float4& v) noexcept
+static float4 sign(float4 v) noexcept { return float4(sign(v.x), sign(v.y), sign(v.z), sign(v.w)); }
+static float4 exp(float4 v) noexcept
 {
 	return float4(std::exp(v.x), std::exp(v.y), std::exp(v.z), std::exp(v.w));
 }
-static float4 exp2(const float4& v) noexcept
+static float4 exp2(float4 v) noexcept
 {
 	return float4(std::exp2(v.x), std::exp2(v.y), std::exp2(v.z), std::exp2(v.w));
 }
-static float4 expm1(const float4& v) noexcept
+static float4 expm1(float4 v) noexcept
 {
 	return float4(std::expm1(v.x), std::expm1(v.y), std::expm1(v.z), std::expm1(v.w));
 }
-static float4 log(const float4& v) noexcept
+static float4 log(float4 v) noexcept
 {
 	return float4(std::log(v.x), std::log(v.y), std::log(v.z), std::log(v.w));
 }
-static float4 log10(const float4& v) noexcept
+static float4 log10(float4 v) noexcept
 {
 	return float4(std::log10(v.x), std::log10(v.y), std::log10(v.z), std::log10(v.w));
 }
-static float4 log2(const float4& v) noexcept
+static float4 log2(float4 v) noexcept
 {
 	return float4(std::log2(v.x), std::log2(v.y), std::log2(v.z), std::log2(v.w));
 }
-static float4 log1p(const float4& v) noexcept
+static float4 log1p(float4 v) noexcept
 {
 	return float4(std::log1p(v.x), std::log1p(v.y), std::log1p(v.z), std::log1p(v.w));
 }
-static float4 pow(const float4& a, const float4& b) noexcept
+static float4 pow(float4 a, float4 b) noexcept
 {
 	return float4(std::pow(a.x, b.x), std::pow(a.y, b.y), std::pow(a.z, b.z), std::pow(a.w, b.w));
 }
-static float4 sqrt(const float4& v) noexcept
+static float4 sqrt(float4 v) noexcept
 {
 	return float4(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z), std::sqrt(v.w));
 }
-static float4 cbrt(const float4& v) noexcept
+static float4 cbrt(float4 v) noexcept
 {
 	return float4(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z), std::cbrt(v.w));
 }
-static float4 sin(const float4& v) noexcept
+static float4 sin(float4 v) noexcept
 {
 	return float4(std::sin(v.x), std::sin(v.y), std::sin(v.z), std::sin(v.w));
 }
-static float4 cos(const float4& v) noexcept
+static float4 cos(float4 v) noexcept
 {
 	return float4(std::cos(v.x), std::cos(v.y), std::cos(v.z), std::cos(v.w));
 }
-static float4 tan(const float4& v) noexcept
+static float4 tan(float4 v) noexcept
 {
 	return float4(std::tan(v.x), std::tan(v.y), std::tan(v.z), std::tan(v.w));
 }
-static float4 asin(const float4& v) noexcept
+static float4 asin(float4 v) noexcept
 {
 	return float4(std::asin(v.x), std::asin(v.y), std::asin(v.z), std::asin(v.w));
 }
-static float4 acos(const float4& v) noexcept
+static float4 acos(float4 v) noexcept
 {
 	return float4(std::acos(v.x), std::acos(v.y), std::acos(v.z), std::acos(v.w));
 }
-static float4 atan(const float4& v) noexcept
+static float4 atan(float4 v) noexcept
 {
 	return float4(std::atan(v.x), std::atan(v.y), std::atan(v.z), std::atan(v.w));
 }
-static float4 atan(const float4& a, const float4& b) noexcept
+static float4 atan(float4 a, float4 b) noexcept
 {
 	return float4(std::atan2(a.x, b.x), std::atan2(a.y, b.y), std::atan2(a.z, b.z), std::atan2(a.w, b.w));
 }
-static float4 sinh(const float4& v) noexcept
+static float4 sinh(float4 v) noexcept
 {
 	return float4(std::sinh(v.x), std::sinh(v.y), std::sinh(v.z), std::sinh(v.w));
 }
-static float4 cosh(const float4& v) noexcept
+static float4 cosh(float4 v) noexcept
 {
 	return float4(std::cosh(v.x), std::cosh(v.y), std::cosh(v.z), std::cosh(v.w));
 }
-static float4 tanh(const float4& v) noexcept
+static float4 tanh(float4 v) noexcept
 {
 	return float4(std::tanh(v.x), std::tanh(v.y), std::tanh(v.z), std::tanh(v.w));
 }
-static float4 asinh(const float4& v) noexcept
+static float4 asinh(float4 v) noexcept
 {
 	return float4(std::asinh(v.x), std::asinh(v.y), std::asinh(v.z), std::asinh(v.w));
 }
-static float4 acosh(const float4& v) noexcept
+static float4 acosh(float4 v) noexcept
 {
 	return float4(std::acosh(v.x), std::acosh(v.y), std::acosh(v.z), std::acosh(v.w));
 }
-static float4 atanh(const float4& v) noexcept
+static float4 atanh(float4 v) noexcept
 {
 	return float4(std::atanh(v.x), std::atanh(v.y), std::atanh(v.z), std::atanh(v.w));
 }
 
-static float4 clamp(const float4& v, const float4& min, const float4& max) noexcept
+static float4 clamp(float4 v, float4 min, float4 max) noexcept
 {
 	return float4(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y),
 		std::clamp(v.z, min.z, max.z), std::clamp(v.w, min.w, max.w));
 }
-static float4 repeat(const float4& v) noexcept { return float4(repeat(v.x), repeat(v.y), repeat(v.z), repeat(v.w)); }
-static constexpr float dot(const float4& a, const float4& b) noexcept
+static float4 repeat(float4 v) noexcept { return float4(repeat(v.x), repeat(v.y), repeat(v.z), repeat(v.w)); }
+static constexpr float dot(float4 a, float4 b) noexcept
 {
 	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
 }

@@ -33,7 +33,7 @@ namespace math
  * @brief Floating point 2x2 matrix structure.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
-struct float2x2
+struct [[nodiscard]] float2x2
 {
 	float2 c0; /**< First matrix column. */
 	float2 c1; /**< Second matrix column. */
@@ -87,9 +87,9 @@ struct float2x2
 
 	/**
 	 * @brief Calculates dot product between two matrices.
-	 * @param[in] m target matrix to dot by
+	 * @param m target matrix to dot by
 	 */
-	constexpr float2x2 operator*(const float2x2& m) const noexcept
+	constexpr float2x2 operator*(float2x2 m) const noexcept
 	{
 		return float2x2(
 			c0 * m.c0.x + c1 * m.c0.y,
@@ -136,7 +136,7 @@ inline const float2x2 float2x2::minusOne = float2x2(-1.0f);
  * @brief Floating point 3x3 matrix structure.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
-struct float3x3
+struct [[nodiscard]] float3x3
 {
 	float3 c0; /**< First matrix column. */
 	float3 c1; /**< Second matrix column. */
@@ -210,9 +210,9 @@ struct float3x3
 	}
 	/**
 	 * @brief Calculates dot product between matrix and vector.
-	 * @param[in] v target vector to dot by
+	 * @param v target vector to dot by
 	 */
-	constexpr float3 operator*(const float3& v) const noexcept
+	constexpr float3 operator*(float3 v) const noexcept
 	{
 		return float3(
 			c0.x * v.x + c1.x * v.y + c2.x * v.z,
@@ -251,7 +251,7 @@ inline const float3x3 float3x3::minusOne = float3x3(-1.0f);
  * @brief Floating point 4x3 matrix structure.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
-struct float4x3
+struct [[nodiscard]] float4x3
 {
 	float3 c0; /**< First matrix column. */
 	float3 c1; /**< Second matrix column. */
@@ -321,9 +321,9 @@ struct float4x3
 
 	/**
 	 * @brief Calculates dot product between matrix and vector.
-	 * @param[in] v target vector to dot by
+	 * @param v target vector to dot by
 	 */
-	constexpr float3 operator*(const float4& v) const noexcept
+	constexpr float3 operator*(float4 v) const noexcept
 	{
 		return float3(
 			c0.x * v.x + c1.x * v.y + c2.x * v.z + c3.x * v.w,
@@ -357,7 +357,7 @@ inline const float4x3 float4x3::minusOne = float4x3(-1.0f);
  * @brief Floating point 4x4 matrix structure.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
-struct float4x4
+struct [[nodiscard]] float4x4
 {
 	float4 c0; /**< First matrix column. */
 	float4 c1; /**< Second matrix column. */
@@ -456,9 +456,9 @@ struct float4x4
 	}
 	/**
 	 * @brief Calculates dot product between matrix and vector.
-	 * @param[in] v target vector to dot by
+	 * @param v target vector to dot by
 	 */
-	constexpr float4 operator*(const float4& v) const noexcept
+	constexpr float4 operator*(float4 v) const noexcept
 	{
 		return float4(
 			c0.x * v.x + c1.x * v.y + c2.x * v.z + c3.x * v.w,
@@ -503,10 +503,10 @@ inline const float4x4 float4x4::minusOne = float4x4(-1.0f);
 /***********************************************************************************************************************
  * @brief Calculates dot product between vector and matrix.
  * 
- * @param[in] v target vector to dot with
- * @param[in] m target matrix to dot by
+ * @param v target vector to dot with
+ * @param m target matrix to dot by
  */
-static float2 operator*(float2 v, const float2x2& m) noexcept
+static float2 operator*(float2 v, float2x2 m) noexcept
 {
 	return float2(
 		m.c0.x * v.x + m.c1.x * v.x,
@@ -515,10 +515,10 @@ static float2 operator*(float2 v, const float2x2& m) noexcept
 /**
  * @brief Calculates dot product between vector and matrix.
  *
- * @param[in] v target vector to dot with
+ * @param v target vector to dot with
  * @param[in] m target matrix to dot by
  */
-static float3 operator*(const float3& v, const float3x3& m) noexcept
+static float3 operator*(float3 v, const float3x3& m) noexcept
 {
 	return float3(
 		m.c0.x * v.x + m.c1.x * v.x + m.c2.x * v.x,
@@ -528,10 +528,10 @@ static float3 operator*(const float3& v, const float3x3& m) noexcept
 /**
  * @brief Calculates dot product between vector and matrix.
  *
- * @param[in] v target vector to dot with
+ * @param v target vector to dot with
  * @param[in] m target matrix to dot by
  */
-static float4 operator*(const float4& v, const float4x4& m) noexcept
+static float4 operator*(float4 v, const float4x4& m) noexcept
 {
 	return float4(
 		m.c0.x * v.x + m.c1.x * v.x + m.c2.x * v.x + m.c3.x * v.x,
@@ -542,9 +542,9 @@ static float4 operator*(const float4& v, const float4x4& m) noexcept
 
 /***********************************************************************************************************************
  * @brief Flips matrix over its diagonal, swapping rows and columns.
- * @param[in] m target matrix to transpose
+ * @param m target matrix to transpose
  */
-static constexpr float2x2 transpose(const float2x2& m) noexcept
+static constexpr float2x2 transpose(float2x2 m) noexcept
 {
 	return float2x2(
 		m.c0.x, m.c0.y,
@@ -552,9 +552,9 @@ static constexpr float2x2 transpose(const float2x2& m) noexcept
 }
 /**
  * @brief Flips matrix over its diagonal, swapping rows and columns.
- * @param[in] m target matrix to transpose
+ * @param m target matrix to transpose
  */
-static constexpr float3x3 transpose(const float3x3& m) noexcept
+static constexpr float3x3 transpose(float3x3 m) noexcept
 {
 	return float3x3(
 		m.c0.x, m.c0.y, m.c0.z,
@@ -565,7 +565,7 @@ static constexpr float3x3 transpose(const float3x3& m) noexcept
  * @brief Flips matrix over its diagonal, swapping rows and columns.
  * @param[in] m target matrix to transpose
  */
-static constexpr float4x4 transpose(const float4x4& m) noexcept
+static constexpr float4x4 transpose(float4x4 m) noexcept
 {
 	return float4x4(
 		m.c0.x, m.c0.y, m.c0.z, m.c0.w,
@@ -576,22 +576,20 @@ static constexpr float4x4 transpose(const float4x4& m) noexcept
 
 /***********************************************************************************************************************
  * @brief Calculates matrix inverse. (Usefull for undoing transformations)
- * @param[in] matrix target matrix to inverse
+ * @param matrix target matrix to inverse
  */
-static constexpr float2x2 inverse(const float2x2& matrix) noexcept
+static constexpr float2x2 inverse(float2x2 m) noexcept
 {
-	auto m = matrix;
 	auto oneOverDeterminant = 1.0f / (m.c0.x * m.c1.y - m.c1.x * m.c0.y);
 	return float2x2(m.c1.y * oneOverDeterminant, -m.c0.y * oneOverDeterminant,
 		-m.c1.x * oneOverDeterminant, m.c0.x * oneOverDeterminant);
 }
 /**
  * @brief Calculates matrix inverse. (Usefull for undoing transformations)
- * @param[in] matrix target matrix to inverse
+ * @param matrix target matrix to inverse
  */
-static constexpr float3x3 inverse(const float3x3& matrix) noexcept
+static constexpr float3x3 inverse(float3x3 m) noexcept
 {
-	auto m = matrix;
 	auto oneOverDeterminant = 1.0f / (
 		m.c0.x * (m.c1.y * m.c2.z - m.c2.y * m.c1.z)
 		-m.c1.x * (m.c0.y * m.c2.z - m.c2.y * m.c0.z) +
@@ -611,9 +609,8 @@ static constexpr float3x3 inverse(const float3x3& matrix) noexcept
  * @brief Calculates matrix inverse. (Usefull for undoing transformations)
  * @param[in] matrix target matrix to inverse
  */
-static constexpr float4x4 inverse(const float4x4& matrix) noexcept
+static constexpr float4x4 inverse(float4x4 m) noexcept
 {
-	auto m = matrix;
 	auto c00 = m.c2.z * m.c3.w - m.c3.z * m.c2.w;
 	auto c02 = m.c1.z * m.c3.w - m.c3.z * m.c1.w;
 	auto c03 = m.c1.z * m.c2.w - m.c2.z * m.c1.w;

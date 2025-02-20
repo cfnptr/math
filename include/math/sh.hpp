@@ -73,7 +73,7 @@ static float calcSolidAngle(float2 st, float invDim) noexcept
 }
 
 //**********************************************************************************************************************
-static void computeShBasis(const float3& s, float shb[shCoeffCount]) noexcept
+static void computeShBasis(float3 s, float shb[shCoeffCount]) noexcept
 {
 	auto pml2 = 0.0f, pml1 = 1.0f;
 	shb[0] = pml1;
@@ -116,7 +116,7 @@ static void computeShBasis(const float3& s, float shb[shCoeffCount]) noexcept
 	}
 }
 
-static void projectVecToSH2K(const float3& s, float r[5]) noexcept
+static void projectVecToSH2K(float3 s, float r[5]) noexcept
 {
 	r[0] = s.y * s.x;
 	r[1] = -(s.y * s.z);
