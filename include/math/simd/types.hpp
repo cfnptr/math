@@ -24,8 +24,6 @@
 
 #include <xmmintrin.h>
 #include <emmintrin.h>
-#include <smmintrin.h>
-
 #define MATH_SIMD_SUPPORT_SSE
 #define MATH_SIMD_VECTOR_ALIGNMENT 16
 
@@ -33,12 +31,15 @@
 #define MATH_SIMD_SUPPORT_AVX2
 #endif
 #if defined(__AVX__) || defined(MATH_SIMD_SUPPORT_AVX2)
+#include <immintrin.h>
 #define MATH_SIMD_SUPPORT_AVX2
 #endif
 #if defined(__SSE4_2__) || defined(MATH_SIMD_SUPPORT_AVX2)
+#include <nmmintrin.h>
 #define MATH_SIMD_SUPPORT_SSE4_2
 #endif
 #if defined(__SSE4_1__) || defined(MATH_SIMD_SUPPORT_SSE4_2)
+#include <smmintrin.h>
 #define MATH_SIMD_SUPPORT_SSE4_1
 #endif
 
