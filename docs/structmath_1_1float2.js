@@ -11,7 +11,6 @@ var structmath_1_1float2 =
     [ "operator uint32", "structmath_1_1float2.html#a7bbebaec687d4f6ed92c8d044a2a3e44", null ],
     [ "operator int32", "structmath_1_1float2.html#a4c60d8dcf9aba69ef6fa8c15f2925c1d", null ],
     [ "operator float", "structmath_1_1float2.html#a75584a19f6a93906039ce3b815fc42aa", null ],
-    [ "toString", "structmath_1_1float2.html#a3526d6515caf3255db8267ef956efa90", null ],
     [ "x", "structmath_1_1float2.html#ad0da36b2558901e21e7a30f6c227a45e", null ],
     [ "y", "structmath_1_1float2.html#aa4f0d3eebc3c443f9be81bf48561a217", null ]
 ];

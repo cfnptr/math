@@ -39,38 +39,6 @@ namespace math
 struct Bvh
 {
 	/**
-	 * @brief BVH hierarchy base node container.
-	 * @details See the @ref Bvh::Node.
-	 */
-	struct BaseNode
-	{
-		float3 min = float3(0.0f);
-		uint32 primitiveCount = 0;
-		float3 max = float3(0.0f);
-	};
-	/**
-	 * @brief BVH hierarchy child node container.
-	 * @details See the @ref Bvh::Node.
-	 */
-	struct ChildNode
-	{
-		float3 min = float3(0.0f);
-		uint32 primitiveCount = 0;
-		float3 max = float3(0.0f);
-		uint32 leftNode = 0;
-	};
-	/**
-	 * @brief BVH hierarchy leaf node container.
-	 * @details See the @ref Bvh::Node.
-	 */
-	struct LeafNode
-	{
-		float3 min = float3(0.0f);
-		uint32 primitiveCount = 0;
-		float3 max = float3(0.0f);
-		uint32 firstPrimitive = 0;
-	};
-	/**
 	 * @brief BVH hierarchy node container.
 	 * 
 	 * @details
@@ -80,29 +48,57 @@ struct Bvh
 	 */
 	union Node
 	{
-		BaseNode base;
-		ChildNode child;
-		LeafNode leaf;
-		constexpr Node() : leaf() { }
+		Aabb aabb = {};
 		
+		/**
+		 * @brief Returns this leaf BVH node primitive count.
+		 */
+		uint32 getPrimitiveCount() const noexcept { return aabb.getMin().uints.w; }
+		/**
+		 * @brief Sets this leaf BVH node primitive count.
+		 * @param primitiveCount target leaf node primitive count
+		 */
+		void setPrimitiveCount(uint32 primitiveCount) noexcept
+		{
+			auto min = aabb.getMin();
+			min.uints.w = primitiveCount;
+			aabb.setMin(min);
+		}
+
+		/**
+		 * @brief Returns this BVH node left child node identifier.
+		 */
+		uint32 getLeftNode() const noexcept { return aabb.getMax().getW(); }
+		/**
+		 * @brief Sets this BVH node left child node identifier.
+		 * @param nodeID target node left child node identifier
+		 */
+		void setLeftNode(uint32 nodeID) noexcept
+		{
+			auto max = aabb.getMax();
+			max.uints.w = nodeID;
+			aabb.setMax(max);
+		}
+
+		/**
+		 * @brief Returns this leaf BVH node first primitive index.
+		 */
+		uint32 getFirstPrimitive() const noexcept { return getLeftNode(); }
+		/**
+		 * @brief Sets this leaf BVH node first primitive index.
+		 * @param primitiveIndex target node first primitive index
+		 */
+		void setFirstPrimitive(uint32 primitiveIndex) noexcept { setLeftNode(primitiveIndex); }
+
 		/**
 		 * @brief Returns true if this is leaf node. (Contain the actual geometric objects)
 		 */
-		bool isLeaf() const noexcept { return base.primitiveCount; }
-		/**
-		 * @brief Returns node Axis Aligned Bounding Box. (AABB)
-		 */
-		Aabb getAabb() const noexcept { return Aabb(base.min, base.max); }
-		/**
-		 * @brief Sets node Axis Aligned Bounding Box. (AABB)
-		 * @param[in] aabb target aabb value
-		 */
-		void setAabb(const Aabb& aabb) noexcept { base.min = aabb.getMin(), base.max = aabb.getMax(); }
+		bool isLeaf() const noexcept { return aabb.getMin().getW(); }
 	};
 protected:
 	vector<Node> nodes;
 	vector<uint32> primitives;
-	vector<float3> centroids;
+	vector<simd_f32_4> centroids;
 	stack<Node*> nodeStack;
 public:
 	/*******************************************************************************************************************
@@ -117,7 +113,7 @@ public:
 	 * @param centroids precalculated centroid array
 	 */
 	Bvh(const uint8* vertices, const uint8* indices, const Aabb& aabb, uint32 indexCount,
-		uint32 vertexSize, uint32 indexSize, const float3* centroids = nullptr);
+		uint32 vertexSize, uint32 indexSize, const simd_f32_4* centroids = nullptr);
 	/**
 	 * @brief Creates a new BVH from the AABB array.
 	 *
@@ -126,7 +122,7 @@ public:
 	 * @param aabbCount AABB array size
 	 * @param centroids precalculated centroid array
 	 */
-	Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const float3* centroids = nullptr);
+	Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const simd_f32_4* centroids = nullptr);
 	/**
 	 * @brief Creates a new empty BVH.
 	 */
@@ -143,7 +139,7 @@ public:
 	/**
 	 * @brief Returns BVH centroid array.
 	 */
-	const vector<float3>& getCentroids() const noexcept { return centroids; }
+	const vector<simd_f32_4>& getCentroids() const noexcept { return centroids; }
 
 	/**
 	 * @brief Recreates BVH from the triangle array.
@@ -157,7 +153,7 @@ public:
 	 * @param centroids precalculated centroid array or null
 	 */
 	void recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb, uint32 indexCount,
-		uint32 vertexSize, uint32 indexSize, const float3* centroids = nullptr);
+		uint32 vertexSize, uint32 indexSize, const simd_f32_4* centroids = nullptr);
 	/**
 	 * @brief Recreates BVH from the AABB array.
 	 *
@@ -166,7 +162,7 @@ public:
 	 * @param aabbCount AABB array size
 	 * @param centroids precalculated centroid array or null
 	 */
-	void recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const float3* centroids = nullptr);
+	void recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const simd_f32_4* centroids = nullptr);
 
 	// TODO: add traverse function
 };

@@ -21,6 +21,7 @@
 #pragma once
 #include "math/common.hpp"
 #include "math/vector/int.hpp"
+#include <cfloat>
 
 namespace math
 {
@@ -118,23 +119,44 @@ struct [[nodiscard]] float2
 	float2& operator=(float n) noexcept { x = n; y = n; return *this; }
 	constexpr bool operator==(float2 v) const noexcept { return x == v.x && y == v.y; }
 	constexpr bool operator!=(float2 v) const noexcept { return x != v.x || y != v.y; }
-	constexpr uint2 operator<(float2 v) const noexcept { return uint2(x < v.x, y < v.y); }
-	constexpr uint2 operator>(float2 v) const noexcept { return uint2(x > v.x, y > v.y); }
-	constexpr uint2 operator<=(float2 v) const noexcept { return uint2(x <= v.x, y <= v.y); }
-	constexpr uint2 operator>=(float2 v) const noexcept { return uint2(x >= v.x, y >= v.y); }
-	constexpr bool operator==(float n) const noexcept { return x == n && y == n; }
-	constexpr bool operator!=(float n) const noexcept { return x != n || y != n; }
-	constexpr uint2 operator<(float n) const noexcept { return uint2(x < n, y < n); }
-	constexpr uint2 operator>(float n) const noexcept { return uint2(x > n, y > n); }
-	constexpr uint2 operator<=(float n) const noexcept { return uint2(x <= n, y <= n); }
-	constexpr uint2 operator>=(float n) const noexcept { return uint2(x >= n, y >= n); }
+	constexpr uint2 operator<(float2 v) const noexcept
+	{
+		return uint2(x < v.x ? UINT32_MAX : 0, y < v.y ? UINT32_MAX : 0);
+	}
+	constexpr uint2 operator>(float2 v) const noexcept
+	{
+		return uint2(x > v.x ? UINT32_MAX : 0, y > v.y ? UINT32_MAX : 0);
+	}
+	constexpr uint2 operator<=(float2 v) const noexcept
+	{
+		return uint2(x <= v.x ? UINT32_MAX : 0, y <= v.y ? UINT32_MAX : 0);
+	}
+	constexpr uint2 operator>=(float2 v) const noexcept
+	{
+		return uint2(x >= v.x ? UINT32_MAX : 0, y >= v.y ? UINT32_MAX : 0);
+	}
+	constexpr bool operator==(float n) const noexcept { return *this == float2(n); }
+	constexpr bool operator!=(float n) const noexcept { return *this != float2(n); }
+	constexpr uint2 operator<(float n) const noexcept { return *this < float2(n); }
+	constexpr uint2 operator>(float n) const noexcept { return *this > float2(n); }
+	constexpr uint2 operator<=(float n) const noexcept { return *this <= float2(n); }
+	constexpr uint2 operator>=(float n) const noexcept { return *this >= float2(n); }
 
-	static const float2 zero, one, minusOne, left, right, bottom, top;
+	static const float2 zero, one, minusOne, min, minusMin, max, minusMax, 
+		epsilon, inf, minusInf, nan, left, right, bottom, top;
 };
 
 inline const float2 float2::zero = float2(0.0f);
 inline const float2 float2::one = float2(1.0f);
 inline const float2 float2::minusOne = float2(-1.0f);
+inline const float2 float2::min = float2(FLT_MIN);
+inline const float2 float2::minusMin = float2(-FLT_MIN);
+inline const float2 float2::max = float2(FLT_MAX);
+inline const float2 float2::minusMax = float2(-FLT_MAX);
+inline const float2 float2::epsilon = float2(FLT_EPSILON);
+inline const float2 float2::inf = float2(INFINITY);
+inline const float2 float2::minusInf = float2(-INFINITY);
+inline const float2 float2::nan = float2(NAN);
 inline const float2 float2::left = float2(-1.0f, 0.0f);
 inline const float2 float2::right = float2(1.0f, 0.0f);
 inline const float2 float2::bottom = float2(0.0f, -1.0f);
@@ -261,23 +283,44 @@ struct [[nodiscard]] float3
 	float3& operator=(float n) noexcept { x = n; y = n; z = n; return *this; }
 	constexpr bool operator==(float3 v) const noexcept { return x == v.x && y == v.y && z == v.z; }
 	constexpr bool operator!=(float3 v) const noexcept { return x != v.x || y != v.y || z != v.z; }
-	constexpr uint3 operator<(float3 v) const noexcept { return uint3(x < v.x, y < v.y, z < v.z); }
-	constexpr uint3 operator>(float3 v) const noexcept { return uint3(x > v.x, y > v.y, z > v.z); }
-	constexpr uint3 operator<=(float3 v) const noexcept { return uint3(x <= v.x, y <= v.y, z <= v.z); }
-	constexpr uint3 operator>=(float3 v) const noexcept { return uint3(x >= v.x, y >= v.y, z >= v.z); }
-	constexpr bool operator==(float n) const noexcept { return x == n && y == n && z == n; }
-	constexpr bool operator!=(float n) const noexcept { return x != n || y != n || z != n; }
-	constexpr uint3 operator<(float n) const noexcept { return uint3(x < n, y < n, z < n); }
-	constexpr uint3 operator>(float n) const noexcept { return uint3(x > n, y > n, z > n); }
-	constexpr uint3 operator<=(float n) const noexcept { return uint3(x <= n, y <= n, z <= n); }
-	constexpr uint3 operator>=(float n) const noexcept { return uint3(x >= n, y >= n, z >= n); }
+	constexpr uint3 operator<(float3 v) const noexcept
+	{
+		return uint3(x < v.x ? UINT32_MAX : 0, y < v.y ? UINT32_MAX : 0, z < v.z ? UINT32_MAX : 0);
+	}
+	constexpr uint3 operator>(float3 v) const noexcept
+	{
+		return uint3(x > v.x ? UINT32_MAX : 0, y > v.y ? UINT32_MAX : 0, z > v.z ? UINT32_MAX : 0);
+	}
+	constexpr uint3 operator<=(float3 v) const noexcept
+	{
+		return uint3(x <= v.x ? UINT32_MAX : 0, y <= v.y ? UINT32_MAX : 0, z <= v.z ? UINT32_MAX : 0);
+	}
+	constexpr uint3 operator>=(float3 v) const noexcept
+	{
+		return uint3(x >= v.x ? UINT32_MAX : 0, y >= v.y ? UINT32_MAX : 0, z >= v.z ? UINT32_MAX : 0);
+	}
+	constexpr bool operator==(float n) const noexcept { return *this == float3(n); }
+	constexpr bool operator!=(float n) const noexcept { return *this != float3(n); }
+	constexpr uint3 operator<(float n) const noexcept { return *this < float3(n); }
+	constexpr uint3 operator>(float n) const noexcept { return *this > float3(n); }
+	constexpr uint3 operator<=(float n) const noexcept { return *this <= float3(n); }
+	constexpr uint3 operator>=(float n) const noexcept { return *this >= float3(n); }
 
-	static const float3 zero, one, minusOne, left, right, bottom, top, back, front;
+	static const float3 zero, one, minusOne, min, minusMin, max, minusMax, 
+		epsilon, inf, minusInf, nan, left, right, bottom, top, back, front;
 };
 
 inline const float3 float3::zero = float3(0.0f);
 inline const float3 float3::one = float3(1.0f);
 inline const float3 float3::minusOne = float3(-1.0f);
+inline const float3 float3::min = float3(FLT_MIN);
+inline const float3 float3::minusMin = float3(-FLT_MIN);
+inline const float3 float3::max = float3(FLT_MAX);
+inline const float3 float3::minusMax = float3(-FLT_MAX);
+inline const float3 float3::epsilon = float3(FLT_EPSILON);
+inline const float3 float3::inf = float3(INFINITY);
+inline const float3 float3::minusInf = float3(-INFINITY);
+inline const float3 float3::nan = float3(NAN);
 inline const float3 float3::left = float3(-1.0f, 0.0f, 0.0f);
 inline const float3 float3::right = float3(1.0f, 0.0f, 0.0f);
 inline const float3 float3::bottom = float3(0.0f, -1.0f, 0.0f);
@@ -453,23 +496,47 @@ struct [[nodiscard]] float4
 	float4& operator=(float n) noexcept { x = n; y = n; z = n; w = n; return *this; }
 	constexpr bool operator==(float4 v) const noexcept { return x == v.x && y == v.y && z == v.z && w == v.w; }
 	constexpr bool operator!=(float4 v) const noexcept { return x != v.x || y != v.y || z != v.z || w != v.w; }
-	constexpr uint4 operator<(float4 v) const noexcept { return uint4(x < v.x, y < v.y, z < v.z, w < v.w); }
-	constexpr uint4 operator>(float4 v) const noexcept { return uint4(x > v.x, y > v.y, z > v.z, w > v.w); }
-	constexpr uint4 operator<=(float4 v) const noexcept { return uint4(x <= v.x, y <= v.y, z <= v.z, w <= v.w); }
-	constexpr uint4 operator>=(float4 v) const noexcept { return uint4(x >= v.x, y >= v.y, z >= v.z, w >= v.w); }
-	constexpr bool operator==(float n) const noexcept { return x == n && y == n && z == n && w == n; }
-	constexpr bool operator!=(float n) const noexcept { return x != n || y != n || z != n || w != n; }
-	constexpr uint4 operator<(float n) const noexcept { return uint4(x < n, y < n, z < n, w < n); }
-	constexpr uint4 operator>(float n) const noexcept { return uint4(x > n, y > n, z > n, w > n); }
-	constexpr uint4 operator<=(float n) const noexcept { return uint4(x <= n, y <= n, z <= n, w <= n); }
-	constexpr uint4 operator>=(float n) const noexcept { return uint4(x >= n, y >= n, z >= n, w >= n); }
+	constexpr uint4 operator<(float4 v) const noexcept
+	{
+		return uint4(x < v.x ? UINT32_MAX : 0, y < v.y ? UINT32_MAX : 0, 
+			z < v.z ? UINT32_MAX : 0, w < v.w ? UINT32_MAX : 0);
+	}
+	constexpr uint4 operator>(float4 v) const noexcept
+	{
+		return uint4(x > v.x ? UINT32_MAX : 0, y > v.y ? UINT32_MAX : 0, 
+			z > v.z ? UINT32_MAX : 0, w > v.w ? UINT32_MAX : 0);
+	}
+	constexpr uint4 operator<=(float4 v) const noexcept
+	{
+		return uint4(x <= v.x ? UINT32_MAX : 0, y <= v.y ? UINT32_MAX : 0, 
+			z <= v.z ? UINT32_MAX : 0, w <= v.w ? UINT32_MAX : 0);
+	}
+	constexpr uint4 operator>=(float4 v) const noexcept
+	{
+		return uint4(x >= v.x ? UINT32_MAX : 0, y >= v.y ? UINT32_MAX : 0, 
+			z >= v.z ? UINT32_MAX : 0, w >= v.w ? UINT32_MAX : 0);
+	}
+	constexpr bool operator==(float n) const noexcept { return *this == float4(n); }
+	constexpr bool operator!=(float n) const noexcept { return *this != float4(n); }
+	constexpr uint4 operator<(float n) const noexcept { return *this < float4(n); }
+	constexpr uint4 operator>(float n) const noexcept { return *this > float4(n); }
+	constexpr uint4 operator<=(float n) const noexcept { return *this <= float4(n); }
+	constexpr uint4 operator>=(float n) const noexcept { return *this >= float4(n); }
 
-	static const float4 zero, one, minusOne;
+	static const float4 zero, one, minusOne, min, minusMin, max, minusMax, epsilon, inf, minusInf, nan;
 };
 
 inline const float4 float4::zero = float4(0.0f);
 inline const float4 float4::one = float4(1.0f);
 inline const float4 float4::minusOne = float4(-1.0f);
+inline const float4 float4::min = float4(FLT_MIN);
+inline const float4 float4::minusMin = float4(-FLT_MIN);
+inline const float4 float4::max = float4(FLT_MAX);
+inline const float4 float4::minusMax = float4(-FLT_MAX);
+inline const float4 float4::epsilon = float4(FLT_EPSILON);
+inline const float4 float4::inf = float4(INFINITY);
+inline const float4 float4::minusInf = float4(-INFINITY);
+inline const float4 float4::nan = float4(NAN);
 
 //**********************************************************************************************************************
 static constexpr float2 operator+(float n, float2 v) noexcept { return float2(n) + v; }
@@ -490,6 +557,27 @@ static constexpr uint2 operator>=(float n, float2 v) noexcept { return float2(n)
 static string toString(float2 v) { return to_string(v.x) + " " + to_string(v.y); }
 
 /**
+ * @brief Compares two vectors component wise if they are equal.
+ *
+ * @param a first vector to compare
+ * @param b second vector to compare
+ */
+static uint2 equal(float2 a, float4 b) noexcept
+{
+	return uint2(a.x == b.x ? UINT32_MAX : 0, a.y == b.y ? UINT32_MAX : 0);
+}
+/**
+ * @brief Compares two vectors component wise if they are not equal.
+ *
+ * @param a first vector to compare
+ * @param b second vector to compare
+ */
+static uint2 notEqual(float2 a, float4 b) noexcept
+{
+	return uint2(a.x != b.x ? UINT32_MAX : 0, a.y != b.y ? UINT32_MAX : 0);
+}
+
+/**
  * @brief Returns true if first vector binary representation is less than the second.
  *
  * @param a first vector to binary compare
@@ -506,7 +594,213 @@ static bool isBinaryLess(float2 a, float2 b) noexcept { return *((const int64*)&
  */
 static constexpr float2 select(uint2 c, float2 t, float2 f) noexcept
 {
-	return float2(c.x ? t.x : f.x, c.y ? t.y : f.y);
+	return float2(c.x & 0x80000000u ? t.x : f.x, c.y & 0x80000000u ? t.y : f.y);
+}
+
+/***********************************************************************************************************************
+ * @brief Returns minimum value for each component of two vectors.
+ * 
+ * @param a first vector to find minimum
+ * @param b second vector to find minimum
+ */
+static constexpr float2 min(float2 a, float2 b) noexcept { return float2(std::min(a.x, b.x), std::min(a.y, b.y)); }
+/**
+ * @brief Returns maximum value for each component of two vectors.
+ * 
+ * @param a first vector to find maximum
+ * @param b second vector to find maximum
+ */
+static constexpr float2 max(float2 a, float2 b) noexcept { return float2(std::max(a.x, b.x), std::max(a.y, b.y)); }
+/**
+ * @brief Returns minimum value for each component of three vectors.
+ * 
+ * @param a first vector to find minimum
+ * @param b second vector to find minimum
+ * @param c third vector to find minimum
+ */
+static constexpr float2 min(float2 a, float2 b, float2 c) noexcept { return min(min(a, b), c); }
+/**
+ * @brief Returns maximum value for each component of three vectors.
+ * 
+ * @param a first vector to find maximum
+ * @param b second vector to find maximum
+ * @param c third vector to find maximum
+ */
+static constexpr float2 max(float2 a, float2 b, float2 c) noexcept { return max(max(a, b), c); }
+
+/**
+ * @brief Clamps vector components between min and max values.
+ * 
+ * @param v target vector to clamp
+ * @param min vector with minimum values
+ * @param max vector with maximum values
+ */
+static constexpr float2 clamp(float2 v, float2 min, float2 max) noexcept
+{
+	return float2(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y));
+}
+
+/***********************************************************************************************************************
+ * @brief Fused multiply add, calculates: mul1 * mul2 + add
+ * 
+ * @param mul1 first vector multiplier
+ * @param mul2 second vector multiplier
+ * @param add vector addend
+ */
+static float2 fma(float2 mul1, float2 mul2, float2 add) noexcept
+{
+	return float2(std::fma(mul1.x, mul2.x, add.x), std::fma(mul1.y, mul2.y, add.y));
+}
+/**
+ * @brief Returns absolute value for each component of the vector.
+ * @param v target vector
+ */
+static float2 abs(float2 v) noexcept { return float2(std::abs(v.x), std::abs(v.y)); }
+/**
+ * @brief Returns square root for each component of the vector.
+ * @param v target vector
+ */
+static float2 sqrt(float2 v) noexcept { return float2(std::sqrt(v.x), std::sqrt(v.y)); }
+/**
+ * @brief Returns sign for each component of the vector.
+ * @param v target vector
+ */
+static float2 sign(float2 v) noexcept { return float2(sign(v.x), sign(v.y)); }
+/**
+ * @brief Returns sign bits of the vector. (2 bits)
+ * @param v target vector
+ */
+static int signBits(float2 v) noexcept { return (std::signbit(v.x) ? 1 : 0) | (std::signbit(v.y) ? 2 : 0); }
+
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.5 -> 2.0; -1.5 -> -2.0)
+ * @param v target vector
+ */
+static float2 round(float2 v) noexcept { return float2(std::round(v.x), std::round(v.y)); }
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.7 -> 1.0; -1.7 -> -2.0)
+ * @param v target vector
+ */
+static float2 floor(float2 v) noexcept { return float2(std::floor(v.x), std::floor(v.y)); }
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.4 -> 2.0; -1.4 -> -1.0)
+ * @param v target vector
+ */
+static float2 ceil(float2 v) noexcept { return float2(std::ceil(v.x), std::ceil(v.y)); }
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.7 -> 1.0; -1.9 -> -1.0)
+ * @param v target vector
+ */
+static float2 trunc(float2 v) noexcept { return float2(std::trunc(v.x), std::trunc(v.y)); }
+
+/***********************************************************************************************************************
+ * @brief Returns dot product between two vector.
+ * 
+ * @param a first vector to dot
+ * @param b second vector to dot
+ */
+static constexpr float dot(float2 a, float2 b) noexcept { return a.x * b.x + a.y * b.y; }
+
+/**
+ * @brief Returns squared length of the vector. (length ^ 2)
+ * @note Faster to compute because we don't calculate square root.
+ * @param v target vector
+ */
+static constexpr float lengthSq(float2 v) noexcept { return dot(v, v); }
+/**
+ * @brief Returns length of the vector.
+ * @param v target vector
+ */
+static float length(float2 v) noexcept { return std::sqrt(dot(v, v)); }
+
+/**
+ * @brief Returns squared distance between two points. (distance ^ 2)
+ * @note Faster to compute because we don't calculate square root.
+ * 
+ * @param a first point
+ * @param b second point
+ */
+static constexpr float distanceSq(float2 a, float2 b) noexcept { return lengthSq(a - b); }
+/**
+ * @brief Returns distance between two points.
+ * 
+ * @param a first point
+ * @param b second point
+ */
+static float distance(float2 a, float2 b) noexcept { return length(a - b); }
+/**
+ * @brief Returns true if two vectors are close with specified maximum squared distance. (maxDistance ^ 2)
+ * 
+ * @param a first vector
+ * @param b second vector
+ */
+static constexpr bool isClose(float2 a, float2 b, float maxDistSq = 1.0e-12f) noexcept
+{
+	return distanceSq(a, b) <= maxDistSq;
+}
+
+/**
+ * @brief Returns normalized vector. (With length of 1.0f)
+ * @param v target vector to normalize
+ */
+static float2 normalize(float2 v) noexcept { return v * (1.0f / length(v)); }
+/**
+ * @brief Returns true if vector is normalized with specified tolerance.
+ * 
+ * @param v target vector to check
+ * @param tolerance floating point precision tolerance
+ */
+static bool isNormalized(float2 v, float tolerance = 1.0e-6f) noexcept
+{
+	return std::abs(lengthSq(v) - 1.0f) <= tolerance;
+}
+
+/**
+ * @brief Remaps each component of vector to the 0.0 - 1.0 range.
+ * @param v target vector
+ */
+static float2 repeat(float2 v) noexcept { return float2(repeat(v.x), repeat(v.y)); }
+
+/**
+ * @brief Linearly interpolates each component of the vector between a and b using t.
+ * 
+ * @param a minimum vector (t == 0.0)
+ * @param b maximum vector (t == 1.0)
+ * @param t target interpolation value (0.0 - 1.0)
+ */
+static float2 lerp(float2 a, float2 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+/**
+ * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
+ * @note Always use this function instead of basic lerp() when you have variable delta time!
+ * 
+ * @param a minimum vector (t == 0.0)
+ * @param b maximum vector (t == 1.0)
+ * @param t target interpolation value (0.0 - 1.0)
+ * @param dt current delta time
+ */
+static float2 lerpDelta(float2 a, float2 b, float f, float dt) noexcept
+{
+	return a + (1.0f - std::pow(f, dt)) * (b - a);
+}
+
+/**
+ * @brief Computes the power of each component of base b raised to the corresponding exponent e.
+ * 
+ * @param b target base vector to raise
+ * @param e exponent vector
+ */
+static float2 pow(float2 b, float2 e) noexcept { return float2(std::pow(b.x, e.x), std::pow(b.y, e.y)); }
+/**
+ * @brief Applies gain function for each component of the vector.
+ * @note The function is symmetric when x == 0.5.
+ * 
+ * @param x target vector to gain (0.0 - 1.0)
+ * @param k gain factor
+ */
+static float2 gain(float2 x, float2 k) noexcept
+{
+	auto a = float2(0.5f) * pow(2.0f * select(x < 0.5f, x, 1.0f - x), k);
+	return select(x < 0.5f, a, 1.0f - a);
 }
 
 //**********************************************************************************************************************
@@ -528,6 +822,27 @@ static constexpr uint3 operator>=(float n, const float3& v) noexcept { return fl
 static string toString(float3 v) { return to_string(v.x) + " " + to_string(v.y) + " " + to_string(v.z); }
 
 /**
+ * @brief Compares two vectors component wise if they are equal.
+ *
+ * @param a first vector to compare
+ * @param b second vector to compare
+ */
+static uint3 equal(float3 a, float3 b) noexcept
+{
+	return uint3(a.x == b.x ? UINT32_MAX : 0, a.y == b.y ? UINT32_MAX : 0, a.z == b.z ? UINT32_MAX : 0);
+}
+/**
+ * @brief Compares two vectors component wise if they are not equal.
+ *
+ * @param a first vector to compare
+ * @param b second vector to compare
+ */
+static uint3 notEqual(float3 a, float3 b) noexcept
+{
+	return uint3(a.x != b.x ? UINT32_MAX : 0, a.y != b.y ? UINT32_MAX : 0, a.z != b.z ? UINT32_MAX : 0);
+}
+
+/**
  * @brief Returns true if first vector binary representation is less than the second.
  *
  * @param[in] a first vector to binary compare
@@ -544,20 +859,248 @@ static bool isBinaryLess(const float3& a, const float3& b) noexcept { return mem
  */
 static constexpr float3 select(uint3 c, float3 t, float3 f) noexcept
 {
-	return float3(c.x ? t.x : f.x, c.y ? t.y : f.y, c.z ? t.z : f.z);
+	return float3(c.x & 0x80000000u ? t.x : f.x, c.y & 0x80000000u ? t.y : f.y, c.z & 0x80000000u ? t.z : f.z);
+}
+
+/***********************************************************************************************************************
+ * @brief Returns minimum value for each component of two vectors.
+ * 
+ * @param a first vector to find minimum
+ * @param b second vector to find minimum
+ */
+static constexpr float3 min(float3 a, float3 b) noexcept
+{
+	return float3(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z));
+}
+/**
+ * @brief Returns maximum value for each component of two vectors.
+ * 
+ * @param a first vector to find maximum
+ * @param b second vector to find maximum
+ */
+static constexpr float3 max(float3 a, float3 b) noexcept
+{
+	return float3(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z));
+}
+/**
+ * @brief Returns minimum value for each component of three vectors.
+ * 
+ * @param a first vector to find minimum
+ * @param b second vector to find minimum
+ * @param c third vector to find minimum
+ */
+static constexpr float3 min(const float3& a, const float3& b, const float3& c) noexcept { return min(min(a, b), c); }
+/**
+ * @brief Returns maximum value for each component of three vectors.
+ * 
+ * @param a first vector to find maximum
+ * @param b second vector to find maximum
+ * @param c third vector to find maximum
+ */
+static constexpr float3 max(const float3& a, const float3& b, const float3& c) noexcept { return max(max(a, b), c); }
+
+/**
+ * @brief Clamps vector components between min and max values.
+ * 
+ * @param v target vector to clamp
+ * @param min vector with minimum values
+ * @param max vector with maximum values
+ */
+static constexpr float3 clamp(float3 v, float3 min, float3 max) noexcept
+{
+	return float3(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y), std::clamp(v.z, min.z, max.z));
+}
+
+/***********************************************************************************************************************
+ * @brief Fused multiply add, calculates: mul1 * mul2 + add
+ * 
+ * @param mul1 first vector multiplier
+ * @param mul2 second vector multiplier
+ * @param add vector addend
+ */
+static float3 fma(float3 mul1, float3 mul2, float3 add) noexcept
+{
+	return float3(std::fma(mul1.x, mul2.x, add.x), std::fma(mul1.y, mul2.y, add.y), std::fma(mul1.z, mul2.z, add.z));
+}
+/**
+ * @brief Returns absolute value for each component of the vector.
+ * @param v target vector
+ */
+static float3 abs(float3 v) noexcept { return float3(std::abs(v.x), std::abs(v.y), std::abs(v.z)); }
+/**
+ * @brief Returns square root for each component of the vector.
+ * @param v target vector
+ */
+static float3 sqrt(float3 v) noexcept { return float3(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z)); }
+/**
+ * @brief Returns sign for each component of the vector.
+ * @param v target vector
+ */
+static float3 sign(float3 v) noexcept { return float3(sign(v.x), sign(v.y), sign(v.z)); }
+/**
+ * @brief Returns sign bits of the vector. (3 bits)
+ * @param v target vector
+ */
+static int signBits(float3 v) noexcept
+{
+	return (std::signbit(v.x) ? 1 : 0) | (std::signbit(v.y) ? 2 : 0) | (std::signbit(v.z) ? 4 : 0);
+}
+
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.5 -> 2.0; -1.5 -> -2.0)
+ * @param v target vector
+ */
+static float3 round(float3 v) noexcept { return float3(std::round(v.x), std::round(v.y), std::round(v.z)); }
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.7 -> 1.0; -1.7 -> -2.0)
+ * @param v target vector
+ */
+static float3 floor(float3 v) noexcept { return float3(std::floor(v.x), std::floor(v.y), std::floor(v.z)); }
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.4 -> 2.0; -1.4 -> -1.0)
+ * @param v target vector
+ */
+static float3 ceil(float3 v) noexcept { return float3(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z)); }
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.7 -> 1.0; -1.9 -> -1.0)
+ * @param v target vector
+ */
+static float3 trunc(float3 v) noexcept { return float3(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z)); }
+
+/***********************************************************************************************************************
+ * @brief Returns dot product between two vector.
+ * 
+ * @param a first vector to dot
+ * @param b second vector to dot
+ */
+static constexpr float dot(float3 a, float3 b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z; }
+/**
+ * @brief Returns cross product between two vector.
+ * 
+ * @param a first vector to cross
+ * @param b second vector to cross
+ */
+static constexpr float3 cross(float3 a, float3 b) noexcept
+{
+	return float3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+}
+
+/**
+ * @brief Returns squared length of the vector. (length ^ 2)
+ * @note Faster to compute because we don't calculate square root.
+ * @param v target vector
+ */
+static constexpr float lengthSq(float3 v) noexcept { return dot(v, v); }
+/**
+ * @brief Returns length of the vector.
+ * @param v target vector
+ */
+static float length(float3 v) noexcept { return std::sqrt(dot(v, v)); }
+
+/**
+ * @brief Returns squared distance between two points. (distance ^ 2)
+ * @note Faster to compute because we don't calculate square root.
+ * 
+ * @param a first point
+ * @param b second point
+ */
+static constexpr float distanceSq(float3 a, float3 b) noexcept { return lengthSq(a - b); }
+/**
+ * @brief Returns distance between two points.
+ * 
+ * @param a first point
+ * @param b second point
+ */
+static float distance(float3 a, float3 b) noexcept { return length(a - b); }
+/**
+ * @brief Returns true if two vectors are close with specified maximum squared distance. (maxDistance ^ 2)
+ * 
+ * @param a first vector
+ * @param b second vector
+ */
+static constexpr bool isClose(float3 a, float3 b, float maxDistSq = 1.0e-12f) noexcept
+{
+	return distanceSq(a, b) <= maxDistSq;
+}
+
+/**
+ * @brief Returns normalized vector. (With length of 1.0f)
+ * @param v target vector to normalize
+ */
+static float3 normalize(float3 v) noexcept { return v * (1.0f / length(v)); }
+/**
+ * @brief Returns true if vector is normalized with specified tolerance.
+ * 
+ * @param v target vector to check
+ * @param tolerance floating point precision tolerance
+ */
+static bool isNormalized(float3 v, float tolerance = 1.0e-6f) noexcept
+{
+	return std::abs(lengthSq(v) - 1.0f) <= tolerance;
+}
+
+/**
+ * @brief Remaps each component of vector to the 0.0 - 1.0 range.
+ * @param v target vector
+ */
+static float3 repeat(float3 v) noexcept { return float3(repeat(v.x), repeat(v.y), repeat(v.z)); }
+
+/**
+ * @brief Linearly interpolates each component of the vector between a and b using t.
+ * 
+ * @param a minimum vector (t == 0.0)
+ * @param b maximum vector (t == 1.0)
+ * @param t target interpolation value (0.0 - 1.0)
+ */
+static float3 lerp(float3 a, float3 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+/**
+ * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
+ * @note Always use this function instead of basic lerp() when you have variable delta time!
+ * 
+ * @param a minimum vector (t == 0.0)
+ * @param b maximum vector (t == 1.0)
+ * @param t target interpolation value (0.0 - 1.0)
+ * @param dt current delta time
+ */
+static float3 lerpDelta(float3 a, float3 b, float f, float dt) noexcept
+{
+	return a + (1.0f - std::pow(f, dt)) * (b - a);
+}
+
+/**
+ * @brief Computes the power of each component of base b raised to the corresponding exponent e.
+ * 
+ * @param b target base vector to raise
+ * @param e exponent vector
+ */
+static float3 pow(float3 b, float3 e) noexcept
+{
+	return float3(std::pow(b.x, e.x), std::pow(b.y, e.y), std::pow(b.z, e.z));
+}
+/**
+ * @brief Applies gain function for each component of the vector.
+ * @note The function is symmetric when x == 0.5.
+ * 
+ * @param x target vector to gain (0.0 - 1.0)
+ * @param k gain factor
+ */
+static float3 gain(float3 x, float3 k) noexcept
+{
+	auto a = float3(0.5f) * pow(2.0f * select(x < 0.5f, x, 1.0f - x), k);
+	return select(x < 0.5f, a, 1.0f - a);
 }
 
 //**********************************************************************************************************************
-static constexpr float4 operator+(float n, const float4& v) noexcept { return float4(n) + v; }
-static constexpr float4 operator-(float n, const float4& v) noexcept { return float4(n) - v; }
-static constexpr float4 operator*(float n, const float4& v) noexcept { return float4(n) * v; }
-static constexpr float4 operator/(float n, const float4& v) noexcept { return float4(n) / v; }
-static constexpr bool operator==(float n, const float4& v) noexcept { return float4(n) == v; }
-static constexpr bool operator!=(float n, const float4& v) noexcept { return float4(n) != v; }
-static constexpr uint4 operator<(float n, const float4& v) noexcept { return float4(n) < v; }
-static constexpr uint4 operator>(float n, const float4& v) noexcept { return float4(n) > v; }
-static constexpr uint4 operator<=(float n, const float4& v) noexcept { return float4(n) <= v; }
-static constexpr uint4 operator>=(float n, const float4& v) noexcept { return float4(n) >= v; }
+static constexpr float4 operator+(float n, float4 v) noexcept { return float4(n) + v; }
+static constexpr float4 operator-(float n, float4 v) noexcept { return float4(n) - v; }
+static constexpr float4 operator*(float n, float4 v) noexcept { return float4(n) * v; }
+static constexpr float4 operator/(float n, float4 v) noexcept { return float4(n) / v; }
+static constexpr bool operator==(float n, float4 v) noexcept { return float4(n) == v; }
+static constexpr bool operator!=(float n, float4 v) noexcept { return float4(n) != v; }
+static constexpr uint4 operator<(float n, float4 v) noexcept { return float4(n) < v; }
+static constexpr uint4 operator>(float n, float4 v) noexcept { return float4(n) > v; }
+static constexpr uint4 operator<=(float n, float4 v) noexcept { return float4(n) <= v; }
+static constexpr uint4 operator>=(float n, float4 v) noexcept { return float4(n) >= v; }
 
 /**
  * @brief Converts vector to the string. (space separated)
@@ -566,6 +1109,29 @@ static constexpr uint4 operator>=(float n, const float4& v) noexcept { return fl
 static string toString(float4 v)
 {
 	return to_string(v.x) + " " + to_string(v.y) + " " + to_string(v.z) + " " + to_string(v.w);
+}
+
+/**
+ * @brief Compares two vectors component wise if they are equal.
+ *
+ * @param a first vector to compare
+ * @param b second vector to compare
+ */
+static uint4 equal(float4 a, float4 b) noexcept
+{
+	return uint4(a.x == b.x ? UINT32_MAX : 0, a.y == b.y ? UINT32_MAX : 0, 
+		a.z == b.z ? UINT32_MAX : 0, a.w == b.w ? UINT32_MAX : 0);
+}
+/**
+ * @brief Compares two vectors component wise if they are not equal.
+ *
+ * @param a first vector to compare
+ * @param b second vector to compare
+ */
+static uint4 notEqual(float4 a, float4 b) noexcept
+{
+	return uint4(a.x != b.x ? UINT32_MAX : 0, a.y != b.y ? UINT32_MAX : 0, 
+		a.z != b.z ? UINT32_MAX : 0, a.w != b.w ? UINT32_MAX : 0);
 }
 
 /**
@@ -585,27 +1151,250 @@ static bool isBinaryLess(const float4& a, const float4& b) noexcept { return mem
  */
 static constexpr float4 select(uint4 c, float4 t, float4 f) noexcept
 {
-	return float4(c.x ? t.x : f.x, c.y ? t.y : f.y, c.z ? t.z : f.z, c.w ? t.w : f.w);
+	return float4(c.x & 0x80000000u ? t.x : f.x, c.y & 0x80000000u ? t.y : f.y, 
+		c.z & 0x80000000u ? t.z : f.z, c.w & 0x80000000u ? t.w : f.w);
+}
+
+/***********************************************************************************************************************
+ * @brief Returns minimum value for each component of two vectors.
+ * 
+ * @param a first vector to find minimum
+ * @param b second vector to find minimum
+ */
+static constexpr float4 min(float4 a, float4 b) noexcept
+{
+	return float4(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z), std::min(a.w, b.w));
+}
+/**
+ * @brief Returns maximum value for each component of two vectors.
+ * 
+ * @param a first vector to find maximum
+ * @param b second vector to find maximum
+ */
+static constexpr float4 max(float4 a, float4 b) noexcept
+{
+	return float4(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z), std::max(a.w, b.w));
+}
+/**
+ * @brief Returns minimum value for each component of three vectors.
+ * 
+ * @param a first vector to find minimum
+ * @param b second vector to find minimum
+ * @param c third vector to find minimum
+ */
+static constexpr float4 min(float4 a, float4 b, float4 c) noexcept { return min(min(a, b), c); }
+/**
+ * @brief Returns maximum value for each component of three vectors.
+ * 
+ * @param a first vector to find maximum
+ * @param b second vector to find maximum
+ * @param c third vector to find maximum
+ */
+static constexpr float4 max(float4 a, float4 b, float4 c) noexcept { return max(max(a, b), c); }
+
+/**
+ * @brief Clamps vector components between min and max values.
+ * 
+ * @param v target vector to clamp
+ * @param min vector with minimum values
+ * @param max vector with maximum values
+ */
+static constexpr float4 clamp(float4 v, float4 min, float4 max) noexcept
+{
+	return float4(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y),
+		std::clamp(v.z, min.z, max.z), std::clamp(v.w, min.w, max.w));
+}
+
+/***********************************************************************************************************************
+ * @brief Fused multiply add, calculates: mul1 * mul2 + add
+ * 
+ * @param mul1 first vector multiplier
+ * @param mul2 second vector multiplier
+ * @param add vector addend
+ */
+static float4 fma(float4 mul1, float4 mul2, float4 add) noexcept
+{
+	return float4(std::fma(mul1.x, mul2.x, add.x), std::fma(mul1.y, mul2.y, add.y), 
+		std::fma(mul1.z, mul2.z, add.z), std::fma(mul1.w, mul2.w, add.w));
+}
+/**
+ * @brief Returns absolute value for each component of the vector.
+ * @param v target vector
+ */
+static float4 abs(float4 v) noexcept { return float4(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w)); }
+/**
+ * @brief Returns square root for each component of the vector.
+ * @param v target vector
+ */
+static float4 sqrt(float4 v) noexcept
+{
+	return float4(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z), std::sqrt(v.w));
+}
+/**
+ * @brief Returns sign for each component of the vector.
+ * @param v target vector
+ */
+static float4 sign(float4 v) noexcept { return float4(sign(v.x), sign(v.y), sign(v.z), sign(v.w)); }
+/**
+ * @brief Returns sign bits of the vector. (4 bits)
+ * @param v target vector
+ */
+static int signBits(float4 v) noexcept
+{
+	return (std::signbit(v.x) ? 1 : 0) | (std::signbit(v.y) ? 2 : 0) | 
+		(std::signbit(v.z) ? 4 : 0) | (std::signbit(v.w) ? 8 : 0);
+}
+
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.5 -> 2.0; -1.5 -> -2.0)
+ * @param v target vector
+ */
+static float4 round(float4 v) noexcept
+{
+	return float4(std::round(v.x), std::round(v.y), std::round(v.z), std::round(v.w));
+}
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.7 -> 1.0; -1.7 -> -2.0)
+ * @param v target vector
+ */
+static float4 floor(float4 v) noexcept
+{
+	return float4(std::floor(v.x), std::floor(v.y), std::floor(v.z), std::floor(v.w));
+}
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.4 -> 2.0; -1.4 -> -1.0)
+ * @param v target vector
+ */
+static float4 ceil(float4 v) noexcept
+{
+	return float4(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z), std::ceil(v.w));
+}
+/**
+ * @brief Rounds each component of the vector to nearest integer. (1.7 -> 1.0; -1.9 -> -1.0)
+ * @param v target vector
+ */
+static float4 trunc(float4 v) noexcept
+{
+	return float4(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z), std::trunc(v.w));
+}
+
+/***********************************************************************************************************************
+ * @brief Returns dot product between two vector.
+ * 
+ * @param a first vector to dot
+ * @param b second vector to dot
+ */
+static constexpr float dot(float4 a, float4 b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w; }
+
+/**
+ * @brief Returns squared length of the vector. (length ^ 2)
+ * @note Faster to compute because we don't calculate square root.
+ * @param v target vector
+ */
+static constexpr float lengthSq(float4 v) noexcept { return dot(v, v); }
+/**
+ * @brief Returns length of the vector.
+ * @param v target vector
+ */
+static float length(float4 v) noexcept { return std::sqrt(dot(v, v)); }
+
+/**
+ * @brief Returns squared distance between two points. (distance ^ 2)
+ * @note Faster to compute because we don't calculate square root.
+ * 
+ * @param a first point
+ * @param b second point
+ */
+static constexpr float distanceSq(float4 a, float4 b) noexcept { return lengthSq(a - b); }
+/**
+ * @brief Returns distance between two points.
+ * 
+ * @param a first point
+ * @param b second point
+ */
+static float distance(float4 a, float4 b) noexcept { return length(a - b); }
+/**
+ * @brief Returns true if two vectors are close with specified maximum squared distance. (maxDistance ^ 2)
+ * 
+ * @param a first vector
+ * @param b second vector
+ */
+static constexpr bool isClose(float4 a, float4 b, float maxDistSq = 1.0e-12f) noexcept
+{
+	return distanceSq(a, b) <= maxDistSq;
+}
+
+/**
+ * @brief Returns normalized vector. (With length of 1.0f)
+ * @param v target vector to normalize
+ */
+static float4 normalize(float4 v) noexcept { return v * (1.0f / length(v)); }
+/**
+ * @brief Returns true if vector is normalized with specified tolerance.
+ * 
+ * @param v target vector to check
+ * @param tolerance floating point precision tolerance
+ */
+static bool isNormalized(float4 v, float tolerance = 1.0e-6f) noexcept
+{
+	return std::abs(lengthSq(v) - 1.0f) <= tolerance;
+}
+
+/**
+ * @brief Remaps each component of vector to the 0.0 - 1.0 range.
+ * @param v target vector
+ */
+static float4 repeat(float4 v) noexcept { return float4(repeat(v.x), repeat(v.y), repeat(v.z), repeat(v.w)); }
+
+/**
+ * @brief Linearly interpolates each component of the vector between a and b using t.
+ * 
+ * @param a minimum vector (t == 0.0)
+ * @param b maximum vector (t == 1.0)
+ * @param t target interpolation value (0.0 - 1.0)
+ */
+static float4 lerp(float4 a, float4 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+/**
+ * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
+ * @note Always use this function instead of basic lerp() when you have variable delta time!
+ * 
+ * @param a minimum vector (t == 0.0)
+ * @param b maximum vector (t == 1.0)
+ * @param t target interpolation value (0.0 - 1.0)
+ * @param dt current delta time
+ */
+static float4 lerpDelta(float4 a, float4 b, float f, float dt) noexcept
+{
+	return a + (1.0f - std::pow(f, dt)) * (b - a);
+}
+
+/**
+ * @brief Computes the power of each component of base b raised to the corresponding exponent e.
+ * 
+ * @param b target base vector to raise
+ * @param e exponent vector
+ */
+static float4 pow(float4 b, float4 e) noexcept
+{
+	return float4(std::pow(b.x, e.x), std::pow(b.y, e.y), std::pow(b.z, e.z), std::pow(b.w, e.w));
+}
+/**
+ * @brief Applies gain function for each component of the vector.
+ * @note The function is symmetric when x == 0.5.
+ * 
+ * @param x target vector to gain (0.0 - 1.0)
+ * @param k gain factor
+ */
+static float4 gain(float4 x, float4 k) noexcept
+{
+	auto a = float4(0.5f) * pow(2.0f * select(x < 0.5f, x, 1.0f - x), k);
+	return select(x < 0.5f, a, 1.0f - a);
 }
 
 //**********************************************************************************************************************
 // TODO: possibly add more specific math functions like remquo, sph_neumann or dFdx.
 
-static constexpr float2 min(float2 a, float2 b) noexcept { return float2(std::min(a.x, b.x), std::min(a.y, b.y)); }
-static constexpr float2 max(float2 a, float2 b) noexcept { return float2(std::max(a.x, b.x), std::max(a.y, b.y)); }
-static constexpr float2 min(float2 a, float2 b, float2 c) noexcept { return min(min(a, b), c); }
-static constexpr float2 max(float2 a, float2 b, float2 c) noexcept { return max(max(a, b), c); }
-static float2 abs(float2 v) noexcept { return float2(std::abs(v.x), std::abs(v.y)); }
 static float2 mod(float2 a, float2 b) noexcept { return float2(std::fmod(a.x, b.x), std::fmod(a.y, b.y)); }
-static float2 fma(float2 a, float2 b, float2 c) noexcept
-{
-	return float2(std::fma(a.x, b.x, c.x), std::fma(a.y, b.y, c.y));
-}
-static float2 ceil(float2 v) noexcept { return float2(std::ceil(v.x), std::ceil(v.y)); }
-static float2 floor(float2 v) noexcept { return float2(std::floor(v.x), std::floor(v.y)); }
-static float2 trunc(float2 v) noexcept { return float2(std::trunc(v.x), std::trunc(v.y)); }
-static float2 round(float2 v) noexcept { return float2(std::round(v.x), std::round(v.y)); }
-static float2 sign(float2 v) noexcept { return float2(sign(v.x), sign(v.y)); }
 static float2 exp(float2 v) noexcept { return float2(std::exp(v.x), std::exp(v.y)); }
 static float2 exp2(float2 v) noexcept { return float2(std::exp2(v.x), std::exp2(v.y)); }
 static float2 expm1(float2 v) noexcept { return float2(std::expm1(v.x), std::expm1(v.y)); }
@@ -613,8 +1402,6 @@ static float2 log(float2 v) noexcept { return float2(std::log(v.x), std::log(v.y
 static float2 log10(float2 v) noexcept { return float2(std::log10(v.x), std::log10(v.y)); }
 static float2 log2(float2 v) noexcept { return float2(std::log2(v.x), std::log2(v.y)); }
 static float2 log1p(float2 v) noexcept { return float2(std::log1p(v.x), std::log1p(v.y)); }
-static float2 pow(float2 a, float2 b) noexcept { return float2(std::pow(a.x, b.x), std::pow(a.y, b.y)); }
-static float2 sqrt(float2 v) noexcept { return float2(std::sqrt(v.x), std::sqrt(v.y)); }
 static float2 cbrt(float2 v) noexcept { return float2(std::cbrt(v.x), std::cbrt(v.y)); }
 static float2 sin(float2 v) noexcept { return float2(std::sin(v.x), std::sin(v.y)); }
 static float2 cos(float2 v) noexcept { return float2(std::cos(v.x), std::cos(v.y)); }
@@ -630,63 +1417,11 @@ static float2 asinh(float2 v) noexcept { return float2(std::asinh(v.x), std::asi
 static float2 acosh(float2 v) noexcept { return float2(std::acosh(v.x), std::acosh(v.y)); }
 static float2 atanh(float2 v) noexcept { return float2(std::atanh(v.x), std::atanh(v.y)); }
 
-static constexpr float2 clamp(float2 v, float2 min, float2 max) noexcept
-{
-	return float2(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y));
-}
-static float2 repeat(float2 v) noexcept { return float2(repeat(v.x), repeat(v.y)); }
-static constexpr float dot(float2 a, float2 b) noexcept { return a.x * b.x + a.y * b.y; }
-static float length(float2 v) noexcept { return std::sqrt(dot(v, v)); }
-static constexpr float length2(float2 v) noexcept { return dot(v, v); }
-static float distance(float2 a, float2 b) noexcept { return length(a - b); }
-static constexpr float distance2(float2 a, float2 b) noexcept { return length2(a - b); }
-static float2 normalize(float2 v) noexcept
-{
-	auto l = length(v);
-	assert(l > 0.0f);
-	return v * (1.0f / l);
-}
-static float2 lerp(float2 a, float2 b, float t) noexcept
-{
-	assert(t >= 0.0f);
-	assert(t <= 1.0f);
-	return a * (1.0f - t) + b * t;
-}
-static float2 lerpDelta(float2 a, float2 b, float f, float dt) noexcept
-{
-	return a + (1.0f - std::pow(f, dt)) * (b - a);
-}
-static float2 gain(float2 x, float2 k) noexcept
-{
-	auto a = float2(0.5f) * pow(2.0f * select(x < 0.5f, x, 1.0f - x), k);
-	return select(x < 0.5f, a, 1.0f - a);
-}
-
 //**********************************************************************************************************************
-static constexpr float3 min(float3 a, float3 b) noexcept
-{
-	return float3(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z));
-}
-static constexpr float3 max(float3 a, float3 b) noexcept
-{
-	return float3(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z));
-}
-static constexpr float3 min(const float3& a, const float3& b, const float3& c) noexcept { return min(min(a, b), c); }
-static constexpr float3 max(const float3& a, const float3& b, const float3& c) noexcept { return max(max(a, b), c); }
-static float3 abs(float3 v) noexcept { return float3(std::abs(v.x), std::abs(v.y), std::abs(v.z)); }
 static float3 mod(float3 a, float3 b) noexcept
 {
 	return float3(std::fmod(a.x, b.x), std::fmod(a.y, b.y), std::fmod(a.z, b.z));
 }
-static float3 fma(float3 a, float3 b, float3 c) noexcept
-{
-	return float3(std::fma(a.x, b.x, c.x), std::fma(a.y, b.y, c.y), std::fma(a.z, b.z, c.z));
-}
-static float3 ceil(float3 v) noexcept { return float3(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z)); }
-static float3 floor(float3 v) noexcept { return float3(std::floor(v.x), std::floor(v.y), std::floor(v.z)); }
-static float3 trunc(float3 v) noexcept { return float3(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z)); }
-static float3 round(float3 v) noexcept { return float3(std::round(v.x), std::round(v.y), std::round(v.z)); }
-static float3 sign(float3 v) noexcept { return float3(sign(v.x), sign(v.y), sign(v.z)); }
 static float3 exp(float3 v) noexcept { return float3(std::exp(v.x), std::exp(v.y), std::exp(v.z)); }
 static float3 exp2(float3 v) noexcept { return float3(std::exp2(v.x), std::exp2(v.y), std::exp2(v.z)); }
 static float3 expm1(float3 v) noexcept { return float3(std::expm1(v.x), std::expm1(v.y), std::expm1(v.z)); }
@@ -694,11 +1429,6 @@ static float3 log(float3 v) noexcept { return float3(std::log(v.x), std::log(v.y
 static float3 log10(float3 v) noexcept { return float3(std::log10(v.x), std::log10(v.y), std::log10(v.z)); }
 static float3 log2(float3 v) noexcept { return float3(std::log2(v.x), std::log2(v.y), std::log2(v.z)); }
 static float3 log1p(float3 v) noexcept { return float3(std::log1p(v.x), std::log1p(v.y), std::log1p(v.z)); }
-static float3 pow(float3 a, float3 b) noexcept
-{
-	return float3(std::pow(a.x, b.x), std::pow(a.y, b.y), std::pow(a.z, b.z));
-}
-static float3 sqrt(float3 v) noexcept { return float3(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z)); }
 static float3 cbrt(float3 v) noexcept { return float3(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z)); }
 static float3 sin(float3 v) noexcept { return float3(std::sin(v.x), std::sin(v.y), std::sin(v.z)); }
 static float3 cos(float3 v) noexcept { return float3(std::cos(v.x), std::cos(v.y), std::cos(v.z)); }
@@ -717,77 +1447,11 @@ static float3 asinh(float3 v) noexcept { return float3(std::asinh(v.x), std::asi
 static float3 acosh(float3 v) noexcept { return float3(std::acosh(v.x), std::acosh(v.y), std::acosh(v.z)); }
 static float3 atanh(float3 v) noexcept { return float3(std::atanh(v.x), std::atanh(v.y), std::atanh(v.z)); }
 
-static constexpr float3 clamp(float3 v, float3 min, float3 max) noexcept
-{
-	return float3(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y), std::clamp(v.z, min.z, max.z));
-}
-static float3 repeat(float3 v) noexcept { return float3(repeat(v.x), repeat(v.y), repeat(v.z)); }
-static constexpr float dot(float3 a, float3 b) noexcept { return a.x * b.x + a.y * b.y + a.z * b.z; }
-static constexpr float3 cross(float3 a, float3 b) noexcept
-{
-	return float3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
-}
-static float length(const float3& v) noexcept { return std::sqrt(dot(v, v)); }
-static constexpr float length2(const float3& v) noexcept { return dot(v, v); }
-static float distance(const float3& a, const float3& b) noexcept { return length(a - b); }
-static constexpr float distance2(const float3& a, const float3& b) noexcept { return length2(a - b); }
-static float3 normalize(const float3& v) noexcept { return v * (1.0f / length(v)); }
-static float3 lerp(const float3& a, const float3& b, float t) noexcept
-{
-	assert(t >= 0.0f);
-	assert(t <= 1.0f);
-	return a * (1.0f - t) + b * t;
-}
-static float3 lerpDelta(const float3& a, const float3& b, float f, float dt) noexcept
-{
-	return a + (1.0f - std::pow(f, dt)) * (b - a);
-}
-static float3 gain(const float3& x, const float3& k) noexcept
-{
-	auto a = float3(0.5f) * pow(2.0f * select(x < 0.5f, x, 1.0f - x), k);
-	return select(x < 0.5f, a, 1.0f - a);
-}
-
 //**********************************************************************************************************************
-static constexpr float4 min(float4 a, float4 b) noexcept
-{
-	return float4(std::min(a.x, b.x), std::min(a.y, b.y), std::min(a.z, b.z), std::min(a.w, b.w));
-}
-static constexpr float4 max(float4 a, float4 b) noexcept
-{
-	return float4(std::max(a.x, b.x), std::max(a.y, b.y), std::max(a.z, b.z), std::max(a.w, b.w));
-}
-static constexpr float4 min(const float4& a, const float4& b, const float4& c) noexcept { return min(min(a, b), c); }
-static constexpr float4 max(const float4& a, const float4& b, const float4& c) noexcept { return max(max(a, b), c); }
-static float4 abs(float4 v) noexcept
-{
-	return float4(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w));
-}
 static float4 mod(float4 a, float4 b) noexcept
 {
 	return float4(std::fmod(a.x, b.x), std::fmod(a.y, b.y), std::fmod(a.z, b.z), std::fmod(a.w, b.w));
 }
-static float4 fma(float4 a, float4 b, float4 c) noexcept
-{
-	return float4(std::fma(a.x, b.x, c.x), std::fma(a.y, b.y, c.y), std::fma(a.z, b.z, c.z), std::fma(a.w, b.w, c.w));
-}
-static float4 ceil(float4 v) noexcept
-{
-	return float4(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z), std::ceil(v.w));
-}
-static float4 floor(float4 v) noexcept
-{
-	return float4(std::floor(v.x), std::floor(v.y), std::floor(v.z), std::floor(v.w));
-}
-static float4 trunc(float4 v) noexcept
-{
-	return float4(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z), std::trunc(v.w));
-}
-static float4 round(float4 v) noexcept
-{
-	return float4(std::round(v.x), std::round(v.y), std::round(v.z), std::round(v.w));
-}
-static float4 sign(float4 v) noexcept { return float4(sign(v.x), sign(v.y), sign(v.z), sign(v.w)); }
 static float4 exp(float4 v) noexcept
 {
 	return float4(std::exp(v.x), std::exp(v.y), std::exp(v.z), std::exp(v.w));
@@ -815,14 +1479,6 @@ static float4 log2(float4 v) noexcept
 static float4 log1p(float4 v) noexcept
 {
 	return float4(std::log1p(v.x), std::log1p(v.y), std::log1p(v.z), std::log1p(v.w));
-}
-static float4 pow(float4 a, float4 b) noexcept
-{
-	return float4(std::pow(a.x, b.x), std::pow(a.y, b.y), std::pow(a.z, b.z), std::pow(a.w, b.w));
-}
-static float4 sqrt(float4 v) noexcept
-{
-	return float4(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z), std::sqrt(v.w));
 }
 static float4 cbrt(float4 v) noexcept
 {
@@ -879,42 +1535,6 @@ static float4 acosh(float4 v) noexcept
 static float4 atanh(float4 v) noexcept
 {
 	return float4(std::atanh(v.x), std::atanh(v.y), std::atanh(v.z), std::atanh(v.w));
-}
-
-static float4 clamp(float4 v, float4 min, float4 max) noexcept
-{
-	return float4(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y),
-		std::clamp(v.z, min.z, max.z), std::clamp(v.w, min.w, max.w));
-}
-static float4 repeat(float4 v) noexcept { return float4(repeat(v.x), repeat(v.y), repeat(v.z), repeat(v.w)); }
-static constexpr float dot(float4 a, float4 b) noexcept
-{
-	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
-}
-static float length(const float4& v) noexcept { return std::sqrt(dot(v, v)); }
-static constexpr float length2(const float4& v) noexcept { return dot(v, v); }
-static float distance(const float4& a, const float4& b) noexcept { return length(a - b); }
-static constexpr float distance2(const float4& a, const float4& b) noexcept { return length2(a - b); }
-static float4 normalize(const float4& v) noexcept
-{
-	auto l = length(v);
-	assert(l > 0.0f);
-	return v * (1.0f / l);
-}
-static float4 lerp(const float4& a, const float4& b, float t) noexcept
-{
-	assert(t >= 0.0f);
-	assert(t <= 1.0f);
-	return a * (1.0f - t) + b * t;
-}
-static float4 lerpDelta(const float4& a, const float4& b, float f, float dt) noexcept
-{
-	return a + (1.0f - std::pow(f, dt)) * (b - a);
-}
-static float4 gain(const float4& x, const float4& k) noexcept
-{
-	auto a = float4(0.5f) * pow(2.0f * select(x < 0.5f, x, 1.0f - x), k);
-	return select(x < 0.5f, a, 1.0f - a);
 }
 
 } // namespace math

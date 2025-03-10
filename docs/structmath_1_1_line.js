@@ -1,9 +1,8 @@
 var structmath_1_1_line =
 [
-    [ "Line", "structmath_1_1_line.html#a82069c040cb33b163eaece7c9413ad53", null ],
-    [ "Line", "structmath_1_1_line.html#a2289a8606aa70e70db5ac9199d3c0e4b", null ],
-    [ "getVector", "structmath_1_1_line.html#a4a3ee7c15ec2cc3a1ea7c3244eaf2e39", null ],
-    [ "getVectorNorm", "structmath_1_1_line.html#a696ba847ec801f3ac35f47964a308f14", null ],
-    [ "start", "structmath_1_1_line.html#a225b8924eceb08d8b67132ba9d764214", null ],
-    [ "end", "structmath_1_1_line.html#a6b678d911d1bbf5b31fa18146e1d7409", null ]
+    [ "Line", "structmath_1_1_line.html#a396a8de09dceb3e3ba30c24a2d096d08", null ],
+    [ "Line", "structmath_1_1_line.html#ae4f5ef4fa7b611383df13b58e3adf3d0", null ],
+    [ "getDirection", "structmath_1_1_line.html#aefa33d144ecf466061e52ef29519b1e0", null ],
+    [ "start", "structmath_1_1_line.html#ac003d85725892a504d5ab0ed74036540", null ],
+    [ "end", "structmath_1_1_line.html#a585474fcab94e1ebdf648a7192861829", null ]
 ];

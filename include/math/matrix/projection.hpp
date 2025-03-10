@@ -17,10 +17,6 @@
  * @brief Common projection matrix functions.
  * 
  * @details
- * Coordinate system: X-right, Y-up, Z-forward (Left handed)
- * Matrices order: Column-major. (OpenGL, Vulkan like)
- * floatNxM - N columns and M rows
- * 
  * Projection matrices are fixed for the Vulkan NDC space.
  * http://matthewwellings.com/blog/the-new-vulkan-coordinate-system/
  * 

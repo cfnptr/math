@@ -1,6 +1,7 @@
 var dir_fba38f648377aa56ae5d69782adf9e53 =
 [
     [ "matrix", "dir_61efc3ca6933b02b951778ad7f15e87f.html", "dir_61efc3ca6933b02b951778ad7f15e87f" ],
+    [ "simd", "dir_e97a22db820454bf23bbe097b6c17840.html", "dir_e97a22db820454bf23bbe097b6c17840" ],
     [ "vector", "dir_38a288074a3050a7826d34b6a5bd7d48.html", "dir_38a288074a3050a7826d34b6a5bd7d48" ],
     [ "aabb.hpp", "aabb_8hpp.html", "aabb_8hpp" ],
     [ "angles.hpp", "angles_8hpp.html", null ],
@@ -12,6 +13,7 @@ var dir_fba38f648377aa56ae5d69782adf9e53 =
     [ "ibl.hpp", "ibl_8hpp.html", "ibl_8hpp" ],
     [ "line.hpp", "line_8hpp.html", "line_8hpp" ],
     [ "matrix.hpp", "matrix_8hpp.html", null ],
+    [ "packed-vector.hpp", "packed-vector_8hpp.html", "packed-vector_8hpp" ],
     [ "pbr-colors.hpp", "pbr-colors_8hpp.html", null ],
     [ "plane.hpp", "plane_8hpp.html", "plane_8hpp" ],
     [ "quaternion.hpp", "quaternion_8hpp.html", "quaternion_8hpp" ],

@@ -5,7 +5,6 @@ var structmath_1_1uint2 =
     [ "operator[]", "structmath_1_1uint2.html#a9ab3332a30994fa7e44106302777c42f", null ],
     [ "operator[]", "structmath_1_1uint2.html#a3727b39170eb217236177be269171b6f", null ],
     [ "operator uint32", "structmath_1_1uint2.html#ad30ff29a31373ec83d11980b664957ee", null ],
-    [ "toString", "structmath_1_1uint2.html#a3526d6515caf3255db8267ef956efa90", null ],
     [ "x", "structmath_1_1uint2.html#a55d1b42282f6c971b82100ad15c138ba", null ],
     [ "y", "structmath_1_1uint2.html#a4e925da0b4f619785e9723da78a42540", null ]
 ];

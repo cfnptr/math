@@ -24,85 +24,90 @@ namespace math
 {
 
 /**
- * @brief Converts linear RGB color to the sRGB color space.
- * @param rgb target linear RGB color
+ * @brief Converts linear RGBA color to the sRGB color space.
+ * @param rgba target linear RGBA color
  */
-static float3 rgbToSrgb(float3 rgb) noexcept
+static simd_f32_4 rgbToSrgb(simd_f32_4 rgba) noexcept
 {
-	constexpr auto c = 0.0031308f;
-	auto l = fma(pow(rgb, float3(1.0f / 2.4f)), float3(1.055f), float3(-0.055f));
-	auto h = rgb * 12.92f;
-	return float3(rgb.x <= c ? h.x : l.x, rgb.y <= c ? h.y : l.y, rgb.z <= c ? h.z : l.z);
+	static const auto c = simd_f32_4(0.0031308f);
+	auto h = rgba * 12.92f;
+	auto l = fma(pow(rgba, simd_f32_4(1.0f / 2.4f)), simd_f32_4(1.055f), simd_f32_4(-0.055f));
+	auto r = select(rgba <= c, h, l); r.setW(rgba.getW());
+	return r;
 }
 /**
- * @brief Converts sRGB color to the linear RGB color space.
+ * @brief Converts sRGB color to the linear RGBA color space.
  * @param srgb target sRGB color
  */
-static float3 srgbToRgb(float3 srgb) noexcept
+static simd_f32_4 srgbToRgb(simd_f32_4 sRGB) noexcept
 {
-	constexpr auto c = 0.04045f;
-	auto l = pow((srgb + 0.055f) * (1.0f / 1.055f), float3(2.4f));
-	auto h = srgb * (1.0f / 12.92f);
-	return float3(srgb.x <= c ? h.x : l.x, srgb.y <= c ? h.y : l.y, srgb.z <= c ? h.z : l.z);
+	static const auto c = simd_f32_4(0.04045f);
+	auto h = sRGB * (1.0f / 12.92f);
+	auto l = pow((sRGB + 0.055f) * (1.0f / 1.055f), simd_f32_4(2.4f));
+	auto r = select(sRGB <= c, h, l); r.setW(sRGB.getW());
+	return r;
 }
 
 /**
  * @brief Converts linear RGB color to the XYZ color space. (CIE 1931)
- * @param[in] rgb target linear RGB color
+ * @param rgb target linear RGB color
  */
-static float3 rgbToXyz(const float3& rgb) noexcept
+static simd_f32_4 rgbToXyz(simd_f32_4 rgb) noexcept
 {
-	constexpr auto m = float3x3
+	static const auto m = simd_f32_4x4
 	(
-		0.4124564f, 0.2126729f, 0.0193339f,
-		0.3575761f, 0.7151522f, 0.1191920f,
-		0.1804375f, 0.0721750f, 0.9503041f
+		simd_f32_4(0.4124564f, 0.2126729f, 0.0193339f, 0.0f),
+		simd_f32_4(0.3575761f, 0.7151522f, 0.1191920f, 0.0f),
+		simd_f32_4(0.1804375f, 0.0721750f, 0.9503041f, 0.0f),
+		simd_f32_4::zero
 	);
-	return m * rgb;
+	return multiply3x3(m, rgb);
 }
 /**
  * @brief Converts XYZ color to the linear RGB color space. (CIE 1931)
- * @param[in] xyz target XYZ color
+ * @param xyz target XYZ color
  */
-static float3 xyzToRgb(const float3& xyz) noexcept
+static simd_f32_4 xyzToRgb(simd_f32_4 xyz) noexcept
 {
-	constexpr auto m = float3x3
+	static const auto m = simd_f32_4x4
 	(
-		 3.2404542f, -0.9692660f,  0.0556434f,
-		-1.5371385f,  1.8760108f, -0.2040259f,
-		-0.4985314f,  0.0415560f,  1.0572252f
+		simd_f32_4( 3.2404542f, -0.9692660f,  0.0556434f, 0.0f),
+		simd_f32_4(-1.5371385f,  1.8760108f, -0.2040259f, 0.0f),
+		simd_f32_4(-0.4985314f,  0.0415560f,  1.0572252f, 0.0f),
+		simd_f32_4::zero
 	);
-	return m * xyz;
+	return multiply3x3(m, xyz);
 }
 
 /**
  * @brief Converts XYZ color to the YXY color space.
  * @param xyz target XYZ color
  */
-static float3 xyzToYxy(float3 xyz) noexcept
+static simd_f32_4 xyzToYxy(simd_f32_4 xyz) noexcept
 {
-	auto inv = 1.0f / dot(xyz, float3(1.0f));
-	return float3(xyz.y, xyz.x * inv, xyz.y * inv);
+	auto y = xyz.getY();
+	auto inv = 1.0f / dot3(xyz, simd_f32_4::one);
+	return simd_f32_4(y, xyz.getX() * inv, y * inv);
 }
 /**
  * @brief Converts YXY color to the XYZ color space.
  * @param yxy target YXY color
  */
-static float3 yxyToXyz(float3 yxy) noexcept
+static simd_f32_4 yxyToXyz(simd_f32_4 yxy) noexcept
 {
-	return float3(yxy.x * yxy.y / yxy.z, yxy.x, 
-		yxy.x * (1.0f - yxy.y - yxy.z) / yxy.z);
+	auto x = yxy.getX(), y = yxy.getY(), z = yxy.getZ();
+	return simd_f32_4(x * y / z, x, x * (1.0f - y - z) / z);
 }
 
 /**
  * @brief Converts linear RGB color to the YXY color space.
- * @param[in] rgb target linear RGB color
+ * @param rgb target linear RGB color
  */
-static float3 rgbToYxy(const float3& rgb) noexcept { return xyzToYxy(rgbToXyz(rgb)); }
+static simd_f32_4 rgbToYxy(simd_f32_4 rgb) noexcept { return xyzToYxy(rgbToXyz(rgb)); }
 /**
  * @brief Converts YXY color to the linear RGB color space.
- * @param[in] yxy target YXY color
+ * @param yxy target YXY color
  */
-static float3 yxyToRgb(const float3& yxy) noexcept { return xyzToRgb(yxyToXyz(yxy)); }
+static simd_f32_4 yxyToRgb(simd_f32_4 yxy) noexcept { return xyzToRgb(yxyToXyz(yxy)); }
 
 } // namespace math

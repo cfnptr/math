@@ -34,28 +34,28 @@ namespace math
 constexpr float defaultGamma = 2.2f;
 
 /**
- * @brief Applies gamma correction to the specified color.
+ * @brief Applies gamma correction to the specified color. (Fast approximation)
  * 
  * @details
  * Gamma correction is used to adjust the brightness of an image or display to match the 
  * nonlinear response of display devices, such as monitors. It compensates for the fact that 
  * displays do not linearly represent the light intensity of a color.
  * 
- * @param[in] color target color to gamma correct
+ * @param color target color to gamma correct
  * @param invGamma inverse gamma correction value (1.0/x)
  */
-static float3 gammaCorrection(const float3& color, float invGamma) noexcept
+static simd_f32_4 fastGammaCorrection(simd_f32_4 color, float invGamma) noexcept
 {
-	return pow(color, float3(invGamma));
+	return simd_f32_4(fastPow(color, simd_f32_4(invGamma)), color.getW());
 }
 /**
- * @brief Applies gamma correction to the specified color.
+ * @brief Applies gamma correction to the specified color. (Fast approximation)
  * @details See the @ref gammaCorrection().
- * @param[in] color target color to gamma correct
+ * @param color target color to gamma correct
  */
-static float3 gammaCorrection(const float3& color) noexcept
+static simd_f32_4 fastGammaCorrection(simd_f32_4 color) noexcept
 {
-	return pow(color, float3(1.0f / defaultGamma));
+	return simd_f32_4(fastPow(color, simd_f32_4(1.0f / defaultGamma)), color.getW());
 }
 
 } // namespace math

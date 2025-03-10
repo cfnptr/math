@@ -69,128 +69,126 @@ $(function(){initNavTree('structmath_1_1_aabb.html',''); initResizable(); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7e9306a0570a168ae5d177f8f38452f7" id="r_a7e9306a0570a168ae5d177f8f38452f7"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e9306a0570a168ae5d177f8f38452f7">Aabb</a> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;min=<a class="el" href="structmath_1_1float3.html">float3</a>(0.0f), const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;max=<a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)) noexcept</td></tr>
-<tr class="memdesc:a7e9306a0570a168ae5d177f8f38452f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new Axis Aligned Bounding Box. (AABB)  <br /></td></tr>
-<tr class="separator:a7e9306a0570a168ae5d177f8f38452f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b413d27b9c05c611a3b42b9e6af385d" id="r_a0b413d27b9c05c611a3b42b9e6af385d"><td class="memItemLeft" align="right" valign="top">constexpr const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b413d27b9c05c611a3b42b9e6af385d">getMin</a> () const noexcept</td></tr>
-<tr class="memdesc:a0b413d27b9c05c611a3b42b9e6af385d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns minimum AABB corner position in the space.  <br /></td></tr>
-<tr class="separator:a0b413d27b9c05c611a3b42b9e6af385d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a930a19e576a9a407c49f630adb62e256" id="r_a930a19e576a9a407c49f630adb62e256"><td class="memItemLeft" align="right" valign="top">constexpr const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a930a19e576a9a407c49f630adb62e256">getMax</a> () const noexcept</td></tr>
-<tr class="memdesc:a930a19e576a9a407c49f630adb62e256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns maximum AABB corner position in the space.  <br /></td></tr>
-<tr class="separator:a930a19e576a9a407c49f630adb62e256"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42ac034bbc13c4567502c817d92dcf01" id="r_a42ac034bbc13c4567502c817d92dcf01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42ac034bbc13c4567502c817d92dcf01">setMin</a> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;min) noexcept</td></tr>
-<tr class="memdesc:a42ac034bbc13c4567502c817d92dcf01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets minimum AABB corner position in the space.  <br /></td></tr>
-<tr class="separator:a42ac034bbc13c4567502c817d92dcf01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8388cf67bc064a2fdca8081fb84b778" id="r_af8388cf67bc064a2fdca8081fb84b778"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8388cf67bc064a2fdca8081fb84b778">setMax</a> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;max) noexcept</td></tr>
-<tr class="memdesc:af8388cf67bc064a2fdca8081fb84b778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets maximum AABB corner position in the space.  <br /></td></tr>
-<tr class="separator:af8388cf67bc064a2fdca8081fb84b778"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2db8324629d2c1dbd38c94678560a29e" id="r_a2db8324629d2c1dbd38c94678560a29e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2db8324629d2c1dbd38c94678560a29e">set</a> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;min, const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;max) noexcept</td></tr>
-<tr class="memdesc:a2db8324629d2c1dbd38c94678560a29e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets minimum and maximum AABB corner position in the space.  <br /></td></tr>
-<tr class="separator:a2db8324629d2c1dbd38c94678560a29e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae209901f007b9d3fa70443b995952cc4" id="r_ae209901f007b9d3fa70443b995952cc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae209901f007b9d3fa70443b995952cc4">setSize</a> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;<a class="elRef" href="https://en.cppreference.com/w/cpp/iterator/size.html">size</a>, const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;position=<a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)) noexcept</td></tr>
-<tr class="memdesc:ae209901f007b9d3fa70443b995952cc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets size and position of the bounding box.  <br /></td></tr>
-<tr class="separator:ae209901f007b9d3fa70443b995952cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2af2be7033781c4eb993d67fac6736eb" id="r_a2af2be7033781c4eb993d67fac6736eb"><td class="memItemLeft" align="right" valign="top"><a id="a2af2be7033781c4eb993d67fac6736eb" name="a2af2be7033781c4eb993d67fac6736eb"></a>
-constexpr <a class="el" href="structmath_1_1float3.html">float3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getSize</b> () const noexcept</td></tr>
-<tr class="memdesc:a2af2be7033781c4eb993d67fac6736eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns size of the bounding box. <br /></td></tr>
-<tr class="separator:a2af2be7033781c4eb993d67fac6736eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53ccbbf00d4e7c21550abdfb26a6c184" id="r_a53ccbbf00d4e7c21550abdfb26a6c184"><td class="memItemLeft" align="right" valign="top"><a id="a53ccbbf00d4e7c21550abdfb26a6c184" name="a53ccbbf00d4e7c21550abdfb26a6c184"></a>
-constexpr <a class="el" href="structmath_1_1float3.html">float3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getPosition</b> () const noexcept</td></tr>
-<tr class="memdesc:a53ccbbf00d4e7c21550abdfb26a6c184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns position of the bounding box. <br /></td></tr>
-<tr class="separator:a53ccbbf00d4e7c21550abdfb26a6c184"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1abca7594dced05c7385145132f71704" id="r_a1abca7594dced05c7385145132f71704"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1abca7594dced05c7385145132f71704">setExtent</a> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;<a class="elRef" href="https://en.cppreference.com/w/cpp/types/extent.html">extent</a>, const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;position=<a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)) noexcept</td></tr>
-<tr class="memdesc:a1abca7594dced05c7385145132f71704"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets extent and position of the bounding box.  <br /></td></tr>
-<tr class="separator:a1abca7594dced05c7385145132f71704"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b96253659836165b14ac8ae47c07184" id="r_a6b96253659836165b14ac8ae47c07184"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b96253659836165b14ac8ae47c07184">getExtent</a> (<a class="el" href="structmath_1_1float3.html">float3</a> &amp;<a class="elRef" href="https://en.cppreference.com/w/cpp/types/extent.html">extent</a>, <a class="el" href="structmath_1_1float3.html">float3</a> &amp;position) const noexcept</td></tr>
-<tr class="memdesc:a6b96253659836165b14ac8ae47c07184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns extent and position of the bounding box.  <br /></td></tr>
-<tr class="separator:a6b96253659836165b14ac8ae47c07184"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a596e702e0749e377a3e2c1b22d35283d" id="r_a596e702e0749e377a3e2c1b22d35283d"><td class="memItemLeft" align="right" valign="top"><a id="a596e702e0749e377a3e2c1b22d35283d" name="a596e702e0749e377a3e2c1b22d35283d"></a>
-constexpr <a class="el" href="structmath_1_1float3.html">float3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getExtent</b> () const noexcept</td></tr>
-<tr class="memdesc:a596e702e0749e377a3e2c1b22d35283d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns extent of the bounding box. (half size) <br /></td></tr>
-<tr class="separator:a596e702e0749e377a3e2c1b22d35283d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ce8241ace50dbec44a6dd8909f76352" id="r_a9ce8241ace50dbec44a6dd8909f76352"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ce8241ace50dbec44a6dd8909f76352">extend</a> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;point) noexcept</td></tr>
-<tr class="memdesc:a9ce8241ace50dbec44a6dd8909f76352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends bounding box min and max corner positions.  <br /></td></tr>
-<tr class="separator:a9ce8241ace50dbec44a6dd8909f76352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad31db5f37ed979f373d07ad18c5f4d35" id="r_ad31db5f37ed979f373d07ad18c5f4d35"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad31db5f37ed979f373d07ad18c5f4d35">Aabb</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> min=simd_f32_4::zero, <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> max=simd_f32_4::zero) noexcept</td></tr>
+<tr class="memdesc:ad31db5f37ed979f373d07ad18c5f4d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new Axis Aligned Bounding Box in 3D space. (AABB)  <br /></td></tr>
+<tr class="separator:ad31db5f37ed979f373d07ad18c5f4d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa643262dad36e28eba1b4681b2a8bb26" id="r_aa643262dad36e28eba1b4681b2a8bb26"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa643262dad36e28eba1b4681b2a8bb26">getMin</a> () const noexcept</td></tr>
+<tr class="memdesc:aa643262dad36e28eba1b4681b2a8bb26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns minimum AABB corner position in 3D space.  <br /></td></tr>
+<tr class="separator:aa643262dad36e28eba1b4681b2a8bb26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50d3495e86481851cea3eb74b3eedc98" id="r_a50d3495e86481851cea3eb74b3eedc98"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a50d3495e86481851cea3eb74b3eedc98">getMax</a> () const noexcept</td></tr>
+<tr class="memdesc:a50d3495e86481851cea3eb74b3eedc98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns maximum AABB corner position in 3D space.  <br /></td></tr>
+<tr class="separator:a50d3495e86481851cea3eb74b3eedc98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ababea3fb005df726dbeb26643e704896" id="r_ababea3fb005df726dbeb26643e704896"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ababea3fb005df726dbeb26643e704896">setMin</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> min) noexcept</td></tr>
+<tr class="memdesc:ababea3fb005df726dbeb26643e704896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets minimum AABB corner position in 3D space.  <br /></td></tr>
+<tr class="separator:ababea3fb005df726dbeb26643e704896"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa964e457c98ba2bca52de4c9ffacac82" id="r_aa964e457c98ba2bca52de4c9ffacac82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa964e457c98ba2bca52de4c9ffacac82">setMax</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> max) noexcept</td></tr>
+<tr class="memdesc:aa964e457c98ba2bca52de4c9ffacac82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets maximum AABB corner position in 3D space.  <br /></td></tr>
+<tr class="separator:aa964e457c98ba2bca52de4c9ffacac82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c13893d075d2fdc6781054ebe8b48cd" id="r_a6c13893d075d2fdc6781054ebe8b48cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c13893d075d2fdc6781054ebe8b48cd">set</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> min, <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> max) noexcept</td></tr>
+<tr class="memdesc:a6c13893d075d2fdc6781054ebe8b48cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets minimum and maximum AABB corner position in 3D space.  <br /></td></tr>
+<tr class="separator:a6c13893d075d2fdc6781054ebe8b48cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a636049e33f5ab9a5f5f16d5540c795" id="r_a6a636049e33f5ab9a5f5f16d5540c795"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a636049e33f5ab9a5f5f16d5540c795">setSize</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> <a class="elRef" href="https://en.cppreference.com/w/cpp/iterator/size.html">size</a>) noexcept</td></tr>
+<tr class="memdesc:a6a636049e33f5ab9a5f5f16d5540c795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets size of the bounding box.  <br /></td></tr>
+<tr class="separator:a6a636049e33f5ab9a5f5f16d5540c795"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbc94b7296c079c851beac8daac57742" id="r_adbc94b7296c079c851beac8daac57742"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adbc94b7296c079c851beac8daac57742">setSize</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> <a class="elRef" href="https://en.cppreference.com/w/cpp/iterator/size.html">size</a>, <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> position) noexcept</td></tr>
+<tr class="memdesc:adbc94b7296c079c851beac8daac57742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets size and position of the bounding box in 3D space.  <br /></td></tr>
+<tr class="separator:adbc94b7296c079c851beac8daac57742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1167554741f920151d52858655814ecc" id="r_a1167554741f920151d52858655814ecc"><td class="memItemLeft" align="right" valign="top"><a id="a1167554741f920151d52858655814ecc" name="a1167554741f920151d52858655814ecc"></a>
+<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getSize</b> () const noexcept</td></tr>
+<tr class="memdesc:a1167554741f920151d52858655814ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns size of the bounding box. <br /></td></tr>
+<tr class="separator:a1167554741f920151d52858655814ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a840d07e5864f5524381d88627515bc7f" id="r_a840d07e5864f5524381d88627515bc7f"><td class="memItemLeft" align="right" valign="top"><a id="a840d07e5864f5524381d88627515bc7f" name="a840d07e5864f5524381d88627515bc7f"></a>
+<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getPosition</b> () const noexcept</td></tr>
+<tr class="memdesc:a840d07e5864f5524381d88627515bc7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns position of the bounding box in 3D space. <br /></td></tr>
+<tr class="separator:a840d07e5864f5524381d88627515bc7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06c4828f1f9262f0d045f6c2a49116b7" id="r_a06c4828f1f9262f0d045f6c2a49116b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06c4828f1f9262f0d045f6c2a49116b7">setExtent</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> <a class="elRef" href="https://en.cppreference.com/w/cpp/types/extent.html">extent</a>) noexcept</td></tr>
+<tr class="memdesc:a06c4828f1f9262f0d045f6c2a49116b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets extent and position of the bounding box in 3D space.  <br /></td></tr>
+<tr class="separator:a06c4828f1f9262f0d045f6c2a49116b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5881724c37887111e73fd8629bb3754" id="r_ad5881724c37887111e73fd8629bb3754"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad5881724c37887111e73fd8629bb3754">setExtent</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> <a class="elRef" href="https://en.cppreference.com/w/cpp/types/extent.html">extent</a>, <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> position) noexcept</td></tr>
+<tr class="memdesc:ad5881724c37887111e73fd8629bb3754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets extent and position of the bounding box in 3D space.  <br /></td></tr>
+<tr class="separator:ad5881724c37887111e73fd8629bb3754"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3645e9b99e6c007b0f2ef323e15635ab" id="r_a3645e9b99e6c007b0f2ef323e15635ab"><td class="memItemLeft" align="right" valign="top"><a id="a3645e9b99e6c007b0f2ef323e15635ab" name="a3645e9b99e6c007b0f2ef323e15635ab"></a>
+<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getExtent</b> () const noexcept</td></tr>
+<tr class="memdesc:a3645e9b99e6c007b0f2ef323e15635ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns extent of the bounding box. (half size) <br /></td></tr>
+<tr class="separator:a3645e9b99e6c007b0f2ef323e15635ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5653f4e15b7cb29652fd163c19a61d0" id="r_aa5653f4e15b7cb29652fd163c19a61d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5653f4e15b7cb29652fd163c19a61d0">getExtent</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> &amp;<a class="elRef" href="https://en.cppreference.com/w/cpp/types/extent.html">extent</a>, <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> &amp;position) const noexcept</td></tr>
+<tr class="memdesc:aa5653f4e15b7cb29652fd163c19a61d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns extent and position of the bounding box in 3D space.  <br /></td></tr>
+<tr class="separator:aa5653f4e15b7cb29652fd163c19a61d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80065e07f5f7b2a12469accea5a9f7bf" id="r_a80065e07f5f7b2a12469accea5a9f7bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a80065e07f5f7b2a12469accea5a9f7bf">extend</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> point) noexcept</td></tr>
+<tr class="memdesc:a80065e07f5f7b2a12469accea5a9f7bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends bounding box min and max corner positions in 3D space.  <br /></td></tr>
+<tr class="separator:a80065e07f5f7b2a12469accea5a9f7bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac64d11dbe34bc5bfdc850395848e9e08" id="r_ac64d11dbe34bc5bfdc850395848e9e08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac64d11dbe34bc5bfdc850395848e9e08">extend</a> (const <a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;aabb) noexcept</td></tr>
-<tr class="memdesc:ac64d11dbe34bc5bfdc850395848e9e08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends bounding box min and max corner positions.  <br /></td></tr>
+<tr class="memdesc:ac64d11dbe34bc5bfdc850395848e9e08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends bounding box min and max corner positions in 3D space.  <br /></td></tr>
 <tr class="separator:ac64d11dbe34bc5bfdc850395848e9e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25808b0c548332ae3c3eae9e63073b49" id="r_a25808b0c548332ae3c3eae9e63073b49"><td class="memItemLeft" align="right" valign="top"><a id="a25808b0c548332ae3c3eae9e63073b49" name="a25808b0c548332ae3c3eae9e63073b49"></a>
-constexpr float&#160;</td><td class="memItemRight" valign="bottom"><b>calcArea</b> () const noexcept</td></tr>
-<tr class="memdesc:a25808b0c548332ae3c3eae9e63073b49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates area of the AABB. <br /></td></tr>
-<tr class="separator:a25808b0c548332ae3c3eae9e63073b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8063e3f8eb2c46af72430841bed9dede" id="r_a8063e3f8eb2c46af72430841bed9dede"><td class="memItemLeft" align="right" valign="top"><a id="a8063e3f8eb2c46af72430841bed9dede" name="a8063e3f8eb2c46af72430841bed9dede"></a>
-constexpr <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:a8063e3f8eb2c46af72430841bed9dede"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57b1d179595c7d1faa42bccc977af362" id="r_a57b1d179595c7d1faa42bccc977af362"><td class="memItemLeft" align="right" valign="top"><a id="a57b1d179595c7d1faa42bccc977af362" name="a57b1d179595c7d1faa42bccc977af362"></a>
-constexpr <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:a57b1d179595c7d1faa42bccc977af362"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7be7e93d7594289580256a2686083439" id="r_a7be7e93d7594289580256a2686083439"><td class="memItemLeft" align="right" valign="top"><a id="a7be7e93d7594289580256a2686083439" name="a7be7e93d7594289580256a2686083439"></a>
-constexpr <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:a7be7e93d7594289580256a2686083439"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6287e074dad531b967b466586583dacc" id="r_a6287e074dad531b967b466586583dacc"><td class="memItemLeft" align="right" valign="top"><a id="a6287e074dad531b967b466586583dacc" name="a6287e074dad531b967b466586583dacc"></a>
-constexpr <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:a6287e074dad531b967b466586583dacc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ed407a2cfb8fc9074b9787520e90e66" id="r_a9ed407a2cfb8fc9074b9787520e90e66"><td class="memItemLeft" align="right" valign="top"><a id="a9ed407a2cfb8fc9074b9787520e90e66" name="a9ed407a2cfb8fc9074b9787520e90e66"></a>
-<a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*=</b> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;v) noexcept</td></tr>
-<tr class="separator:a9ed407a2cfb8fc9074b9787520e90e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b237315472a80847b0d69e4c51c7a15" id="r_a0b237315472a80847b0d69e4c51c7a15"><td class="memItemLeft" align="right" valign="top"><a id="a0b237315472a80847b0d69e4c51c7a15" name="a0b237315472a80847b0d69e4c51c7a15"></a>
-<a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;v) noexcept</td></tr>
-<tr class="separator:a0b237315472a80847b0d69e4c51c7a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc248f22b0f35c799d61aba5f2ca71b0" id="r_acc248f22b0f35c799d61aba5f2ca71b0"><td class="memItemLeft" align="right" valign="top"><a id="acc248f22b0f35c799d61aba5f2ca71b0" name="acc248f22b0f35c799d61aba5f2ca71b0"></a>
-<a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;v) noexcept</td></tr>
-<tr class="separator:acc248f22b0f35c799d61aba5f2ca71b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32264a1f72fe9d53b36af2374336ddd1" id="r_a32264a1f72fe9d53b36af2374336ddd1"><td class="memItemLeft" align="right" valign="top"><a id="a32264a1f72fe9d53b36af2374336ddd1" name="a32264a1f72fe9d53b36af2374336ddd1"></a>
-<a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;v) noexcept</td></tr>
-<tr class="separator:a32264a1f72fe9d53b36af2374336ddd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a080beb47d5784ea103f3e497dc6a9b98" id="r_a080beb47d5784ea103f3e497dc6a9b98"><td class="memItemLeft" align="right" valign="top"><a id="a080beb47d5784ea103f3e497dc6a9b98" name="a080beb47d5784ea103f3e497dc6a9b98"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:a080beb47d5784ea103f3e497dc6a9b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6ddf5e3caf3324963511ca259769659" id="r_ac6ddf5e3caf3324963511ca259769659"><td class="memItemLeft" align="right" valign="top"><a id="ac6ddf5e3caf3324963511ca259769659" name="ac6ddf5e3caf3324963511ca259769659"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:ac6ddf5e3caf3324963511ca259769659"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea5a4dbfc210a17ffc0b8410b835f2f2" id="r_aea5a4dbfc210a17ffc0b8410b835f2f2"><td class="memItemLeft" align="right" valign="top"><a id="aea5a4dbfc210a17ffc0b8410b835f2f2" name="aea5a4dbfc210a17ffc0b8410b835f2f2"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (const <a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:aea5a4dbfc210a17ffc0b8410b835f2f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7a5c78e98fe430331e0a8d60c48d04a" id="r_ac7a5c78e98fe430331e0a8d60c48d04a"><td class="memItemLeft" align="right" valign="top"><a id="ac7a5c78e98fe430331e0a8d60c48d04a" name="ac7a5c78e98fe430331e0a8d60c48d04a"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (const <a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:ac7a5c78e98fe430331e0a8d60c48d04a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbecd120c9bd64e1129d999a8de87882" id="r_abbecd120c9bd64e1129d999a8de87882"><td class="memItemLeft" align="right" valign="top"><a id="abbecd120c9bd64e1129d999a8de87882" name="abbecd120c9bd64e1129d999a8de87882"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;=</b> (const <a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:abbecd120c9bd64e1129d999a8de87882"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad504471867918ab418e10293f2c652e2" id="r_ad504471867918ab418e10293f2c652e2"><td class="memItemLeft" align="right" valign="top"><a id="ad504471867918ab418e10293f2c652e2" name="ad504471867918ab418e10293f2c652e2"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;=</b> (const <a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;v) const noexcept</td></tr>
-<tr class="separator:ad504471867918ab418e10293f2c652e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affbf79af405ee558b20e59ef4eab85e1" id="r_affbf79af405ee558b20e59ef4eab85e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#affbf79af405ee558b20e59ef4eab85e1">translate</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> translation) noexcept</td></tr>
+<tr class="memdesc:affbf79af405ee558b20e59ef4eab85e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translates bounding box in 3D space.  <br /></td></tr>
+<tr class="separator:affbf79af405ee558b20e59ef4eab85e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7c19e710ddb8b2fa645b4b469ef4648" id="r_aa7c19e710ddb8b2fa645b4b469ef4648"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7c19e710ddb8b2fa645b4b469ef4648">scale</a> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> scale) noexcept</td></tr>
+<tr class="memdesc:aa7c19e710ddb8b2fa645b4b469ef4648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scales bounding box in 3D space.  <br /></td></tr>
+<tr class="separator:aa7c19e710ddb8b2fa645b4b469ef4648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a745a5eee04dad90a41e82d917ffd6cf5" id="r_a745a5eee04dad90a41e82d917ffd6cf5"><td class="memItemLeft" align="right" valign="top"><a id="a745a5eee04dad90a41e82d917ffd6cf5" name="a745a5eee04dad90a41e82d917ffd6cf5"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>calcArea</b> () const noexcept</td></tr>
+<tr class="memdesc:a745a5eee04dad90a41e82d917ffd6cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates area of the bounding box. <br /></td></tr>
+<tr class="separator:a745a5eee04dad90a41e82d917ffd6cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aa84edaf562084db375d63460cf0931" id="r_a5aa84edaf562084db375d63460cf0931"><td class="memItemLeft" align="right" valign="top"><a id="a5aa84edaf562084db375d63460cf0931" name="a5aa84edaf562084db375d63460cf0931"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>calcVolume</b> () const noexcept</td></tr>
+<tr class="memdesc:a5aa84edaf562084db375d63460cf0931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates volume of the bounding box. <br /></td></tr>
+<tr class="separator:a5aa84edaf562084db375d63460cf0931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2416a16d5d3abc4678c1db09f0b53361" id="r_a2416a16d5d3abc4678c1db09f0b53361"><td class="memItemLeft" align="right" valign="top"><a id="a2416a16d5d3abc4678c1db09f0b53361" name="a2416a16d5d3abc4678c1db09f0b53361"></a>
+<a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> v) const noexcept</td></tr>
+<tr class="separator:a2416a16d5d3abc4678c1db09f0b53361"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bbf5ad0a81af4585b1a6ef5ea1afb39" id="r_a9bbf5ad0a81af4585b1a6ef5ea1afb39"><td class="memItemLeft" align="right" valign="top"><a id="a9bbf5ad0a81af4585b1a6ef5ea1afb39" name="a9bbf5ad0a81af4585b1a6ef5ea1afb39"></a>
+<a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> v) const noexcept</td></tr>
+<tr class="separator:a9bbf5ad0a81af4585b1a6ef5ea1afb39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdef691f6630bfaa1d5e6558f321b2e0" id="r_afdef691f6630bfaa1d5e6558f321b2e0"><td class="memItemLeft" align="right" valign="top"><a id="afdef691f6630bfaa1d5e6558f321b2e0" name="afdef691f6630bfaa1d5e6558f321b2e0"></a>
+<a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> v) const noexcept</td></tr>
+<tr class="separator:afdef691f6630bfaa1d5e6558f321b2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a878d193b479750d114457471d7b088e3" id="r_a878d193b479750d114457471d7b088e3"><td class="memItemLeft" align="right" valign="top"><a id="a878d193b479750d114457471d7b088e3" name="a878d193b479750d114457471d7b088e3"></a>
+<a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> v) const noexcept</td></tr>
+<tr class="separator:a878d193b479750d114457471d7b088e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c7b1db6cc7b07513b29cb6037138b3c" id="r_a9c7b1db6cc7b07513b29cb6037138b3c"><td class="memItemLeft" align="right" valign="top"><a id="a9c7b1db6cc7b07513b29cb6037138b3c" name="a9c7b1db6cc7b07513b29cb6037138b3c"></a>
+<a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*=</b> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> v) noexcept</td></tr>
+<tr class="separator:a9c7b1db6cc7b07513b29cb6037138b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d90018c72f254d1ff13e3430389bcd7" id="r_a1d90018c72f254d1ff13e3430389bcd7"><td class="memItemLeft" align="right" valign="top"><a id="a1d90018c72f254d1ff13e3430389bcd7" name="a1d90018c72f254d1ff13e3430389bcd7"></a>
+<a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> v) noexcept</td></tr>
+<tr class="separator:a1d90018c72f254d1ff13e3430389bcd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c03f81405ea553ec2cf15d3f45cf3eb" id="r_a7c03f81405ea553ec2cf15d3f45cf3eb"><td class="memItemLeft" align="right" valign="top"><a id="a7c03f81405ea553ec2cf15d3f45cf3eb" name="a7c03f81405ea553ec2cf15d3f45cf3eb"></a>
+<a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> v) noexcept</td></tr>
+<tr class="separator:a7c03f81405ea553ec2cf15d3f45cf3eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb714503bf8e2087bc73654a34625022" id="r_abb714503bf8e2087bc73654a34625022"><td class="memItemLeft" align="right" valign="top"><a id="abb714503bf8e2087bc73654a34625022" name="abb714503bf8e2087bc73654a34625022"></a>
+<a class="el" href="structmath_1_1_aabb.html">Aabb</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> v) noexcept</td></tr>
+<tr class="separator:abb714503bf8e2087bc73654a34625022"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a00133bada20f3038d6b1245cdb84ffba" id="r_a00133bada20f3038d6b1245cdb84ffba"><td class="memItemLeft" align="right" valign="top"><a id="a00133bada20f3038d6b1245cdb84ffba" name="a00133bada20f3038d6b1245cdb84ffba"></a>
-static const <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>zero</b> = <a class="el" href="structmath_1_1_aabb.html">Aabb</a>(<a class="el" href="structmath_1_1float3.html">float3</a>(0.0f), <a class="el" href="structmath_1_1float3.html">float3</a>(0.0f))</td></tr>
+static const <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>zero</b> = <a class="el" href="structmath_1_1_aabb.html">Aabb</a>(simd_f32_4::zero, simd_f32_4::zero)</td></tr>
 <tr class="separator:a00133bada20f3038d6b1245cdb84ffba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b2f9dcc8490bae043530f32b6ce4c77" id="r_a2b2f9dcc8490bae043530f32b6ce4c77"><td class="memItemLeft" align="right" valign="top"><a id="a2b2f9dcc8490bae043530f32b6ce4c77" name="a2b2f9dcc8490bae043530f32b6ce4c77"></a>
-static const <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>one</b> = <a class="el" href="structmath_1_1_aabb.html">Aabb</a>(<a class="el" href="structmath_1_1float3.html">float3</a>(-0.5f), <a class="el" href="structmath_1_1float3.html">float3</a>(0.5f))</td></tr>
+static const <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>one</b> = <a class="el" href="structmath_1_1_aabb.html">Aabb</a>(<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a>(-0.5f), <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a>(0.5f))</td></tr>
 <tr class="separator:a2b2f9dcc8490bae043530f32b6ce4c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34f5563190548bd223b1104ae78c29e1" id="r_a34f5563190548bd223b1104ae78c29e1"><td class="memItemLeft" align="right" valign="top"><a id="a34f5563190548bd223b1104ae78c29e1" name="a34f5563190548bd223b1104ae78c29e1"></a>
-static const <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>two</b> = <a class="el" href="structmath_1_1_aabb.html">Aabb</a>(<a class="el" href="structmath_1_1float3.html">float3</a>(-1.0f), <a class="el" href="structmath_1_1float3.html">float3</a>(1.0f))</td></tr>
+static const <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>two</b> = <a class="el" href="structmath_1_1_aabb.html">Aabb</a>(simd_f32_4::minusOne, simd_f32_4::one)</td></tr>
 <tr class="separator:a34f5563190548bd223b1104ae78c29e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7280ace498e98d1184999ec9bb2575f4" id="r_a7280ace498e98d1184999ec9bb2575f4"><td class="memItemLeft" align="right" valign="top"><a id="a7280ace498e98d1184999ec9bb2575f4" name="a7280ace498e98d1184999ec9bb2575f4"></a>
-static const <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>half</b> = <a class="el" href="structmath_1_1_aabb.html">Aabb</a>(<a class="el" href="structmath_1_1float3.html">float3</a>(-0.25f), <a class="el" href="structmath_1_1float3.html">float3</a>(0.25f))</td></tr>
+static const <a class="el" href="structmath_1_1_aabb.html">Aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>half</b> = <a class="el" href="structmath_1_1_aabb.html">Aabb</a>(<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a>(-0.25f), <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a>(0.25f))</td></tr>
 <tr class="separator:a7280ace498e98d1184999ec9bb2575f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a6a989f47ec1bf994d44996a588bcdb05" id="r_a6a989f47ec1bf994d44996a588bcdb05"><td class="memItemLeft" align="right" valign="top"><a id="a6a989f47ec1bf994d44996a588bcdb05" name="a6a989f47ec1bf994d44996a588bcdb05"></a>
-<a class="el" href="structmath_1_1float3.html">float3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>min</b></td></tr>
-<tr class="separator:a6a989f47ec1bf994d44996a588bcdb05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa35a0cc966dac821d9ad74b6de1261b" id="r_afa35a0cc966dac821d9ad74b6de1261b"><td class="memItemLeft" align="right" valign="top"><a id="afa35a0cc966dac821d9ad74b6de1261b" name="afa35a0cc966dac821d9ad74b6de1261b"></a>
-<a class="el" href="structmath_1_1float3.html">float3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>max</b></td></tr>
-<tr class="separator:afa35a0cc966dac821d9ad74b6de1261b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ab9b7c7a18c1a12ad39479916f82ca1" id="r_a7ab9b7c7a18c1a12ad39479916f82ca1"><td class="memItemLeft" align="right" valign="top"><a id="a7ab9b7c7a18c1a12ad39479916f82ca1" name="a7ab9b7c7a18c1a12ad39479916f82ca1"></a>
+<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>min</b></td></tr>
+<tr class="separator:a7ab9b7c7a18c1a12ad39479916f82ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a275743a00b3818fcd49fcd666991d564" id="r_a275743a00b3818fcd49fcd666991d564"><td class="memItemLeft" align="right" valign="top"><a id="a275743a00b3818fcd49fcd666991d564" name="a275743a00b3818fcd49fcd666991d564"></a>
+<a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>max</b></td></tr>
+<tr class="separator:a275743a00b3818fcd49fcd666991d564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Axis Aligned Bounding Box structure. (AABB) </p>
 <p>A simple and efficient way to represent the boundaries of a 3D or 2D object for collision detection or spatial queries in game development and computer graphics. The sides of the bounding box are aligned with the coordinate axes (e.g., X, Y, and Z axes in 3D space). This means that the edges of the box do not rotate with the object but remain parallel to the axes. Bounding box defines a rectangular (2D) or cuboid (3D) volume that surrounds an object, used to approximate the object's shape for efficient calculations. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7e9306a0570a168ae5d177f8f38452f7" name="a7e9306a0570a168ae5d177f8f38452f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e9306a0570a168ae5d177f8f38452f7">&#9670;&#160;</a></span>Aabb()</h2>
+<a id="ad31db5f37ed979f373d07ad18c5f4d35" name="ad31db5f37ed979f373d07ad18c5f4d35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad31db5f37ed979f373d07ad18c5f4d35">&#9670;&#160;</a></span>Aabb()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -199,28 +197,28 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="structmath_1_1_aabb.html">Aabb</a> </td>
+          <td class="memname"><a class="el" href="structmath_1_1_aabb.html">Aabb</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>min</em><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</span>, </span></td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>min</em><span class="paramdefsep"> = </span><span class="paramdefval">simd_f32_4::zero</span>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>max</em><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</span></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>max</em><span class="paramdefsep"> = </span><span class="paramdefval">simd_f32_4::zero</span></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a new Axis Aligned Bounding Box. (AABB) </p>
+<p>Creates a new Axis Aligned Bounding Box in 3D space. (AABB) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">min</td><td>minimum bounding box corner position in the space </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">max</td><td>maximum bounding box corner position in the space </td></tr>
+    <tr><td class="paramname">min</td><td>minimum bounding box corner position in 3D space </td></tr>
+    <tr><td class="paramname">max</td><td>maximum bounding box corner position in 3d space </td></tr>
   </table>
   </dd>
 </dl>
@@ -228,8 +226,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0b413d27b9c05c611a3b42b9e6af385d" name="a0b413d27b9c05c611a3b42b9e6af385d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b413d27b9c05c611a3b42b9e6af385d">&#9670;&#160;</a></span>getMin()</h2>
+<a id="aa643262dad36e28eba1b4681b2a8bb26" name="aa643262dad36e28eba1b4681b2a8bb26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa643262dad36e28eba1b4681b2a8bb26">&#9670;&#160;</a></span>getMin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -238,7 +236,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr const <a class="el" href="structmath_1_1float3.html">float3</a> &amp; getMin </td>
+          <td class="memname">const <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> &amp; getMin </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
@@ -246,18 +244,18 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns minimum AABB corner position in the space. </p>
+<p>Returns minimum AABB corner position in 3D space. </p>
 <p>The point that has the smallest values for all axes. </p>
 
 </div>
 </div>
-<a id="a930a19e576a9a407c49f630adb62e256" name="a930a19e576a9a407c49f630adb62e256"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a930a19e576a9a407c49f630adb62e256">&#9670;&#160;</a></span>getMax()</h2>
+<a id="a50d3495e86481851cea3eb74b3eedc98" name="a50d3495e86481851cea3eb74b3eedc98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50d3495e86481851cea3eb74b3eedc98">&#9670;&#160;</a></span>getMax()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,7 +264,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr const <a class="el" href="structmath_1_1float3.html">float3</a> &amp; getMax </td>
+          <td class="memname">const <a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> &amp; getMax </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
@@ -274,18 +272,18 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns maximum AABB corner position in the space. </p>
+<p>Returns maximum AABB corner position in 3D space. </p>
 <p>The point that has the biggest values for all axes. </p>
 
 </div>
 </div>
-<a id="a42ac034bbc13c4567502c817d92dcf01" name="a42ac034bbc13c4567502c817d92dcf01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42ac034bbc13c4567502c817d92dcf01">&#9670;&#160;</a></span>setMin()</h2>
+<a id="ababea3fb005df726dbeb26643e704896" name="ababea3fb005df726dbeb26643e704896"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ababea3fb005df726dbeb26643e704896">&#9670;&#160;</a></span>setMin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -296,7 +294,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void setMin </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>min</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>min</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -307,18 +305,18 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets minimum AABB corner position in the space. </p>
-<p>See the <a class="el" href="#a0b413d27b9c05c611a3b42b9e6af385d">getMin()</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Sets minimum AABB corner position in 3D space. </p>
+<p>See the <a class="el" href="#aa643262dad36e28eba1b4681b2a8bb26">getMin()</a>. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">min</td><td>minimum bounding box corner position in the space </td></tr>
+    <tr><td class="paramname">min</td><td>minimum bounding box corner position in 3D space </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="af8388cf67bc064a2fdca8081fb84b778" name="af8388cf67bc064a2fdca8081fb84b778"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8388cf67bc064a2fdca8081fb84b778">&#9670;&#160;</a></span>setMax()</h2>
+<a id="aa964e457c98ba2bca52de4c9ffacac82" name="aa964e457c98ba2bca52de4c9ffacac82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa964e457c98ba2bca52de4c9ffacac82">&#9670;&#160;</a></span>setMax()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -329,7 +327,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void setMax </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>max</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>max</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -340,18 +338,18 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets maximum AABB corner position in the space. </p>
-<p>See the <a class="el" href="#af8388cf67bc064a2fdca8081fb84b778">setMax()</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Sets maximum AABB corner position in 3D space. </p>
+<p>See the <a class="el" href="#aa964e457c98ba2bca52de4c9ffacac82">setMax()</a>. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">max</td><td>maximum bounding box corner position in the space </td></tr>
+    <tr><td class="paramname">max</td><td>maximum bounding box corner position in 3D space </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a2db8324629d2c1dbd38c94678560a29e" name="a2db8324629d2c1dbd38c94678560a29e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2db8324629d2c1dbd38c94678560a29e">&#9670;&#160;</a></span>set()</h2>
+<a id="a6c13893d075d2fdc6781054ebe8b48cd" name="a6c13893d075d2fdc6781054ebe8b48cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c13893d075d2fdc6781054ebe8b48cd">&#9670;&#160;</a></span>set()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -362,12 +360,12 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void <a class="elRef" href="https://en.cppreference.com/w/cpp/container/set.html">set</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>min</em>, </span></td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>min</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>max</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>max</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -377,20 +375,20 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets minimum and maximum AABB corner position in the space. </p>
-<p>See the <a class="el" href="#a0b413d27b9c05c611a3b42b9e6af385d">getMin()</a> and <a class="el" href="#a930a19e576a9a407c49f630adb62e256">getMax()</a>.</p>
+<p>Sets minimum and maximum AABB corner position in 3D space. </p>
+<p>See the <a class="el" href="#aa643262dad36e28eba1b4681b2a8bb26">getMin()</a> and <a class="el" href="#a50d3495e86481851cea3eb74b3eedc98">getMax()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">min</td><td>minimum bounding box corner position in the space </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">max</td><td>maximum bounding box corner position in the space </td></tr>
+    <tr><td class="paramname">min</td><td>minimum bounding box corner position in 3D space </td></tr>
+    <tr><td class="paramname">max</td><td>maximum bounding box corner position in 3D space </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ae209901f007b9d3fa70443b995952cc4" name="ae209901f007b9d3fa70443b995952cc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae209901f007b9d3fa70443b995952cc4">&#9670;&#160;</a></span>setSize()</h2>
+<a id="a6a636049e33f5ab9a5f5f16d5540c795" name="a6a636049e33f5ab9a5f5f16d5540c795"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a636049e33f5ab9a5f5f16d5540c795">&#9670;&#160;</a></span>setSize() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -401,12 +399,8 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void setSize </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>size</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>size</em></span></td><td>)</td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>position</em><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</span></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -416,19 +410,56 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets size and position of the bounding box. </p>
+<p>Sets size of the bounding box. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>target size of the bounding box </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">position</td><td>target position of the bounding box in space </td></tr>
+    <tr><td class="paramname">size</td><td>target size of the bounding box </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a1abca7594dced05c7385145132f71704" name="a1abca7594dced05c7385145132f71704"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1abca7594dced05c7385145132f71704">&#9670;&#160;</a></span>setExtent()</h2>
+<a id="adbc94b7296c079c851beac8daac57742" name="adbc94b7296c079c851beac8daac57742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbc94b7296c079c851beac8daac57742">&#9670;&#160;</a></span>setSize() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setSize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>size</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>position</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets size and position of the bounding box in 3D space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>target size of the bounding box </td></tr>
+    <tr><td class="paramname">position</td><td>target position of the bounding box in 3D space </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a06c4828f1f9262f0d045f6c2a49116b7" name="a06c4828f1f9262f0d045f6c2a49116b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06c4828f1f9262f0d045f6c2a49116b7">&#9670;&#160;</a></span>setExtent() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -439,12 +470,8 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void setExtent </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>extent</em>, </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>extent</em></span></td><td>)</td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>position</em><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</span></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -454,19 +481,56 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets extent and position of the bounding box. </p>
+<p>Sets extent and position of the bounding box in 3D space. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">extent</td><td>target extent of the bounding box (half size) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">position</td><td>target position of the bounding box in space </td></tr>
+    <tr><td class="paramname">extent</td><td>target extent of the bounding box (half size) </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a6b96253659836165b14ac8ae47c07184" name="a6b96253659836165b14ac8ae47c07184"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b96253659836165b14ac8ae47c07184">&#9670;&#160;</a></span>getExtent()</h2>
+<a id="ad5881724c37887111e73fd8629bb3754" name="ad5881724c37887111e73fd8629bb3754"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5881724c37887111e73fd8629bb3754">&#9670;&#160;</a></span>setExtent() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setExtent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>extent</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>position</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets extent and position of the bounding box in 3D space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">extent</td><td>target extent of the bounding box (half size) </td></tr>
+    <tr><td class="paramname">position</td><td>target position of the bounding box in 3D space </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa5653f4e15b7cb29652fd163c19a61d0" name="aa5653f4e15b7cb29652fd163c19a61d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5653f4e15b7cb29652fd163c19a61d0">&#9670;&#160;</a></span>getExtent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -477,12 +541,12 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void getExtent </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>extent</em>, </span></td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>extent</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>position</em></span>&#160;) const</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>position</em></span>&#160;) const</td>
         </tr>
       </table>
   </td>
@@ -492,19 +556,19 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns extent and position of the bounding box. </p>
+<p>Returns extent and position of the bounding box in 3D space. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">extent</td><td>target extent of the bounding box (half size) </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">position</td><td>target position of the bounding box in space </td></tr>
+    <tr><td class="paramname">extent</td><td>target extent of the bounding box (half size) </td></tr>
+    <tr><td class="paramname">position</td><td>target position of the bounding box in 3D space </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a9ce8241ace50dbec44a6dd8909f76352" name="a9ce8241ace50dbec44a6dd8909f76352"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ce8241ace50dbec44a6dd8909f76352">&#9670;&#160;</a></span>extend() <span class="overload">[1/2]</span></h2>
+<a id="a80065e07f5f7b2a12469accea5a9f7bf" name="a80065e07f5f7b2a12469accea5a9f7bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80065e07f5f7b2a12469accea5a9f7bf">&#9670;&#160;</a></span>extend() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -515,7 +579,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void extend </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>point</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>point</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -526,10 +590,10 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Extends bounding box min and max corner positions. </p>
+<p>Extends bounding box min and max corner positions in 3D space. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">point</td><td>target point to include into the bounding box </td></tr>
+    <tr><td class="paramname">point</td><td>target point to include into the bounding box in 3D space </td></tr>
   </table>
   </dd>
 </dl>
@@ -559,10 +623,76 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Extends bounding box min and max corner positions. </p>
+<p>Extends bounding box min and max corner positions in 3D space. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">aabb</td><td>target AABB to include into the bounding box </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="affbf79af405ee558b20e59ef4eab85e1" name="affbf79af405ee558b20e59ef4eab85e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affbf79af405ee558b20e59ef4eab85e1">&#9670;&#160;</a></span>translate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void translate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>translation</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Translates bounding box in 3D space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">translation</td><td>target translation transformation in 3D space </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa7c19e710ddb8b2fa645b4b469ef4648" name="aa7c19e710ddb8b2fa645b4b469ef4648"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7c19e710ddb8b2fa645b4b469ef4648">&#9670;&#160;</a></span>scale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void scale </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1simd__f32__4.html">simd_f32_4</a></td>          <td class="paramname"><span class="paramname"><em>scale</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Scales bounding box in 3D space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scale</td><td>target scale transformation in 3D space </td></tr>
   </table>
   </dd>
 </dl>
@@ -575,7 +705,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>math</b></li><li class="navelem"><a class="el" href="structmath_1_1_aabb.html">Aabb</a></li>
-    <li class="footer">Generated on Wed Jan 8 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+    <li class="footer">Generated on Mon Mar 10 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>
 </body>

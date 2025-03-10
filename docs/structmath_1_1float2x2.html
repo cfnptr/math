@@ -69,9 +69,9 @@ $(function(){initNavTree('structmath_1_1float2x2.html',''); initResizable(); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a22aa9812f5c2daa8865f3c52696599c3" id="r_a22aa9812f5c2daa8865f3c52696599c3"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22aa9812f5c2daa8865f3c52696599c3">float2x2</a> (float v=0.0f) noexcept</td></tr>
-<tr class="memdesc:a22aa9812f5c2daa8865f3c52696599c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new floating point 2x2 matrix structure.  <br /></td></tr>
-<tr class="separator:a22aa9812f5c2daa8865f3c52696599c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad91ae9e15bf818926896e0a510a8a98" id="r_aad91ae9e15bf818926896e0a510a8a98"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad91ae9e15bf818926896e0a510a8a98">float2x2</a> (float n=0.0f) noexcept</td></tr>
+<tr class="memdesc:aad91ae9e15bf818926896e0a510a8a98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new floating point 2x2 matrix structure.  <br /></td></tr>
+<tr class="separator:aad91ae9e15bf818926896e0a510a8a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc241633c488cbd85aff8fbf115f4c6b" id="r_acc241633c488cbd85aff8fbf115f4c6b"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc241633c488cbd85aff8fbf115f4c6b">float2x2</a> (<a class="el" href="structmath_1_1float2.html">float2</a> <a class="el" href="#aaa3e6c2cb6a2bcf93925e3dfe3f7dfa8">c0</a>, <a class="el" href="structmath_1_1float2.html">float2</a> <a class="el" href="#a21f4e5ff1b14c86bdc5e43ffb22440b4">c1</a>) noexcept</td></tr>
 <tr class="memdesc:acc241633c488cbd85aff8fbf115f4c6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new floating point 2x2 matrix structure.  <br /></td></tr>
 <tr class="separator:acc241633c488cbd85aff8fbf115f4c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -84,12 +84,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaf99013594a0e1c4c2949a5de975bd47" id="r_aaf99013594a0e1c4c2949a5de975bd47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmath_1_1float2.html">float2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf99013594a0e1c4c2949a5de975bd47">operator[]</a> (<a class="el" href="types_8hpp.html#ac290a685f46e9b8c6f443e6181661036">psize</a> i) const noexcept</td></tr>
 <tr class="memdesc:aaf99013594a0e1c4c2949a5de975bd47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns matrix column by index.  <br /></td></tr>
 <tr class="separator:aaf99013594a0e1c4c2949a5de975bd47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af773b942628c60b994a1b674abbee178" id="r_af773b942628c60b994a1b674abbee178"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af773b942628c60b994a1b674abbee178">operator*</a> (float v) const noexcept</td></tr>
-<tr class="memdesc:af773b942628c60b994a1b674abbee178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies all matrix columns by specified value.  <br /></td></tr>
-<tr class="separator:af773b942628c60b994a1b674abbee178"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59cb9f01f35eac9c09af5a06fe742148" id="r_a59cb9f01f35eac9c09af5a06fe742148"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59cb9f01f35eac9c09af5a06fe742148">operator*</a> (const <a class="el" href="structmath_1_1float2x2.html">float2x2</a> &amp;m) const noexcept</td></tr>
-<tr class="memdesc:a59cb9f01f35eac9c09af5a06fe742148"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates dot product between two matrices.  <br /></td></tr>
-<tr class="separator:a59cb9f01f35eac9c09af5a06fe742148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f9f03950c6a31a55470b97d427f80b9" id="r_a9f9f03950c6a31a55470b97d427f80b9"><td class="memItemLeft" align="right" valign="top"><a id="a9f9f03950c6a31a55470b97d427f80b9" name="a9f9f03950c6a31a55470b97d427f80b9"></a>
+constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (float n) const noexcept</td></tr>
+<tr class="separator:a9f9f03950c6a31a55470b97d427f80b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6e79c0b3982f2e9ccf845715cccb06b" id="r_ab6e79c0b3982f2e9ccf845715cccb06b"><td class="memItemLeft" align="right" valign="top"><a id="ab6e79c0b3982f2e9ccf845715cccb06b" name="ab6e79c0b3982f2e9ccf845715cccb06b"></a>
+constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (float n) const noexcept</td></tr>
+<tr class="separator:ab6e79c0b3982f2e9ccf845715cccb06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88e416219b0f9bfe40ead81aad44b96d" id="r_a88e416219b0f9bfe40ead81aad44b96d"><td class="memItemLeft" align="right" valign="top"><a id="a88e416219b0f9bfe40ead81aad44b96d" name="a88e416219b0f9bfe40ead81aad44b96d"></a>
+constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (float n) const noexcept</td></tr>
+<tr class="separator:a88e416219b0f9bfe40ead81aad44b96d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4339561abfc429fca232ca2363374d4d" id="r_a4339561abfc429fca232ca2363374d4d"><td class="memItemLeft" align="right" valign="top"><a id="a4339561abfc429fca232ca2363374d4d" name="a4339561abfc429fca232ca2363374d4d"></a>
+constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (float n) const noexcept</td></tr>
+<tr class="separator:a4339561abfc429fca232ca2363374d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2eeb1b63faaed005029697b3e72f988" id="r_ad2eeb1b63faaed005029697b3e72f988"><td class="memItemLeft" align="right" valign="top"><a id="ad2eeb1b63faaed005029697b3e72f988" name="ad2eeb1b63faaed005029697b3e72f988"></a>
+<a class="el" href="structmath_1_1float2x2.html">float2x2</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (float n) noexcept</td></tr>
+<tr class="separator:ad2eeb1b63faaed005029697b3e72f988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a733924fd8e880725ed59ecb36797df62" id="r_a733924fd8e880725ed59ecb36797df62"><td class="memItemLeft" align="right" valign="top"><a id="a733924fd8e880725ed59ecb36797df62" name="a733924fd8e880725ed59ecb36797df62"></a>
+<a class="el" href="structmath_1_1float2x2.html">float2x2</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (float n) noexcept</td></tr>
+<tr class="separator:a733924fd8e880725ed59ecb36797df62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accfab997d8e83d70dae399815f472ef5" id="r_accfab997d8e83d70dae399815f472ef5"><td class="memItemLeft" align="right" valign="top"><a id="accfab997d8e83d70dae399815f472ef5" name="accfab997d8e83d70dae399815f472ef5"></a>
+<a class="el" href="structmath_1_1float2x2.html">float2x2</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*=</b> (float n) noexcept</td></tr>
+<tr class="separator:accfab997d8e83d70dae399815f472ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99f98c58e760c050215273bf8422cb09" id="r_a99f98c58e760c050215273bf8422cb09"><td class="memItemLeft" align="right" valign="top"><a id="a99f98c58e760c050215273bf8422cb09" name="a99f98c58e760c050215273bf8422cb09"></a>
+<a class="el" href="structmath_1_1float2x2.html">float2x2</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (float n) noexcept</td></tr>
+<tr class="separator:a99f98c58e760c050215273bf8422cb09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49a4db48d73b8369e0303946516dc2d0" id="r_a49a4db48d73b8369e0303946516dc2d0"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49a4db48d73b8369e0303946516dc2d0">operator*</a> (<a class="el" href="structmath_1_1float2x2.html">float2x2</a> m) const noexcept</td></tr>
+<tr class="memdesc:a49a4db48d73b8369e0303946516dc2d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates dot product between two matrices.  <br /></td></tr>
+<tr class="separator:a49a4db48d73b8369e0303946516dc2d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77e6e7f20cefeb5a410b65cfd8db227e" id="r_a77e6e7f20cefeb5a410b65cfd8db227e"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structmath_1_1float2.html">float2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77e6e7f20cefeb5a410b65cfd8db227e">operator*</a> (<a class="el" href="structmath_1_1float2.html">float2</a> v) const noexcept</td></tr>
 <tr class="memdesc:a77e6e7f20cefeb5a410b65cfd8db227e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates dot product between matrix and vector.  <br /></td></tr>
 <tr class="separator:a77e6e7f20cefeb5a410b65cfd8db227e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,8 +149,8 @@ static const <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;
 <div class="textblock"><p>Floating point 2x2 matrix structure. </p>
 <p>Commonly used for basic transformations: translation, scale, rotation, etc. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a22aa9812f5c2daa8865f3c52696599c3" name="a22aa9812f5c2daa8865f3c52696599c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22aa9812f5c2daa8865f3c52696599c3">&#9670;&#160;</a></span>float2x2() <span class="overload">[1/3]</span></h2>
+<a id="aad91ae9e15bf818926896e0a510a8a98" name="aad91ae9e15bf818926896e0a510a8a98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad91ae9e15bf818926896e0a510a8a98">&#9670;&#160;</a></span>float2x2() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -140,7 +161,7 @@ static const <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;
         <tr>
           <td class="memname">constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a> </td>
           <td>(</td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>v</em><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span></span></td><td>)</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>n</em><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -154,7 +175,7 @@ static const <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;
 <p>Creates a new floating point 2x2 matrix structure. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">v</td><td>target value for all columns and rows </td></tr>
+    <tr><td class="paramname">n</td><td>target value for all columns and rows </td></tr>
   </table>
   </dd>
 </dl>
@@ -308,8 +329,8 @@ static const <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;
 
 </div>
 </div>
-<a id="af773b942628c60b994a1b674abbee178" name="af773b942628c60b994a1b674abbee178"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af773b942628c60b994a1b674abbee178">&#9670;&#160;</a></span>operator*() <span class="overload">[1/3]</span></h2>
+<a id="a49a4db48d73b8369e0303946516dc2d0" name="a49a4db48d73b8369e0303946516dc2d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49a4db48d73b8369e0303946516dc2d0">&#9670;&#160;</a></span>operator*() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -320,40 +341,7 @@ static const <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;
         <tr>
           <td class="memname">constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a> operator* </td>
           <td>(</td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Multiplies all matrix columns by specified value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">v</td><td>target multiplier value </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a59cb9f01f35eac9c09af5a06fe742148" name="a59cb9f01f35eac9c09af5a06fe742148"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59cb9f01f35eac9c09af5a06fe742148">&#9670;&#160;</a></span>operator*() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr <a class="el" href="structmath_1_1float2x2.html">float2x2</a> operator* </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float2x2.html">float2x2</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>m</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1float2x2.html">float2x2</a></td>          <td class="paramname"><span class="paramname"><em>m</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -367,7 +355,7 @@ static const <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;
 <p>Calculates dot product between two matrices. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td>target matrix to dot by </td></tr>
+    <tr><td class="paramname">m</td><td>target matrix to dot by </td></tr>
   </table>
   </dd>
 </dl>
@@ -375,7 +363,7 @@ static const <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;
 </div>
 </div>
 <a id="a77e6e7f20cefeb5a410b65cfd8db227e" name="a77e6e7f20cefeb5a410b65cfd8db227e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77e6e7f20cefeb5a410b65cfd8db227e">&#9670;&#160;</a></span>operator*() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a77e6e7f20cefeb5a410b65cfd8db227e">&#9670;&#160;</a></span>operator*() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -556,10 +544,10 @@ static const <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code hl_function" href="#a22aa9812f5c2daa8865f3c52696599c3">float2x2</a>(</div>
+<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code hl_function" href="#aad91ae9e15bf818926896e0a510a8a98">float2x2</a>(</div>
 <div class="line">    1.0f, 0.0f,</div>
 <div class="line">    0.0f, 1.0f)</div>
-<div class="ttc" id="astructmath_1_1float2x2_html_a22aa9812f5c2daa8865f3c52696599c3"><div class="ttname"><a href="#a22aa9812f5c2daa8865f3c52696599c3">math::float2x2::float2x2</a></div><div class="ttdeci">constexpr float2x2(float v=0.0f) noexcept</div><div class="ttdoc">Creates a new floating point 2x2 matrix structure.</div><div class="ttdef"><b>Definition</b> float.hpp:45</div></div>
+<div class="ttc" id="astructmath_1_1float2x2_html_aad91ae9e15bf818926896e0a510a8a98"><div class="ttname"><a href="#aad91ae9e15bf818926896e0a510a8a98">math::float2x2::float2x2</a></div><div class="ttdeci">constexpr float2x2(float n=0.0f) noexcept</div><div class="ttdoc">Creates a new floating point 2x2 matrix structure.</div><div class="ttdef"><b>Definition</b> float.hpp:45</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -569,7 +557,7 @@ static const <a class="el" href="structmath_1_1float2x2.html">float2x2</a>&#160;
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>math</b></li><li class="navelem"><a class="el" href="structmath_1_1float2x2.html">float2x2</a></li>
-    <li class="footer">Generated on Wed Jan 8 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+    <li class="footer">Generated on Mon Mar 10 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>
 </body>

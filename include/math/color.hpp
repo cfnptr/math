@@ -70,23 +70,13 @@ struct [[nodiscard]] Color
 	}
 	
 	/**
-	 * @brief Creates a new sRGB color structure from the normalized R channel. (Red)
-	 * @param normR target normalized R and G channel color values
-	 */
-	constexpr explicit Color(float normR)
-	{
-		r = (uint8)(std::clamp(normR, 0.0f, 1.0f) * 255.0f + 0.5f);
-		g = b = a = 0;
-	}
-	/**
 	 * @brief Creates a new sRGB color structure from the normalized R and G channels. (Red, Green)
 	 * @param normRg target normalized R and G channel color values
 	 */
 	constexpr explicit Color(float2 normRg)
 	{
-		r = (uint8)(std::clamp(normRg.x, 0.0f, 1.0f) * 255.0f + 0.5f);
-		g = (uint8)(std::clamp(normRg.y, 0.0f, 1.0f) * 255.0f + 0.5f);
-		b = a = 0;
+		auto c = clamp(normRg, float2(0.0f), float2(1.0f)) * 255.0f + 0.5f;
+		r = (uint8)c.x, g = (uint8)c.y, b = a = 0;
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized RGB channels. (Red, Green, Blue)
@@ -94,10 +84,8 @@ struct [[nodiscard]] Color
 	 */
 	constexpr explicit Color(float3 normRgb)
 	{
-		r = (uint8)(std::clamp(normRgb.x, 0.0f, 1.0f) * 255.0f + 0.5f);
-		g = (uint8)(std::clamp(normRgb.y, 0.0f, 1.0f) * 255.0f + 0.5f);
-		b = (uint8)(std::clamp(normRgb.z, 0.0f, 1.0f) * 255.0f + 0.5f);
-		a = 0;
+		auto c = clamp(normRgb, float3(0.0f), float3(1.0f)) * 255.0f + 0.5f;
+		r = (uint8)c.x, g = (uint8)c.y, b = (uint8)c.z, a = 0;
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized RGBA channels. (Red, Green, Blue, Alpha)
@@ -105,36 +93,35 @@ struct [[nodiscard]] Color
 	 */
 	constexpr explicit Color(float4 normRgba)
 	{
-		r = (uint8)(std::clamp(normRgba.x, 0.0f, 1.0f) * 255.0f + 0.5f);
-		g = (uint8)(std::clamp(normRgba.y, 0.0f, 1.0f) * 255.0f + 0.5f);
-		b = (uint8)(std::clamp(normRgba.z, 0.0f, 1.0f) * 255.0f + 0.5f);
-		a = (uint8)(std::clamp(normRgba.w, 0.0f, 1.0f) * 255.0f + 0.5f);
+		auto c = clamp(normRgba, float4(0.0f), float4(1.0f)) * 255.0f + 0.5f;
+		r = (uint8)c.x, g = (uint8)c.y, b = (uint8)c.z, a = (uint8)c.w;
+	}
+	/**
+	 * @brief Creates a new sRGB color structure from the normalized RGBA channels. (Red, Green, Blue, Alpha)
+	 * @param normRgba target normalized RGBA channel color SIMD values
+	 */
+	explicit Color(simd_f32_4 normRgba)
+	{
+		auto c = clamp(normRgba, simd_f32_4::zero, simd_f32_4::one) * 255.0f + 0.5f;
+		r = (uint8)c.getX(), g = (uint8)c.getY(), b = (uint8)c.getZ(), a = (uint8)c.getW();
 	}
 	
 	/*******************************************************************************************************************
 	 * @brief Converts sRGB color to the normalized RG vector. (Red, Green)
 	 */
-	constexpr explicit operator float2() const noexcept
-	{
-		constexpr auto mul = (1.0f / 255.0f);
-		return float2(r * mul, g * mul);
-	}
+	constexpr explicit operator float2() const noexcept { return float2(r, g) * (1.0f / 255.0f); }
 	/**
 	 * @brief Converts sRGB color to the normalized RGB vector. (Red, Green, Blue)
 	 */
-	constexpr explicit operator float3() const noexcept
-	{
-		constexpr auto mul = (1.0f / 255.0f);
-		return float3(r * mul, g * mul, b * mul);
-	}
+	constexpr explicit operator float3() const noexcept { return float3(r, g, b) * (1.0f / 255.0f); }
 	/**
 	 * @brief Converts sRGB color to the normalized RGBA vector. (Red, Green, Blue, Alpha)
 	 */
-	constexpr explicit operator float4() const noexcept
-	{
-		constexpr auto mul = (1.0f / 255.0f);
-		return float4(r * mul, g * mul, b * mul, a * mul);
-	}
+	constexpr explicit operator float4() const noexcept { return float4(r, g, b, a) * (1.0f / 255.0f); }
+	/**
+	 * @brief Converts sRGB color to the normalized RGBA SIMD vector. (Red, Green, Blue, Alpha)
+	 */
+	explicit operator simd_f32_4() const noexcept { return simd_f32_4(r, g, b, a) * (1.0f / 255.0f); }
 	/**
 	 * @brief Returns color binary data.
 	 */
@@ -219,31 +206,12 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Converts sRGB color to the normalized linear RGB color space.
 	 */
-	float4 toLinear4() const noexcept
-	{
-		auto srgb = (float4)*this;
-		return float4(srgbToRgb((float3)srgb), srgb.w);
-	}
-	/**
-	 * @brief Converts sRGB color to the normalized linear RGB color space.
-	 */
-	float3 toLinear3() const noexcept { return srgbToRgb((float3)*this); }
+	simd_f32_4 toLinear() const noexcept { return srgbToRgb((simd_f32_4)*this); }
 
 	/**
 	 * @brief Converts normalized linear RGB color to the sRGB color space.
 	 */
-	static Color fromLinear4(const float4& normRGBA) noexcept
-	{
-		auto srgb = rgbToSrgb((float3)normRGBA);
-		return Color(float4(srgb, normRGBA.w));
-	}
-	/**
-	 * @brief Converts normalized linear RGB color to the sRGB color space.
-	 */
-	static Color fromLinear3(const float3& normRGB) noexcept
-	{
-		return Color(rgbToSrgb(normRGB));
-	}
+	static Color fromLinear(simd_f32_4 normRGBA) noexcept { return Color(rgbToSrgb(normRGBA)); }
 
 	//******************************************************************************************************************
 	constexpr bool operator==(Color c) const noexcept { return r == c.r && g == c.g && b == c.b && a == c.a; }

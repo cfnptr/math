@@ -70,15 +70,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1_bvh.html">Bvh</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bounding Volume Hierarchy container. (BVH)  <a href="structmath_1_1_bvh.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structmath_1_1_bvh_1_1_base_node" id="r_structmath_1_1_bvh_1_1_base_node"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1_bvh.html#structmath_1_1_bvh_1_1_base_node">Bvh::BaseNode</a></td></tr>
-<tr class="memdesc:structmath_1_1_bvh_1_1_base_node"><td class="mdescLeft">&#160;</td><td class="mdescRight">BVH hierarchy base node container.  <a href="structmath_1_1_bvh.html#structmath_1_1_bvh_1_1_base_node">More...</a><br /></td></tr>
-<tr class="separator:structmath_1_1_bvh_1_1_base_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structmath_1_1_bvh_1_1_child_node" id="r_structmath_1_1_bvh_1_1_child_node"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1_bvh.html#structmath_1_1_bvh_1_1_child_node">Bvh::ChildNode</a></td></tr>
-<tr class="memdesc:structmath_1_1_bvh_1_1_child_node"><td class="mdescLeft">&#160;</td><td class="mdescRight">BVH hierarchy child node container.  <a href="structmath_1_1_bvh.html#structmath_1_1_bvh_1_1_child_node">More...</a><br /></td></tr>
-<tr class="separator:structmath_1_1_bvh_1_1_child_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structmath_1_1_bvh_1_1_leaf_node" id="r_structmath_1_1_bvh_1_1_leaf_node"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1_bvh.html#structmath_1_1_bvh_1_1_leaf_node">Bvh::LeafNode</a></td></tr>
-<tr class="memdesc:structmath_1_1_bvh_1_1_leaf_node"><td class="mdescLeft">&#160;</td><td class="mdescRight">BVH hierarchy leaf node container.  <a href="structmath_1_1_bvh.html#structmath_1_1_bvh_1_1_leaf_node">More...</a><br /></td></tr>
-<tr class="separator:structmath_1_1_bvh_1_1_leaf_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">BVH hierarchy node container.  <a href="unionmath_1_1_bvh_1_1_node.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -86,137 +77,13 @@ Classes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Common Bounding Volume Hierarchy functions. (BVH) </p>
 <p>Based on this: <a href="https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/">https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/</a> </p>
-</div><hr/><h2 class="groupheader">Class Documentation</h2>
-<a name="structmath_1_1_bvh_1_1_base_node" id="structmath_1_1_bvh_1_1_base_node"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structmath_1_1_bvh_1_1_base_node">&#9670;&#160;</a></span>math::Bvh::BaseNode</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct math::Bvh::BaseNode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>BVH hierarchy base node container. </p>
-<p>See the <a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a>. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Class Members</th></tr>
-<tr><td class="fieldtype">
-<a id="a6a989f47ec1bf994d44996a588bcdb05" name="a6a989f47ec1bf994d44996a588bcdb05"></a><a class="el" href="structmath_1_1float3.html">float3</a></td>
-<td class="fieldname">
-min = <a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="afeb30a4411150c4b52342ec38d2a0df0" name="afeb30a4411150c4b52342ec38d2a0df0"></a><a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a></td>
-<td class="fieldname">
-primitiveCount = 0</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="afa35a0cc966dac821d9ad74b6de1261b" name="afa35a0cc966dac821d9ad74b6de1261b"></a><a class="el" href="structmath_1_1float3.html">float3</a></td>
-<td class="fieldname">
-max = <a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</td>
-<td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
-<a name="structmath_1_1_bvh_1_1_child_node" id="structmath_1_1_bvh_1_1_child_node"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structmath_1_1_bvh_1_1_child_node">&#9670;&#160;</a></span>math::Bvh::ChildNode</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct math::Bvh::ChildNode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>BVH hierarchy child node container. </p>
-<p>See the <a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a>. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Class Members</th></tr>
-<tr><td class="fieldtype">
-<a id="a6a989f47ec1bf994d44996a588bcdb05" name="a6a989f47ec1bf994d44996a588bcdb05"></a><a class="el" href="structmath_1_1float3.html">float3</a></td>
-<td class="fieldname">
-min = <a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="afeb30a4411150c4b52342ec38d2a0df0" name="afeb30a4411150c4b52342ec38d2a0df0"></a><a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a></td>
-<td class="fieldname">
-primitiveCount = 0</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="afa35a0cc966dac821d9ad74b6de1261b" name="afa35a0cc966dac821d9ad74b6de1261b"></a><a class="el" href="structmath_1_1float3.html">float3</a></td>
-<td class="fieldname">
-max = <a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a3fb0a66e50b524930b12ddb3c05bcb14" name="a3fb0a66e50b524930b12ddb3c05bcb14"></a><a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a></td>
-<td class="fieldname">
-leftNode = 0</td>
-<td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
-<a name="structmath_1_1_bvh_1_1_leaf_node" id="structmath_1_1_bvh_1_1_leaf_node"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structmath_1_1_bvh_1_1_leaf_node">&#9670;&#160;</a></span>math::Bvh::LeafNode</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct math::Bvh::LeafNode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>BVH hierarchy leaf node container. </p>
-<p>See the <a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a>. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Class Members</th></tr>
-<tr><td class="fieldtype">
-<a id="a6a989f47ec1bf994d44996a588bcdb05" name="a6a989f47ec1bf994d44996a588bcdb05"></a><a class="el" href="structmath_1_1float3.html">float3</a></td>
-<td class="fieldname">
-min = <a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="afeb30a4411150c4b52342ec38d2a0df0" name="afeb30a4411150c4b52342ec38d2a0df0"></a><a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a></td>
-<td class="fieldname">
-primitiveCount = 0</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="afa35a0cc966dac821d9ad74b6de1261b" name="afa35a0cc966dac821d9ad74b6de1261b"></a><a class="el" href="structmath_1_1float3.html">float3</a></td>
-<td class="fieldname">
-max = <a class="el" href="structmath_1_1float3.html">float3</a>(0.0f)</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="aa08a758a0bdac458d8d161f2ff0f2fa0" name="aa08a758a0bdac458d8d161f2ff0f2fa0"></a><a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a></td>
-<td class="fieldname">
-firstPrimitive = 0</td>
-<td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fba38f648377aa56ae5d69782adf9e53.html">math</a></li><li class="navelem"><a class="el" href="bvh_8hpp.html">bvh.hpp</a></li>
-    <li class="footer">Generated on Wed Jan 8 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+    <li class="footer">Generated on Mon Mar 10 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>
 </body>

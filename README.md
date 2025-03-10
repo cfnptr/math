@@ -71,3 +71,5 @@ git clone https://github.com/cfnptr/math
 * [GLM](https://github.com/g-truc/glm/)
 * [3DCollisions](https://gdbooks.gitbooks.io/3dcollisions/content/)
 * [Filament](https://github.com/google/filament/)
+* [JoltPhysics](https://github.com/jrouwe/JoltPhysics)
+* [SLEEF](https://github.com/shibatch/sleef)

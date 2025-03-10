@@ -18,7 +18,6 @@
  */
 
 #pragma once
-#include "math/types.hpp"
 
 #if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
 
@@ -27,18 +26,13 @@
 #define MATH_SIMD_SUPPORT_SSE
 #define MATH_SIMD_VECTOR_ALIGNMENT 16
 
+// TODO: AVX512 support when more than 50% devices will be supported on steam hardware survey.
+
 #if defined(__AVX2__)
-#define MATH_SIMD_SUPPORT_AVX2
-#endif
-#if defined(__AVX__) || defined(MATH_SIMD_SUPPORT_AVX2)
 #include <immintrin.h>
 #define MATH_SIMD_SUPPORT_AVX2
 #endif
-#if defined(__SSE4_2__) || defined(MATH_SIMD_SUPPORT_AVX2)
-#include <nmmintrin.h>
-#define MATH_SIMD_SUPPORT_SSE4_2
-#endif
-#if defined(__SSE4_1__) || defined(MATH_SIMD_SUPPORT_SSE4_2)
+#if defined(__SSE4_1__)
 #include <smmintrin.h>
 #define MATH_SIMD_SUPPORT_SSE4_1
 #endif

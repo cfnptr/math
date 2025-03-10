@@ -59,19 +59,20 @@ $(function(){initNavTree('unionmath_1_1_bvh_1_1_node.html',''); initResizable();
 
 <p>This is the complete list of members for <a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a>, including all inherited members.</p>
 <table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>base</b> (defined in <a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a>)</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>child</b> (defined in <a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a>)</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#a95da4add5b6a451174cca21fa8bceabb">getAabb</a>() const noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#a097d36882bfdd3fdd0153057c645f541">isLeaf</a>() const noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>leaf</b> (defined in <a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a>)</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>Node</b>() (defined in <a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a>)</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#a477741ace67e8b5d2f2ed19461a2560a">setAabb</a>(const Aabb &amp;aabb) noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>aabb</b> (defined in <a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a>)</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#a805a5f043b0cba8924f57234ccc89b6d">getFirstPrimitive</a>() const noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#a78cc9bca2f866c20d4f7d6942853b8ab">getLeftNode</a>() const noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#a1300dadff57f9e4cd985939501fc1d9e">getPrimitiveCount</a>() const noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#a097d36882bfdd3fdd0153057c645f541">isLeaf</a>() const noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#aa0abb23ac7e220a7757ca9e37363573b">setFirstPrimitive</a>(uint32 primitiveIndex) noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#ad0ed801e68b444036a1d3fbfa3d389a5">setLeftNode</a>(uint32 nodeID) noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html#a31d46f746aa0fe95046ba55a0fa6e413">setPrimitiveCount</a>(uint32 primitiveCount) noexcept</td><td class="entry"><a class="el" href="unionmath_1_1_bvh_1_1_node.html">Bvh::Node</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jan 8 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+    <li class="footer">Generated on Mon Mar 10 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>
 </body>

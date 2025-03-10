@@ -38,9 +38,14 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 {
 	union
 	{
-		_simd_u128 data; /** Packed SIMD 4 component 32bit unsigned integer vector data. */
-		uint32 values[4];
+		_simd_u128 data;
+		uint4 uints;
+		int4 ints;
+		float4 floats;
 	};
+
+	simd_u32_4(const simd_u32_4& v) = default;
+	simd_u32_4&	operator=(const simd_u32_4& v) = default;
 
 	/**
 	 * @brief Creates a new zero initialized SIMD 4 component 32bit unsigned integer vector structure.
@@ -52,7 +57,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vdupq_n_u32(0);
 		#else
-		data[0] = 0; data[1] = 0; data[2] = 0; data[3] = 0;
+		uints = uint4::zero;
 		#endif
 	}
 	/**
@@ -66,7 +71,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vdupq_n_u32(xyzw);
 		#else
-		data[0] = xyzw; data[1] = xyzw; data[2] = xyzw; data[3] = xyzw;
+		uints = uint4(xyzw);
 		#endif
 	}
 	/**
@@ -82,9 +87,27 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set_epi32((int)w, (int)z, (int)y, (int)x);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = { x, y, z, w };
+		data = (uint32x4_t){ x, y, z, w };
 		#else
-		data[0] = x; data[1] = y; data[2] = z; data[3] = w;
+		uints = uint4(x, y, z, w);
+		#endif
+	}
+	/**
+	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
+	 * @warning This constructor duplicates Z component to the W component!
+	 *
+	 * @param x first vector component value
+	 * @param y second vector component value
+	 * @param z third vector component value
+	 */
+	simd_u32_4(uint32 x, uint32 y, uint32 z) noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_SSE)
+		data = _mm_set_epi32((int)z, (int)z, (int)y, (int)x);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		data = (uint32x4_t){ x, y, z, z };
+		#else
+		uints = uint4(x, y, z, z);
 		#endif
 	}
 	/**
@@ -95,22 +118,24 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 	 */
 	simd_u32_4(simd_u32_4 xyz, uint32 w) noexcept
 	{
-		#if defined(MATH_SIMD_SUPPORT_SSE)
-		data = _mm_set_epi32((int)w, (int)xyz.values[2], (int)xyz.values[1], (int)xyz.values[0]);
-		#elif defined(MATH_SIMD_SUPPORT_SSE4_1)
-		data = _mm_blend_epi32(xyz.data, _mm_set_epi32((int)w), 8);
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
+		data = _mm_blend_epi32(xyz.data, _mm_set1_epi32((int)w), 8);
+		#elif defined(MATH_SIMD_SUPPORT_SSE)
+		data = _mm_set_epi32((int)w, (int)xyz.uints.z, (int)xyz.uints.y, (int)xyz.uints.x);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vsetq_lane_u32(w, xyz.data, 3);
 		#else
-		values[0] = xyz.values[0]; values[1] = xyz.values[1]; 
-		values[2] = xyz.values[2]; values[3] = w;
+		uints = xyz.uints; uints.w = w;
 		#endif
 	}
+
+	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_NEON)
 	/**
 	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
 	 * @param data target vector SIMD data
 	 */
 	simd_u32_4(_simd_u128 data) : data(data) { }
+	#endif
 
 	/*******************************************************************************************************************
 	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
@@ -121,9 +146,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set_epi32((int)v.w, (int)v.z, (int)v.y, (int)v.x);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = { v.x, v.y, v.z, v.w };
+		data = (uint32x4_t){ v.x, v.y, v.z, v.w };
 		#else
-		data[0] = v.x; data[1] = v.y; data[2] = v.z; data[3] = v.w;
+		uints = v;
 		#endif
 	}
 	/**
@@ -135,9 +160,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set_epi32((int)v.z, (int)v.z, (int)v.y, (int)v.x);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = { v.x, v.y, v.z, v.z };
+		data = (uint32x4_t){ v.x, v.y, v.z, v.z };
 		#else
-		data[0] = v.x; data[1] = v.y; data[2] = v.z; data[3] = v.z;
+		uints = uint4(v, v.z);
 		#endif
 	}
 	/**
@@ -149,23 +174,23 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set_epi32((int)v.y, (int)v.y, (int)v.y, (int)v.x);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = { v.x, v.y, v.y, v.y };
+		data = (uint32x4_t){ v.x, v.y, v.y, v.y };
 		#else
-		data[0] = v.x; data[1] = v.y; data[2] = v.y; data[3] = v.y;
+		uints = uint4(v, v.y, v.y);
 		#endif
 	}
 	/**
 	 * @brief Creates a new SIMD 4 component vector 32bit unsigned integer structure.
 	 * @param[in] v target 4 component vector value pointer (unaligned)
 	 */
-	explicit simd_u32_4(const uint4* v) noexcept
+	explicit simd_u32_4(const uint32* v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
-		data = _mm_loadu_si128((const _simd_u128*)v);
+		data = _mm_loadu_si128((const __m128i*)v);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = vld1q_u32((const uint32*)v);
+		data = vld1q_u32(v);
 		#else
-		data[0] = v->x; data[1] = v->y; data[2] = v->z; data[3] = v->w;
+		uints = *v;
 		#endif
 	}
 	
@@ -174,14 +199,14 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 	 * @warning Specified vector pointer must be aligned in the memory!!!
 	 * @param[in] v target 4 component vector value pointer (aligned)
 	 */
-	void loadAligned(const uint4* v) noexcept
+	void loadAligned(const uint32* v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
-		data = _mm_load_si128((const _simd_u128*)v);
+		data = _mm_load_si128((const __m128i*)v);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = vld1q_u32((const uint32*)v);
+		data = vld1q_u32(v);
 		#else
-		data[0] = v->x; data[1] = v->y; data[2] = v->z; data[3] = v->w;
+		uints = *((const uint4*)v);
 		#endif
 	}
 
@@ -192,11 +217,11 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 	void store(uint32* v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
-		_mm_storeu_si128((_simd_u128*)v, data);
+		_mm_storeu_si128((__m128i*)v, data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		vst1q_u32(v, data);
 		#else
-		v[0] = values[0]; v[1] = values[1]; v[2] = values[2]; v[3] = values[3];
+		*((uint4*)v) = uints;
 		#endif
 	}
 	/**
@@ -204,14 +229,14 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 	 * @warning Specified vector pointer must be aligned in the memory!!!
 	 * @param[out] v target 4 component vector value pointer (aligned)
 	 */
-	void storeAligned(uint4* v) noexcept
+	void storeAligned(uint32* v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
-		_mm_store_si128((_simd_u128*)v, data);
+		_mm_store_si128((__m128i*)v, data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		vst1q_u32((uint32*)v, data);
 		#else
-		v->x= values[0]; v->y = values[1]; v->z = values[2]; v->w = values[3];
+		*((uint4*)v) = uints;
 		#endif
 	}
 
@@ -225,7 +250,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vgetq_lane_u32(data, 0);
 		#else
-		return values[0];
+		return uints.x;
 		#endif
 	}
 	/**
@@ -236,7 +261,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#if defined(MATH_SIMD_SUPPORT_NEON)
 		return vgetq_lane_u32(data, 1);
 		#else
-		return values[1];
+		return uints.y;
 		#endif
 	}
 	/**
@@ -247,7 +272,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#if defined(MATH_SIMD_SUPPORT_NEON)
 		return vgetq_lane_u32(data, 2);
 		#else
-		return values[2];
+		return uints.z;
 		#endif
 	}
 	/**
@@ -258,7 +283,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#if defined(MATH_SIMD_SUPPORT_NEON)
 		return vgetq_lane_u32(data, 3);
 		#else
-		return values[3];
+		return uints.w;
 		#endif
 	}
 
@@ -266,22 +291,22 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 	 * @brief Sets SIMD vector first component value.
 	 * @param value target X vector component value
 	 */
-	void setX(uint32 value) noexcept { values[0] = value; }
+	void setX(uint32 value) noexcept { uints.x = value; }
 	/**
 	 * @brief Sets SIMD vector second component value.
 	 * @param value target Y vector component value
 	 */
-	void setY(uint32 value) noexcept { values[1] = value; }
+	void setY(uint32 value) noexcept { uints.y = value; }
 	/**
 	 * @brief Sets SIMD vector third component value.
 	 * @param value target Z vector component value
 	 */
-	void setZ(uint32 value) noexcept { values[2] = value; }
+	void setZ(uint32 value) noexcept { uints.z = value; }
 	/**
 	 * @brief Sets SIMD vector fourth component value.
 	 * @param value target W vector component value
 	 */
-	void setW(uint32 value) noexcept { values[3] = value; }
+	void setW(uint32 value) noexcept { uints.w = value; }
 
 	/**
 	 * @brief Swizzles SIMD vector components.
@@ -304,7 +329,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return __builtin_shufflevector(data, data, X, Y, Z, W);
 		#else
-		return simd_u32_4(values[X], values[Y], values[Z], values[W]);
+		return simd_u32_4(uints[X], uints[Y], uints[Z], uints[W]);
 		#endif
 	}
 
@@ -317,33 +342,25 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 	 * @brief Returns SIMD vector component by index.
 	 * @param i target component index
 	 */
-	uint32& operator[](psize i) noexcept
-	{
-		assert(i <= 3);
-		return values[i];
-	}
+	uint32& operator[](psize i) noexcept { return uints[i]; }
 	/**
 	 * @brief Returns SIMD vector component by index.
 	 * @param i target component index
 	 */
-	uint32 operator[](psize i) const noexcept
-	{
-		assert(i <= 3);
-		return values[i];
-	}
+	uint32 operator[](psize i) const noexcept { return uints[i]; }
 
 	/**
 	 * @brief Returns SIMD vector as 4 component unsigned integer vector. (xyzw)
 	 */
-	explicit operator uint4() const noexcept { return *((uint4*)values); }
+	explicit operator uint4() const noexcept { return uints; }
 	/**
 	 * @brief Returns SIMD vector as 3 component unsigned integer vector. (xyz)
 	 */
-	explicit operator uint3() const noexcept { return *((uint3*)values); }
+	explicit operator uint3() const noexcept { return (uint3)uints; }
 	/**
 	 * @brief Returns SIMD vector as 2 component unsigned integer vector. (xy)
 	 */
-	explicit operator uint2() const noexcept { return *((uint2*)values); }
+	explicit operator uint2() const noexcept { return (uint2)uints; }
 	/**
 	 * @brief Returns SIMD first vector component value. (x)
 	 */
@@ -357,8 +374,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vaddq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] + v.values[0], values[1] + v.values[1],
-			values[2] + v.values[2], values[3] + v.values[3]);
+		return simd_u32_4(uints + v.uints);
 		#endif
 	}
 	simd_u32_4 operator-(simd_u32_4 v) const noexcept
@@ -368,8 +384,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vsubq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] - v.values[0], values[1] - v.values[1],
-			values[2] - v.values[2], values[3] - v.values[3]);
+		return simd_u32_4(uints - v.uints);
 		#endif
 	}
 	simd_u32_4 operator*(simd_u32_4 v) const noexcept
@@ -379,20 +394,11 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vmulq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] * v.values[0], values[1] * v.values[1],
-			values[2] * v.values[2], values[3] * v.values[3]);
+		return simd_u32_4(uints * v.uints);
 		#endif
 	}
-	simd_u32_4 operator/(simd_u32_4 v) const noexcept
-	{
-		return simd_u32_4(values[0] / v.values[0], values[1] / v.values[1],
-			values[2] / v.values[2], values[3] / v.values[3]);
-	}
-	simd_u32_4 operator%(simd_u32_4 v) const noexcept
-	{
-		return simd_u32_4(values[0] % v.values[0], values[1] % v.values[1],
-			values[2] % v.values[2], values[3] % v.values[3]);
-	}
+	simd_u32_4 operator/(simd_u32_4 v) const noexcept { return simd_u32_4(uints / v.uints); }
+	simd_u32_4 operator%(simd_u32_4 v) const noexcept { return simd_u32_4(uints % v.uints); }
 
 	//******************************************************************************************************************
 	simd_u32_4 operator&(simd_u32_4 v) const noexcept
@@ -402,8 +408,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vandq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] & v.values[0], values[1] & v.values[1],
-			values[2] & v.values[2], values[3] & v.values[3]);
+		return simd_u32_4(uints & v.uints);
 		#endif
 	}
 	simd_u32_4 operator|(simd_u32_4 v) const noexcept
@@ -413,8 +418,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vorrq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] | v.values[0], values[1] | v.values[1],
-			values[2] | v.values[2], values[3] | v.values[3]);
+		return simd_u32_4(uints | v.uints);
 		#endif
 	}
 	simd_u32_4 operator^(simd_u32_4 v) const noexcept
@@ -424,8 +428,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return veorq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] ^ v.values[0], values[1] ^ v.values[1],
-			values[2] ^ v.values[2], values[3] ^ v.values[3]);
+		return simd_u32_4(uints ^ v.uints);
 		#endif
 	}
 	simd_u32_4 operator>>(simd_u32_4 v) const noexcept
@@ -435,8 +438,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vshlq_u32(data, vnegq_s32(vreinterpretq_s32_u32(v.data)));
 		#else
-		return simd_u32_4(values[0] >> v.values[0], values[1] >> v.values[1],
-			values[2] >> v.values[2], values[3] >> v.values[3]);
+		return simd_u32_4(uints >> v.uints);
 		#endif
 	}
 	simd_u32_4 operator<<(simd_u32_4 v) const noexcept
@@ -446,8 +448,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vshlq_u32(data, vreinterpretq_s32_u32(v.data));
 		#else
-		return simd_u32_4(values[0] << v.values[0], values[1] << v.values[1],
-			values[2] << v.values[2], values[3] << v.values[3]);
+		return simd_u32_4(uints << v.uints);
 		#endif
 	}
 	simd_u32_4 operator>>(uint32 n) const noexcept
@@ -455,19 +456,29 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_srli_epi32(data, n);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		return vshrq_n_u32(data, n);
+		return vshlq_u32(data, vdupq_n_s32(-((int32)n)));
 		#else
-		return simd_u32_4(values[0] >> n, values[1] >> n, values[2] >> n, values[3] >> n);
+		return simd_u32_4(uints >> n);
 		#endif
 	}
 	simd_u32_4 operator<<(uint32 n) const noexcept
 	{
-		#if defined(MATH_SIMD_SUPPORT_AVX2)
+		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_slli_epi32(data, n);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		return vshlq_n_u32(data, n);
+		return vshlq_u32(data, vdupq_n_s32((int32)n));
 		#else
-		return simd_u32_4(values[0] << n, values[1] << n, values[2] << n, values[3] << n);
+		return simd_u32_4(uints << n);
+		#endif
+	}
+	simd_u32_4 operator!() const noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_SSE)
+		return _mm_and_si128(_mm_cmpeq_epi32(data, _mm_setzero_si128()), _mm_set1_epi32(1));
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		return vandq_u32(vceqq_u32(data, vdupq_n_u32(0)), vdupq_n_u32(1));
+		#else
+		return simd_u32_4(!uints);
 		#endif
 	}
 	simd_u32_4 operator~() const noexcept
@@ -477,11 +488,20 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vmvnq_u32(data);
 		#else
-		return simd_u32_4(~values[0], ~values[1], ~values[2], ~values[3]);
+		return simd_u32_4(~uints);
 		#endif
 	}
 
 	//******************************************************************************************************************
+	simd_u32_4 operator+(uint32 n) const noexcept { return *this + simd_u32_4(n); }
+	simd_u32_4 operator-(uint32 n) const noexcept { return *this - simd_u32_4(n); }
+	simd_u32_4 operator*(uint32 n) const noexcept { return *this * simd_u32_4(n); }
+	simd_u32_4 operator/(uint32 n) const noexcept { return *this / simd_u32_4(n); }
+	simd_u32_4 operator%(uint32 n) const noexcept { return *this % simd_u32_4(n); }
+	simd_u32_4 operator&(uint32 n) const noexcept { return *this & simd_u32_4(n); }
+	simd_u32_4 operator|(uint32 n) const noexcept { return *this | simd_u32_4(n); }
+	simd_u32_4 operator^(uint32 n) const noexcept { return *this ^ simd_u32_4(n); }
+
 	simd_u32_4& operator+=(simd_u32_4 v) noexcept { *this = *this + v; return *this; }
 	simd_u32_4& operator-=(simd_u32_4 v) noexcept { *this = *this - v; return *this; }
 	simd_u32_4& operator*=(simd_u32_4 v) noexcept { *this = *this * v; return *this; }
@@ -513,8 +533,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vminvq_u32(vceqq_u32(data, v.data)) == 0xFFFFFFFFu;
 		#else
-		return values[0] == v.values[0] && values[1] == v.values[1] && 
-			values[2] == v.values[2] && values[3] == v.values[3];
+		return uints == v.uints;
 		#endif
 	}
 	bool operator!=(simd_u32_4 v) const noexcept
@@ -522,10 +541,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_movemask_epi8(_mm_cmpeq_epi32(data, v.data)) != 0xFFFF;
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		return !vminvq_u32(vceqq_u32(data, v.data));
+		return vminvq_u32(vceqq_u32(data, v.data)) == 0u;
 		#else
-		return values[0] != v.values[0] || values[1] != v.values[1] || 
-			values[2] != v.values[2] || values[3] != v.values[3];
+		return uints != v.uints;
 		#endif
 	}
 	simd_u32_4 operator<(simd_u32_4 v) const noexcept
@@ -535,8 +553,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcltq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] < v.values[0] ? 0xFFFFFFFFu : 0, values[1] < v.values[1] ? 0xFFFFFFFFu : 0,
-			values[2] < v.values[2] ? 0xFFFFFFFFu : 0, values[3] < v.values[3] ? 0xFFFFFFFFu : 0);
+		return simd_u32_4(uints < v.uints);
 		#endif
 	}
 	simd_u32_4 operator>(simd_u32_4 v) const noexcept
@@ -546,8 +563,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcgtq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] > v.values[0] ? 0xFFFFFFFFu : 0, values[1] > v.values[1] ? 0xFFFFFFFFu : 0,
-			values[2] > v.values[2] ? 0xFFFFFFFFu : 0, values[3] > v.values[3] ? 0xFFFFFFFFu : 0);
+		return simd_u32_4(uints > v.uints);
 		#endif
 	}
 	simd_u32_4 operator<=(simd_u32_4 v) const noexcept
@@ -557,8 +573,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcleq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] <= v.values[0] ? 0xFFFFFFFFu : 0, values[1] <= v.values[1] ? 0xFFFFFFFFu : 0,
-			values[2] <= v.values[2] ? 0xFFFFFFFFu : 0, values[3] <= v.values[3] ? 0xFFFFFFFFu : 0);
+		return simd_u32_4(uints <= v.uints);
 		#endif
 	}
 	simd_u32_4 operator>=(simd_u32_4 v) const noexcept
@@ -568,10 +583,16 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcgeq_u32(data, v.data);
 		#else
-		return simd_u32_4(values[0] >= v.values[0] ? 0xFFFFFFFFu : 0, values[1] >= v.values[1] ? 0xFFFFFFFFu : 0,
-			values[2] >= v.values[2] ? 0xFFFFFFFFu : 0, values[3] >= v.values[3] ? 0xFFFFFFFFu : 0);
+		return simd_u32_4(uints >= v.uints);
 		#endif
 	}
+
+	bool operator==(uint32 n) const noexcept { return *this == simd_u32_4(n); }
+	bool operator!=(uint32 n) const noexcept { return *this != simd_u32_4(n); }
+	simd_u32_4 operator<(uint32 n) const noexcept { return *this < simd_u32_4(n); }
+	simd_u32_4 operator>(uint32 n) const noexcept { return *this > simd_u32_4(n); }
+	simd_u32_4 operator<=(uint32 n) const noexcept { return *this <= simd_u32_4(n); }
+	simd_u32_4 operator>=(uint32 n) const noexcept { return *this >= simd_u32_4(n); }
 
 	static const simd_u32_4 zero, one, max;
 };
@@ -605,15 +626,14 @@ static int getTrues(simd_u32_4 v) noexcept
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_movemask_ps(_mm_castsi128_ps(v.data));
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
-	int32x4_t shift = { 0, 1, 2, 3 };
+	auto shift = (int32x4_t){ 0, 1, 2, 3 };
 	return vaddvq_u32(vshlq_u32(vshrq_n_u32(v.data, 31), shift));
 	#else
-	return (v.values[0] >> 31) | ((v.values[1] >> 31) << 1) | 
-		((v.values[2] >> 31) << 2) | ((v.values[3] >> 31) << 3);
+	return getTrues(v.uints);
 	#endif
 }
 /**
- * @brief Returns true if all SIMD vector components are set true.
+ * @brief Returns true if all SIMD vector component bits are set true.
  */
 static bool areAllTrue(simd_u32_4 v) noexcept
 {
@@ -622,11 +642,11 @@ static bool areAllTrue(simd_u32_4 v) noexcept
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return vminvq_u32(v.data) == 0xFFFFFFFFu;
 	#else
-	return v.values[0] && v.values[1] && v.values[2] && v.values[3];
+	return areAllTrue(v.uints);
 	#endif
 }
 /**
- * @brief Returns false if all SIMD vector components are set false.
+ * @brief Returns false if all SIMD vector component bits are set false.
  */
 static bool areAllFalse(simd_u32_4 v) noexcept
 {
@@ -637,11 +657,11 @@ static bool areAllFalse(simd_u32_4 v) noexcept
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return !vmaxvq_u32(v.data);
 	#else
-	return !(v.values[0] || v.values[1] || v.values[2] || v.values[3]);
+	return areAllFalse(v.uints);
 	#endif
 }
 /**
- * @brief Returns true if any of SIMD vector components are set true.
+ * @brief Returns true if any of SIMD vector component bits are set true.
  */
 static bool areAnyTrue(simd_u32_4 v) noexcept
 {
@@ -652,20 +672,20 @@ static bool areAnyTrue(simd_u32_4 v) noexcept
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return vmaxvq_u32(v.data);
 	#else
-	return v.values[0] || v.values[1] || v.values[2] || v.values[3];
+	return areAnyTrue(v.uints);
 	#endif
 }
 /**
- * @brief Returns false if any of SIMD vector components are set false.
+ * @brief Returns false if any of SIMD vector component bits is set false.
  */
 static bool areAnyFalse(simd_u32_4 v) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_movemask_epi8(v.data) != 0xFFFF;
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
-	return !vminvq_u32(v.data);
+	return vminvq_u32(v.data) != 0xFFFFFFFFu;
 	#else
-	return !(v.values[0] && v.values[1] && v.values[2] && v.values[3]);
+	return areAnyFalse(v.uints);
 	#endif
 }
 
@@ -675,17 +695,50 @@ static bool areAnyFalse(simd_u32_4 v) noexcept
  * @param a first SIMD vector to compare
  * @param b second SIMD vector to compare
  */
-static simd_u32_4 compare(simd_u32_4 a, simd_u32_4 b)
+static simd_u32_4 equal(simd_u32_4 a, simd_u32_4 b) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_cmpeq_epi32(a.data, b.data);
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return vceqq_u32(a.data, b.data);
 	#else
-	return simd_u32_4(a.values[0] == b.values[0] ? 0xFFFFFFFFu : 0, a.values[1] == b.values[1] ? 0xFFFFFFFFu : 0,
-		a.values[2] == b.values[2] ? 0xFFFFFFFFu : 0, a.values[3] == b.values[3] ? 0xFFFFFFFFu : 0);
+	return simd_u32_4(equal(a.uints, b.uints));
 	#endif
 }
+/**
+ * @brief Compares two SIMD vectors component wise if they are not equal.
+ *
+ * @param a first SIMD vector to compare
+ * @param b second SIMD vector to compare
+ */
+static simd_u32_4 notEqual(simd_u32_4 a, simd_u32_4 b) noexcept
+{
+	#if defined(MATH_SIMD_SUPPORT_SSE)
+	return _mm_xor_si128(_mm_cmpeq_epi32(a.data, b.data), _mm_set1_epi32(0xFFFFFFFF));
+	#elif defined(MATH_SIMD_SUPPORT_NEON)
+	return vmvnq_u32(vceqq_u32(a.data, b.data));
+	#else
+	return simd_u32_4(notEqual(a.uints, b.uints));
+	#endif
+}
+
+/**
+ * @brief SIMD vector bitwise bit clear component wise. [r = a & (~b)]
+ *
+ * @param a first SIMD vector
+ * @param b second SIMD vector
+ */
+static simd_u32_4 bic(simd_u32_4 a, simd_u32_4 b) noexcept
+{
+	#if defined(MATH_SIMD_SUPPORT_SSE)
+	return _mm_andnot_si128(b.data, a.data); // flipped
+	#elif defined(MATH_SIMD_SUPPORT_NEON)
+	return vbicq_u32(a.data, b.data);
+	#else
+	return simd_u32_4(a.uints & (~b.uints));
+	#endif
+}
+
 /**
  * @brief Returns true if first SIMD vector binary representation is less than the second.
  *
@@ -714,12 +767,74 @@ static simd_u32_4 select(simd_u32_4 c, simd_u32_4 t, simd_u32_4 f) noexcept
 	return vbslq_u32(vreinterpretq_u32_s32(vshrq_n_s32(
 		vreinterpretq_s32_u32(c.data), 31)), t.data, f.data);
 	#else
-	return simd_u32_4(
-		c.values[0] & 0x80000000u ? t.values[0] : f.values[0], 
-		c.values[1] & 0x80000000u ? t.values[1] : f.values[1],
-		c.values[2] & 0x80000000u ? t.values[2] : f.values[2],
-		c.values[3] & 0x80000000u ? t.values[3] : f.values[3]);
+	return simd_u32_4(select(c.uints, t.uints, f.uints));
 	#endif
+}
+
+/***********************************************************************************************************************
+ * @brief Returns minimum value for each component of the SIMD vector.
+ * 
+ * @param a first SIMD vector to find minimum
+ * @param b second SIMD vector to find minimum
+ */
+static simd_u32_4 min(simd_u32_4 a, simd_u32_4 b) noexcept
+{
+	#if defined(MATH_SIMD_SUPPORT_SSE4_1)
+	return _mm_min_epi32(a.data, b.data);
+	#elif defined(MATH_SIMD_SUPPORT_NEON)
+	return vminq_u32(a.data, b.data);
+	#else
+	return simd_u32_4(min(a.uints, b.uints));
+	#endif
+}
+/**
+ * @brief Returns maximum value for each component of the SIMD vector.
+ * 
+ * @param a first SIMD vector to find maximum
+ * @param b second SIMD vector to find maximum
+ */
+static simd_u32_4 max(simd_u32_4 a, simd_u32_4 b) noexcept
+{
+	#if defined(MATH_SIMD_SUPPORT_SSE4_1)
+	return _mm_max_epi32(a.data, b.data);
+	#elif defined(MATH_SIMD_SUPPORT_NEON)
+	return vmaxq_u32(a.data, b.data);
+	#else
+	return simd_u32_4(max(a.uints, b.uints));
+	#endif
+}
+
+/**
+ * @brief Returns minimum value of all SIMD vector components.
+ * @param v target SIMD vector
+ */
+static float min(simd_u32_4 v) noexcept
+{
+	auto m = min(v, v.swizzle<SwY, SwU, SwW, SwU>());
+	m = min(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	return m.getX();
+}
+/**
+ * @brief Returns maximum value of all SIMD vector components.
+ * @param v target SIMD vector
+ */
+static float max(simd_u32_4 v) noexcept
+{
+	auto m = max(v, v.swizzle<SwY, SwU, SwW, SwU>());
+	m = max(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	return m.getX();
+}
+
+/**
+ * @brief Clamps SIMD vector components between min and max values.
+ * 
+ * @param v target SIMD vector to clamp
+ * @param min SIMD vector with minimum values
+ * @param max SIMD vector with maximum values
+ */
+static simd_u32_4 clamp(simd_u32_4 v, simd_u32_4 min, simd_u32_4 max) noexcept
+{
+	return math::max(math::min(v, max), min);
 }
 
 } // namespace math

@@ -69,9 +69,9 @@ $(function(){initNavTree('structmath_1_1float3x3.html',''); initResizable(); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7956bf7c1a7889dae93a4eb01c22ec68" id="r_a7956bf7c1a7889dae93a4eb01c22ec68"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7956bf7c1a7889dae93a4eb01c22ec68">float3x3</a> (float v=0.0f) noexcept</td></tr>
-<tr class="memdesc:a7956bf7c1a7889dae93a4eb01c22ec68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new floating point 3x3 matrix structure.  <br /></td></tr>
-<tr class="separator:a7956bf7c1a7889dae93a4eb01c22ec68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2bc277082d887eb8e8db2bb3479fa7c" id="r_ae2bc277082d887eb8e8db2bb3479fa7c"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2bc277082d887eb8e8db2bb3479fa7c">float3x3</a> (float n=0.0f) noexcept</td></tr>
+<tr class="memdesc:ae2bc277082d887eb8e8db2bb3479fa7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new floating point 3x3 matrix structure.  <br /></td></tr>
+<tr class="separator:ae2bc277082d887eb8e8db2bb3479fa7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a427c498c04929df6351b06119e7ab776" id="r_a427c498c04929df6351b06119e7ab776"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a427c498c04929df6351b06119e7ab776">float3x3</a> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;<a class="el" href="#a476e3ae68bd5e99eeb834a57e779bd85">c0</a>, const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;<a class="el" href="#ad43977c8aa497738a3d212fd4d5be1f0">c1</a>, const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;<a class="el" href="#aa4d9eb15ad58b8371ca8c0ce9a4206d9">c2</a>) noexcept</td></tr>
 <tr class="memdesc:a427c498c04929df6351b06119e7ab776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new floating point 3x3 matrix structure.  <br /></td></tr>
 <tr class="separator:a427c498c04929df6351b06119e7ab776"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -88,15 +88,36 @@ constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator float2x
 <tr class="memitem:af5561bf81bef10176d62b0c6154487d1" id="r_af5561bf81bef10176d62b0c6154487d1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5561bf81bef10176d62b0c6154487d1">operator[]</a> (<a class="el" href="types_8hpp.html#ac290a685f46e9b8c6f443e6181661036">psize</a> i) const noexcept</td></tr>
 <tr class="memdesc:af5561bf81bef10176d62b0c6154487d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns matrix column by index.  <br /></td></tr>
 <tr class="separator:af5561bf81bef10176d62b0c6154487d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae57701a3bfe02b2c040e61175c8a19c5" id="r_ae57701a3bfe02b2c040e61175c8a19c5"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae57701a3bfe02b2c040e61175c8a19c5">operator*</a> (float v) const noexcept</td></tr>
-<tr class="memdesc:ae57701a3bfe02b2c040e61175c8a19c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies all matrix columns by specified value.  <br /></td></tr>
-<tr class="separator:ae57701a3bfe02b2c040e61175c8a19c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60ad15573bd14714b2a1f132d83ff905" id="r_a60ad15573bd14714b2a1f132d83ff905"><td class="memItemLeft" align="right" valign="top"><a id="a60ad15573bd14714b2a1f132d83ff905" name="a60ad15573bd14714b2a1f132d83ff905"></a>
+constexpr <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (float n) const noexcept</td></tr>
+<tr class="separator:a60ad15573bd14714b2a1f132d83ff905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82bf30fad3cb2c33e8c71a21dc0cdb25" id="r_a82bf30fad3cb2c33e8c71a21dc0cdb25"><td class="memItemLeft" align="right" valign="top"><a id="a82bf30fad3cb2c33e8c71a21dc0cdb25" name="a82bf30fad3cb2c33e8c71a21dc0cdb25"></a>
+constexpr <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (float n) const noexcept</td></tr>
+<tr class="separator:a82bf30fad3cb2c33e8c71a21dc0cdb25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9e31fa957855f3c13ad892dae964af4" id="r_ad9e31fa957855f3c13ad892dae964af4"><td class="memItemLeft" align="right" valign="top"><a id="ad9e31fa957855f3c13ad892dae964af4" name="ad9e31fa957855f3c13ad892dae964af4"></a>
+constexpr <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (float n) const noexcept</td></tr>
+<tr class="separator:ad9e31fa957855f3c13ad892dae964af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cd36044a290bba07f28ba5db7f28d3e" id="r_a8cd36044a290bba07f28ba5db7f28d3e"><td class="memItemLeft" align="right" valign="top"><a id="a8cd36044a290bba07f28ba5db7f28d3e" name="a8cd36044a290bba07f28ba5db7f28d3e"></a>
+constexpr <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (float n) const noexcept</td></tr>
+<tr class="separator:a8cd36044a290bba07f28ba5db7f28d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30fc1fd9c6d0f059d15fe36deb71b7f5" id="r_a30fc1fd9c6d0f059d15fe36deb71b7f5"><td class="memItemLeft" align="right" valign="top"><a id="a30fc1fd9c6d0f059d15fe36deb71b7f5" name="a30fc1fd9c6d0f059d15fe36deb71b7f5"></a>
+<a class="el" href="structmath_1_1float3x3.html">float3x3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (float n) noexcept</td></tr>
+<tr class="separator:a30fc1fd9c6d0f059d15fe36deb71b7f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9a8141aaba390ec915f847524e383d9" id="r_ad9a8141aaba390ec915f847524e383d9"><td class="memItemLeft" align="right" valign="top"><a id="ad9a8141aaba390ec915f847524e383d9" name="ad9a8141aaba390ec915f847524e383d9"></a>
+<a class="el" href="structmath_1_1float3x3.html">float3x3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (float n) noexcept</td></tr>
+<tr class="separator:ad9a8141aaba390ec915f847524e383d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78d8e6c624fa222dd52c66ba43fbd3ef" id="r_a78d8e6c624fa222dd52c66ba43fbd3ef"><td class="memItemLeft" align="right" valign="top"><a id="a78d8e6c624fa222dd52c66ba43fbd3ef" name="a78d8e6c624fa222dd52c66ba43fbd3ef"></a>
+<a class="el" href="structmath_1_1float3x3.html">float3x3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*=</b> (float n) noexcept</td></tr>
+<tr class="separator:a78d8e6c624fa222dd52c66ba43fbd3ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af588b840c2751d74f6fdc48e2a6028a9" id="r_af588b840c2751d74f6fdc48e2a6028a9"><td class="memItemLeft" align="right" valign="top"><a id="af588b840c2751d74f6fdc48e2a6028a9" name="af588b840c2751d74f6fdc48e2a6028a9"></a>
+<a class="el" href="structmath_1_1float3x3.html">float3x3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (float n) noexcept</td></tr>
+<tr class="separator:af588b840c2751d74f6fdc48e2a6028a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2c702084bb89736e6cf7ba06e69d9c5" id="r_aa2c702084bb89736e6cf7ba06e69d9c5"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2c702084bb89736e6cf7ba06e69d9c5">operator*</a> (const <a class="el" href="structmath_1_1float3x3.html">float3x3</a> &amp;m) const noexcept</td></tr>
 <tr class="memdesc:aa2c702084bb89736e6cf7ba06e69d9c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates dot product between two matrices.  <br /></td></tr>
 <tr class="separator:aa2c702084bb89736e6cf7ba06e69d9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2db365d622b3db33b4867e0fed34b679" id="r_a2db365d622b3db33b4867e0fed34b679"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structmath_1_1float3.html">float3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2db365d622b3db33b4867e0fed34b679">operator*</a> (const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;v) const noexcept</td></tr>
-<tr class="memdesc:a2db365d622b3db33b4867e0fed34b679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates dot product between matrix and vector.  <br /></td></tr>
-<tr class="separator:a2db365d622b3db33b4867e0fed34b679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dbef848710f4ef92bc07fb8b0a3a601" id="r_a4dbef848710f4ef92bc07fb8b0a3a601"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structmath_1_1float3.html">float3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dbef848710f4ef92bc07fb8b0a3a601">operator*</a> (<a class="el" href="structmath_1_1float3.html">float3</a> v) const noexcept</td></tr>
+<tr class="memdesc:a4dbef848710f4ef92bc07fb8b0a3a601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates dot product between matrix and vector.  <br /></td></tr>
+<tr class="separator:a4dbef848710f4ef92bc07fb8b0a3a601"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade283466930bedaac4eb27040b803500" id="r_ade283466930bedaac4eb27040b803500"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmath_1_1float3x3.html">float3x3</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade283466930bedaac4eb27040b803500">operator*=</a> (const <a class="el" href="structmath_1_1float3x3.html">float3x3</a> &amp;m) noexcept</td></tr>
 <tr class="memdesc:ade283466930bedaac4eb27040b803500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates dot product between two matrices.  <br /></td></tr>
 <tr class="separator:ade283466930bedaac4eb27040b803500"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,8 +155,8 @@ static const <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;
 <div class="textblock"><p>Floating point 3x3 matrix structure. </p>
 <p>Commonly used for basic transformations: translation, scale, rotation, etc. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7956bf7c1a7889dae93a4eb01c22ec68" name="a7956bf7c1a7889dae93a4eb01c22ec68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7956bf7c1a7889dae93a4eb01c22ec68">&#9670;&#160;</a></span>float3x3() <span class="overload">[1/3]</span></h2>
+<a id="ae2bc277082d887eb8e8db2bb3479fa7c" name="ae2bc277082d887eb8e8db2bb3479fa7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2bc277082d887eb8e8db2bb3479fa7c">&#9670;&#160;</a></span>float3x3() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,7 +167,7 @@ static const <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;
         <tr>
           <td class="memname">constexpr <a class="el" href="structmath_1_1float3x3.html">float3x3</a> </td>
           <td>(</td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>v</em><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span></span></td><td>)</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>n</em><span class="paramdefsep"> = </span><span class="paramdefval">0.0f</span></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -160,7 +181,7 @@ static const <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;
 <p>Creates a new floating point 3x3 matrix structure. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">v</td><td>target value for all columns and rows </td></tr>
+    <tr><td class="paramname">n</td><td>target value for all columns and rows </td></tr>
   </table>
   </dd>
 </dl>
@@ -345,41 +366,8 @@ static const <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;
 
 </div>
 </div>
-<a id="ae57701a3bfe02b2c040e61175c8a19c5" name="ae57701a3bfe02b2c040e61175c8a19c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae57701a3bfe02b2c040e61175c8a19c5">&#9670;&#160;</a></span>operator*() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr <a class="el" href="structmath_1_1float3x3.html">float3x3</a> operator* </td>
-          <td>(</td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Multiplies all matrix columns by specified value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">v</td><td>target multiplier value </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="aa2c702084bb89736e6cf7ba06e69d9c5" name="aa2c702084bb89736e6cf7ba06e69d9c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2c702084bb89736e6cf7ba06e69d9c5">&#9670;&#160;</a></span>operator*() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2c702084bb89736e6cf7ba06e69d9c5">&#9670;&#160;</a></span>operator*() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -411,8 +399,8 @@ static const <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;
 
 </div>
 </div>
-<a id="a2db365d622b3db33b4867e0fed34b679" name="a2db365d622b3db33b4867e0fed34b679"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2db365d622b3db33b4867e0fed34b679">&#9670;&#160;</a></span>operator*() <span class="overload">[3/3]</span></h2>
+<a id="a4dbef848710f4ef92bc07fb8b0a3a601" name="a4dbef848710f4ef92bc07fb8b0a3a601"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dbef848710f4ef92bc07fb8b0a3a601">&#9670;&#160;</a></span>operator*() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -423,7 +411,7 @@ static const <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;
         <tr>
           <td class="memname">constexpr <a class="el" href="structmath_1_1float3.html">float3</a> operator* </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structmath_1_1float3.html">float3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1float3.html">float3</a></td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -437,7 +425,7 @@ static const <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;
 <p>Calculates dot product between matrix and vector. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>target vector to dot by </td></tr>
+    <tr><td class="paramname">v</td><td>target vector to dot by </td></tr>
   </table>
   </dd>
 </dl>
@@ -608,11 +596,11 @@ static const <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code hl_function" href="#a7956bf7c1a7889dae93a4eb01c22ec68">float3x3</a>(</div>
+<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code hl_function" href="#ae2bc277082d887eb8e8db2bb3479fa7c">float3x3</a>(</div>
 <div class="line">    1.0f, 0.0f, 0.0f,</div>
 <div class="line">    0.0f, 1.0f, 0.0f,</div>
 <div class="line">    0.0f, 0.0f, 1.0f)</div>
-<div class="ttc" id="astructmath_1_1float3x3_html_a7956bf7c1a7889dae93a4eb01c22ec68"><div class="ttname"><a href="#a7956bf7c1a7889dae93a4eb01c22ec68">math::float3x3::float3x3</a></div><div class="ttdeci">constexpr float3x3(float v=0.0f) noexcept</div><div class="ttdoc">Creates a new floating point 3x3 matrix structure.</div><div class="ttdef"><b>Definition</b> float.hpp:149</div></div>
+<div class="ttc" id="astructmath_1_1float3x3_html_ae2bc277082d887eb8e8db2bb3479fa7c"><div class="ttname"><a href="#ae2bc277082d887eb8e8db2bb3479fa7c">math::float3x3::float3x3</a></div><div class="ttdeci">constexpr float3x3(float n=0.0f) noexcept</div><div class="ttdoc">Creates a new floating point 3x3 matrix structure.</div><div class="ttdef"><b>Definition</b> float.hpp:152</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -622,7 +610,7 @@ static const <a class="el" href="structmath_1_1float3x3.html">float3x3</a>&#160;
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>math</b></li><li class="navelem"><a class="el" href="structmath_1_1float3x3.html">float3x3</a></li>
-    <li class="footer">Generated on Wed Jan 8 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+    <li class="footer">Generated on Mon Mar 10 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>
 </body>

@@ -8,7 +8,6 @@ var structmath_1_1int2 =
     [ "operator uint2", "structmath_1_1int2.html#a08b00de1ba61b65ff16ed5eac82bc89f", null ],
     [ "operator uint32", "structmath_1_1int2.html#ad30ff29a31373ec83d11980b664957ee", null ],
     [ "operator int32", "structmath_1_1int2.html#addd97844067e7b239be4ea76299335b8", null ],
-    [ "toString", "structmath_1_1int2.html#a3526d6515caf3255db8267ef956efa90", null ],
     [ "x", "structmath_1_1int2.html#aade28f62e276833462f1b79c4e41ec7e", null ],
     [ "y", "structmath_1_1int2.html#a3407aff753cf9847b8edaf080c69f9aa", null ]
 ];

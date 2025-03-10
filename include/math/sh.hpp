@@ -26,9 +26,13 @@
  * Based on this project: https://google.github.io/filament/Filament.html
  */
 
+// TODO: use here simd vectors and matrices?
+
 #pragma once
 #include "math/ibl.hpp"
 #include "math/matrix.hpp"
+
+// TODO: use SIMD where possible, but check if SH results are identical.
 
 namespace math::sh
 {

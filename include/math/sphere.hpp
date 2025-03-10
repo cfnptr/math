@@ -30,20 +30,37 @@ namespace math
  */
 struct [[nodiscard]] Sphere
 {
-	float3 position;
-	float radius;
-
+protected:
+	simd_f32_4 posRad;
+public:
 	/**
 	 * @brief Creates a new sphere structure.
 	 *
 	 * @param radius target sphere radius
-	 * @param[in] position sphere position in 3D space
+	 * @param position sphere position in 3D space
 	 */
-	constexpr Sphere(float radius = 0.0f, const float3& position = float3(0.0f)) noexcept :
-		position(position), radius(radius) { }
+	Sphere(float radius = 0.0f, simd_f32_4 position = simd_f32_4::zero) noexcept :
+		posRad(position) { posRad.setW(radius); }
 
-	constexpr bool operator==(const Sphere& s) const noexcept { return position == s.position && radius == s.radius; }
-	constexpr bool operator!=(const Sphere& s) const noexcept { return position != s.position || radius != s.radius; }
+	/**
+	 * @brief Returns sphere radius.
+	 */
+	float getRadius() const noexcept { return posRad.getW(); }
+	/**
+	 * @brief Sets sphere radius.
+	 * @param radius target sphere radius
+	 */
+	void setRadius(float radius) noexcept { return posRad.setW(radius); }
+	
+	/**
+	 * @brief Returns position of the sphere in 3D space.
+	 */
+	const simd_f32_4& getPosition() const noexcept { return posRad; }
+	/**
+	 * @brief Sets position of the sphere in 3D space.
+	 * @param position target sphere position in 3D space
+	 */
+	void setPosition(simd_f32_4 position) noexcept { posRad = simd_f32_4(position, posRad.getW()); }
 
 	static const Sphere one, two, half;
 };
@@ -53,27 +70,28 @@ inline const Sphere Sphere::two = Sphere(1.0f);
 inline const Sphere Sphere::half = Sphere(0.25f);
 
 /**
- * @brief Returns true if point is inside the sphere.
+ * @brief Returns true if point is inside the sphere in 3D space.
  *
  * @param[in] sphere target sphere to check
- * @param[in] point target point in the space
+ * @param point target point in 3D space
  */
-static constexpr bool isInside(const Sphere& sphere, const float3& point) noexcept
+static bool isInside(const Sphere& sphere, simd_f32_4 point) noexcept
 {
-	auto difference = sphere.position - point;
-  	return length2(difference) < sphere.radius * sphere.radius;
+	auto difference = sphere.getPosition() - point;
+	auto radius = sphere.getRadius();
+	return lengthSq3(difference) < radius * radius;
 }
 
 /**
- * @brief Calculates closest point on sphere to the specified one.
+ * @brief Calculates closest point on sphere to the specified one in 3D space.
  *
  * @param[in] sphere target sphere to use
- * @param[in] point target point in 3D space
+ * @param point target point in 3D space
  */
-static float3 closestPoint(const Sphere& sphere, const float3& point) noexcept
+static simd_f32_4 closestPoint(const Sphere& sphere, simd_f32_4 point) noexcept
 {
-    auto sphereToPoint = normalize(point - sphere.position);
-    return sphere.position + sphereToPoint * sphere.radius;
+	auto sphereToPoint = normalize3(point - sphere.getPosition());
+	return sphere.getPosition() + sphereToPoint * sphere.getRadius();
 }
 
 /**
@@ -82,11 +100,11 @@ static float3 closestPoint(const Sphere& sphere, const float3& point) noexcept
  * @param[in] a first sphere to check
  * @param[in] b second sphere to check
  */
-static constexpr bool isIntersected(const Sphere& a, const Sphere& b) noexcept
+static bool isIntersected(const Sphere& a, const Sphere& b) noexcept
 {
-    auto d = a.position - b.position;
-    auto s = a.radius + b.radius;
-    return length2(d) <= s * s;
+	auto d = a.getPosition() - b.getPosition();
+	auto s = a.getRadius() + b.getRadius();
+	return lengthSq3(d) <= s * s;
 }
 /**
  * @brief Returns true if sphere intersects AABB.
@@ -96,9 +114,9 @@ static constexpr bool isIntersected(const Sphere& a, const Sphere& b) noexcept
  */
 static bool isIntersected(const Sphere& a, const Aabb& b) noexcept
 {
-	auto c = closestPoint(b, a.position);
-	auto d2 = length2(a.position - c);
-	return d2 < a.radius * a.radius;
+	auto c = closestPoint(b, a.getPosition());
+	auto d2 = lengthSq3(a.getPosition() - c), radius = a.getRadius();
+	return d2 < radius * radius;
 }
 
 } // namespace math

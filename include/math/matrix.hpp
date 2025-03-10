@@ -24,4 +24,4 @@
  */
 
 #pragma once
-#include "math/matrix/float.hpp"
+#include "math/simd/matrix/float.hpp"

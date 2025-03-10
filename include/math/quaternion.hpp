@@ -14,7 +14,7 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common quaternion functions.
+ * @brief Common floating point quaternion functions.
  * 
  * @details
  * Quaternion is a mathematical concept used to represent 3D rotations. It consists of four components (one real part 
@@ -27,7 +27,7 @@
  */
 
 #pragma once
-#include "math/vector/float.hpp"
+#include "math/simd/quaternion.hpp"
 
 namespace math
 {
@@ -40,30 +40,31 @@ struct [[nodiscard]] quat : public float4
 {
 	/**
 	 * @brief Creates a new quaternion structure.
+	 * @note Identity quaternion represents rotation of 0 degrees around all axis.
+	 * @param xyzw quaternion parts vector
+	 */
+	constexpr quat(float4 xyzw = identity) noexcept : float4(xyzw) { }
+	/**
+	 * @brief Creates a new quaternion structure.
 	 * 
-	 * @param x imaginary vector X part.
-	 * @param y imaginary vector Y part.
-	 * @param z imaginary vector Z part.
-	 * @param w real scalar part.
+	 * @param x imaginary vector X part
+	 * @param y imaginary vector Y part
+	 * @param z imaginary vector Z part
+	 * @param w real scalar part
 	 */
 	constexpr quat(float x, float y, float z, float w) noexcept : float4(x, y, z, w) { }
-	/**
-	 * @brief Creates a new identity quaternion structure.
-	 * @param[in] xyzw quaternion parts vector.
-	 */
-	constexpr quat(const float4& xyzw = quat::identity) noexcept : float4(xyzw) { }
 	/**
 	 * @brief Creates a new quaternion structure from the euler angles. (In radians)
 	 * @param[in] eulerAngles target euler angles vector
 	 */
-	quat(const float3& eulerAngles) noexcept
+	quat(float3 eulerAngles) noexcept
 	{
-		auto sin = math::sin(eulerAngles * 0.5f);
-		auto cos = math::cos(eulerAngles * 0.5f);
-		x = sin.x * cos.y * cos.z - cos.x * sin.y * sin.z;
-		y = cos.x * sin.y * cos.z + sin.x * cos.y * sin.z;
-		z = cos.x * cos.y * sin.z - sin.x * sin.y * cos.z;
-		w = cos.x * cos.y * cos.z + sin.x * sin.y * sin.z;
+		auto s = sin(eulerAngles * 0.5f);
+		auto c = cos(eulerAngles * 0.5f);
+		x = s.x * c.y * c.z - c.x * s.y * s.z;
+		y = c.x * s.y * c.z + s.x * c.y * s.z;
+		z = c.x * c.y * s.z - s.x * s.y * c.z;
+		w = c.x * c.y * c.z + s.x * s.y * s.z;
 	}
 	/**
 	 * @brief Creates a new quaternion structure from the angle and axis. (In radians)
@@ -73,10 +74,10 @@ struct [[nodiscard]] quat : public float4
 	 */
 	quat(float angle, float3 axis) noexcept
 	{
-		auto sinus = std::sin(angle * 0.5f);
-		x = axis.x * sinus;
-		y = axis.y * sinus;
-		z = axis.z * sinus;
+		auto s = std::sin(angle * 0.5f);
+		x = axis.x * s;
+		y = axis.y * s;
+		z = axis.z * s;
 		w = std::cos(angle * 0.5f);
 	}
 
@@ -94,50 +95,45 @@ struct [[nodiscard]] quat : public float4
 	}
 	/**
 	 * @brief Rotates vector by this quaternion.
-	 * @param[in] v target vector to rotate
+	 * @param v target vector to rotate
 	 */
-	constexpr float3 operator*(const float3& v) const noexcept
+	float3 operator*(float3 v) const noexcept
 	{
-		auto q = float3(x, y, z);
-		auto cq = math::cross(q, v);
-		auto ccq = math::cross(q, cq);
-		return v + ((cq * w) + ccq) * 2.0f;
+		auto q = (float3)*this;
+		auto cq = math::cross(q, v), ccq = math::cross(q, cq);
+		return fma(fma(cq, float3(w), ccq), float3(2.0f), v);
 	}
 	/**
 	 * @brief Rotates this quaternion by the specified one.
-	 * @param[in] q target quaternion to rotate by
+	 * @param q target quaternion to rotate by
 	 */
-	quat& operator*=(const quat& q) noexcept { return *this = *this * q; }
+	quat& operator*=(quat q) noexcept { return *this = *this * q; }
 
 	/**
 	 * @brief Extracts quaternion rotation around X axis. (In radians)
 	 */
-	float getPitch() const noexcept
+	float extractPitch() const noexcept
 	{
 		auto yy = 2.0f * (y * z + w * x);
 		auto xx = w * w - x * x - y * y + z * z;
 
 		// Avoid atan2(0, 0) - handle singularity - Matiis
-		if (std::abs(xx) <= numeric_limits<float>::epsilon() ||
-			std::abs(yy) <= numeric_limits<float>::epsilon())
-		{
+		if (std::abs(xx) <= FLT_EPSILON || std::abs(yy) <= FLT_EPSILON)
 			return 2.0f * std::atan2(x, w);
-		}
-
 		return std::atan2(yy, xx);
 	}
 	/**
 	 * @brief Extracts quaternion around Y axis. (In radians)
 	 */
-	float getYaw() const noexcept { return std::asin(std::clamp(-2.0f * (x * z - w * y), -1.0f, 1.0f)); }
+	float extractYaw() const noexcept { return std::asin(std::clamp(-2.0f * (x * z - w * y), -1.0f, 1.0f)); }
 	/**
 	 * @brief Extracts quaternion around Z axis. (In radians)
 	 */
-	float getRoll() const noexcept { return std::atan2(2.0f * (x * y + w * z), w * w + x * x - y * y - z * z); }
+	float extractRoll() const noexcept { return std::atan2(2.0f * (x * y + w * z), w * w + x * x - y * y - z * z); }
 	/**
 	 * @brief Calculates quaternion euler angles. (In radians)
 	 */
-	float3 toEulerAngles() const noexcept { return float3(getPitch(), getYaw(), getRoll()); }
+	float3 extractEulerAngles() const noexcept { return float3(extractPitch(), extractYaw(), extractRoll()); }
 
 	/**
 	 * @brief Quaternion with zero rotation.
@@ -151,40 +147,32 @@ inline const quat quat::identity = quat(0.0f, 0.0f, 0.0f, 1.0f);
  * @brief Normalizes quaternion.
  * @param q target quaternion to normalize
  */
-static quat normalize(quat q) noexcept
-{
-	auto l = length(q);
-	assert(l > 0.0f);
-	auto il = (1.0f / l);
-	return quat(q.x * il, q.y * il, q.z * il, q.w * il);
-}
+static quat normalize(quat q) noexcept { return (float4)q * (1.0f / length(q)); }
+
 /**
  * @brief Quaternion spherical linear interpolation from a to b.
  * 
  * @param a starting quaternion value
- * @param[in] b target quaternion value
+ * @param b target quaternion value
  * @param t interpolation value (from 0.0 to 1.0)
  */
-static quat slerp(quat a, const quat& b, float t) noexcept
+static quat slerp(quat a, quat b, float t) noexcept
 {
-	auto cosTheta = dot(a, b);
-	auto c = (float4)b;
-
+	auto cosTheta = dot(a, b); auto c = (float4)b;
 	if (cosTheta < 0.0f)
 	{
 		c = -b;
 		cosTheta = -cosTheta;
 	}
 
-	if (cosTheta > 1.0f - numeric_limits<float>::epsilon())
+	if (cosTheta > 1.0f - FLT_EPSILON)
 	{
-		return quat(lerp(a.x, c.x, t), lerp(a.y, c.y, t), lerp(a.z, c.z, t), lerp(a.w, c.w, t));
+		return lerp(a, c, t);
 	}
 	else
 	{
 		auto angle = std::acos(cosTheta);
-		return ((float4)a * std::sin((1.0f - t) * angle) + 
-			c * std::sin(t * angle)) / std::sin(angle);
+		return ((float4)a * std::sin((1.0f - t) * angle) + c * std::sin(t * angle)) / std::sin(angle);
 	}
 }
 
@@ -195,16 +183,16 @@ static quat slerp(quat a, const quat& b, float t) noexcept
 static constexpr quat conjugate(quat q) noexcept { return quat(-q.x, -q.y, -q.z, q.w); }
 /**
  * @brief Calculates inverse of the quaternion.
- * @param[in] q target quaternion to inverse
+ * @param q target quaternion to inverse
  */
-static constexpr quat inverse(const quat& q) noexcept { return conjugate(q) / dot(q, q);  }
+static constexpr quat inverse(quat q) noexcept { return conjugate(q) / dot(q, q);  }
 
 /**
  * @brief Rotates vector by the inversed quaternion.
  * 
- * @param[in] v target vector to rotate
- * @param[in] q target quaternion to use
+ * @param v target vector to rotate
+ * @param q target quaternion to use
  */
-static constexpr float3 operator*(const float3& v, const quat& q) noexcept { return inverse(q) * v; }
+static float3 operator*(float3 v, quat q) noexcept { return inverse(q) * v; }
 
 } // namespace math

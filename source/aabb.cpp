@@ -15,179 +15,79 @@
 #include "math/aabb.hpp"
 
 //**********************************************************************************************************************
-math::float2 math::raycast2(const Aabb& aabb, const Ray& ray) noexcept
+bool math::isAabbIntersected(simd_f32_4 position, simd_f32_4 extent, const Triangle& triangle) noexcept
 {
-	auto origin = ray.origin;
-	auto invDirection = float3(1.0f) / ray.getDirection();
-	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
+	auto v = simd_f32_4x4(triangle.p0 - position, 
+		triangle.p1 - position, triangle.p2 - position, simd_f32_4::zero);
+	auto f0 = v.c1 - v.c0, f1 = v.c2 - v.c1, f2 = v.c0 - v.c2;
+	auto f0X = f0.getX(), f0Y = f0.getY(), f0Z = f0.getZ();
+	auto f1X = f1.getX(), f1Y = f1.getY(), f1Z = f1.getZ();
+	auto f2X = f2.getX(), f2Y = f2.getY(), f2Z = f2.getZ();
+	auto extX = extent.getX(), extY = extent.getY(), extZ = extent.getZ();
 
-	auto t1 = (aabbMin.x - origin.x) * invDirection.x;
-	auto t2 = (aabbMax.x - origin.x) * invDirection.x;
-	auto t3 = (aabbMin.y - origin.y) * invDirection.y;
-	auto t4 = (aabbMax.y - origin.y) * invDirection.y;
-	auto t5 = (aabbMin.z - origin.z) * invDirection.z;
-	auto t6 = (aabbMax.z - origin.z) * invDirection.z;
-
-	auto tMin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
-	auto tMax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
-	return float2(tMin, tMax);
-}
-math::float2 math::raycast2I(const Aabb& aabb, const Ray& ray) noexcept
-{
-	auto origin = ray.origin;
-	auto invDirection = ray.getDirection();
-	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
-
-	auto t1 = (aabbMin.x - origin.x) * invDirection.x;
-	auto t2 = (aabbMax.x - origin.x) * invDirection.x;
-	auto t3 = (aabbMin.y - origin.y) * invDirection.y;
-	auto t4 = (aabbMax.y - origin.y) * invDirection.y;
-	auto t5 = (aabbMin.z - origin.z) * invDirection.z;
-	auto t6 = (aabbMax.z - origin.z) * invDirection.z;
-
-	auto tMin = std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
-	auto tMax = std::min(std::min(std::max(t1, t2), std::max(t3, t4)), std::max(t5, t6));
-	return float2(tMin, tMax);
-}
-
-float math::raycast1(const Aabb& aabb, const Ray& ray) noexcept
-{
-	auto origin = ray.origin;
-	auto invDirection = float3(1.0f) / ray.getDirection();
-	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
-
-	auto t1 = (aabbMin.x - origin.x) * invDirection.x;
-	auto t2 = (aabbMax.x - origin.x) * invDirection.x;
-	auto t3 = (aabbMin.y - origin.y) * invDirection.y;
-	auto t4 = (aabbMax.y - origin.y) * invDirection.y;
-	auto t5 = (aabbMin.z - origin.z) * invDirection.z;
-	auto t6 = (aabbMax.z - origin.z) * invDirection.z;
-
-	return std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
-}
-float math::raycast1I(const Aabb& aabb, const Ray& ray) noexcept
-{
-	auto origin = ray.origin;
-	auto invDirection = ray.getDirection();
-	auto aabbMin = aabb.getMin(), aabbMax = aabb.getMax();
-
-	auto t1 = (aabbMin.x - origin.x) * invDirection.x;
-	auto t2 = (aabbMax.x - origin.x) * invDirection.x;
-	auto t3 = (aabbMin.y - origin.y) * invDirection.y;
-	auto t4 = (aabbMax.y - origin.y) * invDirection.y;
-	auto t5 = (aabbMin.z - origin.z) * invDirection.z;
-	auto t6 = (aabbMax.z - origin.z) * invDirection.z;
-
-	return std::max(std::max(std::min(t1, t2), std::min(t3, t4)), std::min(t5, t6));
-}
-
-//**********************************************************************************************************************
-bool math::isAabbIntersected(const float3& center, float3 extent, const Triangle& triangle) noexcept
-{
-	auto v0 = triangle.p0 - center;
-	auto v1 = triangle.p1 - center;
-	auto v2 = triangle.p2 - center;
-	auto f0 = v1 - v0, f1 = v2 - v1, f2 = v0 - v2;
-
-	auto a = float3(0.0f, -f0.z, f0.y);
-	auto p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	auto r = extent.y * std::abs(f0.z) + extent.z * std::abs(f0.y);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+	auto a = simd_f32_4(0.0f, -f0Z, f0Y);
+	auto p = simd_f32_4(dot3(v.c0, a), dot3(v.c1, a), dot3(v.c2, a));
+	auto r = extY * std::abs(f0Z) + extZ * std::abs(f0Y);
+	if (std::max(-max3(p), min3(p)) > r)
 		return false;
 
-	a = float3(0.0f, -f1.z, f1.y);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.y * std::abs(f1.z) + extent.z * std::abs(f1.y);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+	a = simd_f32_4(0.0f, -f1Z, f1Y);
+	p = simd_f32_4(dot3(v.c0, a), dot3(v.c1, a), dot3(v.c2, a));
+	r = extY * std::abs(f1Z) + extZ * std::abs(f1Y);
+	if (std::max(-max3(p), min3(p)) > r)
 		return false;
 
-	a = float3(0.0f, -f2.z, f2.y);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.y * std::abs(f2.z) + extent.z * std::abs(f2.y);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+	a = simd_f32_4(0.0f, -f2Z, f2Y);
+	p = simd_f32_4(dot3(v.c0, a), dot3(v.c1, a), dot3(v.c2, a));
+	r = extY * std::abs(f2Z) + extZ * std::abs(f2Y);
+	if (std::max(-max3(p), min3(p)) > r)
 		return false;
 
-	a = float3(f0.z, 0.0f, -f0.x);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f0.z) + extent.z * std::abs(f0.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+	a = simd_f32_4(f0Z, 0.0f, -f0X);
+	p = simd_f32_4(dot3(v.c0, a), dot3(v.c1, a), dot3(v.c2, a));
+	r = extX * std::abs(f0Z) + extZ * std::abs(f0X);
+	if (std::max(-max3(p), min3(p)) > r)
 		return false;
 
-	a = float3(f1.z, 0.0f, -f1.x);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f1.z) + extent.z * std::abs(f1.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+	a = simd_f32_4(f1Z, 0.0f, -f1X);
+	p = simd_f32_4(dot3(v.c0, a), dot3(v.c1, a), dot3(v.c2, a));
+	r = extX * std::abs(f1Z) + extZ * std::abs(f1X);
+	if (std::max(-max3(p), min3(p)) > r)
 		return false;
 
-	a = float3(f2.z, 0.0f, -f2.x);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f2.z) + extent.z * std::abs(f2.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+	a = simd_f32_4(f2Z, 0.0f, -f2X);
+	p = simd_f32_4(dot3(v.c0, a), dot3(v.c1, a), dot3(v.c2, a));
+	r = extX * std::abs(f2Z) + extZ * std::abs(f2X);
+	if (std::max(-max3(p), min3(p)) > r)
 		return false;
 
-	a = float3(-f0.y, f0.x, 0.0f);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f0.y) + extent.y * std::abs(f0.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+	a = simd_f32_4(-f0Y, f0X, 0.0f);
+	p = simd_f32_4(dot3(v.c0, a), dot3(v.c1, a), dot3(v.c2, a));
+	r = extX * std::abs(f0Y) + extY * std::abs(f0X);
+	if (std::max(-max3(p), min3(p)) > r)
 		return false;
 
-	a = float3(-f1.y, f1.x, 0.0f);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f1.y) + extent.y * std::abs(f1.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+	a = simd_f32_4(-f1Y, f1X, 0.0f);
+	p = simd_f32_4(dot3(v.c0, a), dot3(v.c1, a), dot3(v.c2, a));
+	r = extX * std::abs(f1Y) + extY * std::abs(f1X);
+	if (std::max(-max3(p), min3(p)) > r)
 		return false;
 
-	a = float3(-f2.y, f2.x, 0.0f);
-	p0 = dot(v0, a), p1 = dot(v1, a), p2 = dot(v2, a);
-	r = extent.x * std::abs(f2.y) + extent.y * std::abs(f2.x);
-	if (std::max(-max(p0, p1, p2), min(p0, p1, p2)) > r)
+	a = simd_f32_4(-f2Y, f2X, 0.0f);
+	p = simd_f32_4(dot3(v.c0, a), dot3(v.c1, a), dot3(v.c2, a));
+	r = extX * std::abs(f2Y) + extY * std::abs(f2X);
+	if (std::max(-max3(p), min3(p)) > r)
 		return false;
 
-	if (max(v0.x, v1.x, v2.x) < -extent.x || min(v0.x, v1.x, v2.x) > extent.x)
-		return false;
-	if (max(v0.y, v1.y, v2.y) < -extent.y || min(v0.y, v1.y, v2.y) > extent.y)
-		return false;
-	if (max(v0.z, v1.z, v2.z) < -extent.z || min(v0.z, v1.z, v2.z) > extent.z)
-		return false;
-
-	auto normal = cross(f0, f1);
-	auto distance = std::abs(dot(normal, v0));
-	r = extent.x * std::abs(normal.x) + extent.y * std::abs(normal.y) + extent.z * std::abs(normal.z);
-	return distance <= r;
-}
-
-//**********************************************************************************************************************
-bool math::isBehindFrustum(const Aabb& aabb, const float4x4& model, const Plane* planes, uint8 planeCount) noexcept
-{
-	auto min = aabb.getMin(), max = aabb.getMax();
-	auto v0 = model * float4(min, 1.0f);
-	auto v1 = model * float4(min.x, min.y, max.z, 1.0f);
-	auto v2 = model * float4(min.x, max.y, min.z, 1.0f);
-	auto v3 = model * float4(min.x, max.y, max.z, 1.0f);
-	auto v4 = model * float4(max.x, min.y, min.z, 1.0f);
-	auto v5 = model * float4(max.x, min.y, max.z, 1.0f);
-	auto v6 = model * float4(max.x, max.y, min.z, 1.0f);
-	auto v7 = model * float4(max, 1.0f);
-
-	auto p0 = (float3)v0, p1 = (float3)v1;
-	auto p2 = (float3)v2, p3 = (float3)v3;
-	auto p4 = (float3)v4, p5 = (float3)v5;
-	auto p6 = (float3)v6, p7 = (float3)v7;
-
-	for (uint8 i = 0; i < planeCount; i++)
+	auto t = transpose3x3(v);
+	if (max3(t.c0) < -extX || min3(t.c0) > extX || max3(t.c1) < -extY || 
+		min3(t.c1) > extY || max3(t.c2) < -extZ || min3(t.c2) > extZ)
 	{
-		auto plane = planes[i];
-		auto distance0 = distance(plane, p0), distance1 = distance(plane, p1);
-		auto distance2 = distance(plane, p2), distance3 = distance(plane, p3);
-		auto distance4 = distance(plane, p4), distance5 = distance(plane, p5);
-		auto distance6 = distance(plane, p6), distance7 = distance(plane, p7);
-
-		if (distance0 < 0.0f && distance1 < 0.0f && distance2 < 0.0f && distance3 < 0.0f &&
-			distance4 < 0.0f && distance5 < 0.0f && distance6 < 0.0f && distance7 < 0.0f)
-		{
-			return true;
-		}
+		return false;
 	}
 
-	return false;
+	auto normal = cross3(f0, f1);
+	auto distance = std::abs(dot3(normal, v.c0));
+	r = extX * std::abs(normal.getX()) + extY * std::abs(normal.getY()) + extZ * std::abs(normal.getZ());
+	return distance <= r;
 }

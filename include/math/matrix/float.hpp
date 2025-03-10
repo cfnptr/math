@@ -18,7 +18,7 @@
  * 
  * Coordinate system: X-right, Y-up, Z-forward (Left handed)
  * Matrices order: Column-major. (OpenGL, Vulkan like)
- * floatNxM - N columns and M rows
+ * floatCxR -where C columns and R rows
  * 
  * Based on this project: https://github.com/g-truc/glm
  */
@@ -40,9 +40,9 @@ struct [[nodiscard]] float2x2
 
 	/**
 	 * @brief Creates a new floating point 2x2 matrix structure.
-	 * @param v target value for all columns and rows
+	 * @param n target value for all columns and rows
 	 */
-	constexpr explicit float2x2(float v = 0.0f) noexcept : c0(v), c1(v) { }
+	constexpr explicit float2x2(float n = 0.0f) noexcept : c0(n), c1(n) { }
 	/**
 	 * @brief Creates a new floating point 2x2 matrix structure.
 	 * 
@@ -79,11 +79,14 @@ struct [[nodiscard]] float2x2
 		return ((float2*)this)[i];
 	}
 
-	/*******************************************************************************************************************
-	 * @brief Multiplies all matrix columns by specified value.
-	 * @param v target multiplier value
-	 */
-	constexpr float2x2 operator*(float v) const noexcept { return float2x2(c0 * v, c1 * v); }
+	constexpr float2x2 operator+(float n) const noexcept { return float2x2(c0 + n, c1 + n); }
+	constexpr float2x2 operator-(float n) const noexcept { return float2x2(c0 - n, c1 - n); }
+	constexpr float2x2 operator*(float n) const noexcept { return float2x2(c0 * n, c1 * n); }
+	constexpr float2x2 operator/(float n) const noexcept { return float2x2(c0 / n, c1 / n); }
+	float2x2& operator+=(float n) noexcept { c0 += n; c1 += n; return *this; }
+	float2x2& operator-=(float n) noexcept { c0 -= n; c1 -= n; return *this; }
+	float2x2& operator*=(float n) noexcept { c0 *= n; c1 *= n; return *this; }
+	float2x2& operator/=(float n) noexcept { c0 /= n, c1 /= n; return *this; }
 
 	/**
 	 * @brief Calculates dot product between two matrices.
@@ -144,9 +147,9 @@ struct [[nodiscard]] float3x3
 
 	/**
 	 * @brief Creates a new floating point 3x3 matrix structure.
-	 * @param v target value for all columns and rows
+	 * @param n target value for all columns and rows
 	 */
-	constexpr explicit float3x3(float v = 0.0f) noexcept : c0(v), c1(v), c2(v) { }
+	constexpr explicit float3x3(float n = 0.0f) noexcept : c0(n), c1(n), c2(n) { }
 	/**
 	 * @brief Creates a new floating point 3x3 matrix structure.
 	 *
@@ -191,11 +194,14 @@ struct [[nodiscard]] float3x3
 		return ((float3*)this)[i];
 	}
 
-	/*******************************************************************************************************************
-	 * @brief Multiplies all matrix columns by specified value.
-	 * @param v target multiplier value
-	 */
-	constexpr float3x3 operator*(float v) const noexcept { return float3x3(c0 * v, c1 * v, c2 * v); }
+	constexpr float3x3 operator+(float n) const noexcept { return float3x3(c0 + n, c1 + n, c2 + n); }
+	constexpr float3x3 operator-(float n) const noexcept { return float3x3(c0 - n, c1 - n, c2 - n); }
+	constexpr float3x3 operator*(float n) const noexcept { return float3x3(c0 * n, c1 * n, c2 * n); }
+	constexpr float3x3 operator/(float n) const noexcept { return float3x3(c0 / n, c1 / n, c2 / n); }
+	float3x3& operator+=(float n) noexcept { c0 += n; c1 += n; c2 += n; return *this; }
+	float3x3& operator-=(float n) noexcept { c0 -= n; c1 -= n; c2 -= n; return *this; }
+	float3x3& operator*=(float n) noexcept { c0 *= n; c1 *= n; c2 *= n; return *this; }
+	float3x3& operator/=(float n) noexcept { c0 /= n, c1 /= n; c2 /= n; return *this; }
 
 	/**
 	 * @brief Calculates dot product between two matrices.
@@ -260,15 +266,16 @@ struct [[nodiscard]] float4x3
 
 	/**
 	 * @brief Creates a new floating point 4x3 matrix structure.
-	 * @param v target value for all columns and rows
+	 * @param n target value for all columns and rows
 	 */
-	constexpr explicit float4x3(float v = 0.0f) noexcept : c0(v), c1(v), c2(v), c3(v) { }
+	constexpr explicit float4x3(float n = 0.0f) noexcept : c0(n), c1(n), c2(n), c3(n) { }
 	/**
 	 * @brief Creates a new floating point 4x3 matrix structure.
 	 *
 	 * @param[in] c0 first matrix column value
 	 * @param[in] c1 second matrix column value
 	 * @param[in] c2 third matrix column value
+	 * @param[in] c3 fourth matrix column value
 	 */
 	constexpr float4x3(const float3& c0, const float3& c1, const float3& c2, const float3& c3)
 		noexcept : c0(c0), c1(c1), c2(c2), c3(c3) { }
@@ -313,11 +320,14 @@ struct [[nodiscard]] float4x3
 		return ((float3*)this)[i];
 	}
 
-	/*******************************************************************************************************************
-	 * @brief Multiplies all matrix columns by specified value.
-	 * @param v target multiplier value
-	 */
-	constexpr float4x3 operator*(float v) const noexcept { return float4x3(c0 * v, c1 * v, c2 * v, c3 * v); }
+	constexpr float4x3 operator+(float n) const noexcept { return float4x3(c0 + n, c1 + n, c2 + n, c3 + n); }
+	constexpr float4x3 operator-(float n) const noexcept { return float4x3(c0 - n, c1 - n, c2 - n, c3 - n); }
+	constexpr float4x3 operator*(float n) const noexcept { return float4x3(c0 * n, c1 * n, c2 * n, c3 * n); }
+	constexpr float4x3 operator/(float n) const noexcept { return float4x3(c0 / n, c1 / n, c2 / n, c3 / n); }
+	float4x3& operator+=(float n) noexcept { c0 += n; c1 += n; c2 += n; c3 += n; return *this; }
+	float4x3& operator-=(float n) noexcept { c0 -= n; c1 -= n; c2 -= n; c3 -= n; return *this; }
+	float4x3& operator*=(float n) noexcept { c0 *= n; c1 *= n; c2 *= n; c3 *= n; return *this; }
+	float4x3& operator/=(float n) noexcept { c0 /= n, c1 /= n; c2 /= n; c3 /= n; return *this; }
 
 	/**
 	 * @brief Calculates dot product between matrix and vector.
@@ -366,9 +376,9 @@ struct [[nodiscard]] float4x4
 
 	/**
 	 * @brief Creates a new floating point 4x4 matrix structure.
-	 * @param v target value for all columns and rows
+	 * @param n target value for all columns and rows
 	 */
-	constexpr explicit float4x4(float v = 0.0f) noexcept : c0(v), c1(v), c2(v), c3(v) { }
+	constexpr explicit float4x4(float n = 0.0f) noexcept : c0(n), c1(n), c2(n), c3(n) { }
 	/**
 	 * @brief Creates a new floating point 4x4 matrix structure.
 	 *
@@ -382,13 +392,14 @@ struct [[nodiscard]] float4x4
 	/**
 	 * @brief Creates a new floating point 4x4 matrix structure.
 	 *
-	 * @param[in] c0 first matrix column value
-	 * @param[in] c1 second matrix column value
-	 * @param[in] c2 third matrix column value
-	 * @param[in] c3 fourth matrix column value
+	 * @param[in] m4x3 target 4x3 matrix
+	 * @param c0r3 first matrix column fourth component value
+	 * @param c1r3 second matrix column fourth component value
+	 * @param c2r3 third matrix column fourth component value
+	 * @param c3r3 fourth matrix column fourth component value
 	 */
-	constexpr float4x4(const float4x3& m4x3, float c0, float c1, float c2, float c3) noexcept :
-		c0(float4(m4x3.c0, c0)), c1(float4(m4x3.c1, c1)), c2(float4(m4x3.c2, c2)), c3(float4(m4x3.c3, c3)) { }
+	constexpr float4x4(const float4x3& m4x3, float c0r3, float c1r3, float c2r3, float c3r3) noexcept :
+		c0(float4(m4x3.c0, c0r3)), c1(float4(m4x3.c1, c1r3)), c2(float4(m4x3.c2, c2r3)), c3(float4(m4x3.c3, c3r3)) { }
 	/**
 	 * @brief Creates a new floating point 4x4 matrix structure.
 	 * @details See the @ref float4x4.
@@ -407,7 +418,9 @@ struct [[nodiscard]] float4x4
 	 * @brief Returns matrix 4x3 part.
 	 */
 	constexpr explicit operator float4x3() const noexcept
-	{ return float4x3((float3)c0, (float3)c1, (float3)c2, (float3)c3); }
+	{
+		return float4x3((float3)c0, (float3)c1, (float3)c2, (float3)c3);
+	}
 	/**
 	 * @brief Returns matrix 3x3 part.
 	 */
@@ -436,11 +449,14 @@ struct [[nodiscard]] float4x4
 		return ((float4*)this)[i];
 	}
 
-	/*******************************************************************************************************************
-	 * @brief Multiplies all matrix columns by specified value.
-	 * @param v target multiplier value
-	 */
-	constexpr float4x4 operator*(float v) const noexcept { return float4x4(c0 * v, c1 * v, c2 * v, c3 * v); }
+	constexpr float4x4 operator+(float n) const noexcept { return float4x4(c0 + n, c1 + n, c2 + n, c3 + n); }
+	constexpr float4x4 operator-(float n) const noexcept { return float4x4(c0 - n, c1 - n, c2 - n, c3 - n); }
+	constexpr float4x4 operator*(float n) const noexcept { return float4x4(c0 * n, c1 * n, c2 * n, c3 * n); }
+	constexpr float4x4 operator/(float n) const noexcept { return float4x4(c0 / n, c1 / n, c2 / n, c3 / n); }
+	float4x4& operator+=(float n) noexcept { c0 += n; c1 += n; c2 += n; c3 += n; return *this; }
+	float4x4& operator-=(float n) noexcept { c0 -= n; c1 -= n; c2 -= n; c3 -= n; return *this; }
+	float4x4& operator*=(float n) noexcept { c0 *= n; c1 *= n; c2 *= n; c3 *= n; return *this; }
+	float4x4& operator/=(float n) noexcept { c0 /= n, c1 /= n; c2 /= n; c3 /= n; return *this; }
 
 	/**
 	 * @brief Calculates dot product between two matrices.
@@ -500,13 +516,58 @@ inline const float4x4 float4x4::zero = float4x4(0.0f);
 inline const float4x4 float4x4::one = float4x4(1.0f);
 inline const float4x4 float4x4::minusOne = float4x4(-1.0f);
 
+//**********************************************************************************************************************
+static constexpr float4x4 operator+(float n, const float4x4& m) noexcept
+{
+	return float4x4(n + m.c0, n + m.c1, n + m.c2, n + m.c3);
+}
+static constexpr float4x4 operator-(float n, const float4x4& m) noexcept
+{
+	return float4x4(n - m.c0, n - m.c1, n - m.c2, n - m.c3);
+}
+static constexpr float4x4 operator*(float n, const float4x4& m) noexcept
+{
+	return float4x4(n * m.c0, n * m.c1, n * m.c2, n * m.c3);
+}
+static constexpr float4x4 operator/(float n, const float4x4& m) noexcept
+{
+	return float4x4(n / m.c0, n / m.c1, n / m.c2, n / m.c3);
+}
+
+static constexpr float4x3 operator+(float n, const float4x3& m) noexcept
+{
+	return float4x3(n + m.c0, n + m.c1, n + m.c2, n + m.c3);
+}
+static constexpr float4x3 operator-(float n, const float4x3& m) noexcept
+{
+	return float4x3(n - m.c0, n - m.c1, n - m.c2, n - m.c3);
+}
+static constexpr float4x3 operator*(float n, const float4x3& m) noexcept
+{
+	return float4x3(n * m.c0, n * m.c1, n * m.c2, n * m.c3);
+}
+static constexpr float4x3 operator/(float n, const float4x3& m) noexcept
+{
+	return float4x3(n / m.c0, n / m.c1, n / m.c2, n / m.c3);
+}
+
+static constexpr float3x3 operator+(float n, const float3x3& m) noexcept { return float3x3(n + m.c0, n + m.c1, n + m.c2); }
+static constexpr float3x3 operator-(float n, const float3x3& m) noexcept { return float3x3(n - m.c0, n - m.c1, n - m.c2); }
+static constexpr float3x3 operator*(float n, const float3x3& m) noexcept { return float3x3(n * m.c0, n * m.c1, n * m.c2); }
+static constexpr float3x3 operator/(float n, const float3x3& m) noexcept { return float3x3(n / m.c0, n / m.c1, n / m.c2); }
+
+static constexpr float2x2 operator+(float n, const float2x2& m) noexcept { return float2x2(n + m.c0, n + m.c1); }
+static constexpr float2x2 operator-(float n, const float2x2& m) noexcept { return float2x2(n - m.c0, n - m.c1); }
+static constexpr float2x2 operator*(float n, const float2x2& m) noexcept { return float2x2(n * m.c0, n * m.c1); }
+static constexpr float2x2 operator/(float n, const float2x2& m) noexcept { return float2x2(n / m.c0, n / m.c1); }
+
 /***********************************************************************************************************************
  * @brief Calculates dot product between vector and matrix.
  * 
  * @param v target vector to dot with
  * @param m target matrix to dot by
  */
-static float2 operator*(float2 v, float2x2 m) noexcept
+static constexpr float2 operator*(float2 v, float2x2 m) noexcept
 {
 	return float2(
 		m.c0.x * v.x + m.c1.x * v.x,
@@ -518,7 +579,7 @@ static float2 operator*(float2 v, float2x2 m) noexcept
  * @param v target vector to dot with
  * @param[in] m target matrix to dot by
  */
-static float3 operator*(float3 v, const float3x3& m) noexcept
+static constexpr float3 operator*(float3 v, const float3x3& m) noexcept
 {
 	return float3(
 		m.c0.x * v.x + m.c1.x * v.x + m.c2.x * v.x,
@@ -531,7 +592,7 @@ static float3 operator*(float3 v, const float3x3& m) noexcept
  * @param v target vector to dot with
  * @param[in] m target matrix to dot by
  */
-static float4 operator*(float4 v, const float4x4& m) noexcept
+static constexpr float4 operator*(float4 v, const float4x4& m) noexcept
 {
 	return float4(
 		m.c0.x * v.x + m.c1.x * v.x + m.c2.x * v.x + m.c3.x * v.x,
@@ -607,9 +668,9 @@ static constexpr float3x3 inverse(float3x3 m) noexcept
 }
 /**
  * @brief Calculates matrix inverse. (Usefull for undoing transformations)
- * @param[in] matrix target matrix to inverse
+ * @param[in] m target matrix to inverse
  */
-static constexpr float4x4 inverse(float4x4 m) noexcept
+static float4x4 inverse(float4x4 m) noexcept
 {
 	auto c00 = m.c2.z * m.c3.w - m.c3.z * m.c2.w;
 	auto c02 = m.c1.z * m.c3.w - m.c3.z * m.c1.w;

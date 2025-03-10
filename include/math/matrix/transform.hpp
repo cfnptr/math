@@ -15,43 +15,14 @@
 /***********************************************************************************************************************
  * @file
  * @brief Common matrix transformation functions.
- * 
- * @details
- * Coordinate system: X-right, Y-up, Z-forward (Left handed)
- * Matrices order: Column-major. (OpenGL, Vulkan like)
- * floatNxM - N columns and M rows
- * 
- * Based on this project: https://github.com/g-truc/glm
+ * @details Based on this project: https://github.com/g-truc/glm
  */
 
 #pragma once
-#include "math/matrix.hpp"
+#include "math/simd/matrix/transform.hpp"
 
 namespace math
 {
-
-/**
- * @brief Applies translation transformation to an object in 3D space.
- * 
- * @param[in] m target model matrix to translate
- * @param t target object translation
- */
-static constexpr float4x4 translate(const float4x4& m, float3 t) noexcept
-{
-	return float4x4(m.c0, m.c1, m.c2, m.c0 * t.x + m.c1 * t.y + m.c2 * t.z + m.c3);
-}
-/**
- * @brief Creates a new matrix with a specified object position in 3D space.
- * @param t target object translation
- */
-static constexpr float4x4 translate(float3 t) noexcept
-{
-	return float4x4(
-		1.0f, 0.0f, 0.0f, t.x,
-		0.0f, 1.0f, 0.0f, t.y,
-		0.0f, 0.0f, 1.0f, t.z,
-		0.0f, 0.0f, 0.0f, 1.0f);
-}
 
 /**
  * @brief Returns total matrix translation transformation of an object in 3D space.
@@ -73,27 +44,39 @@ static constexpr void setTranslation(float4x4& m, float3 t) noexcept
 }
 
 /**
- * @brief Adds translation of an object in 3D space to the matrix.
- * 
- * @param[out] m target model matrix to use
- * @param t target object position to add
+ * @brief Creates a new matrix with a specified object position in 3D space.
+ * @param t target object translation
  */
-static constexpr void addTranslation(float4x4& m, float3 t) noexcept
+static constexpr float4x4 translate(float3 t) noexcept
 {
-	m.c3 = float4((float3)m.c3 + t, m.c3.w);
+	return float4x4(
+		1.0f, 0.0f, 0.0f, t.x,
+		0.0f, 1.0f, 0.0f, t.y,
+		0.0f, 0.0f, 1.0f, t.z,
+		0.0f, 0.0f, 0.0f, 1.0f);
+}
+/**
+ * @brief Applies translation transformation to an object in 3D space. [r = m * translate(t)]
+ * 
+ * @param[in] m target model matrix to translate
+ * @param t target object translation
+ */
+static constexpr float4x4 translate(const float4x4& m, float3 t) noexcept
+{
+	return float4x4(m.c0, m.c1, m.c2, m.c0 * t.x + m.c1 * t.y + m.c2 * t.z + m.c3);
+}
+/**
+ * @brief Applies translation transformation to an object in 3D space. [r = translate(t) * m]
+ * 
+ * @param t target object translation
+ * @param[in] m target model matrix to translate
+ */
+static constexpr float4x4 translate(float3 t, const float4x4& m) noexcept
+{
+	return float4x4(m.c0, m.c1, m.c2, float4(getTranslation(m) + t, m.c3.w));
 }
 
 /***********************************************************************************************************************
- * @brief Applies scale transformation to an object in 3D space.
- *
- * @param[in] m target model matrix to scale
- * @param s target object scale
- */
-static constexpr float4x4 scale(const float4x4& m, float3 s) noexcept
-{
-	return float4x4(m.c0 * s.x, m.c1 * s.y, m.c2 * s.z, m.c3);
-}
-/**
  * @brief Creates a new matrix with a specified object scale in 3D space.
  * @param s target object scale
  */
@@ -104,6 +87,27 @@ static constexpr float4x4 scale(float3 s) noexcept
 		0.0f, s.y, 0.0f, 0.0f,
 		0.0f, 0.0f, s.z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
+}
+/**
+ * @brief Applies scale transformation to an object in 3D space. [r = m * scale(s)]
+ *
+ * @param[in] m target model matrix to scale
+ * @param s target object scale
+ */
+static constexpr float4x4 scale(const float4x4& m, float3 s) noexcept
+{
+	return float4x4(m.c0 * s.x, m.c1 * s.y, m.c2 * s.z, m.c3);
+}
+/**
+ * @brief Applies scale transformation to an object in 3D space. [r = scale(s) * m]
+ *
+ * @param[in] m target model SIMD matrix to scale
+ * @param s target object scale
+ */
+static constexpr float4x4 scale(float3 s, const float4x4& m) noexcept
+{
+	auto sm = scale(s);
+	return float4x4(sm * m.c0, sm * m.c1, sm * m.c2, sm * m.c3);
 }
 
 /**
@@ -142,11 +146,11 @@ static constexpr float4x4 rotate(quat q) noexcept
 /**
  * @brief Calculates a new rotation matrix from look vectors in 3D space.
  *
- * @param[in] lookFrom viewer position in 3D space
- * @param[in] lookTo object position in 3D space
- * @param[in] up space up direction vector
+ * @param lookFrom viewer position in 3D space
+ * @param lookTo object position in 3D space
+ * @param up space up direction vector
  */
-static float4x4 rotate(const float3& lookFrom, const float3& lookTo, const float3& up = float3::top) noexcept
+static float4x4 rotate(float3 lookFrom, float3 lookTo, float3 up = float3::top) noexcept
 {
 	auto f = normalize(lookTo - lookFrom);
 	auto s = normalize(cross(up, f));
@@ -161,10 +165,10 @@ static float4x4 rotate(const float3& lookFrom, const float3& lookTo, const float
 /**
  * @brief Calculates a new matrix from direction vector in 3D space.
  *
- * @param[in] front view direction vector in 3D space
- * @param[in] up space up direction vector
+ * @param front view direction vector in 3D space
+ * @param up space up direction vector
  */
-static float4x4 rotate(const float3& front, const float3& up = float3::top) noexcept
+static float4x4 rotate(float3 front, float3 up = float3::top) noexcept
 {
 	auto f = front;
 	auto s = normalize(cross(up, f));
@@ -189,12 +193,25 @@ static float4x4 extractRotation(const float4x4& m) noexcept
 	auto c2 = (float3)m.c2 * invScale.z;
 	return float4x4(float4(c0, 0.0f), float4(c1, 0.0f), float4(c2, 0.0f), float4(0.0f, 0.0f, 0.0f, 1.0f));
 }
+/**
+ * @brief Extracts total matrix rotation transformation of an object in 3D space.
+ * @warning Matrix should be only translated and/or rotated, without scaling!!!
+ * @param[in] m target model matrix to extract from
+ */
+static float4x4 extractRotationOnly(const float4x4& m) noexcept
+{
+	return float4x4(
+		float4((float3)m.c0, 0.0f), 
+		float4((float3)m.c1, 0.0f), 
+		float4((float3)m.c2, 0.0f), 
+		float4(0.0f, 0.0f, 0.0f, 1.0f));
+}
 
 /**
  * @brief Extracts total matrix rotation quaternion of an object in 3D space.
- * @param[in] m target rotation matrix to extract from
+ * @param m target rotation matrix to extract from
  */
-static quat extractQuat(const float3x3& m) noexcept
+static quat extractQuat(float3x3 m) noexcept
 {
 	auto fourXSquaredMinus1 = m.c0.x - m.c1.y - m.c2.z;
 	auto fourYSquaredMinus1 = m.c1.y - m.c0.x - m.c2.z;
@@ -247,10 +264,11 @@ static quat extractQuat(const float4x4& m) noexcept
  * @param[in] rotation object rotation in 3D space
  * @param[in] scale object scale in 3D space
  */
-static float4x4 calcModel(const float3& position = float3(0.0f),
-	const quat& rotation = quat::identity, const float3& scale = float3(1.0f)) noexcept
+static float4x4 calcModel(float3 position = float3::zero,
+	quat rotation = quat::identity, float3 scale = float3::one) noexcept
 {
-	return translate(position) * rotate(normalize(rotation)) * math::scale(scale);
+	return scale == float3::one ? translate(position, rotate(normalize(rotation))) :
+		translate(position) * rotate(normalize(rotation)) * math::scale(scale);
 }
 /**
  * @brief Extracts total matrix position, rotation and scale of an object in 3D space. (Decompose)
@@ -260,21 +278,33 @@ static float4x4 calcModel(const float3& position = float3(0.0f),
  * @param[out] scale object scale in 3D space
  * @param[out] rotation object rotation in 3D space
  */
-static void extractTransform(const float4x4& m, float3& position, float3& scale, quat& rotation) noexcept
+static void extractTransform(const float4x4& m, float3& position, quat& rotation, float3& scale) noexcept
 {
 	position = getTranslation(m);
-	scale = extractScale(m);
 	rotation = extractQuat(extractRotation(m));
+	scale = extractScale(m);
+}
+/**
+ * @brief Extracts total matrix position and rotation of an object in 3D space. (Decompose)
+ *
+ * @param[in] m target model matrix to extract from
+ * @param[out] position object position in 3D space
+ * @param[out] rotation object rotation in 3D space
+ */
+static void extractTransform(const float4x4& m, float3& position, quat& rotation) noexcept
+{
+	position = getTranslation(m);
+	rotation = extractQuat(extractRotationOnly(m));
 }
 
 /***********************************************************************************************************************
  * @brief Calculates a new model matrix from look vectors in 3D space.
  *
- * @param[in] from viewer position in 3D space
- * @param[in] to object position in 3D space
- * @param[in] up space up direction vector
+ * @param from viewer position in 3D space
+ * @param to object position in 3D space
+ * @param up space up direction vector
  */
-static float4x4 lookAt(const float3& from, const float3& to, const float3& up = float3::top) noexcept
+static float4x4 lookAt(float3 from, float3 to, float3 up = float3::top) noexcept
 {
 	auto f = normalize(to - from);
 	auto s = normalize(cross(up, f));
@@ -288,16 +318,28 @@ static float4x4 lookAt(const float3& from, const float3& to, const float3& up = 
 /**
  * @brief Calculates a new quaternion from direction vector in 3D space.
  *
- * @param[in] direction viewer direction in 3D space
- * @param[in] up space up direction vector
+ * @param direction viewer direction in 3D space
+ * @param up space up direction vector
  */
-static quat lookAtQuat(const float3& direction, const float3& up = float3::top) noexcept
+static quat lookAtQuat(float3 direction, float3 up = float3::top) noexcept
 {
 	auto right = cross(up, direction);
 	auto c0 = right * (1.0f / std::sqrt(std::max(0.00001f, dot(right, right))));
 	auto c1 = cross(right, c0);
 	auto m = float3x3(c0, c1, direction);
 	return extractQuat(m);
+}
+
+/**
+ * @brief Calculates translated/rotated matrix inverse.
+ * @warning Matrix should be only translated and/or rotated, without scaling!!!
+ * @param[in] m target matrix to inverse
+ */
+static float4x4 inverseTransRot(const float4x4& m)
+{
+	auto t = transpose(m);
+	setTranslation(t, -((float3x3)t * getTranslation(m)));
+	return t;
 }
 
 } // namespace math

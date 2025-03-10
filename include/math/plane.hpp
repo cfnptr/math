@@ -38,119 +38,117 @@ public:
 	 */
 	static constexpr uint8 frustumCount = 6;
 protected:
-	float3 normal;
+	simd_f32_4 normDist = simd_f32_4::zero;
 public:
-	/**
-	 * @brief Distance to the plane in 3D space.
-	 */
-	float distance;
 
 	/**
-	 * @brief Creates a new plane structure.
+	 * @brief Creates a new plane structure. (In 3D space)
 	 * 
-	 * @param[in] normal target plane normal vector
+	 * @param normal target plane normal vector in 3D space
 	 * @param distance target distance to the plane
 	 * @param normalize is normal vector should be normalized
 	 */
-	constexpr Plane(const float3& normal = float3::top, float distance = 0.0f, bool normalize = true) noexcept :
-		normal(normalize ? math::normalize(normal) : normal), distance(distance) { }
+	Plane(simd_f32_4 normal, float distance = 0.0f, bool normalize = true) noexcept :
+		normDist(normalize ? normalize3(normal) : normal) { normDist.setW(distance); }
+	/**
+	 * @brief Creates a new empty plane structure.
+	 */
+	Plane() = default;
+
 	/**
 	 * @brief Calculates a new plane from the triangle. (Polygon)
 	 * @param[in] triangle target triangle (polygon)
 	 */
 	Plane(const Triangle& triangle) noexcept
 	{
-		normal = cross(triangle.p1 - triangle.p0,
-			triangle.p2 - triangle.p0);
-		if (length(normal) > 0.0f)
-			normal = math::normalize(normal);
-		distance = dot(normal, triangle.p0);
+		auto normal = cross3(triangle.p1 - triangle.p0, triangle.p2 - triangle.p0);
+		if (length3(normal) > 0.0f)
+			normal = normalize3(normal);
+		auto distance = dot3(normal, triangle.p0);
+		normDist = simd_f32_4(normal, distance);
 	}
 
 	/**
-	 * @brief Returns plane normal vector.
+	 * @brief Returns plane normal vector in 3D space.
 	 */
-	constexpr const float3& getNormal() const noexcept { return normal; }
+	const simd_f32_4& getNormal() const noexcept { return normDist; }
 	/**
-	 * @brief Sets plane normal vector.
+	 * @brief Sets plane normal vector in 3D space.
 	 * 
-	 * @param[in] normal target plane normal vector
+	 * @param normal target plane normal vector in 3D space
 	 * @param normalize is normal vector should be normalized
 	 */
-	void setNormal(const float3& normal, bool normalize = true) noexcept
+	void setNormal(simd_f32_4 normal, bool normalize = true) noexcept
 	{
-		this->normal = normalize ? math::normalize(normal) : normal;
+		normDist = simd_f32_4(normalize ? normalize3(normal) : normal, normDist.getW());
 	}
+
+	/**
+	 * @brief Returns distance to the plane.
+	 */
+	float getDistance() const noexcept { return normDist.getW(); }
+	/**
+	 * @brief Sets distance to the plane.
+	 * @param distance target distance to the plane
+	 */
+	void setDistance(float distance) noexcept { return normDist.setW(distance); }
+
 	/**
 	 * @brief Normalizes plane normal vector.
 	 */
-	void normalize() noexcept
-	{
-		auto l = length(normal);
-		normal /= l;
-		distance /= l;
-	}
-
-	constexpr bool operator==(const Plane& p) const noexcept { return normal == p.normal && distance == p.distance; }
-	constexpr bool operator!=(const Plane& p) const noexcept { return normal != p.normal || distance != p.distance; }
+	void normalize() noexcept { normDist /= length3(normDist); }
 
 	static const Plane left, right, bottom, top, back, front;
 };
 
-inline const Plane Plane::left = Plane(float3(-1.0f, 0.0f, 0.0f), 0.0f, false);
-inline const Plane Plane::right = Plane(float3(1.0f, 0.0f, 0.0f), 0.0f, false);
-inline const Plane Plane::bottom = Plane(float3(0.0f, -1.0f, 0.0f), 0.0f, false);
-inline const Plane Plane::top = Plane(float3(0.0f, 1.0f, 0.0f), 0.0f, false);
-inline const Plane Plane::back = Plane(float3(0.0f, 0.0f, -1.0f), 0.0f, false);
-inline const Plane Plane::front = Plane(float3(0.0f, 0.0f, 1.0f), 0.0f, false);
+inline const Plane Plane::left = Plane(simd_f32_4(-1.0f, 0.0f, 0.0f, 0.0f), 0.0f, false);
+inline const Plane Plane::right = Plane(simd_f32_4(1.0f, 0.0f, 0.0f, 0.0f), 0.0f, false);
+inline const Plane Plane::bottom = Plane(simd_f32_4(0.0f, -1.0f, 0.0f, 0.0f), 0.0f, false);
+inline const Plane Plane::top = Plane(simd_f32_4(0.0f, 1.0f, 0.0f, 0.0f), 0.0f, false);
+inline const Plane Plane::back = Plane(simd_f32_4(0.0f, 0.0f, -1.0f, 0.0f), 0.0f, false);
+inline const Plane Plane::front = Plane(simd_f32_4(0.0f, 0.0f, 1.0f, 0.0f), 0.0f, false);
 
 /***********************************************************************************************************************
- * @brief Calculates distance between plane and point in 3D space.
+ * @brief Returns distance between plane and point in 3D space.
  * 
  * @param[in] plane target plane to use
- * @param[in] point target point in 3D space
+ * @param point target point in 3D space
  */
-static constexpr float distance(const Plane& plane, const float3& point) noexcept
+static float distance3(const Plane& plane, simd_f32_4 point) noexcept
 {
-	return dot(plane.getNormal(), point) + plane.distance;
+	return dot3(plane.getNormal(), point) + plane.getDistance();
 }
 /**
- * @brief Calculates closest point on the plane to specified one.
+ * @brief Returns closest point on the plane to specified one in 3D space.
  *
  * @param[in] plane target plane to use
  * @param[in] point target point in 3D space
  */
-static constexpr float3 closestPoint(const Plane& plane, const float3& point) noexcept
+static simd_f32_4 closestPoint(const Plane& plane, simd_f32_4 point) noexcept
 {
-	return point - plane.getNormal() * distance(plane, point);
+	return point - plane.getNormal() * simd_f32_4(distance3(plane, point));
 }
 
 /**
- * @brief Calculates closest point on the triangle to specified one.
+ * @brief Returns closest point on the triangle to specified one in 3D space.
  *
  * @param[in] plane target plane to use
  * @param[in] point target point in 3D space
  */
-static float3 closestPoint(const Triangle& triangle, const float3& point) noexcept
+static simd_f32_4 closestPoint(const Triangle& triangle, simd_f32_4 point) noexcept
 {
 	auto p = closestPoint(Plane(triangle), point);
 	if (isInside(triangle, p))
 		return p;
 
-	auto ab = Line(triangle.p0, triangle.p1);
-	auto bc = Line(triangle.p1, triangle.p2);
-	auto ca = Line(triangle.p2, triangle.p0);
-	auto c0 = closestPoint(ab, p);
-	auto c1 = closestPoint(bc, p);
-	auto c2 = closestPoint(ca, p);
-	auto m0 = length2(p - c0);
-	auto m1 = length2(p - c1);
-	auto m2 = length2(p - c2);
-	auto m = min(m0, m1, m2);
+	auto ab = Line(triangle.p0, triangle.p1), bc = Line(triangle.p1, triangle.p2), ca = Line(triangle.p2, triangle.p0);
+	auto c0 = closestPoint(ab, p), c1 = closestPoint(bc, p), c2 = closestPoint(ca, p);
+	auto v = simd_f32_4(lengthSq3(p - c0), lengthSq3(p - c1), lengthSq3(p - c2));
+	auto m = min3(v);
 
-	if (m == m0)
+	if (m == v.getX())
 		return c0;
-	if (m == m1)
+	if (m == v.getY())
 		return c1;
 	return c2;
 }
@@ -162,21 +160,18 @@ static float3 closestPoint(const Triangle& triangle, const float3& point) noexce
  * @param[in] frustum target projection matrix
  * @param[out] planes frustum plane array (6 planes)
  */
-static void extractFrustumPlanes(const float4x4& frustum, Plane* planes) noexcept
+static void extractFrustumPlanes(const simd_f32_4x4& frustum, Plane* planes) noexcept
 {
+	auto t = transpose4x4(frustum);
+	auto c0W = t.c0.getW(), c1W = t.c1.getW(), c2W = t.c2.getW(), c3W = t.c3.getW();
+	
 	// Gribb & Hartmann method
-	planes[0] = Plane(float3(frustum.c0.w + frustum.c0.x, frustum.c1.w + frustum.c1.x,
-		frustum.c2.w + frustum.c2.x), frustum.c3.w + frustum.c3.x, false);
-	planes[1] = Plane(float3(frustum.c0.w - frustum.c0.x, frustum.c1.w - frustum.c1.x,
-		frustum.c2.w - frustum.c2.x), frustum.c3.w - frustum.c3.x, false);
-	planes[2] = Plane(float3(frustum.c0.w - frustum.c0.y, frustum.c1.w - frustum.c1.y,
-		frustum.c2.w - frustum.c2.y), frustum.c3.w - frustum.c3.y, false); // Flipped Vulkan NDC!
-	planes[3] = Plane(float3(frustum.c0.w + frustum.c0.y, frustum.c1.w + frustum.c1.y,
-		frustum.c2.w + frustum.c2.y), frustum.c3.w + frustum.c3.y, false); // Flipped Vulkan NDC!
-	planes[4] = Plane(float3(frustum.c0.z,
-		frustum.c1.z, frustum.c2.z), frustum.c3.z, false);
-	planes[5] = Plane(float3(frustum.c0.w - frustum.c0.z, frustum.c1.w - frustum.c1.z,
-		frustum.c2.w - frustum.c2.z), frustum.c3.w - frustum.c3.z, false);
+	planes[0] = Plane(simd_f32_4(t.c3 + t.c0, 0.0f), c3W + c0W, false);
+	planes[1] = Plane(simd_f32_4(t.c3 - t.c0, 0.0f), c3W - c0W, false);
+	planes[2] = Plane(simd_f32_4(t.c3 - t.c1, 0.0f), c3W - c1W, false); // Flipped Vulkan NDC!
+	planes[3] = Plane(simd_f32_4(t.c3 + t.c1, 0.0f), c3W + c1W, false); // Flipped Vulkan NDC!
+	planes[4] = Plane(simd_f32_4(t.c2,        0.0f),       c2W, false);
+	planes[5] = Plane(simd_f32_4(t.c3 - t.c2, 0.0f), c3W - c2W, false);
 }
 /**
  * @brief Normalizes specified planes.

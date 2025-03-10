@@ -37,26 +37,22 @@ static constexpr float radians(float degrees) noexcept { return degrees * ((floa
  * @brief Converts specified vector in degrees to radians.
  * @param degrees target vector in degrees
  */
-static constexpr float2 radians(float2 degrees) noexcept
-{
-	return float2(radians(degrees.x), radians(degrees.y));
-}
+static constexpr float2 radians(float2 degrees) noexcept { return degrees * ((float)M_PI / 180.0f); }
 /**
  * @brief Converts specified vector in degrees to radians.
  * @param degrees target vector in degrees
  */
-static constexpr float3 radians(float3 degrees) noexcept
-{
-	return float3(radians(degrees.x), radians(degrees.y), radians(degrees.z));
-}
+static constexpr float3 radians(float3 degrees) noexcept { return degrees * ((float)M_PI / 180.0f); }
 /**
  * @brief Converts specified vector in degrees to radians.
  * @param degrees target vector in degrees
  */
-static constexpr float4 radians(float4 degrees) noexcept
-{
-	return float4(radians(degrees.x), radians(degrees.y), radians(degrees.z), radians(degrees.w));
-}
+static constexpr float4 radians(float4 degrees) noexcept { return degrees * ((float)M_PI / 180.0f); }
+/**
+ * @brief Converts specified SIMD vector in degrees to radians.
+ * @param degrees target SIMD vector in degrees
+ */
+static simd_f32_4 radians(simd_f32_4 degrees) noexcept { return degrees * (float)M_PI / 180.0f; }
 
 /**
  * @brief Converts specified value in radians to degrees.
@@ -67,25 +63,21 @@ static constexpr float degrees(float radians) noexcept { return radians * (180.0
  * @brief Converts specified vector in radians to degrees.
  * @param degrees target vector in radians
  */
-static constexpr float2 degrees(float2 radians) noexcept
-{
-	return float2(degrees(radians.x), degrees(radians.y));
-}
+static constexpr float2 degrees(float2 radians) noexcept { return radians * (180.0f / (float)M_PI); }
 /**
  * @brief Converts specified vector in radians to degrees.
  * @param degrees target vector in radians
  */
-static constexpr float3 degrees(float3 radians) noexcept
-{
-	return float3(degrees(radians.x), degrees(radians.y), degrees(radians.z));
-}
+static constexpr float3 degrees(float3 radians) noexcept { return radians * (180.0f / (float)M_PI); }
 /**
  * @brief Converts specified vector in radians to degrees.
  * @param degrees target vector in radians
  */
-static constexpr float4 degrees(float4 radians) noexcept
-{
-	return float4(degrees(radians.x), degrees(radians.y), degrees(radians.z), degrees(radians.w));
-}
+static constexpr float4 degrees(float4 radians) noexcept { return radians * (180.0f / (float)M_PI); }
+/**
+ * @brief Converts specified SIMD vector in radians to degrees.
+ * @param degrees target SIMD vector in radians
+ */
+static simd_f32_4 degrees(simd_f32_4 radians) noexcept { return radians * 180.0f / (float)M_PI; }
 
 }; // namespace math

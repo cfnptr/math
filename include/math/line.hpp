@@ -31,73 +31,69 @@ namespace math
 struct [[nodiscard]] Line
 {
 	/**
-	 * @brief Line start point in the space.
+	 * @brief Line start point in 3D space.
 	 */
-	float3 start = float3(0.0f);
+	simd_f32_4 start = simd_f32_4::zero;
 	/**
-	 * @brief Line end point in the space.
+	 * @brief Line end point in 3D space.
 	 */
-	float3 end = float3(0.0f);
+	simd_f32_4 end = simd_f32_4::zero;
 
 	/**
-	 * @brief Creates a new line structure.
+	 * @brief Creates a new line structure. (In 3D space)
 	 * 
-	 * @param[in] start target line start point in the space
-	 * @param[in] end target line end point in the space
+	 * @param start target line start point in the space
+	 * @param end target line end point in the space
 	 */
-	constexpr Line(const float3& start, const float3& end) noexcept : start(start), end(end) { }
+	Line(simd_f32_4 start, simd_f32_4 end) noexcept : start(start), end(end) { }
 	/**
 	 * @brief Creates a new zero size line structure.
 	 */
-	constexpr Line() = default;
+	Line() = default;
 
 	/**
-	 * @brief Returns line direction vector. (Unnormalized)
+	 * @brief Returns line direction vector in 3D space.
+	 * @param normalize is direction vector should be normalized
 	 */
-	constexpr float3 getVector() const noexcept { return end - start; }
-	/**
-	 * @brief Returns line direction vector. (Normalized)
-	 */
-	float3 getVectorNorm() const noexcept { return normalize(end - start); }
+	simd_f32_4 getDirection(bool normalize = true) const noexcept
+	{
+		return normalize ? normalize3(end - start) : end - start;
+	}
 
-	constexpr Line operator*(const float3& v) const noexcept { return Line(start * v, end * v); }
-	constexpr Line operator/(const float3& v) const noexcept { return Line(start / v, end / v); }
-	constexpr Line operator+(const float3& v) const noexcept { return Line(start + v, end + v); }
-	constexpr Line operator-(const float3& v) const noexcept { return Line(start - v, end - v); }
-	Line& operator*=(const float3& v) noexcept { start *= v; end *= v; return *this; }
-	Line& operator/=(const float3& v) noexcept { start /= v; end /= v; return *this; }
-	Line& operator+=(const float3& v) noexcept { start += v; end += v; return *this; }
-	Line& operator-=(const float3& v) noexcept { start -= v; end -= v; return *this; }
-	constexpr bool operator==(const Line& l) const noexcept { return start == l.start && end == l.end; }
-	constexpr bool operator!=(const Line& l) const noexcept { return start != l.start || end != l.end; }
+	Line operator*(simd_f32_4 v) const noexcept { return Line(start * v, end * v); }
+	Line operator/(simd_f32_4 v) const noexcept { return Line(start / v, end / v); }
+	Line operator+(simd_f32_4 v) const noexcept { return Line(start + v, end + v); }
+	Line operator-(simd_f32_4 v) const noexcept { return Line(start - v, end - v); }
+	Line& operator*=(simd_f32_4 v) noexcept { start *= v; end *= v; return *this; }
+	Line& operator/=(simd_f32_4 v) noexcept { start /= v; end /= v; return *this; }
+	Line& operator+=(simd_f32_4 v) noexcept { start += v; end += v; return *this; }
+	Line& operator-=(simd_f32_4 v) noexcept { start -= v; end -= v; return *this; }
 };
 
 /**
- * @brief Returns closest point on line to the specified one.
+ * @brief Returns closest point on line to the specified one in 3D space.
  * 
  * @param[in] line target line to use
- * @param[in] point target point in the space
+ * @param point target point in 3D space
  */
-static constexpr float3 closestPoint(const Line& line, const float3& point) noexcept
+static simd_f32_4 closestPoint(const Line& line, simd_f32_4 point) noexcept
 {
-	auto a = line.start;
-	auto v = line.getVector();
-	auto t = dot(point - a, v) / dot(v, v); 
-	return a + v * std::clamp(t, 0.0f, 1.0f);
+	auto a = line.start, d = line.getDirection(false);
+	auto t = dot3(point - a, d) / dot3(d, d);
+	return fma(d, simd_f32_4(std::clamp(t, 0.0f, 1.0f)), a);
 }
 /**
- * @brief Returns closest point on line to the specified one.
+ * @brief Returns closest point on line to the specified one in 3D space.
  *
  * @param[in] line target line to use
- * @param[in] point target point in the space
+ * @param point target point in 3D space
  * @param[out] t distance to the closest point
  */
-static constexpr float3 closestPoint(const Line& line, const float3& point, float& t) noexcept
+static simd_f32_4 closestPoint(const Line& line, simd_f32_4 point, float& t) noexcept
 {
-	auto a = line.start;
-	auto v = line.getVector();
-	t = dot(point - a, v) / dot(v, v); 
-	return a + v * std::clamp(t, 0.0f, 1.0f);
+	auto a = line.start, d = line.getDirection(false);
+	t = dot3(point - a, d) / dot3(d, d);
+	return fma(d, simd_f32_4(std::clamp(t, 0.0f, 1.0f)), a);
 }
 
 } // namespace math

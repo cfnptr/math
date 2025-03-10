@@ -22,6 +22,8 @@
 #include "math/ray.hpp"
 #include "math/plane.hpp"
 
+// TODO: Port more Jolt optimized BBox functions.
+
 namespace math
 {
 
@@ -38,179 +40,194 @@ namespace math
 struct [[nodiscard]] Aabb
 {
 protected:
-	float3 min, max;
+	simd_f32_4 min, max;
 public:
 	/**
-	 * @brief Creates a new Axis Aligned Bounding Box. (AABB)
+	 * @brief Creates a new Axis Aligned Bounding Box in 3D space. (AABB)
 	 * 
-	 * @param[in] min minimum bounding box corner position in the space
-	 * @param[in] max maximum bounding box corner position in the space
+	 * @param min minimum bounding box corner position in 3D space
+	 * @param max maximum bounding box corner position in 3d space
 	 */
-	constexpr Aabb(const float3& min = float3(0.0f), const float3& max = float3(0.0f)) noexcept : min(min), max(max)
+	Aabb(simd_f32_4 min = simd_f32_4::zero, simd_f32_4 max = simd_f32_4::zero) noexcept : min(min), max(max)
 	{
 		assert(areAllTrue(min <= max));
 	}
 
 	/**
-	 * @brief Returns minimum AABB corner position in the space.
+	 * @brief Returns minimum AABB corner position in 3D space.
 	 * @details The point that has the smallest values for all axes.
 	 */
-	constexpr const float3& getMin() const noexcept { return min; }
+	const simd_f32_4& getMin() const noexcept { return min; }
 	/**
-	 * @brief Returns maximum AABB corner position in the space.
+	 * @brief Returns maximum AABB corner position in 3D space.
 	 * @details The point that has the biggest values for all axes.
 	 */
-	constexpr const float3& getMax() const noexcept { return max; }
+	const simd_f32_4& getMax() const noexcept { return max; }
 
 	/**
-	 * @brief Sets minimum AABB corner position in the space.
+	 * @brief Sets minimum AABB corner position in 3D space.
 	 * @details See the @ref getMin().
-	 * @param[in] min minimum bounding box corner position in the space
+	 * @param min minimum bounding box corner position in 3D space
 	 */
-	void setMin(const float3& min) noexcept
+	void setMin(simd_f32_4 min) noexcept
 	{
 		assert(areAllTrue(min <= this->max));
 		this->min = min;
 	}
 	/**
-	 * @brief Sets maximum AABB corner position in the space.
+	 * @brief Sets maximum AABB corner position in 3D space.
 	 * @details See the @ref setMax().
-	 * @param[in] max maximum bounding box corner position in the space
+	 * @param max maximum bounding box corner position in 3D space
 	 */
-	void setMax(const float3& max) noexcept
+	void setMax(simd_f32_4 max) noexcept
 	{
 		assert(areAllTrue(max >= this->min));
 		this->max = max;
 	}
 	/**
-	 * @brief Sets minimum and maximum AABB corner position in the space.
+	 * @brief Sets minimum and maximum AABB corner position in 3D space.
 	 * @details See the @ref getMin() and @ref getMax().
 	 * 
-	 * @param[in] min minimum bounding box corner position in the space
-	 * @param[in] max maximum bounding box corner position in the space
+	 * @param min minimum bounding box corner position in 3D space
+	 * @param max maximum bounding box corner position in 3D space
 	 */
-	void set(const float3& min, const float3& max) noexcept
+	void set(simd_f32_4 min, simd_f32_4 max) noexcept
 	{
 		assert(areAllTrue(min <= max));
-		this->min = min;
-		this->max = max;
+		this->min = min; this->max = max;
 	}
 	
 	/**
-	 * @brief Sets size and position of the bounding box.
-	 * 
-	 * @param[in] size target size of the bounding box
-	 * @param[in] position target position of the bounding box in space
+	 * @brief Sets size of the bounding box.
+	 * @param size target size of the bounding box
 	 */
-	void setSize(const float3& size, const float3& position = float3(0.0f)) noexcept
+	void setSize(simd_f32_4 size) noexcept
 	{
 		assert(areAllTrue(size >= 0.0f));
 		auto extent = size * 0.5f;
-		min = position - extent;
-		max = position + extent;
+		min = -extent; max = extent;
+	}
+	/**
+	 * @brief Sets size and position of the bounding box in 3D space.
+	 * 
+	 * @param size target size of the bounding box
+	 * @param position target position of the bounding box in 3D space
+	 */
+	void setSize(simd_f32_4 size, simd_f32_4 position) noexcept
+	{
+		assert(areAllTrue(size >= 0.0f));
+		auto extent = size * 0.5f;
+		min = position - extent; max = position + extent;
 	}
 
 	/**
 	 * @brief Returns size of the bounding box.
 	 */
-	constexpr float3 getSize() const noexcept { return max - min; }
+	simd_f32_4 getSize() const noexcept { return max - min; }
 	/**
-	 * @brief Returns position of the bounding box.
+	 * @brief Returns position of the bounding box in 3D space.
 	 */
-	constexpr float3 getPosition() const noexcept { return (min + max) * 0.5f; }
+	simd_f32_4 getPosition() const noexcept { return (min + max) * 0.5f; }
 
 	/*******************************************************************************************************************
-	 * @brief Sets extent and position of the bounding box.
-	 * 
-	 * @param[in] extent target extent of the bounding box (half size)
-	 * @param[in] position target position of the bounding box in space
+	 * @brief Sets extent and position of the bounding box in 3D space.
+	 * @param extent target extent of the bounding box (half size)
 	 */
-	void setExtent(const float3& extent, const float3& position = float3(0.0f)) noexcept
+	void setExtent(simd_f32_4 extent) noexcept
 	{
 		assert(areAllTrue(extent >= 0.0f));
-		min = position - extent;
-		max = position + extent;
+		min = -extent; max = extent;
+	}
+	/**
+	 * @brief Sets extent and position of the bounding box in 3D space.
+	 * 
+	 * @param extent target extent of the bounding box (half size)
+	 * @param position target position of the bounding box in 3D space
+	 */
+	void setExtent(simd_f32_4 extent, simd_f32_4 position) noexcept
+	{
+		assert(areAllTrue(extent >= 0.0f));
+		min = position - extent; max = position + extent;
 	}
 
-	/**
-	 * @brief Returns extent and position of the bounding box.
-	 * 
-	 * @param[out] extent target extent of the bounding box (half size)
-	 * @param[out] position target position of the bounding box in space
-	 */
-	void getExtent(float3& extent, float3& position) const noexcept
-	{
-		extent = (max - min) * 0.5f;
-		position = min + extent;
-	}
 	/**
 	 * @brief Returns extent of the bounding box. (half size)
 	 */
-	constexpr float3 getExtent() const noexcept { return (max - min) * 0.5f; }
+	simd_f32_4 getExtent() const noexcept { return (max - min) * 0.5f; }
+	/**
+	 * @brief Returns extent and position of the bounding box in 3D space.
+	 * 
+	 * @param extent target extent of the bounding box (half size)
+	 * @param position target position of the bounding box in 3D space
+	 */
+	void getExtent(simd_f32_4& extent, simd_f32_4& position) const noexcept
+	{
+		extent = (max - min) * 0.5f; position = min + extent;
+	}
 
 	/**
-	 * @brief Extends bounding box min and max corner positions.
-	 * @param[in] point target point to include into the bounding box
+	 * @brief Extends bounding box min and max corner positions in 3D space.
+	 * @param point target point to include into the bounding box in 3D space
 	 */
-	void extend(const float3& point) noexcept
+	void extend(simd_f32_4 point) noexcept
 	{
-		min = math::min(min, point);
-		max = math::max(max, point); 
+		min = math::min(min, point); max = math::max(max, point); 
 	}
 	/**
-	 * @brief Extends bounding box min and max corner positions.
+	 * @brief Extends bounding box min and max corner positions in 3D space.
 	 * @param[in] aabb target AABB to include into the bounding box
 	 */
 	void extend(const Aabb& aabb) noexcept
 	{
-		min = math::min(min, aabb.min);
-		max = math::max(max, aabb.max); 
+		min = math::min(min, aabb.min); max = math::max(max, aabb.max); 
 	}
 
 	/**
-	 * @brief Calculates area of the AABB.
+	 * @brief Translates bounding box in 3D space.
+	 * @param translation target translation transformation in 3D space
 	 */
-	constexpr float calcArea() const noexcept
+	void translate(simd_f32_4 translation) noexcept { min += translation; max += translation; }
+	/**
+	 * @brief Scales bounding box in 3D space.
+	 * @param scale target scale transformation in 3D space
+	 */
+	void scale(simd_f32_4 scale) noexcept { min *= scale; max *= scale; }
+
+	// TODO: update min max using rotation matrix
+
+	/**
+	 * @brief Calculates area of the bounding box.
+	 */
+	float calcArea() const noexcept
 	{
 		auto extent = max - min;
-		return extent.x * extent.y + extent.y * extent.z + extent.z * extent.x;
+		return 2.0f * (extent.getX() * extent.getY() + extent.getX() * extent.getZ() + extent.getY() * extent.getZ());
+	}
+	/**
+	 * @brief Calculates volume of the bounding box.
+	 */
+	float calcVolume() const noexcept
+	{
+		auto extent = max - min;
+		return extent.getX() * extent.getY() * extent.getZ();
 	}
 
-	constexpr Aabb operator*(const float3& v) const noexcept { return Aabb(min * v, max * v); }
-	constexpr Aabb operator/(const float3& v) const noexcept { return Aabb(min / v, max / v); }
-	constexpr Aabb operator+(const float3& v) const noexcept { return Aabb(min + v, max + v); }
-	constexpr Aabb operator-(const float3& v) const noexcept { return Aabb(min - v, max - v); }
-	Aabb& operator*=(const float3& v) noexcept { min *= v; max *= v; return *this; }
-	Aabb& operator/=(const float3& v) noexcept { min /= v; max /= v; return *this; }
-	Aabb& operator+=(const float3& v) noexcept { min += v; max += v; return *this; }
-	Aabb& operator-=(const float3& v) noexcept { min -= v; max -= v; return *this; }
-	constexpr bool operator==(const Aabb& v) const noexcept { return min == v.min && max == v.max; }
-	constexpr bool operator!=(const Aabb& v) const noexcept { return min != v.min || max != v.max; }
-
-	constexpr bool operator<(const Aabb& v) const noexcept
-	{
-		return areAllTrue(min < v.min) && areAllTrue(max < v.max);
-	}
-	constexpr bool operator>(const Aabb& v) const noexcept
-	{ 
-		return areAllTrue(min > v.min) && areAllTrue(max > v.max);
-	}
-	constexpr bool operator<=(const Aabb& v) const noexcept
-	{
-		return areAllTrue(min <= v.min) && areAllTrue(max <= v.max);
-	}
-	constexpr bool operator>=(const Aabb& v) const noexcept
-	{
-		return areAllTrue(min >= v.min) && areAllTrue(max >= v.max);
-	}
+	Aabb operator*(simd_f32_4 v) const noexcept { return Aabb(min * v, max * v); }
+	Aabb operator/(simd_f32_4 v) const noexcept { return Aabb(min / v, max / v); }
+	Aabb operator+(simd_f32_4 v) const noexcept { return Aabb(min + v, max + v); }
+	Aabb operator-(simd_f32_4 v) const noexcept { return Aabb(min - v, max - v); }
+	Aabb& operator*=(simd_f32_4 v) noexcept { min *= v; max *= v; return *this; }
+	Aabb& operator/=(simd_f32_4 v) noexcept { min /= v; max /= v; return *this; }
+	Aabb& operator+=(simd_f32_4 v) noexcept { min += v; max += v; return *this; }
+	Aabb& operator-=(simd_f32_4 v) noexcept { min -= v; max -= v; return *this; }
 	
 	static const Aabb zero, one, two, half;
 };
 
-inline const Aabb Aabb::zero = Aabb(float3(0.0f), float3(0.0f));
-inline const Aabb Aabb::one = Aabb(float3(-0.5f), float3(0.5f));
-inline const Aabb Aabb::two = Aabb(float3(-1.0f), float3(1.0f));
-inline const Aabb Aabb::half = Aabb(float3(-0.25f), float3(0.25f));
+inline const Aabb Aabb::zero = Aabb(simd_f32_4::zero, simd_f32_4::zero);
+inline const Aabb Aabb::one = Aabb(simd_f32_4(-0.5f), simd_f32_4(0.5f));
+inline const Aabb Aabb::two = Aabb(simd_f32_4::minusOne, simd_f32_4::one);
+inline const Aabb Aabb::half = Aabb(simd_f32_4(-0.25f), simd_f32_4(0.25f));
 
 /**
  * @brief Returns true if first AABB binary representation is less than the second.
@@ -221,59 +238,113 @@ inline const Aabb Aabb::half = Aabb(float3(-0.25f), float3(0.25f));
 static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(&a, &b, sizeof(float3) * 2) < 0; }
 
 /***********************************************************************************************************************
- * @brief Returns true if point is inside the AABB.
+ * @brief Returns true if point is inside the AABB in 3D space.
  * 
  * @param[in] aabb target AABB to check
- * @param[in] point target point in the space
+ * @param point target point in the space
  */
-static constexpr bool isInside(const Aabb& aabb, const float3& point) noexcept
+static bool isInside(const Aabb& aabb, simd_f32_4 point) noexcept
 {
-	return areAllTrue(aabb.getMin() <= point) && areAllTrue(point <= aabb.getMax());
+	return areAllTrue(aabb.getMin() <= point & aabb.getMax() >= point);
 }
 /**
- * @brief Returns closest point inside AABB to the specified one.
+ * @brief Returns true if other AABB is inside this AABB in 3D space.
+ * 
+ * @param[in] aabb this AABB
+ * @param[in] other another AABB to check
+ */
+static bool isInside(const Aabb& aabb, const Aabb& other) noexcept
+{
+	return areAllTrue(aabb.getMin() <= other.getMin() & aabb.getMax() >= other.getMax());
+}
+
+/**
+ * @brief Returns closest point inside AABB to the specified one in 3D space.
  *
  * @param[in] aabb target AABB to use
- * @param[in] point target point in the space
+ * @param point target point in the space
  */
-static constexpr float3 closestPoint(const Aabb& aabb, const float3& point) noexcept
+static simd_f32_4 closestPoint(const Aabb& aabb, simd_f32_4 point) noexcept
 {
 	return clamp(point, aabb.getMin(), aabb.getMax());
 }
 
 /**
- * @brief Calculates where ray intersects the AABB.
- * @return Distance to the intersection points.
+ * @brief Calculates where ray intersects the AABB in 3D space. (Ray is inversed!)
+ * @return Distance to the intersection points, or FLT_MAX; -FLT_MAX if no hit.
  *
- * @param[in] aabb target AABB to raycast
- * @param[in] ray target ray in the space
+ * @param aabb target AABB to raycast
+ * @param ray target ray in the space (inversed!)
  */
-float2 raycast2(const Aabb& aabb, const Ray& ray) noexcept;
+static float2 raycast2I(Aabb aabb, Ray ray) noexcept
+{
+	auto t1 = (aabb.getMin() - ray.origin) * ray.getDirection();
+	auto t2 = (aabb.getMax() - ray.origin) * ray.getDirection();
+	auto tMin = select(ray.getParallel(), simd_f32_4::minusMax, min(t1, t2));
+	auto tMax = select(ray.getParallel(), simd_f32_4::max, max(t1, t2));
+	tMin = max(tMin, tMin.swizzle<SwY, SwZ, SwX>());
+	tMin = max(tMin, tMin.swizzle<SwZ, SwX, SwY>());
+	tMax = min(tMax, tMax.swizzle<SwY, SwZ, SwX>());
+	tMax = min(tMax, tMax.swizzle<SwZ, SwX, SwY>());
+
+	auto noParallelOverlap = (ray.origin < aabb.getMin()) | (ray.origin > aabb.getMax());
+	auto noIntersection = (tMin > tMax) | (tMax < simd_f32_4::zero) | (ray.getParallel() & noParallelOverlap);
+	noIntersection |= noIntersection.splatY();
+	noIntersection |= noIntersection.splatZ();
+
+	return float2(
+		select(noIntersection, simd_f32_4::max, tMin).getX(), 
+		select(noIntersection, simd_f32_4::minusMax, tMax).getX());
+}
 /**
- * @brief Calculates where ray intersects the AABB. (Ray is inversed!)
- * @return Distance to the intersection points.
+ * @brief Calculates where ray intersects the AABB in 3D space.
+ * @return Distance to the intersection points, or FLT_MAX; -FLT_MAX if no hit.
  *
  * @param[in] aabb target AABB to raycast
- * @param[in] ray target ray in the space (inversed)
+ * @param ray target ray in the space
  */
-float2 raycast2I(const Aabb& aabb, const Ray& ray) noexcept;
+static float2 raycast2(const Aabb& aabb, Ray ray) noexcept
+{
+	ray.setDirection(simd_f32_4::one / ray.getDirection());
+	return raycast2I(aabb, ray);
+}
 
 /**
- * @brief Calculates where ray intersects the AABB.
- * @return Distance to the first intersection point.
- *
- * @param[in] aabb target AABB to raycast
- * @param[in] ray target ray in the space
- */
-float raycast1(const Aabb& aabb, const Ray& ray) noexcept;
-/**
- * @brief Calculates where ray intersects the AABB. (Ray is inversed!)
- * @return Distance to the first intersection point.
+ * @brief Calculates where ray intersects the AABB in 3D space. (Ray is inversed!)
+ * @return Distance to the first intersection point, or FLT_MAX; -FLT_MAX if no hit.
  *
  * @param[in] aabb target AABB to raycast
  * @param[in] ray target ray in the space (inversed)
  */
-float raycast1I(const Aabb& aabb, const Ray& ray) noexcept;
+static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
+{
+	auto t1 = (aabb.getMin() - ray.origin) * ray.getDirection();
+	auto t2 = (aabb.getMax() - ray.origin) * ray.getDirection();
+	auto tMin = select(ray.getParallel(), simd_f32_4::minusMax, min(t1, t2));
+	auto tMax = select(ray.getParallel(), simd_f32_4::max, max(t1, t2));
+	tMin = max(tMin, tMin.swizzle<SwY, SwZ, SwX>());
+	tMin = max(tMin, tMin.swizzle<SwZ, SwX, SwY>());
+	tMax = min(tMax, tMax.swizzle<SwY, SwZ, SwX>());
+	tMax = min(tMax, tMax.swizzle<SwZ, SwX, SwY>());
+
+	auto noParallelOverlap = (ray.origin < aabb.getMin()) | (ray.origin > aabb.getMax());
+	auto noIntersection = (tMin > tMax) | (tMax < simd_f32_4::zero) | (ray.getParallel() & noParallelOverlap);
+	noIntersection |= noIntersection.splatY();
+	noIntersection |= noIntersection.splatZ();
+	return select(noIntersection, simd_f32_4::max, tMin).getX();
+}
+/**
+ * @brief Calculates where ray intersects the AABB in 3D space.
+ * @return Distance to the first intersection point, or FLT_MAX; -FLT_MAX if no hit.
+ *
+ * @param[in] aabb target AABB to raycast
+ * @param ray target ray in the space
+ */
+static float raycast1(const Aabb& aabb, Ray ray) noexcept
+{
+	ray.setDirection(simd_f32_4::one / ray.getDirection());
+	return raycast1I(aabb, ray);
+}
 
 /**
  * @brief Returns true if ray is intersecting the AABB.
@@ -286,7 +357,7 @@ static constexpr bool isAabbIntersected(float2 raycastDists) noexcept
 }
 
 /**
- * @brief Returns true if ray intersects the AABB.
+ * @brief Returns true if ray intersects the AABB in 3D space.
  * 
  * @param[in] aabb target AABB to raycast
  * @param[in] ray target ray in the space
@@ -314,18 +385,18 @@ static bool raycastI(const Aabb& aabb, const Ray& ray) noexcept
  */
 static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 {
-	return areAllTrue(a.getMin() <= b.getMax()) && areAllTrue(b.getMin() <= a.getMax());
+	return areAllTrue(a.getMin() <= b.getMax() & a.getMin() >= b.getMax());
 }
 
 /**
  * @brief Returns true if triangle intersects the AABB.
  * @details Usefull for a fast 3D model voxelization.
  *
- * @param[in] center target AABB center point in the space
- * @param[in] extent target AABB extent (half size)
+ * @param position target AABB position in 3D space
+ * @param extent target AABB extent (half size)
  * @param[in] triangle target triangle in the space
  */
-bool isAabbIntersected(const float3& center, float3 extent, const Triangle& triangle) noexcept;
+bool isAabbIntersected(simd_f32_4 position, simd_f32_4 extent, const Triangle& triangle) noexcept;
 
 /**
  * @brief Returns true if AABB is behind the frustum planes.
@@ -339,9 +410,35 @@ bool isAabbIntersected(const float3& center, float3 extent, const Triangle& tria
  * @param[in] aabb target AABB to check
  * @param[in] model AABB transformation matrix
  * @param[in] planes target frustum planes
- * @param[in] planeCount frustum plane count
+ * @param planeCount frustum plane count
  */
-bool isBehindFrustum(const Aabb& aabb, const float4x4& model,
-	const Plane* planes, uint8 planeCount = Plane::frustumCount) noexcept;
+static bool isBehindFrustum(const Aabb& aabb, const simd_f32_4x4& model,
+	const Plane* planes, uint8 planeCount = Plane::frustumCount) noexcept
+{
+	auto min = aabb.getMin(), max = aabb.getMax();
+	auto minX = min.getX(), minY = min.getY(), minZ = min.getZ();
+	auto maxX = max.getX(), maxY = max.getY(), maxZ = max.getZ();
+
+	auto v0 = model * simd_f32_4(min, 1.0f);
+	auto v1 = model * simd_f32_4(minX, minY, maxZ, 1.0f);
+	auto v2 = model * simd_f32_4(minX, maxY, minZ, 1.0f);
+	auto v3 = model * simd_f32_4(minX, maxY, maxZ, 1.0f);
+	auto v4 = model * simd_f32_4(maxX, minY, minZ, 1.0f);
+	auto v5 = model * simd_f32_4(maxX, minY, maxZ, 1.0f);
+	auto v6 = model * simd_f32_4(maxX, maxY, minZ, 1.0f);
+	auto v7 = model * simd_f32_4(max, 1.0f);
+
+	for (uint8 i = 0; i < planeCount; i++)
+	{
+		auto plane = planes[i];
+		auto d0 = simd_f32_4(distance3(plane, v0), distance3(plane, v1), distance3(plane, v2), distance3(plane, v3));
+		auto d1 = simd_f32_4(distance3(plane, v4), distance3(plane, v5), distance3(plane, v6), distance3(plane, v7)); // TODO: use simd_f32_8?
+		
+		if (areAllTrue(d0 < 0.0f & d1 < 0.0f))
+			return true;
+	}
+
+	return false;
+}
 
 } // namespace math
