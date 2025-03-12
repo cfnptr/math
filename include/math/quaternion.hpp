@@ -100,7 +100,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) quat : public f32x4
 	 * @brief Rotates this SIMD quaternion by the specified one.
 	 * @param v target SIMD quaternion to rotate by
 	 */
-	f32x4& operator*=(f32x4 v) noexcept { return *this = *this * v; }
+	quat& operator*=(quat v) noexcept { return *this = *this * v; }
 
 	/**
 	 * @brief Extracts SIMD quaternion rotation around X axis. (In radians)
