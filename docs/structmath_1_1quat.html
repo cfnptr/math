@@ -62,245 +62,298 @@ $(function(){initNavTree('structmath_1_1quat.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 
-<p>Quaternion rotation container. (In 3D space)  
+<p>SIMD 32bit floating point quaternion rotation container. (In 3D space)  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;quaternion.hpp&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a22cb50d6799a8fef2e19a56600f27994" id="r_a22cb50d6799a8fef2e19a56600f27994"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22cb50d6799a8fef2e19a56600f27994">quat</a> (<a class="el" href="structmath_1_1float4.html">float4</a> xyzw=<a class="elRef" href="https://en.cppreference.com/w/cpp/utility/functional/identity.html">identity</a>) noexcept</td></tr>
-<tr class="memdesc:a22cb50d6799a8fef2e19a56600f27994"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new quaternion structure.  <br /></td></tr>
-<tr class="separator:a22cb50d6799a8fef2e19a56600f27994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a388d416a3cb812587962020560862f7b" id="r_a388d416a3cb812587962020560862f7b"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a388d416a3cb812587962020560862f7b">quat</a> (float <a class="el" href="structmath_1_1float4.html#ad0da36b2558901e21e7a30f6c227a45e">x</a>, float <a class="el" href="structmath_1_1float4.html#aa4f0d3eebc3c443f9be81bf48561a217">y</a>, float <a class="el" href="structmath_1_1float4.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, float <a class="el" href="structmath_1_1float4.html#a56eca241e2896b9f57a79589e76fd24b">w</a>) noexcept</td></tr>
-<tr class="memdesc:a388d416a3cb812587962020560862f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new quaternion structure.  <br /></td></tr>
-<tr class="separator:a388d416a3cb812587962020560862f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5e5dfbff514b4ca46a38b71a8d5aed4" id="r_ab5e5dfbff514b4ca46a38b71a8d5aed4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5e5dfbff514b4ca46a38b71a8d5aed4">quat</a> (<a class="el" href="structmath_1_1float3.html">float3</a> eulerAngles) noexcept</td></tr>
-<tr class="memdesc:ab5e5dfbff514b4ca46a38b71a8d5aed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new quaternion structure from the euler angles. (In radians)  <br /></td></tr>
-<tr class="separator:ab5e5dfbff514b4ca46a38b71a8d5aed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8effa3dc8810f17394b907f233843765" id="r_a8effa3dc8810f17394b907f233843765"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8effa3dc8810f17394b907f233843765">quat</a> (float angle, <a class="el" href="structmath_1_1float3.html">float3</a> axis) noexcept</td></tr>
-<tr class="memdesc:a8effa3dc8810f17394b907f233843765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new quaternion structure from the angle and axis. (In radians)  <br /></td></tr>
-<tr class="separator:a8effa3dc8810f17394b907f233843765"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13737c3cf28f34289ebf1d0f165c0ac7" id="r_a13737c3cf28f34289ebf1d0f165c0ac7"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structmath_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13737c3cf28f34289ebf1d0f165c0ac7">operator*</a> (<a class="el" href="structmath_1_1quat.html">quat</a> q) const noexcept</td></tr>
-<tr class="memdesc:a13737c3cf28f34289ebf1d0f165c0ac7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates this quaternion by the specified one.  <br /></td></tr>
-<tr class="separator:a13737c3cf28f34289ebf1d0f165c0ac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59d51f148dcdc18cbf118a2ef1dbddea" id="r_a59d51f148dcdc18cbf118a2ef1dbddea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmath_1_1float3.html">float3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59d51f148dcdc18cbf118a2ef1dbddea">operator*</a> (<a class="el" href="structmath_1_1float3.html">float3</a> v) const noexcept</td></tr>
-<tr class="memdesc:a59d51f148dcdc18cbf118a2ef1dbddea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates vector by this quaternion.  <br /></td></tr>
-<tr class="separator:a59d51f148dcdc18cbf118a2ef1dbddea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ebbd0645197b31284d09cdd5c4075ad" id="r_a7ebbd0645197b31284d09cdd5c4075ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmath_1_1quat.html">quat</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ebbd0645197b31284d09cdd5c4075ad">operator*=</a> (<a class="el" href="structmath_1_1quat.html">quat</a> q) noexcept</td></tr>
-<tr class="memdesc:a7ebbd0645197b31284d09cdd5c4075ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates this quaternion by the specified one.  <br /></td></tr>
-<tr class="separator:a7ebbd0645197b31284d09cdd5c4075ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a896acb49fdd46fcccc2efc6b1f376c0b" id="r_a896acb49fdd46fcccc2efc6b1f376c0b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a896acb49fdd46fcccc2efc6b1f376c0b">quat</a> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> xyzw=<a class="elRef" href="https://en.cppreference.com/w/cpp/utility/functional/identity.html">identity</a>) noexcept</td></tr>
+<tr class="memdesc:a896acb49fdd46fcccc2efc6b1f376c0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new identity SIMD 32bit floating point quaternion structure.  <br /></td></tr>
+<tr class="separator:a896acb49fdd46fcccc2efc6b1f376c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8dcd0a8630c3a20fe143c085b1af1e5" id="r_ad8dcd0a8630c3a20fe143c085b1af1e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8dcd0a8630c3a20fe143c085b1af1e5">quat</a> (float x, float y, float z, float w) noexcept</td></tr>
+<tr class="memdesc:ad8dcd0a8630c3a20fe143c085b1af1e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new SIMD 32bit floating point quaternion structure.  <br /></td></tr>
+<tr class="separator:ad8dcd0a8630c3a20fe143c085b1af1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab52e350b6a2ad67750af993782a34d76" id="r_ab52e350b6a2ad67750af993782a34d76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab52e350b6a2ad67750af993782a34d76">quat</a> (float angle, <a class="el" href="structmath_1_1f32x4.html">f32x4</a> axis) noexcept</td></tr>
+<tr class="memdesc:ab52e350b6a2ad67750af993782a34d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new SIMD quaternion structure from the angle and axis. (In radians)  <br /></td></tr>
+<tr class="separator:ab52e350b6a2ad67750af993782a34d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72e14f091cbd84879f5e7a978db09ccb" id="r_a72e14f091cbd84879f5e7a978db09ccb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmath_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72e14f091cbd84879f5e7a978db09ccb">operator*</a> (<a class="el" href="structmath_1_1quat.html">quat</a> q) const noexcept</td></tr>
+<tr class="memdesc:a72e14f091cbd84879f5e7a978db09ccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates this SIMD quaternion by the specified one.  <br /></td></tr>
+<tr class="separator:a72e14f091cbd84879f5e7a978db09ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af29f6486f671d9ad3954cb91ece01dd9" id="r_af29f6486f671d9ad3954cb91ece01dd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af29f6486f671d9ad3954cb91ece01dd9">operator*</a> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="memdesc:af29f6486f671d9ad3954cb91ece01dd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates 3D vector by this SIMD quaternion.  <br /></td></tr>
+<tr class="separator:af29f6486f671d9ad3954cb91ece01dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabdf19bb892619cc64bb2c41d8671984" id="r_aabdf19bb892619cc64bb2c41d8671984"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmath_1_1f32x4.html">f32x4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabdf19bb892619cc64bb2c41d8671984">operator*=</a> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) noexcept</td></tr>
+<tr class="memdesc:aabdf19bb892619cc64bb2c41d8671984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotates this SIMD quaternion by the specified one.  <br /></td></tr>
+<tr class="separator:aabdf19bb892619cc64bb2c41d8671984"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afafff5d06497ee6332d6fc9cc20c48aa" id="r_afafff5d06497ee6332d6fc9cc20c48aa"><td class="memItemLeft" align="right" valign="top"><a id="afafff5d06497ee6332d6fc9cc20c48aa" name="afafff5d06497ee6332d6fc9cc20c48aa"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>extractPitch</b> () const noexcept</td></tr>
-<tr class="memdesc:afafff5d06497ee6332d6fc9cc20c48aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts quaternion rotation around X axis. (In radians) <br /></td></tr>
+<tr class="memdesc:afafff5d06497ee6332d6fc9cc20c48aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts SIMD quaternion rotation around X axis. (In radians) <br /></td></tr>
 <tr class="separator:afafff5d06497ee6332d6fc9cc20c48aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3048605b5f116efff358e9abf8e58eca" id="r_a3048605b5f116efff358e9abf8e58eca"><td class="memItemLeft" align="right" valign="top"><a id="a3048605b5f116efff358e9abf8e58eca" name="a3048605b5f116efff358e9abf8e58eca"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>extractYaw</b> () const noexcept</td></tr>
-<tr class="memdesc:a3048605b5f116efff358e9abf8e58eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts quaternion around Y axis. (In radians) <br /></td></tr>
+<tr class="memdesc:a3048605b5f116efff358e9abf8e58eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts SIMD quaternion around Y axis. (In radians) <br /></td></tr>
 <tr class="separator:a3048605b5f116efff358e9abf8e58eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a481b92783dbe0972e711176c6848beee" id="r_a481b92783dbe0972e711176c6848beee"><td class="memItemLeft" align="right" valign="top"><a id="a481b92783dbe0972e711176c6848beee" name="a481b92783dbe0972e711176c6848beee"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>extractRoll</b> () const noexcept</td></tr>
-<tr class="memdesc:a481b92783dbe0972e711176c6848beee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts quaternion around Z axis. (In radians) <br /></td></tr>
+<tr class="memdesc:a481b92783dbe0972e711176c6848beee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts SIMD quaternion around Z axis. (In radians) <br /></td></tr>
 <tr class="separator:a481b92783dbe0972e711176c6848beee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4af40ff23c1ea534f3024ab55835c84d" id="r_a4af40ff23c1ea534f3024ab55835c84d"><td class="memItemLeft" align="right" valign="top"><a id="a4af40ff23c1ea534f3024ab55835c84d" name="a4af40ff23c1ea534f3024ab55835c84d"></a>
-<a class="el" href="structmath_1_1float3.html">float3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>extractEulerAngles</b> () const noexcept</td></tr>
-<tr class="memdesc:a4af40ff23c1ea534f3024ab55835c84d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates quaternion euler angles. (In radians) <br /></td></tr>
-<tr class="separator:a4af40ff23c1ea534f3024ab55835c84d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeccd51d095c36911d7e114495bfed733" id="r_aeccd51d095c36911d7e114495bfed733"><td class="memItemLeft" align="right" valign="top">float &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1float4.html#aeccd51d095c36911d7e114495bfed733">operator[]</a> (<a class="el" href="types_8hpp.html#ac290a685f46e9b8c6f443e6181661036">psize</a> i) noexcept</td></tr>
-<tr class="memdesc:aeccd51d095c36911d7e114495bfed733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns vector component by index.  <br /></td></tr>
+<tr class="memitem:a35683fe07192d02be5b99f335a0ef8ab" id="r_a35683fe07192d02be5b99f335a0ef8ab"><td class="memItemLeft" align="right" valign="top"><a id="a35683fe07192d02be5b99f335a0ef8ab" name="a35683fe07192d02be5b99f335a0ef8ab"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>extractEulerAngles</b> () const noexcept</td></tr>
+<tr class="memdesc:a35683fe07192d02be5b99f335a0ef8ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates SIMD quaternion euler angles. (In radians) <br /></td></tr>
+<tr class="separator:a35683fe07192d02be5b99f335a0ef8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a821a1524aaa8e3bd59df157b1ee51b" id="r_a5a821a1524aaa8e3bd59df157b1ee51b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#a5a821a1524aaa8e3bd59df157b1ee51b">loadAligned</a> (const float *v) noexcept</td></tr>
+<tr class="memdesc:a5a821a1524aaa8e3bd59df157b1ee51b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads SIMD 4 component 32bit floating point aligned vector values.  <br /></td></tr>
+<tr class="separator:a5a821a1524aaa8e3bd59df157b1ee51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc736fa699aca1d96b888bdee6155103" id="r_abc736fa699aca1d96b888bdee6155103"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#abc736fa699aca1d96b888bdee6155103">store</a> (float *v) noexcept</td></tr>
+<tr class="memdesc:abc736fa699aca1d96b888bdee6155103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores SIMD 4 component 32bit floating point unaligned vector values.  <br /></td></tr>
+<tr class="separator:abc736fa699aca1d96b888bdee6155103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba76e76b224a364f9f3062f2eaec88dc" id="r_aba76e76b224a364f9f3062f2eaec88dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#aba76e76b224a364f9f3062f2eaec88dc">storeAligned</a> (float *v) noexcept</td></tr>
+<tr class="memdesc:aba76e76b224a364f9f3062f2eaec88dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores SIMD 4 component 32bit floating point aligned vector values.  <br /></td></tr>
+<tr class="separator:aba76e76b224a364f9f3062f2eaec88dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba0f561d7cd42fa54b60d756720912f6" id="r_aba0f561d7cd42fa54b60d756720912f6"><td class="memItemLeft" align="right" valign="top"><a id="aba0f561d7cd42fa54b60d756720912f6" name="aba0f561d7cd42fa54b60d756720912f6"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>getX</b> () const noexcept</td></tr>
+<tr class="memdesc:aba0f561d7cd42fa54b60d756720912f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD vector first component value. <br /></td></tr>
+<tr class="separator:aba0f561d7cd42fa54b60d756720912f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb96f59b1c6e5b818f50f270f8fe0598" id="r_aeb96f59b1c6e5b818f50f270f8fe0598"><td class="memItemLeft" align="right" valign="top"><a id="aeb96f59b1c6e5b818f50f270f8fe0598" name="aeb96f59b1c6e5b818f50f270f8fe0598"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>getY</b> () const noexcept</td></tr>
+<tr class="memdesc:aeb96f59b1c6e5b818f50f270f8fe0598"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD vector second component value. <br /></td></tr>
+<tr class="separator:aeb96f59b1c6e5b818f50f270f8fe0598"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa516b4a653917f69dc5d118cee70e3fe" id="r_aa516b4a653917f69dc5d118cee70e3fe"><td class="memItemLeft" align="right" valign="top"><a id="aa516b4a653917f69dc5d118cee70e3fe" name="aa516b4a653917f69dc5d118cee70e3fe"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>getZ</b> () const noexcept</td></tr>
+<tr class="memdesc:aa516b4a653917f69dc5d118cee70e3fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD vector third component value. <br /></td></tr>
+<tr class="separator:aa516b4a653917f69dc5d118cee70e3fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa450754db0e6f0a76deaca7a42434f6c" id="r_aa450754db0e6f0a76deaca7a42434f6c"><td class="memItemLeft" align="right" valign="top"><a id="aa450754db0e6f0a76deaca7a42434f6c" name="aa450754db0e6f0a76deaca7a42434f6c"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>getW</b> () const noexcept</td></tr>
+<tr class="memdesc:aa450754db0e6f0a76deaca7a42434f6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD vector fourth component value. <br /></td></tr>
+<tr class="separator:aa450754db0e6f0a76deaca7a42434f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcc1f96b379454e86ad8afb68092d088" id="r_abcc1f96b379454e86ad8afb68092d088"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#abcc1f96b379454e86ad8afb68092d088">setX</a> (float value) noexcept</td></tr>
+<tr class="memdesc:abcc1f96b379454e86ad8afb68092d088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets SIMD vector first component value.  <br /></td></tr>
+<tr class="separator:abcc1f96b379454e86ad8afb68092d088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fa0d7bb175eb9850cde88313e002377" id="r_a6fa0d7bb175eb9850cde88313e002377"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#a6fa0d7bb175eb9850cde88313e002377">setY</a> (float value) noexcept</td></tr>
+<tr class="memdesc:a6fa0d7bb175eb9850cde88313e002377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets SIMD vector second component value.  <br /></td></tr>
+<tr class="separator:a6fa0d7bb175eb9850cde88313e002377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07eddbb1ed48c8042e40527a2e365e97" id="r_a07eddbb1ed48c8042e40527a2e365e97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#a07eddbb1ed48c8042e40527a2e365e97">setZ</a> (float value) noexcept</td></tr>
+<tr class="memdesc:a07eddbb1ed48c8042e40527a2e365e97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets SIMD vector third component value.  <br /></td></tr>
+<tr class="separator:a07eddbb1ed48c8042e40527a2e365e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a627d221b8e89313f0c7c55151c631594" id="r_a627d221b8e89313f0c7c55151c631594"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#a627d221b8e89313f0c7c55151c631594">setW</a> (float value) noexcept</td></tr>
+<tr class="memdesc:a627d221b8e89313f0c7c55151c631594"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets SIMD vector fourth component value.  <br /></td></tr>
+<tr class="separator:a627d221b8e89313f0c7c55151c631594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0b3e54f95ca33e8b1ffd7023bd3d834" id="r_af0b3e54f95ca33e8b1ffd7023bd3d834"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#af0b3e54f95ca33e8b1ffd7023bd3d834">fixW</a> () noexcept</td></tr>
+<tr class="memdesc:af0b3e54f95ca33e8b1ffd7023bd3d834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets SIMD vector Z component value to the W component.  <br /></td></tr>
+<tr class="separator:af0b3e54f95ca33e8b1ffd7023bd3d834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af721735e2f235a827cb6634339c2ee84" id="r_af721735e2f235a827cb6634339c2ee84"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a> X, <a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a> Y, <a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a> Z, <a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a> W = SwU&gt; </td></tr>
+<tr class="memitem:af721735e2f235a827cb6634339c2ee84"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#af721735e2f235a827cb6634339c2ee84">swizzle</a> () const noexcept</td></tr>
+<tr class="memdesc:af721735e2f235a827cb6634339c2ee84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swizzles SIMD vector components.  <br /></td></tr>
+<tr class="separator:af721735e2f235a827cb6634339c2ee84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0626e5cfc1993a77bdfee5ac4704caa3" id="r_a0626e5cfc1993a77bdfee5ac4704caa3"><td class="memItemLeft" align="right" valign="top"><a id="a0626e5cfc1993a77bdfee5ac4704caa3" name="a0626e5cfc1993a77bdfee5ac4704caa3"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>splatX</b> () const noexcept</td></tr>
+<tr class="separator:a0626e5cfc1993a77bdfee5ac4704caa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3787e19aaaa012aacfcd7fb9cf3be80d" id="r_a3787e19aaaa012aacfcd7fb9cf3be80d"><td class="memItemLeft" align="right" valign="top"><a id="a3787e19aaaa012aacfcd7fb9cf3be80d" name="a3787e19aaaa012aacfcd7fb9cf3be80d"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>splatY</b> () const noexcept</td></tr>
+<tr class="separator:a3787e19aaaa012aacfcd7fb9cf3be80d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4e9285140c0f4b70ddc953622562811" id="r_af4e9285140c0f4b70ddc953622562811"><td class="memItemLeft" align="right" valign="top"><a id="af4e9285140c0f4b70ddc953622562811" name="af4e9285140c0f4b70ddc953622562811"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>splatZ</b> () const noexcept</td></tr>
+<tr class="separator:af4e9285140c0f4b70ddc953622562811"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a526561a0dcdb5ca04a208520f5857a21" id="r_a526561a0dcdb5ca04a208520f5857a21"><td class="memItemLeft" align="right" valign="top"><a id="a526561a0dcdb5ca04a208520f5857a21" name="a526561a0dcdb5ca04a208520f5857a21"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>splatW</b> () const noexcept</td></tr>
+<tr class="separator:a526561a0dcdb5ca04a208520f5857a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeccd51d095c36911d7e114495bfed733" id="r_aeccd51d095c36911d7e114495bfed733"><td class="memItemLeft" align="right" valign="top">float &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#aeccd51d095c36911d7e114495bfed733">operator[]</a> (<a class="el" href="types_8hpp.html#ac290a685f46e9b8c6f443e6181661036">psize</a> i) noexcept</td></tr>
+<tr class="memdesc:aeccd51d095c36911d7e114495bfed733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD vector component by index.  <br /></td></tr>
 <tr class="separator:aeccd51d095c36911d7e114495bfed733"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b1e2bfa084b1859994a1ff707f6074d" id="r_a7b1e2bfa084b1859994a1ff707f6074d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1float4.html#a7b1e2bfa084b1859994a1ff707f6074d">operator[]</a> (<a class="el" href="types_8hpp.html#ac290a685f46e9b8c6f443e6181661036">psize</a> i) const noexcept</td></tr>
-<tr class="memdesc:a7b1e2bfa084b1859994a1ff707f6074d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns vector component by index.  <br /></td></tr>
+<tr class="memitem:a7b1e2bfa084b1859994a1ff707f6074d" id="r_a7b1e2bfa084b1859994a1ff707f6074d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1f32x4.html#a7b1e2bfa084b1859994a1ff707f6074d">operator[]</a> (<a class="el" href="types_8hpp.html#ac290a685f46e9b8c6f443e6181661036">psize</a> i) const noexcept</td></tr>
+<tr class="memdesc:a7b1e2bfa084b1859994a1ff707f6074d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD vector component by index.  <br /></td></tr>
 <tr class="separator:a7b1e2bfa084b1859994a1ff707f6074d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a915819e37fa3b7bacacce6343cdaa374" id="r_a915819e37fa3b7bacacce6343cdaa374"><td class="memItemLeft" align="right" valign="top"><a id="a915819e37fa3b7bacacce6343cdaa374" name="a915819e37fa3b7bacacce6343cdaa374"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator int4</b> () const noexcept</td></tr>
-<tr class="memdesc:a915819e37fa3b7bacacce6343cdaa374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 4 component signed integer vector. (xyzw) <br /></td></tr>
-<tr class="separator:a915819e37fa3b7bacacce6343cdaa374"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec483bd305cfd2a4134506680236b3ab" id="r_aec483bd305cfd2a4134506680236b3ab"><td class="memItemLeft" align="right" valign="top"><a id="aec483bd305cfd2a4134506680236b3ab" name="aec483bd305cfd2a4134506680236b3ab"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator uint4</b> () const noexcept</td></tr>
-<tr class="memdesc:aec483bd305cfd2a4134506680236b3ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 4 component unsigned integer vector. (xyzw) <br /></td></tr>
-<tr class="separator:aec483bd305cfd2a4134506680236b3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b99be486400d377528fa4a7fdf38e73" id="r_a8b99be486400d377528fa4a7fdf38e73"><td class="memItemLeft" align="right" valign="top"><a id="a8b99be486400d377528fa4a7fdf38e73" name="a8b99be486400d377528fa4a7fdf38e73"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator int3</b> () const noexcept</td></tr>
-<tr class="memdesc:a8b99be486400d377528fa4a7fdf38e73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 3 component signed integer vector. (xyz) <br /></td></tr>
-<tr class="separator:a8b99be486400d377528fa4a7fdf38e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8987573040f6e826add3f0ed29a4dce4" id="r_a8987573040f6e826add3f0ed29a4dce4"><td class="memItemLeft" align="right" valign="top"><a id="a8987573040f6e826add3f0ed29a4dce4" name="a8987573040f6e826add3f0ed29a4dce4"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator uint3</b> () const noexcept</td></tr>
-<tr class="memdesc:a8987573040f6e826add3f0ed29a4dce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 3 component unsigned integer vector. (xyz) <br /></td></tr>
-<tr class="separator:a8987573040f6e826add3f0ed29a4dce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4291ef00bdd6070fcb07cbb25635df89" id="r_a4291ef00bdd6070fcb07cbb25635df89"><td class="memItemLeft" align="right" valign="top"><a id="a4291ef00bdd6070fcb07cbb25635df89" name="a4291ef00bdd6070fcb07cbb25635df89"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator int2</b> () const noexcept</td></tr>
-<tr class="memdesc:a4291ef00bdd6070fcb07cbb25635df89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 2 component signed integer vector. (xy) <br /></td></tr>
-<tr class="separator:a4291ef00bdd6070fcb07cbb25635df89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08b00de1ba61b65ff16ed5eac82bc89f" id="r_a08b00de1ba61b65ff16ed5eac82bc89f"><td class="memItemLeft" align="right" valign="top"><a id="a08b00de1ba61b65ff16ed5eac82bc89f" name="a08b00de1ba61b65ff16ed5eac82bc89f"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator uint2</b> () const noexcept</td></tr>
-<tr class="memdesc:a08b00de1ba61b65ff16ed5eac82bc89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 2 component unsigned integer vector. (xy) <br /></td></tr>
-<tr class="separator:a08b00de1ba61b65ff16ed5eac82bc89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bbebaec687d4f6ed92c8d044a2a3e44" id="r_a7bbebaec687d4f6ed92c8d044a2a3e44"><td class="memItemLeft" align="right" valign="top"><a id="a7bbebaec687d4f6ed92c8d044a2a3e44" name="a7bbebaec687d4f6ed92c8d044a2a3e44"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator uint32</b> () const noexcept</td></tr>
-<tr class="memdesc:a7bbebaec687d4f6ed92c8d044a2a3e44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns first vector component as unsigned integer. (x) <br /></td></tr>
-<tr class="separator:a7bbebaec687d4f6ed92c8d044a2a3e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c60d8dcf9aba69ef6fa8c15f2925c1d" id="r_a4c60d8dcf9aba69ef6fa8c15f2925c1d"><td class="memItemLeft" align="right" valign="top"><a id="a4c60d8dcf9aba69ef6fa8c15f2925c1d" name="a4c60d8dcf9aba69ef6fa8c15f2925c1d"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator int32</b> () const noexcept</td></tr>
-<tr class="memdesc:a4c60d8dcf9aba69ef6fa8c15f2925c1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns first vector component as signed integer. (x) <br /></td></tr>
-<tr class="separator:a4c60d8dcf9aba69ef6fa8c15f2925c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbdde98e757b800524afab0179f8c873" id="r_adbdde98e757b800524afab0179f8c873"><td class="memItemLeft" align="right" valign="top"><a id="adbdde98e757b800524afab0179f8c873" name="adbdde98e757b800524afab0179f8c873"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator float3</b> () const noexcept</td></tr>
-<tr class="memdesc:adbdde98e757b800524afab0179f8c873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 3 component floating point vector. (xyz) <br /></td></tr>
-<tr class="separator:adbdde98e757b800524afab0179f8c873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90d4f8b2752c2f62c649474d5884be87" id="r_a90d4f8b2752c2f62c649474d5884be87"><td class="memItemLeft" align="right" valign="top"><a id="a90d4f8b2752c2f62c649474d5884be87" name="a90d4f8b2752c2f62c649474d5884be87"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator float2</b> () const noexcept</td></tr>
-<tr class="memdesc:a90d4f8b2752c2f62c649474d5884be87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 2 component floating point vector. (xy) <br /></td></tr>
-<tr class="separator:a90d4f8b2752c2f62c649474d5884be87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75584a19f6a93906039ce3b815fc42aa" id="r_a75584a19f6a93906039ce3b815fc42aa"><td class="memItemLeft" align="right" valign="top"><a id="a75584a19f6a93906039ce3b815fc42aa" name="a75584a19f6a93906039ce3b815fc42aa"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator float</b> () const noexcept</td></tr>
-<tr class="memdesc:a75584a19f6a93906039ce3b815fc42aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns first vector component value. (x) <br /></td></tr>
-<tr class="separator:a75584a19f6a93906039ce3b815fc42aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ae3f6d9fbc13d7c6456b17408a39091" id="r_a7ae3f6d9fbc13d7c6456b17408a39091"><td class="memItemLeft" align="right" valign="top"><a id="a7ae3f6d9fbc13d7c6456b17408a39091" name="a7ae3f6d9fbc13d7c6456b17408a39091"></a>
-constexpr <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:a7ae3f6d9fbc13d7c6456b17408a39091"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a656920ba2bce165174822d1df7aaaf13" id="r_a656920ba2bce165174822d1df7aaaf13"><td class="memItemLeft" align="right" valign="top"><a id="a656920ba2bce165174822d1df7aaaf13" name="a656920ba2bce165174822d1df7aaaf13"></a>
-constexpr <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (float n) const noexcept</td></tr>
-<tr class="separator:a656920ba2bce165174822d1df7aaaf13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1061dbd1e85acc307bd88347dda0359" id="r_ac1061dbd1e85acc307bd88347dda0359"><td class="memItemLeft" align="right" valign="top"><a id="ac1061dbd1e85acc307bd88347dda0359" name="ac1061dbd1e85acc307bd88347dda0359"></a>
-constexpr <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:ac1061dbd1e85acc307bd88347dda0359"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefdb5c77a3da8c119f6c8168a154b4c9" id="r_aefdb5c77a3da8c119f6c8168a154b4c9"><td class="memItemLeft" align="right" valign="top"><a id="aefdb5c77a3da8c119f6c8168a154b4c9" name="aefdb5c77a3da8c119f6c8168a154b4c9"></a>
-constexpr <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (float n) const noexcept</td></tr>
-<tr class="separator:aefdb5c77a3da8c119f6c8168a154b4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56a20afbae1e346dd2b731687328b187" id="r_a56a20afbae1e346dd2b731687328b187"><td class="memItemLeft" align="right" valign="top"><a id="a56a20afbae1e346dd2b731687328b187" name="a56a20afbae1e346dd2b731687328b187"></a>
-constexpr <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> () const noexcept</td></tr>
-<tr class="separator:a56a20afbae1e346dd2b731687328b187"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a332e939aa17fb502a057cb904687aef6" id="r_a332e939aa17fb502a057cb904687aef6"><td class="memItemLeft" align="right" valign="top"><a id="a332e939aa17fb502a057cb904687aef6" name="a332e939aa17fb502a057cb904687aef6"></a>
-constexpr <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:a332e939aa17fb502a057cb904687aef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af794771b68ed49cf21f3019739284e70" id="r_af794771b68ed49cf21f3019739284e70"><td class="memItemLeft" align="right" valign="top"><a id="af794771b68ed49cf21f3019739284e70" name="af794771b68ed49cf21f3019739284e70"></a>
-constexpr <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (float n) const noexcept</td></tr>
-<tr class="separator:af794771b68ed49cf21f3019739284e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae864a2ebd5579a1c84ba655d4872e038" id="r_ae864a2ebd5579a1c84ba655d4872e038"><td class="memItemLeft" align="right" valign="top"><a id="ae864a2ebd5579a1c84ba655d4872e038" name="ae864a2ebd5579a1c84ba655d4872e038"></a>
-constexpr <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:ae864a2ebd5579a1c84ba655d4872e038"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07a6fbfbeb7e6949720e2d5f39629ddc" id="r_a07a6fbfbeb7e6949720e2d5f39629ddc"><td class="memItemLeft" align="right" valign="top"><a id="a07a6fbfbeb7e6949720e2d5f39629ddc" name="a07a6fbfbeb7e6949720e2d5f39629ddc"></a>
-constexpr <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (float n) const noexcept</td></tr>
-<tr class="separator:a07a6fbfbeb7e6949720e2d5f39629ddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e2f8e38543ceb2b29827c1f4c881559" id="r_a9e2f8e38543ceb2b29827c1f4c881559"><td class="memItemLeft" align="right" valign="top"><a id="a9e2f8e38543ceb2b29827c1f4c881559" name="a9e2f8e38543ceb2b29827c1f4c881559"></a>
-<a class="el" href="structmath_1_1float4.html">float4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) noexcept</td></tr>
-<tr class="separator:a9e2f8e38543ceb2b29827c1f4c881559"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fadc48928524c7435c9af5b577afafd" id="r_a6fadc48928524c7435c9af5b577afafd"><td class="memItemLeft" align="right" valign="top"><a id="a6fadc48928524c7435c9af5b577afafd" name="a6fadc48928524c7435c9af5b577afafd"></a>
-<a class="el" href="structmath_1_1float4.html">float4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (float n) noexcept</td></tr>
-<tr class="separator:a6fadc48928524c7435c9af5b577afafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6980bb28cd9d377f6bf9cf84aba396d5" id="r_a6980bb28cd9d377f6bf9cf84aba396d5"><td class="memItemLeft" align="right" valign="top"><a id="a6980bb28cd9d377f6bf9cf84aba396d5" name="a6980bb28cd9d377f6bf9cf84aba396d5"></a>
-<a class="el" href="structmath_1_1float4.html">float4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) noexcept</td></tr>
-<tr class="separator:a6980bb28cd9d377f6bf9cf84aba396d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e39b46afbddda9a56361605a9e67747" id="r_a8e39b46afbddda9a56361605a9e67747"><td class="memItemLeft" align="right" valign="top"><a id="a8e39b46afbddda9a56361605a9e67747" name="a8e39b46afbddda9a56361605a9e67747"></a>
-<a class="el" href="structmath_1_1float4.html">float4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (float n) noexcept</td></tr>
-<tr class="separator:a8e39b46afbddda9a56361605a9e67747"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78db5d62df72cb10f9387a58bad6cebf" id="r_a78db5d62df72cb10f9387a58bad6cebf"><td class="memItemLeft" align="right" valign="top"><a id="a78db5d62df72cb10f9387a58bad6cebf" name="a78db5d62df72cb10f9387a58bad6cebf"></a>
-<a class="el" href="structmath_1_1float4.html">float4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*=</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) noexcept</td></tr>
-<tr class="separator:a78db5d62df72cb10f9387a58bad6cebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44b268cef63b34c6e21c98cd8adbfa2b" id="r_a44b268cef63b34c6e21c98cd8adbfa2b"><td class="memItemLeft" align="right" valign="top"><a id="a44b268cef63b34c6e21c98cd8adbfa2b" name="a44b268cef63b34c6e21c98cd8adbfa2b"></a>
-<a class="el" href="structmath_1_1float4.html">float4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*=</b> (float n) noexcept</td></tr>
-<tr class="separator:a44b268cef63b34c6e21c98cd8adbfa2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7caa0d942f55f3dc3b1605d05d0abba7" id="r_a7caa0d942f55f3dc3b1605d05d0abba7"><td class="memItemLeft" align="right" valign="top"><a id="a7caa0d942f55f3dc3b1605d05d0abba7" name="a7caa0d942f55f3dc3b1605d05d0abba7"></a>
-<a class="el" href="structmath_1_1float4.html">float4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) noexcept</td></tr>
-<tr class="separator:a7caa0d942f55f3dc3b1605d05d0abba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8c04dcf1d00c46072513ce9433c82e5" id="r_ad8c04dcf1d00c46072513ce9433c82e5"><td class="memItemLeft" align="right" valign="top"><a id="ad8c04dcf1d00c46072513ce9433c82e5" name="ad8c04dcf1d00c46072513ce9433c82e5"></a>
-<a class="el" href="structmath_1_1float4.html">float4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (float n) noexcept</td></tr>
-<tr class="separator:ad8c04dcf1d00c46072513ce9433c82e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40050215d2de5ca975fa67a073fc1a7c" id="r_a40050215d2de5ca975fa67a073fc1a7c"><td class="memItemLeft" align="right" valign="top"><a id="a40050215d2de5ca975fa67a073fc1a7c" name="a40050215d2de5ca975fa67a073fc1a7c"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:a40050215d2de5ca975fa67a073fc1a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1238c304729224f793bf247f18039c95" id="r_a1238c304729224f793bf247f18039c95"><td class="memItemLeft" align="right" valign="top"><a id="a1238c304729224f793bf247f18039c95" name="a1238c304729224f793bf247f18039c95"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (float n) const noexcept</td></tr>
-<tr class="separator:a1238c304729224f793bf247f18039c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8831572465e90501b12e33b7715dea4e" id="r_a8831572465e90501b12e33b7715dea4e"><td class="memItemLeft" align="right" valign="top"><a id="a8831572465e90501b12e33b7715dea4e" name="a8831572465e90501b12e33b7715dea4e"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:a8831572465e90501b12e33b7715dea4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3855f2e75543bd5462df70e96fb68af3" id="r_a3855f2e75543bd5462df70e96fb68af3"><td class="memItemLeft" align="right" valign="top"><a id="a3855f2e75543bd5462df70e96fb68af3" name="a3855f2e75543bd5462df70e96fb68af3"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (float n) const noexcept</td></tr>
-<tr class="separator:a3855f2e75543bd5462df70e96fb68af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b837f61fbbc40141ba35285b66ad362" id="r_a4b837f61fbbc40141ba35285b66ad362"><td class="memItemLeft" align="right" valign="top"><a id="a4b837f61fbbc40141ba35285b66ad362" name="a4b837f61fbbc40141ba35285b66ad362"></a>
-constexpr <a class="el" href="structmath_1_1uint4.html">uint4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:a4b837f61fbbc40141ba35285b66ad362"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68e3d1bc285aadf87a25c80dfff5acc8" id="r_a68e3d1bc285aadf87a25c80dfff5acc8"><td class="memItemLeft" align="right" valign="top"><a id="a68e3d1bc285aadf87a25c80dfff5acc8" name="a68e3d1bc285aadf87a25c80dfff5acc8"></a>
-constexpr <a class="el" href="structmath_1_1uint4.html">uint4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (float n) const noexcept</td></tr>
-<tr class="separator:a68e3d1bc285aadf87a25c80dfff5acc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9d84517c82bc7263080679d78e93c50" id="r_aa9d84517c82bc7263080679d78e93c50"><td class="memItemLeft" align="right" valign="top"><a id="aa9d84517c82bc7263080679d78e93c50" name="aa9d84517c82bc7263080679d78e93c50"></a>
-constexpr <a class="el" href="structmath_1_1uint4.html">uint4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:aa9d84517c82bc7263080679d78e93c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75aae42369e6099627905dc37fb1a887" id="r_a75aae42369e6099627905dc37fb1a887"><td class="memItemLeft" align="right" valign="top"><a id="a75aae42369e6099627905dc37fb1a887" name="a75aae42369e6099627905dc37fb1a887"></a>
-constexpr <a class="el" href="structmath_1_1uint4.html">uint4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (float n) const noexcept</td></tr>
-<tr class="separator:a75aae42369e6099627905dc37fb1a887"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93f5be9220889bff4e971adca98425ce" id="r_a93f5be9220889bff4e971adca98425ce"><td class="memItemLeft" align="right" valign="top"><a id="a93f5be9220889bff4e971adca98425ce" name="a93f5be9220889bff4e971adca98425ce"></a>
-constexpr <a class="el" href="structmath_1_1uint4.html">uint4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;=</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:a93f5be9220889bff4e971adca98425ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab531b3ff3ae26075958ccad2c53db154" id="r_ab531b3ff3ae26075958ccad2c53db154"><td class="memItemLeft" align="right" valign="top"><a id="ab531b3ff3ae26075958ccad2c53db154" name="ab531b3ff3ae26075958ccad2c53db154"></a>
-constexpr <a class="el" href="structmath_1_1uint4.html">uint4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;=</b> (float n) const noexcept</td></tr>
-<tr class="separator:ab531b3ff3ae26075958ccad2c53db154"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ede33a5fadfaea322cd258a8c440898" id="r_a6ede33a5fadfaea322cd258a8c440898"><td class="memItemLeft" align="right" valign="top"><a id="a6ede33a5fadfaea322cd258a8c440898" name="a6ede33a5fadfaea322cd258a8c440898"></a>
-constexpr <a class="el" href="structmath_1_1uint4.html">uint4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;=</b> (<a class="el" href="structmath_1_1float4.html">float4</a> v) const noexcept</td></tr>
-<tr class="separator:a6ede33a5fadfaea322cd258a8c440898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d964c184f9db2648b817cb504ca8f52" id="r_a4d964c184f9db2648b817cb504ca8f52"><td class="memItemLeft" align="right" valign="top"><a id="a4d964c184f9db2648b817cb504ca8f52" name="a4d964c184f9db2648b817cb504ca8f52"></a>
-constexpr <a class="el" href="structmath_1_1uint4.html">uint4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;=</b> (float n) const noexcept</td></tr>
-<tr class="separator:a4d964c184f9db2648b817cb504ca8f52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca6aab9d0a2857f0d9310eaa33e35c5" id="r_abca6aab9d0a2857f0d9310eaa33e35c5"><td class="memItemLeft" align="right" valign="top"><a id="abca6aab9d0a2857f0d9310eaa33e35c5" name="abca6aab9d0a2857f0d9310eaa33e35c5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator u32x4</b> () const noexcept</td></tr>
+<tr class="memdesc:abca6aab9d0a2857f0d9310eaa33e35c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 4 component unsigned integer SIMD vector. <br /></td></tr>
+<tr class="separator:abca6aab9d0a2857f0d9310eaa33e35c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae41fb6468fe597037e6e615a01c6aec" id="r_aae41fb6468fe597037e6e615a01c6aec"><td class="memItemLeft" align="right" valign="top"><a id="aae41fb6468fe597037e6e615a01c6aec" name="aae41fb6468fe597037e6e615a01c6aec"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator i32x4</b> () const noexcept</td></tr>
+<tr class="memdesc:aae41fb6468fe597037e6e615a01c6aec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns as 4 component signed integer SIMD vector. <br /></td></tr>
+<tr class="separator:aae41fb6468fe597037e6e615a01c6aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdf7fa87edfff9ddac1632e125adaf64" id="r_acdf7fa87edfff9ddac1632e125adaf64"><td class="memItemLeft" align="right" valign="top"><a id="acdf7fa87edfff9ddac1632e125adaf64" name="acdf7fa87edfff9ddac1632e125adaf64"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator float4</b> () const noexcept</td></tr>
+<tr class="memdesc:acdf7fa87edfff9ddac1632e125adaf64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD vector as 4 component floating point vector. (xyzw) <br /></td></tr>
+<tr class="separator:acdf7fa87edfff9ddac1632e125adaf64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4ec3ae79a8af4067424557dd98ca512" id="r_ab4ec3ae79a8af4067424557dd98ca512"><td class="memItemLeft" align="right" valign="top"><a id="ab4ec3ae79a8af4067424557dd98ca512" name="ab4ec3ae79a8af4067424557dd98ca512"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator float3</b> () const noexcept</td></tr>
+<tr class="memdesc:ab4ec3ae79a8af4067424557dd98ca512"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD vector as 3 component floating point vector. (xyz) <br /></td></tr>
+<tr class="separator:ab4ec3ae79a8af4067424557dd98ca512"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e51eeecdfcfb7130a6a96762e96067f" id="r_a6e51eeecdfcfb7130a6a96762e96067f"><td class="memItemLeft" align="right" valign="top"><a id="a6e51eeecdfcfb7130a6a96762e96067f" name="a6e51eeecdfcfb7130a6a96762e96067f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator float2</b> () const noexcept</td></tr>
+<tr class="memdesc:a6e51eeecdfcfb7130a6a96762e96067f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD vector as 2 component floating point vector. (xy) <br /></td></tr>
+<tr class="separator:a6e51eeecdfcfb7130a6a96762e96067f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9162438cc1113db09f0b20ce2fbcd854" id="r_a9162438cc1113db09f0b20ce2fbcd854"><td class="memItemLeft" align="right" valign="top"><a id="a9162438cc1113db09f0b20ce2fbcd854" name="a9162438cc1113db09f0b20ce2fbcd854"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator float</b> () const noexcept</td></tr>
+<tr class="memdesc:a9162438cc1113db09f0b20ce2fbcd854"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns SIMD first vector component value. (x) <br /></td></tr>
+<tr class="separator:a9162438cc1113db09f0b20ce2fbcd854"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a7909fecd35f899a3a116e17afe7f6a" id="r_a5a7909fecd35f899a3a116e17afe7f6a"><td class="memItemLeft" align="right" valign="top"><a id="a5a7909fecd35f899a3a116e17afe7f6a" name="a5a7909fecd35f899a3a116e17afe7f6a"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="separator:a5a7909fecd35f899a3a116e17afe7f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0de464c6fefd3874fd4eb5aa43f75234" id="r_a0de464c6fefd3874fd4eb5aa43f75234"><td class="memItemLeft" align="right" valign="top"><a id="a0de464c6fefd3874fd4eb5aa43f75234" name="a0de464c6fefd3874fd4eb5aa43f75234"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (float n) const noexcept</td></tr>
+<tr class="separator:a0de464c6fefd3874fd4eb5aa43f75234"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae784bacd151cc5d9fa20780d47dc938a" id="r_ae784bacd151cc5d9fa20780d47dc938a"><td class="memItemLeft" align="right" valign="top"><a id="ae784bacd151cc5d9fa20780d47dc938a" name="ae784bacd151cc5d9fa20780d47dc938a"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="separator:ae784bacd151cc5d9fa20780d47dc938a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7c1bcd7d47bf61e36aaea948f045d70" id="r_ad7c1bcd7d47bf61e36aaea948f045d70"><td class="memItemLeft" align="right" valign="top"><a id="ad7c1bcd7d47bf61e36aaea948f045d70" name="ad7c1bcd7d47bf61e36aaea948f045d70"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> () const noexcept</td></tr>
+<tr class="separator:ad7c1bcd7d47bf61e36aaea948f045d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cf6067a6cc7516b3eeb82a0109ea14c" id="r_a3cf6067a6cc7516b3eeb82a0109ea14c"><td class="memItemLeft" align="right" valign="top"><a id="a3cf6067a6cc7516b3eeb82a0109ea14c" name="a3cf6067a6cc7516b3eeb82a0109ea14c"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (float n) const noexcept</td></tr>
+<tr class="separator:a3cf6067a6cc7516b3eeb82a0109ea14c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a435c71a658bb0cc016251331f700718b" id="r_a435c71a658bb0cc016251331f700718b"><td class="memItemLeft" align="right" valign="top"><a id="a435c71a658bb0cc016251331f700718b" name="a435c71a658bb0cc016251331f700718b"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (float n) const noexcept</td></tr>
+<tr class="separator:a435c71a658bb0cc016251331f700718b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4677bfd3c0baae14e9810f07b17f978b" id="r_a4677bfd3c0baae14e9810f07b17f978b"><td class="memItemLeft" align="right" valign="top"><a id="a4677bfd3c0baae14e9810f07b17f978b" name="a4677bfd3c0baae14e9810f07b17f978b"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="separator:a4677bfd3c0baae14e9810f07b17f978b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1348fd7bd8ab73fca1b1e8fe4666c44b" id="r_a1348fd7bd8ab73fca1b1e8fe4666c44b"><td class="memItemLeft" align="right" valign="top"><a id="a1348fd7bd8ab73fca1b1e8fe4666c44b" name="a1348fd7bd8ab73fca1b1e8fe4666c44b"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (float n) const noexcept</td></tr>
+<tr class="separator:a1348fd7bd8ab73fca1b1e8fe4666c44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a142747c69d532247e65ae21ab2b8ef9b" id="r_a142747c69d532247e65ae21ab2b8ef9b"><td class="memItemLeft" align="right" valign="top"><a id="a142747c69d532247e65ae21ab2b8ef9b" name="a142747c69d532247e65ae21ab2b8ef9b"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) noexcept</td></tr>
+<tr class="separator:a142747c69d532247e65ae21ab2b8ef9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba2b2785491219b9ce559e17c1b056a4" id="r_aba2b2785491219b9ce559e17c1b056a4"><td class="memItemLeft" align="right" valign="top"><a id="aba2b2785491219b9ce559e17c1b056a4" name="aba2b2785491219b9ce559e17c1b056a4"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (float n) noexcept</td></tr>
+<tr class="separator:aba2b2785491219b9ce559e17c1b056a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4ab9d1fae633c24d2e18dd05d09684f" id="r_af4ab9d1fae633c24d2e18dd05d09684f"><td class="memItemLeft" align="right" valign="top"><a id="af4ab9d1fae633c24d2e18dd05d09684f" name="af4ab9d1fae633c24d2e18dd05d09684f"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) noexcept</td></tr>
+<tr class="separator:af4ab9d1fae633c24d2e18dd05d09684f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a604b4f125cda70e96e5999e7d08f7c85" id="r_a604b4f125cda70e96e5999e7d08f7c85"><td class="memItemLeft" align="right" valign="top"><a id="a604b4f125cda70e96e5999e7d08f7c85" name="a604b4f125cda70e96e5999e7d08f7c85"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator-=</b> (float n) noexcept</td></tr>
+<tr class="separator:a604b4f125cda70e96e5999e7d08f7c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a946291f9d42d1a45a352100881c01753" id="r_a946291f9d42d1a45a352100881c01753"><td class="memItemLeft" align="right" valign="top"><a id="a946291f9d42d1a45a352100881c01753" name="a946291f9d42d1a45a352100881c01753"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*=</b> (float n) noexcept</td></tr>
+<tr class="separator:a946291f9d42d1a45a352100881c01753"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3415837d4acd6e8e70d47d81051a1b65" id="r_a3415837d4acd6e8e70d47d81051a1b65"><td class="memItemLeft" align="right" valign="top"><a id="a3415837d4acd6e8e70d47d81051a1b65" name="a3415837d4acd6e8e70d47d81051a1b65"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) noexcept</td></tr>
+<tr class="separator:a3415837d4acd6e8e70d47d81051a1b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3878c063fd6170faae9c238fac97bf85" id="r_a3878c063fd6170faae9c238fac97bf85"><td class="memItemLeft" align="right" valign="top"><a id="a3878c063fd6170faae9c238fac97bf85" name="a3878c063fd6170faae9c238fac97bf85"></a>
+<a class="el" href="structmath_1_1f32x4.html">f32x4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (float n) noexcept</td></tr>
+<tr class="separator:a3878c063fd6170faae9c238fac97bf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76f421df9cc2a192896f1d301fd88729" id="r_a76f421df9cc2a192896f1d301fd88729"><td class="memItemLeft" align="right" valign="top"><a id="a76f421df9cc2a192896f1d301fd88729" name="a76f421df9cc2a192896f1d301fd88729"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="separator:a76f421df9cc2a192896f1d301fd88729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7977c878849ac490610303f0eea8a61" id="r_af7977c878849ac490610303f0eea8a61"><td class="memItemLeft" align="right" valign="top"><a id="af7977c878849ac490610303f0eea8a61" name="af7977c878849ac490610303f0eea8a61"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (float n) const noexcept</td></tr>
+<tr class="separator:af7977c878849ac490610303f0eea8a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32bf167fc7da35f38e161d9412f21d37" id="r_a32bf167fc7da35f38e161d9412f21d37"><td class="memItemLeft" align="right" valign="top"><a id="a32bf167fc7da35f38e161d9412f21d37" name="a32bf167fc7da35f38e161d9412f21d37"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="separator:a32bf167fc7da35f38e161d9412f21d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac500689ffbe898e086169e44abc49e7f" id="r_ac500689ffbe898e086169e44abc49e7f"><td class="memItemLeft" align="right" valign="top"><a id="ac500689ffbe898e086169e44abc49e7f" name="ac500689ffbe898e086169e44abc49e7f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (float n) const noexcept</td></tr>
+<tr class="separator:ac500689ffbe898e086169e44abc49e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaa44c117bea07b76d5c074a21f876ff" id="r_abaa44c117bea07b76d5c074a21f876ff"><td class="memItemLeft" align="right" valign="top"><a id="abaa44c117bea07b76d5c074a21f876ff" name="abaa44c117bea07b76d5c074a21f876ff"></a>
+<a class="el" href="structmath_1_1u32x4.html">u32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="separator:abaa44c117bea07b76d5c074a21f876ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6154560b446b939a58e6aca51da9688" id="r_ad6154560b446b939a58e6aca51da9688"><td class="memItemLeft" align="right" valign="top"><a id="ad6154560b446b939a58e6aca51da9688" name="ad6154560b446b939a58e6aca51da9688"></a>
+<a class="el" href="structmath_1_1u32x4.html">u32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (float n) const noexcept</td></tr>
+<tr class="separator:ad6154560b446b939a58e6aca51da9688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc9f60fb2c15b9dcfae9ed549c8298c5" id="r_adc9f60fb2c15b9dcfae9ed549c8298c5"><td class="memItemLeft" align="right" valign="top"><a id="adc9f60fb2c15b9dcfae9ed549c8298c5" name="adc9f60fb2c15b9dcfae9ed549c8298c5"></a>
+<a class="el" href="structmath_1_1u32x4.html">u32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="separator:adc9f60fb2c15b9dcfae9ed549c8298c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08584dfb5297c01df154666b312a59c8" id="r_a08584dfb5297c01df154666b312a59c8"><td class="memItemLeft" align="right" valign="top"><a id="a08584dfb5297c01df154666b312a59c8" name="a08584dfb5297c01df154666b312a59c8"></a>
+<a class="el" href="structmath_1_1u32x4.html">u32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (float n) const noexcept</td></tr>
+<tr class="separator:a08584dfb5297c01df154666b312a59c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77b752e96599e32272e706210938c0ce" id="r_a77b752e96599e32272e706210938c0ce"><td class="memItemLeft" align="right" valign="top"><a id="a77b752e96599e32272e706210938c0ce" name="a77b752e96599e32272e706210938c0ce"></a>
+<a class="el" href="structmath_1_1u32x4.html">u32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;=</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="separator:a77b752e96599e32272e706210938c0ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29a62136b3b2e17780326f8b8ebb3d98" id="r_a29a62136b3b2e17780326f8b8ebb3d98"><td class="memItemLeft" align="right" valign="top"><a id="a29a62136b3b2e17780326f8b8ebb3d98" name="a29a62136b3b2e17780326f8b8ebb3d98"></a>
+<a class="el" href="structmath_1_1u32x4.html">u32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;=</b> (float n) const noexcept</td></tr>
+<tr class="separator:a29a62136b3b2e17780326f8b8ebb3d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae84271f57c6747b99e79a3dc58991b3d" id="r_ae84271f57c6747b99e79a3dc58991b3d"><td class="memItemLeft" align="right" valign="top"><a id="ae84271f57c6747b99e79a3dc58991b3d" name="ae84271f57c6747b99e79a3dc58991b3d"></a>
+<a class="el" href="structmath_1_1u32x4.html">u32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;=</b> (<a class="el" href="structmath_1_1f32x4.html">f32x4</a> v) const noexcept</td></tr>
+<tr class="separator:ae84271f57c6747b99e79a3dc58991b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93afedc2ad07ddf9438b4a86f975a5ee" id="r_a93afedc2ad07ddf9438b4a86f975a5ee"><td class="memItemLeft" align="right" valign="top"><a id="a93afedc2ad07ddf9438b4a86f975a5ee" name="a93afedc2ad07ddf9438b4a86f975a5ee"></a>
+<a class="el" href="structmath_1_1u32x4.html">u32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;=</b> (float n) const noexcept</td></tr>
+<tr class="separator:a93afedc2ad07ddf9438b4a86f975a5ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ad0da36b2558901e21e7a30f6c227a45e" id="r_ad0da36b2558901e21e7a30f6c227a45e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1float4.html#ad0da36b2558901e21e7a30f6c227a45e">x</a></td></tr>
-<tr class="separator:ad0da36b2558901e21e7a30f6c227a45e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4f0d3eebc3c443f9be81bf48561a217" id="r_aa4f0d3eebc3c443f9be81bf48561a217"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1float4.html#aa4f0d3eebc3c443f9be81bf48561a217">y</a></td></tr>
-<tr class="separator:aa4f0d3eebc3c443f9be81bf48561a217"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af73583b1e980b0aa03f9884812e9fd4d" id="r_af73583b1e980b0aa03f9884812e9fd4d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1float4.html#af73583b1e980b0aa03f9884812e9fd4d">z</a></td></tr>
-<tr class="separator:af73583b1e980b0aa03f9884812e9fd4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56eca241e2896b9f57a79589e76fd24b" id="r_a56eca241e2896b9f57a79589e76fd24b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmath_1_1float4.html#a56eca241e2896b9f57a79589e76fd24b">w</a></td></tr>
-<tr class="separator:a56eca241e2896b9f57a79589e76fd24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c00957139b5ee34e6a51981dc70fde" id="r_a08c00957139b5ee34e6a51981dc70fde"><td class="memItemLeft" ><a id="a08c00957139b5ee34e6a51981dc70fde" name="a08c00957139b5ee34e6a51981dc70fde"></a>
+union {&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b3f2fc92ce16cd82d994b1917aec3ec" id="r_a9b3f2fc92ce16cd82d994b1917aec3ec"><td class="memItemLeft" align="right" valign="top"><a id="a9b3f2fc92ce16cd82d994b1917aec3ec" name="a9b3f2fc92ce16cd82d994b1917aec3ec"></a>
+_simd_f128&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
+<tr class="separator:a9b3f2fc92ce16cd82d994b1917aec3ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac25fe7e2e0d3bc0087de41cf142ae3b7" id="r_ac25fe7e2e0d3bc0087de41cf142ae3b7"><td class="memItemLeft" align="right" valign="top"><a id="ac25fe7e2e0d3bc0087de41cf142ae3b7" name="ac25fe7e2e0d3bc0087de41cf142ae3b7"></a>
+<a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>floats</b></td></tr>
+<tr class="separator:ac25fe7e2e0d3bc0087de41cf142ae3b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af637c973cb8d60d98f346219d31c097f" id="r_af637c973cb8d60d98f346219d31c097f"><td class="memItemLeft" align="right" valign="top"><a id="af637c973cb8d60d98f346219d31c097f" name="af637c973cb8d60d98f346219d31c097f"></a>
+<a class="el" href="structmath_1_1int4.html">int4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ints</b></td></tr>
+<tr class="separator:af637c973cb8d60d98f346219d31c097f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc7852d967ef1179bb1c17bed9f7371d" id="r_adc7852d967ef1179bb1c17bed9f7371d"><td class="memItemLeft" align="right" valign="top"><a id="adc7852d967ef1179bb1c17bed9f7371d" name="adc7852d967ef1179bb1c17bed9f7371d"></a>
+<a class="el" href="structmath_1_1uint4.html">uint4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>uints</b></td></tr>
+<tr class="separator:adc7852d967ef1179bb1c17bed9f7371d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c00957139b5ee34e6a51981dc70fde" id="r_a08c00957139b5ee34e6a51981dc70fde"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom">&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a08c00957139b5ee34e6a51981dc70fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:aba09d63a3b5c9bf74d31e42ef910c044" id="r_aba09d63a3b5c9bf74d31e42ef910c044"><td class="memItemLeft" align="right" valign="top"><a id="aba09d63a3b5c9bf74d31e42ef910c044" name="aba09d63a3b5c9bf74d31e42ef910c044"></a>
 static const <a class="el" href="structmath_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><b>identity</b> = <a class="el" href="structmath_1_1quat.html">quat</a>(0.0f, 0.0f, 0.0f, 1.0f)</td></tr>
-<tr class="memdesc:aba09d63a3b5c9bf74d31e42ef910c044"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quaternion with zero rotation. <br /></td></tr>
 <tr class="separator:aba09d63a3b5c9bf74d31e42ef910c044"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84de7332e41a43afc1f70e19c6479bf2" id="r_a84de7332e41a43afc1f70e19c6479bf2"><td class="memItemLeft" align="right" valign="top"><a id="a84de7332e41a43afc1f70e19c6479bf2" name="a84de7332e41a43afc1f70e19c6479bf2"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>zero</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(0.0f)</td></tr>
-<tr class="separator:a84de7332e41a43afc1f70e19c6479bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf82f3863a7903d99e5a9081d6fba625" id="r_adf82f3863a7903d99e5a9081d6fba625"><td class="memItemLeft" align="right" valign="top"><a id="adf82f3863a7903d99e5a9081d6fba625" name="adf82f3863a7903d99e5a9081d6fba625"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>one</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(1.0f)</td></tr>
-<tr class="separator:adf82f3863a7903d99e5a9081d6fba625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ef8ae7121fa0195f34a86f078155977" id="r_a4ef8ae7121fa0195f34a86f078155977"><td class="memItemLeft" align="right" valign="top"><a id="a4ef8ae7121fa0195f34a86f078155977" name="a4ef8ae7121fa0195f34a86f078155977"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>minusOne</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(-1.0f)</td></tr>
-<tr class="separator:a4ef8ae7121fa0195f34a86f078155977"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad04ab80da2a5c4223a0880fe126e5aaf" id="r_ad04ab80da2a5c4223a0880fe126e5aaf"><td class="memItemLeft" align="right" valign="top"><a id="ad04ab80da2a5c4223a0880fe126e5aaf" name="ad04ab80da2a5c4223a0880fe126e5aaf"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>min</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(FLT_MIN)</td></tr>
-<tr class="separator:ad04ab80da2a5c4223a0880fe126e5aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe6d68370ef43b797ddd1622407f151e" id="r_abe6d68370ef43b797ddd1622407f151e"><td class="memItemLeft" align="right" valign="top"><a id="abe6d68370ef43b797ddd1622407f151e" name="abe6d68370ef43b797ddd1622407f151e"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>minusMin</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(-FLT_MIN)</td></tr>
-<tr class="separator:abe6d68370ef43b797ddd1622407f151e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabc4f5010ddea0fc5df9357e891422c7" id="r_aabc4f5010ddea0fc5df9357e891422c7"><td class="memItemLeft" align="right" valign="top"><a id="aabc4f5010ddea0fc5df9357e891422c7" name="aabc4f5010ddea0fc5df9357e891422c7"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>max</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(FLT_MAX)</td></tr>
-<tr class="separator:aabc4f5010ddea0fc5df9357e891422c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ee129b57e5d9db6c1340329de13c74e" id="r_a4ee129b57e5d9db6c1340329de13c74e"><td class="memItemLeft" align="right" valign="top"><a id="a4ee129b57e5d9db6c1340329de13c74e" name="a4ee129b57e5d9db6c1340329de13c74e"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>minusMax</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(-FLT_MAX)</td></tr>
-<tr class="separator:a4ee129b57e5d9db6c1340329de13c74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9670c1a250487a40afacbd32b2133ca" id="r_ae9670c1a250487a40afacbd32b2133ca"><td class="memItemLeft" align="right" valign="top"><a id="ae9670c1a250487a40afacbd32b2133ca" name="ae9670c1a250487a40afacbd32b2133ca"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>epsilon</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(FLT_EPSILON)</td></tr>
-<tr class="separator:ae9670c1a250487a40afacbd32b2133ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d47124704e28560b2b0d4f39c4d0640" id="r_a1d47124704e28560b2b0d4f39c4d0640"><td class="memItemLeft" align="right" valign="top"><a id="a1d47124704e28560b2b0d4f39c4d0640" name="a1d47124704e28560b2b0d4f39c4d0640"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>inf</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(INFINITY)</td></tr>
-<tr class="separator:a1d47124704e28560b2b0d4f39c4d0640"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5a1c6d8c8eaeb7f2c4046b6813dffbc" id="r_ab5a1c6d8c8eaeb7f2c4046b6813dffbc"><td class="memItemLeft" align="right" valign="top"><a id="ab5a1c6d8c8eaeb7f2c4046b6813dffbc" name="ab5a1c6d8c8eaeb7f2c4046b6813dffbc"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>minusInf</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(-INFINITY)</td></tr>
-<tr class="separator:ab5a1c6d8c8eaeb7f2c4046b6813dffbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a699036d385ba666ea6beaf0bb9121e0e" id="r_a699036d385ba666ea6beaf0bb9121e0e"><td class="memItemLeft" align="right" valign="top"><a id="a699036d385ba666ea6beaf0bb9121e0e" name="a699036d385ba666ea6beaf0bb9121e0e"></a>
-static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nan</b> = <a class="el" href="structmath_1_1float4.html">float4</a>(NAN)</td></tr>
-<tr class="separator:a699036d385ba666ea6beaf0bb9121e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dc93d49f3828ef47f12c5223e6b4133" id="r_a0dc93d49f3828ef47f12c5223e6b4133"><td class="memItemLeft" align="right" valign="top"><a id="a0dc93d49f3828ef47f12c5223e6b4133" name="a0dc93d49f3828ef47f12c5223e6b4133"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>zero</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(0.0f)</td></tr>
+<tr class="separator:a0dc93d49f3828ef47f12c5223e6b4133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7ed483479afae4d8c33ca463cf1680f" id="r_ae7ed483479afae4d8c33ca463cf1680f"><td class="memItemLeft" align="right" valign="top"><a id="ae7ed483479afae4d8c33ca463cf1680f" name="ae7ed483479afae4d8c33ca463cf1680f"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>one</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(1.0f)</td></tr>
+<tr class="separator:ae7ed483479afae4d8c33ca463cf1680f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf0211664edba8958b8675e1b0e16cf1" id="r_aaf0211664edba8958b8675e1b0e16cf1"><td class="memItemLeft" align="right" valign="top"><a id="aaf0211664edba8958b8675e1b0e16cf1" name="aaf0211664edba8958b8675e1b0e16cf1"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>minusOne</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(-1.0f)</td></tr>
+<tr class="separator:aaf0211664edba8958b8675e1b0e16cf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a789381a64d6d8265c721aa51fb183af3" id="r_a789381a64d6d8265c721aa51fb183af3"><td class="memItemLeft" align="right" valign="top"><a id="a789381a64d6d8265c721aa51fb183af3" name="a789381a64d6d8265c721aa51fb183af3"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>min</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(FLT_MIN)</td></tr>
+<tr class="separator:a789381a64d6d8265c721aa51fb183af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab208951c7c1329093c19373043305956" id="r_ab208951c7c1329093c19373043305956"><td class="memItemLeft" align="right" valign="top"><a id="ab208951c7c1329093c19373043305956" name="ab208951c7c1329093c19373043305956"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>minusMin</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(-FLT_MIN)</td></tr>
+<tr class="separator:ab208951c7c1329093c19373043305956"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81afa6a319593d4dfa81130ab8c15129" id="r_a81afa6a319593d4dfa81130ab8c15129"><td class="memItemLeft" align="right" valign="top"><a id="a81afa6a319593d4dfa81130ab8c15129" name="a81afa6a319593d4dfa81130ab8c15129"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>max</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(FLT_MAX)</td></tr>
+<tr class="separator:a81afa6a319593d4dfa81130ab8c15129"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3ecabff2d30e993af649b98e5dbba95" id="r_aa3ecabff2d30e993af649b98e5dbba95"><td class="memItemLeft" align="right" valign="top"><a id="aa3ecabff2d30e993af649b98e5dbba95" name="aa3ecabff2d30e993af649b98e5dbba95"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>minusMax</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(-FLT_MAX)</td></tr>
+<tr class="separator:aa3ecabff2d30e993af649b98e5dbba95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c58524f60620a04292d3dad0b796a03" id="r_a1c58524f60620a04292d3dad0b796a03"><td class="memItemLeft" align="right" valign="top"><a id="a1c58524f60620a04292d3dad0b796a03" name="a1c58524f60620a04292d3dad0b796a03"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>epsilon</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(FLT_EPSILON)</td></tr>
+<tr class="separator:a1c58524f60620a04292d3dad0b796a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9aae2c75347b58f8ed7337256a3106dc" id="r_a9aae2c75347b58f8ed7337256a3106dc"><td class="memItemLeft" align="right" valign="top"><a id="a9aae2c75347b58f8ed7337256a3106dc" name="a9aae2c75347b58f8ed7337256a3106dc"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>inf</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(INFINITY)</td></tr>
+<tr class="separator:a9aae2c75347b58f8ed7337256a3106dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3e3290b4d2f54076639f8cdba3a57d3" id="r_ab3e3290b4d2f54076639f8cdba3a57d3"><td class="memItemLeft" align="right" valign="top"><a id="ab3e3290b4d2f54076639f8cdba3a57d3" name="ab3e3290b4d2f54076639f8cdba3a57d3"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>minusInf</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(-INFINITY)</td></tr>
+<tr class="separator:ab3e3290b4d2f54076639f8cdba3a57d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a427cbf4fc7b6b3ec3bf6db501fa6bc8d" id="r_a427cbf4fc7b6b3ec3bf6db501fa6bc8d"><td class="memItemLeft" align="right" valign="top"><a id="a427cbf4fc7b6b3ec3bf6db501fa6bc8d" name="a427cbf4fc7b6b3ec3bf6db501fa6bc8d"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nan</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(NAN)</td></tr>
+<tr class="separator:a427cbf4fc7b6b3ec3bf6db501fa6bc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59da2afb3ca1a9d7b5975ead076ea8f0" id="r_a59da2afb3ca1a9d7b5975ead076ea8f0"><td class="memItemLeft" align="right" valign="top"><a id="a59da2afb3ca1a9d7b5975ead076ea8f0" name="a59da2afb3ca1a9d7b5975ead076ea8f0"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>left</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(-1.0f, 0.0f, 0.0f, 0.0f)</td></tr>
+<tr class="separator:a59da2afb3ca1a9d7b5975ead076ea8f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad06bee79a6068958d126725827ce5990" id="r_ad06bee79a6068958d126725827ce5990"><td class="memItemLeft" align="right" valign="top"><a id="ad06bee79a6068958d126725827ce5990" name="ad06bee79a6068958d126725827ce5990"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>right</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(1.0f, 0.0f, 0.0f, 0.0f)</td></tr>
+<tr class="separator:ad06bee79a6068958d126725827ce5990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b2cb0226806e0ab11cc3c904d31e985" id="r_a3b2cb0226806e0ab11cc3c904d31e985"><td class="memItemLeft" align="right" valign="top"><a id="a3b2cb0226806e0ab11cc3c904d31e985" name="a3b2cb0226806e0ab11cc3c904d31e985"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>bottom</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(0.0f, -1.0f, 0.0f, 0.0f)</td></tr>
+<tr class="separator:a3b2cb0226806e0ab11cc3c904d31e985"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a38b5641f46f3e05a6183e604a3ab0b" id="r_a1a38b5641f46f3e05a6183e604a3ab0b"><td class="memItemLeft" align="right" valign="top"><a id="a1a38b5641f46f3e05a6183e604a3ab0b" name="a1a38b5641f46f3e05a6183e604a3ab0b"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>top</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(0.0f, 1.0f, 0.0f, 0.0f)</td></tr>
+<tr class="separator:a1a38b5641f46f3e05a6183e604a3ab0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a374712d30dfede9aefbab582b65b7b5a" id="r_a374712d30dfede9aefbab582b65b7b5a"><td class="memItemLeft" align="right" valign="top"><a id="a374712d30dfede9aefbab582b65b7b5a" name="a374712d30dfede9aefbab582b65b7b5a"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>back</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(0.0f, 0.0f, -1.0f, 0.0f)</td></tr>
+<tr class="separator:a374712d30dfede9aefbab582b65b7b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7686b535b3ff0ab30b9f8c5ba77b653e" id="r_a7686b535b3ff0ab30b9f8c5ba77b653e"><td class="memItemLeft" align="right" valign="top"><a id="a7686b535b3ff0ab30b9f8c5ba77b653e" name="a7686b535b3ff0ab30b9f8c5ba77b653e"></a>
+static const <a class="el" href="structmath_1_1f32x4.html">f32x4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>front</b> = <a class="el" href="structmath_1_1f32x4.html">f32x4</a>(0.0f, 0.0f, 1.0f, 0.0f)</td></tr>
+<tr class="separator:a7686b535b3ff0ab30b9f8c5ba77b653e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Quaternion rotation container. (In 3D space) </p>
+<div class="textblock"><p>SIMD 32bit floating point quaternion rotation container. (In 3D space) </p>
 <p>Represents rotation using complex numbers, avoiding gimbal lock problem. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a22cb50d6799a8fef2e19a56600f27994" name="a22cb50d6799a8fef2e19a56600f27994"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22cb50d6799a8fef2e19a56600f27994">&#9670;&#160;</a></span>quat() <span class="overload">[1/4]</span></h2>
+<a id="a896acb49fdd46fcccc2efc6b1f376c0b" name="a896acb49fdd46fcccc2efc6b1f376c0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a896acb49fdd46fcccc2efc6b1f376c0b">&#9670;&#160;</a></span>quat() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -309,20 +362,20 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="structmath_1_1quat.html">quat</a> </td>
+          <td class="memname"><a class="el" href="structmath_1_1quat.html">quat</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmath_1_1float4.html">float4</a></td>          <td class="paramname"><span class="paramname"><em>xyzw</em><span class="paramdefsep"> = </span><span class="paramdefval"><a class="elRef" href="https://en.cppreference.com/w/cpp/utility/functional/identity.html">identity</a></span></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1f32x4.html">f32x4</a></td>          <td class="paramname"><span class="paramname"><em>xyzw</em><span class="paramdefsep"> = </span><span class="paramdefval"><a class="elRef" href="https://en.cppreference.com/w/cpp/utility/functional/identity.html">identity</a></span></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a new quaternion structure. </p>
+<p>Creates a new identity SIMD 32bit floating point quaternion structure. </p>
 <dl class="section note"><dt>Note</dt><dd>Identity quaternion represents rotation of 0 degrees around all axis. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -333,8 +386,8 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
 
 </div>
 </div>
-<a id="a388d416a3cb812587962020560862f7b" name="a388d416a3cb812587962020560862f7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a388d416a3cb812587962020560862f7b">&#9670;&#160;</a></span>quat() <span class="overload">[2/4]</span></h2>
+<a id="ad8dcd0a8630c3a20fe143c085b1af1e5" name="ad8dcd0a8630c3a20fe143c085b1af1e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8dcd0a8630c3a20fe143c085b1af1e5">&#9670;&#160;</a></span>quat() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -343,7 +396,7 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="structmath_1_1quat.html">quat</a> </td>
+          <td class="memname"><a class="el" href="structmath_1_1quat.html">quat</a> </td>
           <td>(</td>
           <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>x</em>, </span></td>
         </tr>
@@ -365,12 +418,12 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a new quaternion structure. </p>
+<p>Creates a new SIMD 32bit floating point quaternion structure. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>imaginary vector X part </td></tr>
@@ -383,41 +436,8 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
 
 </div>
 </div>
-<a id="ab5e5dfbff514b4ca46a38b71a8d5aed4" name="ab5e5dfbff514b4ca46a38b71a8d5aed4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5e5dfbff514b4ca46a38b71a8d5aed4">&#9670;&#160;</a></span>quat() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structmath_1_1quat.html">quat</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structmath_1_1float3.html">float3</a></td>          <td class="paramname"><span class="paramname"><em>eulerAngles</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a new quaternion structure from the euler angles. (In radians) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">eulerAngles</td><td>target euler angles vector </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a8effa3dc8810f17394b907f233843765" name="a8effa3dc8810f17394b907f233843765"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8effa3dc8810f17394b907f233843765">&#9670;&#160;</a></span>quat() <span class="overload">[4/4]</span></h2>
+<a id="ab52e350b6a2ad67750af993782a34d76" name="ab52e350b6a2ad67750af993782a34d76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab52e350b6a2ad67750af993782a34d76">&#9670;&#160;</a></span>quat() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -433,7 +453,7 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structmath_1_1float3.html">float3</a></td>          <td class="paramname"><span class="paramname"><em>axis</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1f32x4.html">f32x4</a></td>          <td class="paramname"><span class="paramname"><em>axis</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -443,11 +463,11 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
 </table>
 </div><div class="memdoc">
 
-<p>Creates a new quaternion structure from the angle and axis. (In radians) </p>
+<p>Creates a new SIMD quaternion structure from the angle and axis. (In radians) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">angle</td><td>target rotation around axis in radians </td></tr>
-    <tr><td class="paramname">axis</td><td>target axis to rotate around </td></tr>
+    <tr><td class="paramname">axis</td><td>target 3D axis to rotate around </td></tr>
   </table>
   </dd>
 </dl>
@@ -455,8 +475,8 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a13737c3cf28f34289ebf1d0f165c0ac7" name="a13737c3cf28f34289ebf1d0f165c0ac7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13737c3cf28f34289ebf1d0f165c0ac7">&#9670;&#160;</a></span>operator*() <span class="overload">[1/2]</span></h2>
+<a id="a72e14f091cbd84879f5e7a978db09ccb" name="a72e14f091cbd84879f5e7a978db09ccb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72e14f091cbd84879f5e7a978db09ccb">&#9670;&#160;</a></span>operator*() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -465,42 +485,9 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="structmath_1_1quat.html">quat</a> operator* </td>
+          <td class="memname"><a class="el" href="structmath_1_1quat.html">quat</a> operator* </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmath_1_1quat.html">quat</a></td>          <td class="paramname"><span class="paramname"><em>q</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Rotates this quaternion by the specified one. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">q</td><td>target quaternion to rotate by </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a59d51f148dcdc18cbf118a2ef1dbddea" name="a59d51f148dcdc18cbf118a2ef1dbddea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59d51f148dcdc18cbf118a2ef1dbddea">&#9670;&#160;</a></span>operator*() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structmath_1_1float3.html">float3</a> operator* </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structmath_1_1float3.html">float3</a></td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -511,18 +498,18 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
 </table>
 </div><div class="memdoc">
 
-<p>Rotates vector by this quaternion. </p>
+<p>Rotates this SIMD quaternion by the specified one. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">v</td><td>target vector to rotate </td></tr>
+    <tr><td class="paramname">q</td><td>target SIMD quaternion to rotate by </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a7ebbd0645197b31284d09cdd5c4075ad" name="a7ebbd0645197b31284d09cdd5c4075ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ebbd0645197b31284d09cdd5c4075ad">&#9670;&#160;</a></span>operator*=()</h2>
+<a id="af29f6486f671d9ad3954cb91ece01dd9" name="af29f6486f671d9ad3954cb91ece01dd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af29f6486f671d9ad3954cb91ece01dd9">&#9670;&#160;</a></span>operator*() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -531,9 +518,42 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structmath_1_1quat.html">quat</a> &amp; operator*= </td>
+          <td class="memname"><a class="el" href="structmath_1_1f32x4.html">f32x4</a> operator* </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmath_1_1quat.html">quat</a></td>          <td class="paramname"><span class="paramname"><em>q</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1f32x4.html">f32x4</a></td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Rotates 3D vector by this SIMD quaternion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>target 3D vector to rotate </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aabdf19bb892619cc64bb2c41d8671984" name="aabdf19bb892619cc64bb2c41d8671984"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabdf19bb892619cc64bb2c41d8671984">&#9670;&#160;</a></span>operator*=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmath_1_1f32x4.html">f32x4</a> &amp; operator*= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmath_1_1f32x4.html">f32x4</a></td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -544,10 +564,309 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
 </table>
 </div><div class="memdoc">
 
-<p>Rotates this quaternion by the specified one. </p>
+<p>Rotates this SIMD quaternion by the specified one. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">q</td><td>target quaternion to rotate by </td></tr>
+    <tr><td class="paramname">v</td><td>target SIMD quaternion to rotate by </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5a821a1524aaa8e3bd59df157b1ee51b" name="a5a821a1524aaa8e3bd59df157b1ee51b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a821a1524aaa8e3bd59df157b1ee51b">&#9670;&#160;</a></span>loadAligned()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void loadAligned </td>
+          <td>(</td>
+          <td class="paramtype">const float *</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads SIMD 4 component 32bit floating point aligned vector values. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Specified vector pointer must be aligned in the memory!!! </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>target 4 component vector value pointer (aligned) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abc736fa699aca1d96b888bdee6155103" name="abc736fa699aca1d96b888bdee6155103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc736fa699aca1d96b888bdee6155103">&#9670;&#160;</a></span>store()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void store </td>
+          <td>(</td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores SIMD 4 component 32bit floating point unaligned vector values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">v</td><td>target 4 component vector value pointer (unaligned) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aba76e76b224a364f9f3062f2eaec88dc" name="aba76e76b224a364f9f3062f2eaec88dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba76e76b224a364f9f3062f2eaec88dc">&#9670;&#160;</a></span>storeAligned()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void storeAligned </td>
+          <td>(</td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores SIMD 4 component 32bit floating point aligned vector values. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Specified vector pointer must be aligned in the memory!!! </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">v</td><td>target 4 component vector value pointer (aligned) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abcc1f96b379454e86ad8afb68092d088" name="abcc1f96b379454e86ad8afb68092d088"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcc1f96b379454e86ad8afb68092d088">&#9670;&#160;</a></span>setX()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setX </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets SIMD vector first component value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>target X vector component value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6fa0d7bb175eb9850cde88313e002377" name="a6fa0d7bb175eb9850cde88313e002377"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fa0d7bb175eb9850cde88313e002377">&#9670;&#160;</a></span>setY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setY </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets SIMD vector second component value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>target Y vector component value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a07eddbb1ed48c8042e40527a2e365e97" name="a07eddbb1ed48c8042e40527a2e365e97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07eddbb1ed48c8042e40527a2e365e97">&#9670;&#160;</a></span>setZ()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setZ </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets SIMD vector third component value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>target Z vector component value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a627d221b8e89313f0c7c55151c631594" name="a627d221b8e89313f0c7c55151c631594"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a627d221b8e89313f0c7c55151c631594">&#9670;&#160;</a></span>setW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setW </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets SIMD vector fourth component value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>target W vector component value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af0b3e54f95ca33e8b1ffd7023bd3d834" name="af0b3e54f95ca33e8b1ffd7023bd3d834"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0b3e54f95ca33e8b1ffd7023bd3d834">&#9670;&#160;</a></span>fixW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void fixW </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets SIMD vector Z component value to the W component. </p>
+<dl class="section note"><dt>Note</dt><dd>Usefull when you want to prevent SIMD division by zero. </dd></dl>
+
+</div>
+</div>
+<a id="af721735e2f235a827cb6634339c2ee84" name="af721735e2f235a827cb6634339c2ee84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af721735e2f235a827cb6634339c2ee84">&#9670;&#160;</a></span>swizzle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a> X, <a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a> Y, <a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a> Z, <a class="el" href="types_8hpp.html#acbd4acd0d29e2d6c43104827f77d9cd2">uint32</a> W = SwU&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmath_1_1f32x4.html">f32x4</a> swizzle </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Swizzles SIMD vector components. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">X</td><td>first vector component swizzle index </td></tr>
+    <tr><td class="paramname">Y</td><td>second vector component swizzle index </td></tr>
+    <tr><td class="paramname">Z</td><td>third vector component swizzle index </td></tr>
+    <tr><td class="paramname">W</td><td>fourth vector component swizzle index </td></tr>
   </table>
   </dd>
 </dl>
@@ -577,7 +896,7 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
 </table>
 </div><div class="memdoc">
 
-<p>Returns vector component by index. </p>
+<p>Returns SIMD vector component by index. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">i</td><td>target component index </td></tr>
@@ -610,7 +929,7 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
 </table>
 </div><div class="memdoc">
 
-<p>Returns vector component by index. </p>
+<p>Returns SIMD vector component by index. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">i</td><td>target component index </td></tr>
@@ -620,106 +939,13 @@ static const <a class="el" href="structmath_1_1float4.html">float4</a>&#160;</td
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="ad0da36b2558901e21e7a30f6c227a45e" name="ad0da36b2558901e21e7a30f6c227a45e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0da36b2558901e21e7a30f6c227a45e">&#9670;&#160;</a></span>x</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">float x</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>First vector component. </p>
-
-</div>
-</div>
-<a id="aa4f0d3eebc3c443f9be81bf48561a217" name="aa4f0d3eebc3c443f9be81bf48561a217"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4f0d3eebc3c443f9be81bf48561a217">&#9670;&#160;</a></span>y</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">float y</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Second vector component. </p>
-
-</div>
-</div>
-<a id="af73583b1e980b0aa03f9884812e9fd4d" name="af73583b1e980b0aa03f9884812e9fd4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af73583b1e980b0aa03f9884812e9fd4d">&#9670;&#160;</a></span>z</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">float z</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Third vector component. </p>
-
-</div>
-</div>
-<a id="a56eca241e2896b9f57a79589e76fd24b" name="a56eca241e2896b9f57a79589e76fd24b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56eca241e2896b9f57a79589e76fd24b">&#9670;&#160;</a></span>w</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">float w</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Fourth vector component. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>math</b></li><li class="navelem"><a class="el" href="structmath_1_1quat.html">quat</a></li>
-    <li class="footer">Generated on Mon Mar 10 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+    <li class="footer">Generated on Wed Mar 12 2025 for Math by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>
 </body>

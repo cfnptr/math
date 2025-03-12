@@ -1,14 +1,15 @@
 var structmath_1_1float4x4 =
 [
     [ "float4x4", "structmath_1_1float4x4.html#a3256ec5d6d208190ef43ee09a10f79bc", null ],
-    [ "float4x4", "structmath_1_1float4x4.html#ae76c18b74d8d353b8865d7836c7f805c", null ],
-    [ "float4x4", "structmath_1_1float4x4.html#a3ee356a1e765d7797e3b9aada1b836d5", null ],
+    [ "float4x4", "structmath_1_1float4x4.html#a245fd0288e0013e39874559edcc7d2d8", null ],
     [ "float4x4", "structmath_1_1float4x4.html#ac6df0812fdcbef421913bf95ceb9f983", null ],
+    [ "float4x4", "structmath_1_1float4x4.html#aad2bf9e12b0a5c3357f7e68e2a4205b4", null ],
+    [ "float4x4", "structmath_1_1float4x4.html#aabe5a396abd7b69c414f52ddce9f764e", null ],
     [ "operator float4x3", "structmath_1_1float4x4.html#adcabbcbcbd8c265533e3e6050d176e56", null ],
     [ "operator float3x3", "structmath_1_1float4x4.html#a1789daddb2a107f35823991c32dbd237", null ],
     [ "operator float2x2", "structmath_1_1float4x4.html#aff82b55b371b04b3fd00005f6c390044", null ],
     [ "operator[]", "structmath_1_1float4x4.html#ab2640adb632580c8ce1ad0d9904a6c4c", null ],
-    [ "operator[]", "structmath_1_1float4x4.html#ad866b60e2423e4ea1a9fc4d91cc5ab0e", null ],
+    [ "operator[]", "structmath_1_1float4x4.html#adf746a01937c4ee8539df595168e2299", null ],
     [ "operator*", "structmath_1_1float4x4.html#af06d84c62295e5793df47bf5da3110f1", null ],
     [ "operator*", "structmath_1_1float4x4.html#a332e939aa17fb502a057cb904687aef6", null ],
     [ "operator*=", "structmath_1_1float4x4.html#a5c7c83f942d65642e0cd06a7e222ac93", null ],

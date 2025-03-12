@@ -1,11 +1,11 @@
 var structmath_1_1float3x3 =
 [
     [ "float3x3", "structmath_1_1float3x3.html#ae2bc277082d887eb8e8db2bb3479fa7c", null ],
-    [ "float3x3", "structmath_1_1float3x3.html#a427c498c04929df6351b06119e7ab776", null ],
     [ "float3x3", "structmath_1_1float3x3.html#aee75ef07143e5764698abe44d1e0c401", null ],
+    [ "float3x3", "structmath_1_1float3x3.html#a9476477abf6db6cbd2e00560a3cde700", null ],
     [ "operator float2x2", "structmath_1_1float3x3.html#aff82b55b371b04b3fd00005f6c390044", null ],
     [ "operator[]", "structmath_1_1float3x3.html#a1084d3fa4ce6d0f721d886f0ae54d691", null ],
-    [ "operator[]", "structmath_1_1float3x3.html#af5561bf81bef10176d62b0c6154487d1", null ],
+    [ "operator[]", "structmath_1_1float3x3.html#aa63dee7a147929be4e7909842fd921b9", null ],
     [ "operator*", "structmath_1_1float3x3.html#aa2c702084bb89736e6cf7ba06e69d9c5", null ],
     [ "operator*", "structmath_1_1float3x3.html#a4dbef848710f4ef92bc07fb8b0a3a601", null ],
     [ "operator*=", "structmath_1_1float3x3.html#ade283466930bedaac4eb27040b803500", null ],

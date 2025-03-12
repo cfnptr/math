@@ -1,5 +1,5 @@
 var simd_2vector_2int_8hpp =
 [
-    [ "simd_i32_4", "structmath_1_1simd__i32__4.html", "structmath_1_1simd__i32__4" ],
-    [ "simd_i32_4.__unnamed1__", "unionmath_1_1simd__i32__4_8____unnamed1____.html", null ]
+    [ "i32x4", "structmath_1_1i32x4.html", "structmath_1_1i32x4" ],
+    [ "i32x4.__unnamed1__", "unionmath_1_1i32x4_8____unnamed1____.html", null ]
 ];
