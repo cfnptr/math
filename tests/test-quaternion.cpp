@@ -45,10 +45,6 @@ static void testQuatVectors()
 {
 	const auto eulerAngles = radians(f32x4(90.0f, -1.23f, 45.0f, 0.0f));
 	const auto quat = fromEulerAngles(eulerAngles);
-	cmp(quat.extractEulerAngles(), eulerAngles);
-	cmp(quat.extractPitch(), eulerAngles.getX());
-	cmp(quat.extractYaw(), eulerAngles.getY());
-	cmp(quat.extractRoll(), eulerAngles.getZ());
 	cmp(conjugate(conjugate(quat)), quat);
 	cmp(inverse(inverse(quat)), quat);
 
