@@ -804,16 +804,16 @@ static float2 gain(float2 x, float2 k) noexcept
 }
 
 //**********************************************************************************************************************
-static constexpr float3 operator+(float n, const float3& v) noexcept { return float3(n) + v; }
-static constexpr float3 operator-(float n, const float3& v) noexcept { return float3(n) - v; }
-static constexpr float3 operator*(float n, const float3& v) noexcept { return float3(n) * v; }
-static constexpr float3 operator/(float n, const float3& v) noexcept { return float3(n) / v; }
-static constexpr bool operator==(float n, const float3& v) noexcept { return float3(n) == v; }
-static constexpr bool operator!=(float n, const float3& v) noexcept { return float3(n) != v; }
-static constexpr uint3 operator<(float n, const float3& v) noexcept { return float3(n) < v; }
-static constexpr uint3 operator>(float n, const float3& v) noexcept { return float3(n) > v; }
-static constexpr uint3 operator<=(float n, const float3& v) noexcept { return float3(n) <= v; }
-static constexpr uint3 operator>=(float n, const float3& v) noexcept { return float3(n) >= v; }
+static constexpr float3 operator+(float n, float3 v) noexcept { return float3(n) + v; }
+static constexpr float3 operator-(float n, float3 v) noexcept { return float3(n) - v; }
+static constexpr float3 operator*(float n, float3 v) noexcept { return float3(n) * v; }
+static constexpr float3 operator/(float n, float3 v) noexcept { return float3(n) / v; }
+static constexpr bool operator==(float n, float3 v) noexcept { return float3(n) == v; }
+static constexpr bool operator!=(float n, float3 v) noexcept { return float3(n) != v; }
+static constexpr uint3 operator<(float n, float3 v) noexcept { return float3(n) < v; }
+static constexpr uint3 operator>(float n, float3 v) noexcept { return float3(n) > v; }
+static constexpr uint3 operator<=(float n, float3 v) noexcept { return float3(n) <= v; }
+static constexpr uint3 operator>=(float n, float3 v) noexcept { return float3(n) >= v; }
 
 /**
  * @brief Converts vector to the string. (space separated)
@@ -889,7 +889,7 @@ static constexpr float3 max(float3 a, float3 b) noexcept
  * @param b second vector to find minimum
  * @param c third vector to find minimum
  */
-static constexpr float3 min(const float3& a, const float3& b, const float3& c) noexcept { return min(min(a, b), c); }
+static constexpr float3 min(float3 a, float3 b, float3 c) noexcept { return min(min(a, b), c); }
 /**
  * @brief Returns maximum value for each component of three vectors.
  * 
@@ -897,7 +897,7 @@ static constexpr float3 min(const float3& a, const float3& b, const float3& c) n
  * @param b second vector to find maximum
  * @param c third vector to find maximum
  */
-static constexpr float3 max(const float3& a, const float3& b, const float3& c) noexcept { return max(max(a, b), c); }
+static constexpr float3 max(float3 a, float3 b, float3 c) noexcept { return max(max(a, b), c); }
 
 /**
  * @brief Clamps vector components between min and max values.

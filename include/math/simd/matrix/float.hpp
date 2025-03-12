@@ -19,80 +19,101 @@
 
 #pragma once
 #include "math/matrix/float.hpp"
-#include "math/simd/quaternion.hpp"
 
 namespace math
 {
 
 /**
- * @brief SIMD 32bit floating point 4x4 matrix structure.
+ * @brief SIMD 32bit floating point 4x4 matrix structure. (float4x4)
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  * @note Use it when you know how to implement a faster vectorized code.
  */
-struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_f32_4x4
+struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 {
-	simd_f32_4 c0, c1, c2, c3;
+	f32x4 c0, c1, c2, c3;
 
 	/**
-	 * @brief Creates a new zero initialized SIMD 32bit floating point 4x4 matrix structure.
+	 * @brief Creates a new zero initialized SIMD 32bit floating point 4x4 matrix structure. (float4x4)
 	 */
-	simd_f32_4x4() noexcept = default;
+	f32x4x4() noexcept = default;
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure.
+	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @param n target value for all matrix vector components
+	 */
+	explicit f32x4x4(float n) noexcept : c0(n), c1(n), c2(n), c3(n) { }
+	/**
+	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @details See the @ref f32x4x4.
+	 */
+	f32x4x4(
+		float c0r0, float c1r0, float c2r0, float c3r0,
+		float c0r1, float c1r1, float c2r1, float c3r1,
+		float c0r2, float c1r2, float c2r2, float c3r2,
+		float c0r3, float c1r3, float c2r3, float c3r3) noexcept :
+		c0(f32x4(c0r0, c0r1, c0r2, c0r3)),
+		c1(f32x4(c1r0, c1r1, c1r2, c1r3)),
+		c2(f32x4(c2r0, c2r1, c2r2, c2r3)),
+		c3(f32x4(c3r0, c3r1, c3r2, c3r3)) { }
+	/**
+	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
 	 * 
 	 * @param c0 first matrix column value
 	 * @param c1 second matrix column value
 	 * @param c2 third matrix column value
 	 * @param c3 fourth matrix column value
 	 */
-	simd_f32_4x4(simd_f32_4 c0, simd_f32_4 c1, simd_f32_4 c2, simd_f32_4 c3) noexcept :
-		c0(c0), c1(c1), c2(c2), c3(c3) { }
+	f32x4x4(f32x4 c0, f32x4 c1, f32x4 c2, f32x4 c3) noexcept : c0(c0), c1(c1), c2(c2), c3(c3) { }
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure.
+	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
 	 * @warning This constructor duplicates second column vector to the third column!
 	 *
 	 * @param c0 first matrix column value
 	 * @param c1 second matrix column value
 	 * @param c2 third matrix column value
 	 */
-	simd_f32_4x4(simd_f32_4 c0, simd_f32_4 c1, simd_f32_4 c2) noexcept :
-		c0(c0), c1(c1), c2(c2), c3(c2) { }
+	f32x4x4(f32x4 c0, f32x4 c1, f32x4 c2) noexcept : c0(c0), c1(c1), c2(c2), c3(c2) { }
+	
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure.
-	 * @param n target value for all matrix vector components
-	 */
-	explicit simd_f32_4x4(float n) noexcept : c0(n), c1(n), c2(n), c3(n) { }
-	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure.
+	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
 	 * @param[in] m target 4x4 matrix value
 	 */
-	explicit simd_f32_4x4(const float4x4& m) noexcept { *this = *((const simd_f32_4x4*)&m); }
+	explicit f32x4x4(const float4x4& m) noexcept { *this = *((const f32x4x4*)&m); }
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure.
+	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * 
+	 * @param[in] m target 3x3 matrix value
+	 * @param r3 third rows SIMD vector
+	 */
+	explicit f32x4x4(const float4x3& m, f32x4 r3 = f32x4::zero) noexcept : 
+		c0(float4(m.c0, r3.getX())), c1(float4(m.c1, r3.getY())), 
+		c2(float4(m.c2, r3.getZ())), c3(float4(m.c3, r3.getW())) { }
+	/**
+	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
 	 * 
 	 * @param[in] m target 3x3 matrix value
 	 * @param c3 third columns SIMD vector
+	 * @param r3 third rows SIMD vector
 	 */
-	explicit simd_f32_4x4(const float3x3& m, simd_f32_4 c3 = simd_f32_4::zero) noexcept : 
-		c0(float4(m.c0, m.c0.z)), c1(float4(m.c1, m.c1.z)), c2(float4(m.c2, m.c2.z)), c3(c3) { }
+	explicit f32x4x4(const float3x3& m, f32x4 c3 = f32x4::zero, f32x4 r3 = f32x4::zero) noexcept : 
+		c0(float4(m.c0, r3.getX())), c1(float4(m.c1, r3.getY())), c2(float4(m.c2, r3.getZ())), c3(c3) { }
 
 	/**
 	 * @brief Returns SIMD matrix column by index.
 	 * @param i target column index
 	 */
-	simd_f32_4& operator[](psize i) noexcept
+	f32x4& operator[](psize i) noexcept
 	{
 		assert(i <= 3);
-		return ((simd_f32_4*)this)[i];
+		return ((f32x4*)this)[i];
 	}
 	/**
 	 * @brief Returns SIMD matrix column by index.
 	 * @param i target column index
 	 */
-	simd_f32_4 operator[](psize i) const noexcept
+	f32x4 operator[](psize i) const noexcept
 	{
 		assert(i <= 3);
-		return ((simd_f32_4*)this)[i];
+		return ((f32x4*)this)[i];
 	}
 
 	/**
@@ -125,46 +146,46 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_f32_4x4
 	 * @brief Adds specified value to the all SIMD matrix columns.
 	 * @param n target value to add
 	 */
-	simd_f32_4x4 operator+(float n) const noexcept
+	f32x4x4 operator+(float n) const noexcept
 	{
-		auto t = simd_f32_4(n);
-		return simd_f32_4x4(c0 + t, c1 + t, c2 + t, c3 + t);
+		auto t = f32x4(n);
+		return f32x4x4(c0 + t, c1 + t, c2 + t, c3 + t);
 	}
 	/**
 	 * @brief Subtracts specified value from the all SIMD matrix columns.
 	 * @param n target value to subtract
 	 */
-	simd_f32_4x4 operator-(float n) const noexcept
+	f32x4x4 operator-(float n) const noexcept
 	{
-		auto t = simd_f32_4(n);
-		return simd_f32_4x4(c0 - t, c1 - t, c2 - t, c3 - t);
+		auto t = f32x4(n);
+		return f32x4x4(c0 - t, c1 - t, c2 - t, c3 - t);
 	}
 	/**
 	 * @brief Multiplies all SIMD matrix columns by the specified value.
 	 * @param n target value to multiply by
 	 */
-	simd_f32_4x4 operator*(float n) const noexcept
+	f32x4x4 operator*(float n) const noexcept
 	{
-		auto t = simd_f32_4(n);
-		return simd_f32_4x4(c0 * t, c1 * t, c2 * t, c3 * t);
+		auto t = f32x4(n);
+		return f32x4x4(c0 * t, c1 * t, c2 * t, c3 * t);
 	}
 	/**
 	 * @brief Divides all SIMD matrix columns by the specified value.
 	 * @param n target value to divide by
 	 */
-	simd_f32_4x4 operator/(float n) const noexcept
+	f32x4x4 operator/(float n) const noexcept
 	{
-		auto t = simd_f32_4(n);
-		return simd_f32_4x4(c0 / t, c1 / t, c2 / t, c3 / t);
+		auto t = f32x4(n);
+		return f32x4x4(c0 / t, c1 / t, c2 / t, c3 / t);
 	}
 
 	/**
 	 * @brief Calculates dot product between two SIMD matrices.
 	 * @param[in] m target SIMD matrix to dot by
 	 */
-	simd_f32_4x4 operator*(const simd_f32_4x4& m) const noexcept
+	f32x4x4 operator*(const f32x4x4& m) const noexcept
 	{
-		simd_f32_4x4 result;
+		f32x4x4 result;
 		#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_AVX2)
 		for (int i = 0; i < 4; ++i)
 		{
@@ -186,7 +207,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_f32_4x4
 			result[i].data = r;
 		}
 		#else
-		result = simd_f32_4x4((*((const float4x4*)this) * (*((const float4x4*)&m))));
+		result = f32x4x4((*((const float4x4*)this) * (*((const float4x4*)&m))));
 		#endif
 		return result;
 	}
@@ -194,7 +215,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_f32_4x4
 	 * @brief Calculates dot product between SIMD matrix and vector.
 	 * @param v target SIMD vector to dot by
 	 */
-	simd_f32_4 operator*(simd_f32_4 v) const noexcept
+	f32x4 operator*(f32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_AVX2)
 		auto r = _mm_mul_ps(c0.data, _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(0, 0, 0, 0)));
@@ -209,45 +230,45 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_f32_4x4
 		r = vmlaq_f32(r, c3.data, vdupq_laneq_f32(v.data, 3));
 		return r;
 		#else
-		return simd_f32_4((*((const float4x4*)this) * (*((const float4*)&v))));
+		return f32x4((*((const float4x4*)this) * (*((const float4*)&v))));
 		#endif
 	}
 
-	simd_f32_4x4& operator*=(const simd_f32_4x4& m) noexcept { *this = *this * m; return *this; }
-	simd_f32_4x4& operator+=(float n) noexcept { *this = *this + n; return *this; }
-	simd_f32_4x4& operator-=(float n) noexcept { *this = *this - n; return *this; }
-	simd_f32_4x4& operator*=(float n) noexcept { *this = *this * n; return *this; }
-	simd_f32_4x4& operator/=(float n) noexcept { *this = *this / n; return *this; }
+	f32x4x4& operator*=(const f32x4x4& m) noexcept { *this = *this * m; return *this; }
+	f32x4x4& operator+=(float n) noexcept { *this = *this + n; return *this; }
+	f32x4x4& operator-=(float n) noexcept { *this = *this - n; return *this; }
+	f32x4x4& operator*=(float n) noexcept { *this = *this * n; return *this; }
+	f32x4x4& operator/=(float n) noexcept { *this = *this / n; return *this; }
 	
-	bool operator==(const simd_f32_4x4& m) const noexcept
+	bool operator==(const f32x4x4& m) const noexcept
 	{
 		return areAllTrue(equal(c0, m.c0) & equal(c1, m.c1) & equal(c2, m.c2) & equal(c3, m.c3));
 	}
-	bool operator!=(const simd_f32_4x4& m) const noexcept
+	bool operator!=(const f32x4x4& m) const noexcept
 	{
 		return areAnyTrue(notEqual(c0, m.c0) | notEqual(c1, m.c1) | notEqual(c2, m.c2) | notEqual(c3, m.c3));
 	}
 
-	static const simd_f32_4x4 zero, one, minusOne, min, minusMin, max, minusMax, epsilon, inf, minusInf, nan, identity;
+	static const f32x4x4 zero, one, minusOne, min, minusMin, max, minusMax, epsilon, inf, minusInf, nan, identity;
 };
 
 //**********************************************************************************************************************
-inline const simd_f32_4x4 simd_f32_4x4::zero = simd_f32_4x4(0.0f);
-inline const simd_f32_4x4 simd_f32_4x4::one = simd_f32_4x4(1.0f);
-inline const simd_f32_4x4 simd_f32_4x4::minusOne = simd_f32_4x4(-1.0f);
-inline const simd_f32_4x4 simd_f32_4x4::min = simd_f32_4x4(FLT_MIN);
-inline const simd_f32_4x4 simd_f32_4x4::minusMin = simd_f32_4x4(-FLT_MIN);
-inline const simd_f32_4x4 simd_f32_4x4::max = simd_f32_4x4(FLT_MAX);
-inline const simd_f32_4x4 simd_f32_4x4::minusMax = simd_f32_4x4(-FLT_MAX);
-inline const simd_f32_4x4 simd_f32_4x4::epsilon = simd_f32_4x4(FLT_EPSILON);
-inline const simd_f32_4x4 simd_f32_4x4::inf = simd_f32_4x4(INFINITY);
-inline const simd_f32_4x4 simd_f32_4x4::minusInf = simd_f32_4x4(-INFINITY);
-inline const simd_f32_4x4 simd_f32_4x4::nan = simd_f32_4x4(NAN);
-inline const simd_f32_4x4 simd_f32_4x4::identity = simd_f32_4x4(
-	simd_f32_4(1.0f, 0.0f, 0.0f, 0.0f),
-	simd_f32_4(0.0f, 1.0f, 0.0f, 0.0f),
-	simd_f32_4(0.0f, 0.0f, 1.0f, 0.0f),
-	simd_f32_4(0.0f, 0.0f, 0.0f, 1.0f)
+inline const f32x4x4 f32x4x4::zero = f32x4x4(0.0f);
+inline const f32x4x4 f32x4x4::one = f32x4x4(1.0f);
+inline const f32x4x4 f32x4x4::minusOne = f32x4x4(-1.0f);
+inline const f32x4x4 f32x4x4::min = f32x4x4(FLT_MIN);
+inline const f32x4x4 f32x4x4::minusMin = f32x4x4(-FLT_MIN);
+inline const f32x4x4 f32x4x4::max = f32x4x4(FLT_MAX);
+inline const f32x4x4 f32x4x4::minusMax = f32x4x4(-FLT_MAX);
+inline const f32x4x4 f32x4x4::epsilon = f32x4x4(FLT_EPSILON);
+inline const f32x4x4 f32x4x4::inf = f32x4x4(INFINITY);
+inline const f32x4x4 f32x4x4::minusInf = f32x4x4(-INFINITY);
+inline const f32x4x4 f32x4x4::nan = f32x4x4(NAN);
+inline const f32x4x4 f32x4x4::identity = f32x4x4(
+	f32x4(1.0f, 0.0f, 0.0f, 0.0f),
+	f32x4(0.0f, 1.0f, 0.0f, 0.0f),
+	f32x4(0.0f, 0.0f, 1.0f, 0.0f),
+	f32x4(0.0f, 0.0f, 0.0f, 1.0f)
 );
 
 /**
@@ -256,9 +277,9 @@ inline const simd_f32_4x4 simd_f32_4x4::identity = simd_f32_4x4(
  * @param[in] a first SIMD matrix to binary compare
  * @param[in] b second SIMD matrix to binary compare
  */
-static bool isBinaryLess(const simd_f32_4x4& a, const simd_f32_4x4& b) noexcept
+static bool isBinaryLess(const f32x4x4& a, const f32x4x4& b) noexcept
 {
-	return memcmp(&a, &b, sizeof(simd_f32_4x4)) < 0;
+	return memcmp(&a, &b, sizeof(f32x4x4)) < 0;
 }
 
 /**
@@ -266,9 +287,9 @@ static bool isBinaryLess(const simd_f32_4x4& a, const simd_f32_4x4& b) noexcept
  * @param[in] a first SIMD matrix to use
  * @param[in] b second SIMD matrix to use
  */
-static simd_f32_4x4 multiply3x3(const simd_f32_4x4& a, const simd_f32_4x4& b) noexcept
+static f32x4x4 multiply3x3(const f32x4x4& a, const f32x4x4& b) noexcept
 {
-	simd_f32_4x4 result; 
+	f32x4x4 result; 
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_AVX2)
 	for (int i = 0; i < 4; ++i)
 	{
@@ -288,7 +309,7 @@ static simd_f32_4x4 multiply3x3(const simd_f32_4x4& a, const simd_f32_4x4& b) no
 		result[i].data = r;
 	}
 	#else
-	result = simd_f32_4x4((float3x3)a * (float3x3)b, a.c3);
+	result = f32x4x4((float3x3)a * (float3x3)b, a.c3);
 	#endif
 	return result;
 }
@@ -297,9 +318,9 @@ static simd_f32_4x4 multiply3x3(const simd_f32_4x4& a, const simd_f32_4x4& b) no
  * @param[in] m target SIMD matrix to use
  * @param v target SIMD vector to dot by
  */
-static simd_f32_4 multiply3x3(const simd_f32_4x4& m, simd_f32_4 v) noexcept
+static f32x4 multiply3x3(const f32x4x4& m, f32x4 v) noexcept
 {
-	simd_f32_4 result;
+	f32x4 result;
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_AVX2)
 	auto r = _mm_mul_ps(m.c0.data, _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(0, 0, 0, 0)));
 	r = MATH_SIMD_FMA(m.c1.data, _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(1, 1, 1, 1)), r);
@@ -312,7 +333,7 @@ static simd_f32_4 multiply3x3(const simd_f32_4x4& m, simd_f32_4 v) noexcept
 	result = r;
 	#else
 	auto t = float3x3((float3)m.c0, (float3)m.c1, (float3)m.c2) * (float3)v;
-	result = simd_f32_4(t.x, t.y, t.z, t.z);
+	result = f32x4(t.x, t.y, t.z, t.z);
 	#endif
 	return result.swizzle<SwX, SwY, SwZ, SwU>();
 }
@@ -321,14 +342,14 @@ static simd_f32_4 multiply3x3(const simd_f32_4x4& m, simd_f32_4 v) noexcept
  * @brief Calculates 4x4 SIMD matrix transpose. (Flips matrix over its diagonal)
  * @param[in] m target SIMD matrix to transpose
  */
-static simd_f32_4x4 transpose4x4(const simd_f32_4x4& m) noexcept
+static f32x4x4 transpose4x4(const f32x4x4& m) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	auto t1 = _mm_shuffle_ps(m.c0.data, m.c1.data, _MM_SHUFFLE(1, 0, 1, 0));
 	auto t3 = _mm_shuffle_ps(m.c0.data, m.c1.data, _MM_SHUFFLE(3, 2, 3, 2));
 	auto t2 = _mm_shuffle_ps(m.c2.data, m.c3.data, _MM_SHUFFLE(1, 0, 1, 0));
 	auto t4 = _mm_shuffle_ps(m.c2.data, m.c3.data, _MM_SHUFFLE(3, 2, 3, 2));
-	return simd_f32_4x4(
+	return f32x4x4(
 		_mm_shuffle_ps(t1, t2, _MM_SHUFFLE(2, 0, 2, 0)),
 		_mm_shuffle_ps(t1, t2, _MM_SHUFFLE(3, 1, 3, 1)),
 		_mm_shuffle_ps(t3, t4, _MM_SHUFFLE(2, 0, 2, 0)),
@@ -338,16 +359,16 @@ static simd_f32_4x4 transpose4x4(const simd_f32_4x4& m) noexcept
 	auto t2 = vzipq_f32(m.c1.data, m.c3.data);
 	auto t3 = vzipq_f32(t1.val[0], t2.val[0]);
 	auto t4 = vzipq_f32(t1.val[1], t2.val[1]);
-	return simd_f32_4x4(t3.val[0], t3.val[1], t4.val[0], t4.val[1]);
+	return f32x4x4(t3.val[0], t3.val[1], t4.val[0], t4.val[1]);
 	#else
-	return simd_f32_4x4(transpose(*((const float4x4*)&m)));
+	return f32x4x4(transpose(*((const float4x4*)&m)));
 	#endif
 }
 /**
  * @brief Calculates 3x3 SIMD matrix transpose. (Flips matrix over its diagonal)
  * @param[in] m target SIMD matrix to transpose
  */
-static simd_f32_4x4 transpose3x3(const simd_f32_4x4& m) noexcept
+static f32x4x4 transpose3x3(const f32x4x4& m) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	auto zero = _mm_setzero_ps();
@@ -355,7 +376,7 @@ static simd_f32_4x4 transpose3x3(const simd_f32_4x4& m) noexcept
 	auto t3 = _mm_shuffle_ps(m.c0.data, m.c1.data, _MM_SHUFFLE(3, 2, 3, 2));
 	auto t2 = _mm_shuffle_ps(m.c2.data, zero, _MM_SHUFFLE(1, 0, 1, 0));
 	auto t4 = _mm_shuffle_ps(m.c2.data, zero, _MM_SHUFFLE(3, 2, 3, 2));
-	return simd_f32_4x4(
+	return f32x4x4(
 		_mm_shuffle_ps(t1, t2, _MM_SHUFFLE(2, 0, 2, 0)),
 		_mm_shuffle_ps(t1, t2, _MM_SHUFFLE(3, 1, 3, 1)),
 		_mm_shuffle_ps(t3, t4, _MM_SHUFFLE(2, 0, 2, 0)), m.c3);
@@ -364,13 +385,13 @@ static simd_f32_4x4 transpose3x3(const simd_f32_4x4& m) noexcept
 	auto t2 = vzipq_f32(m.c1.data, vdupq_n_f32(0));
 	auto t3 = vzipq_f32(t1.val[0], t2.val[0]);
 	auto t4 = vzipq_f32(t1.val[1], t2.val[1]);
-	return simd_f32_4x4(t3.val[0], t3.val[1], t4.val[0], m.c3);
+	return f32x4x4(t3.val[0], t3.val[1], t4.val[0], m.c3);
 	#else
 	auto r = transpose((float3x3)m);
-	return simd_f32_4x4(
-		simd_f32_4(r.c0.x, r.c0.y, r.c0.z, m.c3.floats.x), 
-		simd_f32_4(r.c1.x, r.c1.y, r.c1.z, m.c3.floats.y), 
-		simd_f32_4(r.c2.x, r.c2.y, r.c2.z, m.c3.floats.z), m.c3);
+	return f32x4x4(
+		f32x4(r.c0.x, r.c0.y, r.c0.z, m.c3.floats.x), 
+		f32x4(r.c1.x, r.c1.y, r.c1.z, m.c3.floats.y), 
+		f32x4(r.c2.x, r.c2.y, r.c2.z, m.c3.floats.z), m.c3);
 	#endif
 }
 
@@ -378,7 +399,7 @@ static simd_f32_4x4 transpose3x3(const simd_f32_4x4& m) noexcept
  * @brief Calculates 4x4 SIMD matrix inverse. (Usefull for undoing transformations)
  * @param[in] m target SIMD matrix to inverse
  */
-static simd_f32_4x4 inverse4x4(const simd_f32_4x4& m) noexcept
+static f32x4x4 inverse4x4(const f32x4x4& m) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_AVX2)
 	auto t1 = _mm_shuffle_ps(m.c0.data, m.c1.data, _MM_SHUFFLE(1, 0, 1, 0));
@@ -449,7 +470,7 @@ static simd_f32_4x4 inverse4x4(const simd_f32_4x4& m) noexcept
 	d = _mm_div_ss(_mm_set_ss(1.0f), d);
 	d = _mm_shuffle_ps(d, d, _MM_SHUFFLE(0, 0, 0, 0));
 
-	return simd_f32_4x4(_mm_mul_ps(d, m0), _mm_mul_ps(d, m1), 
+	return f32x4x4(_mm_mul_ps(d, m0), _mm_mul_ps(d, m1), 
 		_mm_mul_ps(d, m2), _mm_mul_ps(d, m3));
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	auto t1 = __builtin_shufflevector(m.c0.data, m.c1.data, 0, 1, 4, 5);
@@ -518,10 +539,10 @@ static simd_f32_4x4 inverse4x4(const simd_f32_4x4& m) noexcept
 	d = vdupq_n_f32(vaddvq_f32(d));
 	d = vdivq_f32(vdupq_n_f32(1.0f), d);
 
-	return simd_f32_4x4(vmulq_f32(d, m0), vmulq_f32(d, m1), 
+	return f32x4x4(vmulq_f32(d, m0), vmulq_f32(d, m1), 
 		vmulq_f32(d, m2), vmulq_f32(d, m3));
 	#else
-	return simd_f32_4x4(inverse(*((const float4x4*)&m)));
+	return f32x4x4(inverse(*((const float4x4*)&m)));
 	#endif
 }
 

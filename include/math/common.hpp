@@ -19,12 +19,6 @@
 
 #pragma once
 #include "math/types.hpp"
-
-#if _WIN32
-#define _USE_MATH_DEFINES
-#define NOMINMAX
-#endif
-
 #include <algorithm>
 #include <cmath>
 #include <cassert>

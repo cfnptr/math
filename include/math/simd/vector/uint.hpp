@@ -31,10 +31,10 @@ static constexpr uint32 SwW = 3; /**< SIMD vector swizzle W component index. */
 static constexpr uint32 SwU = 2; /**< SIMD vector swizzle unused component index. */
 
 /**
- * @brief SIMD 4 component 32bit unsigned integer vector structure.
+ * @brief SIMD 4 component 32bit unsigned integer vector structure. (uint4)
  * @note Use it when you know how to implement a faster vectorized code.
  */
-struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
+struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 {
 	union
 	{
@@ -44,13 +44,13 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		float4 floats;
 	};
 
-	simd_u32_4(const simd_u32_4& v) = default;
-	simd_u32_4&	operator=(const simd_u32_4& v) = default;
+	u32x4(const u32x4& v) = default;
+	u32x4& operator=(const u32x4& v) = default;
 
 	/**
-	 * @brief Creates a new zero initialized SIMD 4 component 32bit unsigned integer vector structure.
+	 * @brief Creates a new zero initialized SIMD 4 component 32bit unsigned integer vector structure. (uint4)
 	 */
-	simd_u32_4() noexcept
+	u32x4() noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_setzero_si128();
@@ -61,10 +61,10 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
+	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
 	 * @param xyzw target value for all vector components
 	 */
-	explicit simd_u32_4(uint32 xyzw) noexcept
+	explicit u32x4(uint32 xyzw) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set1_epi32((int)xyzw);
@@ -75,14 +75,14 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
+	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
 	 * @param z third vector component value
 	 * @param w fourth vector component value
 	 */
-	simd_u32_4(uint32 x, uint32 y, uint32 z, uint32 w) noexcept
+	u32x4(uint32 x, uint32 y, uint32 z, uint32 w) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set_epi32((int)w, (int)z, (int)y, (int)x);
@@ -93,14 +93,14 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
+	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
 	 * @warning This constructor duplicates Z component to the W component!
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
 	 * @param z third vector component value
 	 */
-	simd_u32_4(uint32 x, uint32 y, uint32 z) noexcept
+	u32x4(uint32 x, uint32 y, uint32 z) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set_epi32((int)z, (int)z, (int)y, (int)x);
@@ -111,12 +111,12 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
+	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
 	 *
 	 * @param xyz first, second and third vector component values
 	 * @param w fourth vector component value
 	 */
-	simd_u32_4(simd_u32_4 xyz, uint32 w) noexcept
+	u32x4(u32x4 xyz, uint32 w) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		data = _mm_blend_epi32(xyz.data, _mm_set1_epi32((int)w), 8);
@@ -131,17 +131,17 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_NEON)
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
+	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
 	 * @param data target vector SIMD data
 	 */
-	simd_u32_4(_simd_u128 data) : data(data) { }
+	u32x4(_simd_u128 data) : data(data) { }
 	#endif
 
 	/*******************************************************************************************************************
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
+	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
 	 * @param v target 4 component vector value
 	 */
-	explicit simd_u32_4(uint4 v) noexcept
+	explicit u32x4(uint4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set_epi32((int)v.w, (int)v.z, (int)v.y, (int)v.x);
@@ -152,10 +152,10 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
+	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
 	 * @param v target 3 component vector value
 	 */
-	explicit simd_u32_4(uint3 v) noexcept
+	explicit u32x4(uint3 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set_epi32((int)v.z, (int)v.z, (int)v.y, (int)v.x);
@@ -166,10 +166,10 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure.
+	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
 	 * @param v target 2 component vector value
 	 */
-	explicit simd_u32_4(uint2 v) noexcept
+	explicit u32x4(uint2 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_set_epi32((int)v.y, (int)v.y, (int)v.y, (int)v.x);
@@ -180,10 +180,10 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component vector 32bit unsigned integer structure.
+	 * @brief Creates a new SIMD 4 component vector 32bit unsigned integer structure. (uint4)
 	 * @param[in] v target 4 component vector value pointer (unaligned)
 	 */
-	explicit simd_u32_4(const uint32* v) noexcept
+	explicit u32x4(const uint32* v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = _mm_loadu_si128((const __m128i*)v);
@@ -309,6 +309,12 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 	void setW(uint32 value) noexcept { uints.w = value; }
 
 	/**
+	 * @brief Sets SIMD vector Z component value to the W component.
+	 * @note Usefull when you want to prevent SIMD division by zero.
+	 */
+	void fixW() noexcept { uints.w = getZ(); }
+
+	/**
 	 * @brief Swizzles SIMD vector components.
 	 * 
 	 * @tparam X first vector component swizzle index
@@ -317,7 +323,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 	 * @tparam W fourth vector component swizzle index
 	 */
 	template<uint32 X, uint32 Y, uint32 Z, uint32 W>
-	simd_u32_4 swizzle() const noexcept
+	u32x4 swizzle() const noexcept
 	{
 		static_assert(X <= 3, "X template parameter out of range");
 		static_assert(Y <= 3, "Y template parameter out of range");
@@ -329,14 +335,14 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return __builtin_shufflevector(data, data, X, Y, Z, W);
 		#else
-		return simd_u32_4(uints[X], uints[Y], uints[Z], uints[W]);
+		return u32x4(uints[X], uints[Y], uints[Z], uints[W]);
 		#endif
 	}
 
-	simd_u32_4 splatX() const noexcept { return swizzle<SwX, SwX, SwX, SwX>(); }
-	simd_u32_4 splatY() const noexcept { return swizzle<SwY, SwY, SwY, SwY>(); }
-	simd_u32_4 splatZ() const noexcept { return swizzle<SwZ, SwZ, SwZ, SwZ>(); }
-	simd_u32_4 splatW() const noexcept { return swizzle<SwW, SwW, SwW, SwW>(); }
+	u32x4 splatX() const noexcept { return swizzle<SwX, SwX, SwX, SwX>(); }
+	u32x4 splatY() const noexcept { return swizzle<SwY, SwY, SwY, SwY>(); }
+	u32x4 splatZ() const noexcept { return swizzle<SwZ, SwZ, SwZ, SwZ>(); }
+	u32x4 splatW() const noexcept { return swizzle<SwW, SwW, SwW, SwW>(); }
 
 	/*******************************************************************************************************************
 	 * @brief Returns SIMD vector component by index.
@@ -367,166 +373,166 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 	explicit operator uint32() const noexcept { return getX(); }
 
 	//******************************************************************************************************************
-	simd_u32_4 operator+(simd_u32_4 v) const noexcept
+	u32x4 operator+(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_add_epi32(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vaddq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints + v.uints);
+		return u32x4(uints + v.uints);
 		#endif
 	}
-	simd_u32_4 operator-(simd_u32_4 v) const noexcept
+	u32x4 operator-(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_sub_epi32(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vsubq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints - v.uints);
+		return u32x4(uints - v.uints);
 		#endif
 	}
-	simd_u32_4 operator*(simd_u32_4 v) const noexcept
+	u32x4 operator*(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE4_1)
 		return _mm_mullo_epi32(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vmulq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints * v.uints);
+		return u32x4(uints * v.uints);
 		#endif
 	}
-	simd_u32_4 operator/(simd_u32_4 v) const noexcept { return simd_u32_4(uints / v.uints); }
-	simd_u32_4 operator%(simd_u32_4 v) const noexcept { return simd_u32_4(uints % v.uints); }
+	u32x4 operator/(u32x4 v) const noexcept { return u32x4(uints / v.uints); }
+	u32x4 operator%(u32x4 v) const noexcept { return u32x4(uints % v.uints); }
 
 	//******************************************************************************************************************
-	simd_u32_4 operator&(simd_u32_4 v) const noexcept
+	u32x4 operator&(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_and_si128(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vandq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints & v.uints);
+		return u32x4(uints & v.uints);
 		#endif
 	}
-	simd_u32_4 operator|(simd_u32_4 v) const noexcept
+	u32x4 operator|(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_or_si128(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vorrq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints | v.uints);
+		return u32x4(uints | v.uints);
 		#endif
 	}
-	simd_u32_4 operator^(simd_u32_4 v) const noexcept
+	u32x4 operator^(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_xor_si128(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return veorq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints ^ v.uints);
+		return u32x4(uints ^ v.uints);
 		#endif
 	}
-	simd_u32_4 operator>>(simd_u32_4 v) const noexcept
+	u32x4 operator>>(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		return _mm_srlv_epi32(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vshlq_u32(data, vnegq_s32(vreinterpretq_s32_u32(v.data)));
 		#else
-		return simd_u32_4(uints >> v.uints);
+		return u32x4(uints >> v.uints);
 		#endif
 	}
-	simd_u32_4 operator<<(simd_u32_4 v) const noexcept
+	u32x4 operator<<(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		return _mm_sllv_epi32(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vshlq_u32(data, vreinterpretq_s32_u32(v.data));
 		#else
-		return simd_u32_4(uints << v.uints);
+		return u32x4(uints << v.uints);
 		#endif
 	}
-	simd_u32_4 operator>>(uint32 n) const noexcept
+	u32x4 operator>>(uint32 n) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_srli_epi32(data, n);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vshlq_u32(data, vdupq_n_s32(-((int32)n)));
 		#else
-		return simd_u32_4(uints >> n);
+		return u32x4(uints >> n);
 		#endif
 	}
-	simd_u32_4 operator<<(uint32 n) const noexcept
+	u32x4 operator<<(uint32 n) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_slli_epi32(data, n);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vshlq_u32(data, vdupq_n_s32((int32)n));
 		#else
-		return simd_u32_4(uints << n);
+		return u32x4(uints << n);
 		#endif
 	}
-	simd_u32_4 operator!() const noexcept
+	u32x4 operator!() const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_and_si128(_mm_cmpeq_epi32(data, _mm_setzero_si128()), _mm_set1_epi32(1));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vandq_u32(vceqq_u32(data, vdupq_n_u32(0)), vdupq_n_u32(1));
 		#else
-		return simd_u32_4(!uints);
+		return u32x4(!uints);
 		#endif
 	}
-	simd_u32_4 operator~() const noexcept
+	u32x4 operator~() const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_xor_si128(data, _mm_set1_epi32(0xFFFFFFFF));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vmvnq_u32(data);
 		#else
-		return simd_u32_4(~uints);
+		return u32x4(~uints);
 		#endif
 	}
 
 	//******************************************************************************************************************
-	simd_u32_4 operator+(uint32 n) const noexcept { return *this + simd_u32_4(n); }
-	simd_u32_4 operator-(uint32 n) const noexcept { return *this - simd_u32_4(n); }
-	simd_u32_4 operator*(uint32 n) const noexcept { return *this * simd_u32_4(n); }
-	simd_u32_4 operator/(uint32 n) const noexcept { return *this / simd_u32_4(n); }
-	simd_u32_4 operator%(uint32 n) const noexcept { return *this % simd_u32_4(n); }
-	simd_u32_4 operator&(uint32 n) const noexcept { return *this & simd_u32_4(n); }
-	simd_u32_4 operator|(uint32 n) const noexcept { return *this | simd_u32_4(n); }
-	simd_u32_4 operator^(uint32 n) const noexcept { return *this ^ simd_u32_4(n); }
+	u32x4 operator+(uint32 n) const noexcept { return *this + u32x4(n); }
+	u32x4 operator-(uint32 n) const noexcept { return *this - u32x4(n); }
+	u32x4 operator*(uint32 n) const noexcept { return *this * u32x4(n); }
+	u32x4 operator/(uint32 n) const noexcept { return *this / u32x4(n); }
+	u32x4 operator%(uint32 n) const noexcept { return *this % u32x4(n); }
+	u32x4 operator&(uint32 n) const noexcept { return *this & u32x4(n); }
+	u32x4 operator|(uint32 n) const noexcept { return *this | u32x4(n); }
+	u32x4 operator^(uint32 n) const noexcept { return *this ^ u32x4(n); }
 
-	simd_u32_4& operator+=(simd_u32_4 v) noexcept { *this = *this + v; return *this; }
-	simd_u32_4& operator-=(simd_u32_4 v) noexcept { *this = *this - v; return *this; }
-	simd_u32_4& operator*=(simd_u32_4 v) noexcept { *this = *this * v; return *this; }
-	simd_u32_4& operator/=(simd_u32_4 v) noexcept { *this = *this / v; return *this; }
-	simd_u32_4& operator%=(simd_u32_4 v) noexcept { *this = *this % v; return *this; }
-	simd_u32_4& operator&=(simd_u32_4 v) noexcept { *this = *this & v; return *this; }
-	simd_u32_4& operator|=(simd_u32_4 v) noexcept { *this = *this | v; return *this; }
-	simd_u32_4& operator^=(simd_u32_4 v) noexcept { *this = *this ^ v; return *this; }
-	simd_u32_4& operator>>=(simd_u32_4 v) noexcept { *this = *this >> v; return *this; }
-	simd_u32_4& operator<<=(simd_u32_4 v) noexcept { *this = *this << v; return *this; }
+	u32x4& operator+=(u32x4 v) noexcept { *this = *this + v; return *this; }
+	u32x4& operator-=(u32x4 v) noexcept { *this = *this - v; return *this; }
+	u32x4& operator*=(u32x4 v) noexcept { *this = *this * v; return *this; }
+	u32x4& operator/=(u32x4 v) noexcept { *this = *this / v; return *this; }
+	u32x4& operator%=(u32x4 v) noexcept { *this = *this % v; return *this; }
+	u32x4& operator&=(u32x4 v) noexcept { *this = *this & v; return *this; }
+	u32x4& operator|=(u32x4 v) noexcept { *this = *this | v; return *this; }
+	u32x4& operator^=(u32x4 v) noexcept { *this = *this ^ v; return *this; }
+	u32x4& operator>>=(u32x4 v) noexcept { *this = *this >> v; return *this; }
+	u32x4& operator<<=(u32x4 v) noexcept { *this = *this << v; return *this; }
 
-	simd_u32_4& operator+=(uint32 n) noexcept { *this = *this + simd_u32_4(n); return *this; }
-	simd_u32_4& operator-=(uint32 n) noexcept { *this = *this - simd_u32_4(n); return *this; }
-	simd_u32_4& operator*=(uint32 n) noexcept { *this = *this * simd_u32_4(n); return *this; }
-	simd_u32_4& operator/=(uint32 n) noexcept { *this = *this / simd_u32_4(n); return *this; }
-	simd_u32_4& operator%=(uint32 n) noexcept { *this = *this % simd_u32_4(n); return *this; }
-	simd_u32_4& operator&=(uint32 n) noexcept { *this = *this & simd_u32_4(n); return *this; }
-	simd_u32_4& operator|=(uint32 n) noexcept { *this = *this | simd_u32_4(n); return *this; }
-	simd_u32_4& operator^=(uint32 n) noexcept { *this = *this ^ simd_u32_4(n); return *this; }
-	simd_u32_4& operator>>=(uint32 n) noexcept { *this = *this >> n; return *this; }
-	simd_u32_4& operator<<=(uint32 n) noexcept { *this = *this << n; return *this; }
-	simd_u32_4& operator=(uint32 n) noexcept { *this = simd_u32_4(n); return *this; }
+	u32x4& operator+=(uint32 n) noexcept { *this = *this + u32x4(n); return *this; }
+	u32x4& operator-=(uint32 n) noexcept { *this = *this - u32x4(n); return *this; }
+	u32x4& operator*=(uint32 n) noexcept { *this = *this * u32x4(n); return *this; }
+	u32x4& operator/=(uint32 n) noexcept { *this = *this / u32x4(n); return *this; }
+	u32x4& operator%=(uint32 n) noexcept { *this = *this % u32x4(n); return *this; }
+	u32x4& operator&=(uint32 n) noexcept { *this = *this & u32x4(n); return *this; }
+	u32x4& operator|=(uint32 n) noexcept { *this = *this | u32x4(n); return *this; }
+	u32x4& operator^=(uint32 n) noexcept { *this = *this ^ u32x4(n); return *this; }
+	u32x4& operator>>=(uint32 n) noexcept { *this = *this >> n; return *this; }
+	u32x4& operator<<=(uint32 n) noexcept { *this = *this << n; return *this; }
+	u32x4& operator=(uint32 n) noexcept { *this = u32x4(n); return *this; }
 
 	//******************************************************************************************************************
-	bool operator==(simd_u32_4 v) const noexcept
+	bool operator==(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_movemask_epi8(_mm_cmpeq_epi32(data, v.data)) == 0xFFFF;
@@ -536,7 +542,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		return uints == v.uints;
 		#endif
 	}
-	bool operator!=(simd_u32_4 v) const noexcept
+	bool operator!=(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_movemask_epi8(_mm_cmpeq_epi32(data, v.data)) != 0xFFFF;
@@ -546,82 +552,91 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) simd_u32_4
 		return uints != v.uints;
 		#endif
 	}
-	simd_u32_4 operator<(simd_u32_4 v) const noexcept
+	u32x4 operator<(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_cmplt_epi32(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcltq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints < v.uints);
+		return u32x4(uints < v.uints);
 		#endif
 	}
-	simd_u32_4 operator>(simd_u32_4 v) const noexcept
+	u32x4 operator>(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_cmpgt_epi32(data, v.data);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcgtq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints > v.uints);
+		return u32x4(uints > v.uints);
 		#endif
 	}
-	simd_u32_4 operator<=(simd_u32_4 v) const noexcept
+	u32x4 operator<=(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_or_si128(_mm_cmplt_epi32(data, v.data), _mm_cmpeq_epi32(data, v.data));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcleq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints <= v.uints);
+		return u32x4(uints <= v.uints);
 		#endif
 	}
-	simd_u32_4 operator>=(simd_u32_4 v) const noexcept
+	u32x4 operator>=(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_or_si128(_mm_cmpgt_epi32(data, v.data), _mm_cmpeq_epi32(data, v.data));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcgeq_u32(data, v.data);
 		#else
-		return simd_u32_4(uints >= v.uints);
+		return u32x4(uints >= v.uints);
 		#endif
 	}
 
-	bool operator==(uint32 n) const noexcept { return *this == simd_u32_4(n); }
-	bool operator!=(uint32 n) const noexcept { return *this != simd_u32_4(n); }
-	simd_u32_4 operator<(uint32 n) const noexcept { return *this < simd_u32_4(n); }
-	simd_u32_4 operator>(uint32 n) const noexcept { return *this > simd_u32_4(n); }
-	simd_u32_4 operator<=(uint32 n) const noexcept { return *this <= simd_u32_4(n); }
-	simd_u32_4 operator>=(uint32 n) const noexcept { return *this >= simd_u32_4(n); }
+	bool operator==(uint32 n) const noexcept { return *this == u32x4(n); }
+	bool operator!=(uint32 n) const noexcept { return *this != u32x4(n); }
+	u32x4 operator<(uint32 n) const noexcept { return *this < u32x4(n); }
+	u32x4 operator>(uint32 n) const noexcept { return *this > u32x4(n); }
+	u32x4 operator<=(uint32 n) const noexcept { return *this <= u32x4(n); }
+	u32x4 operator>=(uint32 n) const noexcept { return *this >= u32x4(n); }
 
-	static const simd_u32_4 zero, one, max;
+	static const u32x4 zero, one, max;
 };
 
-inline const simd_u32_4 simd_u32_4::zero = simd_u32_4(0u);
-inline const simd_u32_4 simd_u32_4::one = simd_u32_4(1u);
-inline const simd_u32_4 simd_u32_4::max = simd_u32_4(UINT32_MAX);
+inline const u32x4 u32x4::zero = u32x4(0u);
+inline const u32x4 u32x4::one = u32x4(1u);
+inline const u32x4 u32x4::max = u32x4(UINT32_MAX);
 
-static simd_u32_4 operator+(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) + v; }
-static simd_u32_4 operator-(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) - v; }
-static simd_u32_4 operator*(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) * v; }
-static simd_u32_4 operator/(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) / v; }
-static simd_u32_4 operator%(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) % v; }
-static simd_u32_4 operator&(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) & v; }
-static simd_u32_4 operator|(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) | v; }
-static simd_u32_4 operator^(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) ^ v; }
-static simd_u32_4 operator>>(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) >> v; }
-static simd_u32_4 operator<<(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) << v; }
-static bool operator==(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) == v; }
-static bool operator!=(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) != v; }
-static simd_u32_4 operator<(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) < v; }
-static simd_u32_4 operator>(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) > v; }
-static simd_u32_4 operator<=(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) <= v; }
-static simd_u32_4 operator>=(uint32 n, simd_u32_4 v) noexcept { return simd_u32_4(n) >= v; }
+static u32x4 operator+(uint32 n, u32x4 v) noexcept { return u32x4(n) + v; }
+static u32x4 operator-(uint32 n, u32x4 v) noexcept { return u32x4(n) - v; }
+static u32x4 operator*(uint32 n, u32x4 v) noexcept { return u32x4(n) * v; }
+static u32x4 operator/(uint32 n, u32x4 v) noexcept { return u32x4(n) / v; }
+static u32x4 operator%(uint32 n, u32x4 v) noexcept { return u32x4(n) % v; }
+static u32x4 operator&(uint32 n, u32x4 v) noexcept { return u32x4(n) & v; }
+static u32x4 operator|(uint32 n, u32x4 v) noexcept { return u32x4(n) | v; }
+static u32x4 operator^(uint32 n, u32x4 v) noexcept { return u32x4(n) ^ v; }
+static u32x4 operator>>(uint32 n, u32x4 v) noexcept { return u32x4(n) >> v; }
+static u32x4 operator<<(uint32 n, u32x4 v) noexcept { return u32x4(n) << v; }
+static bool operator==(uint32 n, u32x4 v) noexcept { return u32x4(n) == v; }
+static bool operator!=(uint32 n, u32x4 v) noexcept { return u32x4(n) != v; }
+static u32x4 operator<(uint32 n, u32x4 v) noexcept { return u32x4(n) < v; }
+static u32x4 operator>(uint32 n, u32x4 v) noexcept { return u32x4(n) > v; }
+static u32x4 operator<=(uint32 n, u32x4 v) noexcept { return u32x4(n) <= v; }
+static u32x4 operator>=(uint32 n, u32x4 v) noexcept { return u32x4(n) >= v; }
+
+/**
+ * @brief Converts SIMD vector to the string. (space separated)
+ * @param v target SIMD vector to convert
+ */
+static string toString(u32x4 v)
+{
+	return to_string(v.getX()) + " " + to_string(v.getY()) + " " + to_string(v.getZ()) + " " + to_string(v.getW());
+}
 
 /***********************************************************************************************************************
  * @brief Returns mask of SIMD vector components set to true. (4bits)
  */
-static int getTrues(simd_u32_4 v) noexcept
+static int getTrues(u32x4 v) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_movemask_ps(_mm_castsi128_ps(v.data));
@@ -635,7 +650,7 @@ static int getTrues(simd_u32_4 v) noexcept
 /**
  * @brief Returns true if all SIMD vector component bits are set true.
  */
-static bool areAllTrue(simd_u32_4 v) noexcept
+static bool areAllTrue(u32x4 v) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_movemask_epi8(v.data) == 0xFFFF;
@@ -648,7 +663,7 @@ static bool areAllTrue(simd_u32_4 v) noexcept
 /**
  * @brief Returns false if all SIMD vector component bits are set false.
  */
-static bool areAllFalse(simd_u32_4 v) noexcept
+static bool areAllFalse(u32x4 v) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE4_1)
 	return _mm_testz_si128(v.data, v.data);
@@ -663,7 +678,7 @@ static bool areAllFalse(simd_u32_4 v) noexcept
 /**
  * @brief Returns true if any of SIMD vector component bits are set true.
  */
-static bool areAnyTrue(simd_u32_4 v) noexcept
+static bool areAnyTrue(u32x4 v) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE4_1)
 	return !_mm_testz_si128(v.data, v.data);
@@ -678,7 +693,7 @@ static bool areAnyTrue(simd_u32_4 v) noexcept
 /**
  * @brief Returns false if any of SIMD vector component bits is set false.
  */
-static bool areAnyFalse(simd_u32_4 v) noexcept
+static bool areAnyFalse(u32x4 v) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_movemask_epi8(v.data) != 0xFFFF;
@@ -695,14 +710,14 @@ static bool areAnyFalse(simd_u32_4 v) noexcept
  * @param a first SIMD vector to compare
  * @param b second SIMD vector to compare
  */
-static simd_u32_4 equal(simd_u32_4 a, simd_u32_4 b) noexcept
+static u32x4 equal(u32x4 a, u32x4 b) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_cmpeq_epi32(a.data, b.data);
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return vceqq_u32(a.data, b.data);
 	#else
-	return simd_u32_4(equal(a.uints, b.uints));
+	return u32x4(equal(a.uints, b.uints));
 	#endif
 }
 /**
@@ -711,14 +726,14 @@ static simd_u32_4 equal(simd_u32_4 a, simd_u32_4 b) noexcept
  * @param a first SIMD vector to compare
  * @param b second SIMD vector to compare
  */
-static simd_u32_4 notEqual(simd_u32_4 a, simd_u32_4 b) noexcept
+static u32x4 notEqual(u32x4 a, u32x4 b) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_xor_si128(_mm_cmpeq_epi32(a.data, b.data), _mm_set1_epi32(0xFFFFFFFF));
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return vmvnq_u32(vceqq_u32(a.data, b.data));
 	#else
-	return simd_u32_4(notEqual(a.uints, b.uints));
+	return u32x4(notEqual(a.uints, b.uints));
 	#endif
 }
 
@@ -728,14 +743,14 @@ static simd_u32_4 notEqual(simd_u32_4 a, simd_u32_4 b) noexcept
  * @param a first SIMD vector
  * @param b second SIMD vector
  */
-static simd_u32_4 bic(simd_u32_4 a, simd_u32_4 b) noexcept
+static u32x4 bic(u32x4 a, u32x4 b) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_andnot_si128(b.data, a.data); // flipped
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return vbicq_u32(a.data, b.data);
 	#else
-	return simd_u32_4(a.uints & (~b.uints));
+	return u32x4(a.uints & (~b.uints));
 	#endif
 }
 
@@ -745,7 +760,7 @@ static simd_u32_4 bic(simd_u32_4 a, simd_u32_4 b) noexcept
  * @param a first SIMD vector to binary compare
  * @param b second SIMD vector to binary compare
  */
-static bool isBinaryLess(simd_u32_4 a, simd_u32_4 b) noexcept { return memcmp(&a, &b, sizeof(simd_u32_4)) < 0; }
+static bool isBinaryLess(u32x4 a, u32x4 b) noexcept { return memcmp(&a, &b, sizeof(u32x4)) < 0; }
 
 /**
  * @brief Selects between two SIMD vector components based on the control vector values.
@@ -754,7 +769,7 @@ static bool isBinaryLess(simd_u32_4 a, simd_u32_4 b) noexcept { return memcmp(&a
  * @param t contains components for true condition
  * @param f contains components for false condition
  */
-static simd_u32_4 select(simd_u32_4 c, simd_u32_4 t, simd_u32_4 f) noexcept
+static u32x4 select(u32x4 c, u32x4 t, u32x4 f) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE4_1)
 	return _mm_castps_si128(_mm_blendv_ps(_mm_castsi128_ps(f.data), 
@@ -767,7 +782,7 @@ static simd_u32_4 select(simd_u32_4 c, simd_u32_4 t, simd_u32_4 f) noexcept
 	return vbslq_u32(vreinterpretq_u32_s32(vshrq_n_s32(
 		vreinterpretq_s32_u32(c.data), 31)), t.data, f.data);
 	#else
-	return simd_u32_4(select(c.uints, t.uints, f.uints));
+	return u32x4(select(c.uints, t.uints, f.uints));
 	#endif
 }
 
@@ -777,14 +792,14 @@ static simd_u32_4 select(simd_u32_4 c, simd_u32_4 t, simd_u32_4 f) noexcept
  * @param a first SIMD vector to find minimum
  * @param b second SIMD vector to find minimum
  */
-static simd_u32_4 min(simd_u32_4 a, simd_u32_4 b) noexcept
+static u32x4 min(u32x4 a, u32x4 b) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE4_1)
 	return _mm_min_epi32(a.data, b.data);
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return vminq_u32(a.data, b.data);
 	#else
-	return simd_u32_4(min(a.uints, b.uints));
+	return u32x4(min(a.uints, b.uints));
 	#endif
 }
 /**
@@ -793,14 +808,14 @@ static simd_u32_4 min(simd_u32_4 a, simd_u32_4 b) noexcept
  * @param a first SIMD vector to find maximum
  * @param b second SIMD vector to find maximum
  */
-static simd_u32_4 max(simd_u32_4 a, simd_u32_4 b) noexcept
+static u32x4 max(u32x4 a, u32x4 b) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE4_1)
 	return _mm_max_epi32(a.data, b.data);
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return vmaxq_u32(a.data, b.data);
 	#else
-	return simd_u32_4(max(a.uints, b.uints));
+	return u32x4(max(a.uints, b.uints));
 	#endif
 }
 
@@ -808,7 +823,7 @@ static simd_u32_4 max(simd_u32_4 a, simd_u32_4 b) noexcept
  * @brief Returns minimum value of all SIMD vector components.
  * @param v target SIMD vector
  */
-static float min(simd_u32_4 v) noexcept
+static uint32 min(u32x4 v) noexcept
 {
 	auto m = min(v, v.swizzle<SwY, SwU, SwW, SwU>());
 	m = min(m, m.swizzle<SwZ, SwU, SwU, SwU>());
@@ -818,9 +833,51 @@ static float min(simd_u32_4 v) noexcept
  * @brief Returns maximum value of all SIMD vector components.
  * @param v target SIMD vector
  */
-static float max(simd_u32_4 v) noexcept
+static uint32 max(u32x4 v) noexcept
 {
 	auto m = max(v, v.swizzle<SwY, SwU, SwW, SwU>());
+	m = max(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	return m.getX();
+}
+
+/**
+ * @brief Returns minimum value of 4D SIMD vector components.
+ * @param v target SIMD vector
+ */
+static uint32 min4(u32x4 v) noexcept
+{
+	auto m = min(v, v.swizzle<SwY, SwU, SwW, SwU>());
+	m = min(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	return m.getX();
+}
+/**
+ * @brief Returns maximum value of 4D SIMD vector components.
+ * @param v target SIMD vector
+ */
+static uint32 max4(u32x4 v) noexcept
+{
+	auto m = max(v, v.swizzle<SwY, SwU, SwW, SwU>());
+	m = max(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	return m.getX();
+}
+
+/**
+ * @brief Returns minimum value of 3D SIMD vector components.
+ * @param v target SIMD vector
+ */
+static uint32 min3(u32x4 v) noexcept
+{
+	auto m = min(v, v.swizzle<SwY, SwU, SwZ, SwU>());
+	m = min(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	return m.getX();
+}
+/**
+ * @brief Returns maximum value of 3D SIMD vector components.
+ * @param v target SIMD vector
+ */
+static uint32 max3(u32x4 v) noexcept
+{
+	auto m = max(v, v.swizzle<SwY, SwU, SwZ, SwU>());
 	m = max(m, m.swizzle<SwZ, SwU, SwU, SwU>());
 	return m.getX();
 }
@@ -832,9 +889,19 @@ static float max(simd_u32_4 v) noexcept
  * @param min SIMD vector with minimum values
  * @param max SIMD vector with maximum values
  */
-static simd_u32_4 clamp(simd_u32_4 v, simd_u32_4 min, simd_u32_4 max) noexcept
+static u32x4 clamp(u32x4 v, u32x4 min, u32x4 max) noexcept
 {
 	return math::max(math::min(v, max), min);
+}
+
+//**********************************************************************************************************************
+static uint8 calcMipCount3(u32x4 size) noexcept
+{
+	return (uint8)(std::floor(std::log2((float)max3(size)))) + 1u;
+}
+static u32x4 calcSizeAtMip3(u32x4 sizeAt0, uint8 mip) noexcept
+{
+	return max(sizeAt0 / (uint32)std::exp2((float)mip), u32x4(1u));
 }
 
 } // namespace math

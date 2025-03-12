@@ -31,13 +31,13 @@ namespace math
 struct [[nodiscard]] Ray
 {
 protected:
-	simd_f32_4 direction = simd_f32_4::zero;
-	simd_u32_4 isParallel = simd_u32_4::zero;
+	f32x4 direction = f32x4::zero;
+	u32x4 isParallel = u32x4::zero;
 public:
 	/**
 	 * @brief Ray origin point in 3D space.
 	 */
-	simd_f32_4 origin = simd_f32_4::zero;
+	f32x4 origin = f32x4::zero;
 
 	/**
 	 * @brief Creates a new ray structure. (In 3D space)
@@ -46,7 +46,7 @@ public:
 	 * @param direction ray direction vector in 3D space
 	 * @param normalize is direction vector should be normalized
 	 */
-	Ray(simd_f32_4 origin, simd_f32_4 direction, bool normalize = true) noexcept : 
+	Ray(f32x4 origin, f32x4 direction, bool normalize = true) noexcept : 
 		direction(normalize ? normalize3(direction) : direction), origin(origin) { }
 	/**
 	 * @brief Creates a new empty ray structure.
@@ -56,47 +56,49 @@ public:
 	/**
 	 * @brief Returns ray direction vector in 3D space.
 	 */
-	const simd_f32_4& getDirection() const noexcept { return direction; }
+	f32x4 getDirection() const noexcept { return direction; }
 	/**
 	 * @brief Sets ray direction vector in 3D space.
 	 * 
 	 * @param direction target ray direction vector
 	 * @param normalize is direction vector should be normalized
 	 */
-	void setDirection(simd_f32_4 direction, bool normalize = true) noexcept
+	void setDirection(f32x4 direction, bool normalize = true) noexcept
 	{
 		this->direction = normalize ? normalize3(direction) : direction;
-		isParallel = abs(direction) <= simd_f32_4(1.0e-20f);
+		isParallel = abs(direction) <= f32x4(1.0e-20f);
 	}
 
 	/**
 	 * @brief Returns which of the ray direction axes are parallel.
 	 */
-	const simd_u32_4& getParallel() const noexcept { return isParallel; }
+	const u32x4& getParallel() const noexcept { return isParallel; }
 
 	/**
 	 * @brief Normalizes ray direction vector.
 	 */
 	void normalize() noexcept { direction /= length3(direction);  }
 
-	Ray operator*(simd_f32_4 v) const noexcept { return Ray(origin * v, direction * v); }
-	Ray operator/(simd_f32_4 v) const noexcept { return Ray(origin / v, direction / v); }
-	Ray operator+(simd_f32_4 v) const noexcept { return Ray(origin + v, direction + v); }
-	Ray operator-(simd_f32_4 v) const noexcept { return Ray(origin - v, direction - v); }
-	Ray& operator*=(simd_f32_4 v) noexcept { direction *= v; origin *= v; return *this; }
-	Ray& operator/=(simd_f32_4 v) noexcept { direction /= v; origin /= v; return *this; }
-	Ray& operator+=(simd_f32_4 v) noexcept { direction += v; origin += v; return *this; }
-	Ray& operator-=(simd_f32_4 v) noexcept { direction -= v; origin -= v; return *this; }
+	Ray operator*(f32x4 v) const noexcept { return Ray(origin * v, direction * v); }
+	Ray operator/(f32x4 v) const noexcept { return Ray(origin / v, direction / v); }
+	Ray operator+(f32x4 v) const noexcept { return Ray(origin + v, direction + v); }
+	Ray operator-(f32x4 v) const noexcept { return Ray(origin - v, direction - v); }
+	Ray& operator*=(f32x4 v) noexcept { direction *= v; origin *= v; return *this; }
+	Ray& operator/=(f32x4 v) noexcept { direction /= v; origin /= v; return *this; }
+	Ray& operator+=(f32x4 v) noexcept { direction += v; origin += v; return *this; }
+	Ray& operator-=(f32x4 v) noexcept { direction -= v; origin -= v; return *this; }
+	bool operator==(const Ray& v) const noexcept { return !memcmp(this, &v, sizeof(Ray)); }
+	bool operator!=(const Ray& v) const noexcept { return memcmp(this, &v, sizeof(Ray)); }
 	
 	static const Ray left, right, bottom, top, back, front;
 };
 
-inline const Ray Ray::left = Ray(simd_f32_4::zero, simd_f32_4(-1.0f, 0.0f, 0.0f, 0.0f), false);
-inline const Ray Ray::right = Ray(simd_f32_4::zero, simd_f32_4(1.0f, 0.0f, 0.0f, 0.0f), false);
-inline const Ray Ray::bottom = Ray(simd_f32_4::zero, simd_f32_4(0.0f, -1.0f, 0.0f, 0.0f), false);
-inline const Ray Ray::top = Ray(simd_f32_4::zero, simd_f32_4(0.0f, 1.0f, 0.0f, 0.0f), false);
-inline const Ray Ray::back = Ray(simd_f32_4::zero, simd_f32_4(0.0f, 0.0f, -1.0f, 0.0f), false);
-inline const Ray Ray::front = Ray(simd_f32_4::zero, simd_f32_4(0.0f, 0.0f, 1.0f, 0.0f), false);
+inline const Ray Ray::left = Ray(f32x4::zero, f32x4(-1.0f, 0.0f, 0.0f, 0.0f), false);
+inline const Ray Ray::right = Ray(f32x4::zero, f32x4(1.0f, 0.0f, 0.0f, 0.0f), false);
+inline const Ray Ray::bottom = Ray(f32x4::zero, f32x4(0.0f, -1.0f, 0.0f, 0.0f), false);
+inline const Ray Ray::top = Ray(f32x4::zero, f32x4(0.0f, 1.0f, 0.0f, 0.0f), false);
+inline const Ray Ray::back = Ray(f32x4::zero, f32x4(0.0f, 0.0f, -1.0f, 0.0f), false);
+inline const Ray Ray::front = Ray(f32x4::zero, f32x4(0.0f, 0.0f, 1.0f, 0.0f), false);
 
 /**
  * @brief Returns closest point on ray to the specified one in 3D space.
@@ -104,11 +106,11 @@ inline const Ray Ray::front = Ray(simd_f32_4::zero, simd_f32_4(0.0f, 0.0f, 1.0f,
  * @param[in] ray target ray to use
  * @param point target point in 3D space
  */
-static simd_f32_4 closestPoint(const Ray& ray, simd_f32_4 point) noexcept
+static f32x4 closestPoint(const Ray& ray, f32x4 point) noexcept
 {
 	auto a = ray.origin, b = ray.origin + ray.getDirection();
 	auto v = b - a; auto t = dot3(point - a, v) / dot3(v, v);
-	return fma(ray.getDirection(), simd_f32_4(std::max(t, 0.0f)), a);
+	return fma(ray.getDirection(), f32x4(std::max(t, 0.0f)), a);
 }
 
 } // namespace math

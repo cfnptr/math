@@ -98,7 +98,7 @@ struct Bvh
 protected:
 	vector<Node> nodes;
 	vector<uint32> primitives;
-	vector<simd_f32_4> centroids;
+	vector<f32x4> centroids;
 	stack<Node*> nodeStack;
 public:
 	/*******************************************************************************************************************
@@ -113,7 +113,7 @@ public:
 	 * @param centroids precalculated centroid array
 	 */
 	Bvh(const uint8* vertices, const uint8* indices, const Aabb& aabb, uint32 indexCount,
-		uint32 vertexSize, uint32 indexSize, const simd_f32_4* centroids = nullptr);
+		uint32 vertexSize, uint32 indexSize, const f32x4* centroids = nullptr);
 	/**
 	 * @brief Creates a new BVH from the AABB array.
 	 *
@@ -122,7 +122,7 @@ public:
 	 * @param aabbCount AABB array size
 	 * @param centroids precalculated centroid array
 	 */
-	Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const simd_f32_4* centroids = nullptr);
+	Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const f32x4* centroids = nullptr);
 	/**
 	 * @brief Creates a new empty BVH.
 	 */
@@ -139,7 +139,7 @@ public:
 	/**
 	 * @brief Returns BVH centroid array.
 	 */
-	const vector<simd_f32_4>& getCentroids() const noexcept { return centroids; }
+	const vector<f32x4>& getCentroids() const noexcept { return centroids; }
 
 	/**
 	 * @brief Recreates BVH from the triangle array.
@@ -153,7 +153,7 @@ public:
 	 * @param centroids precalculated centroid array or null
 	 */
 	void recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb, uint32 indexCount,
-		uint32 vertexSize, uint32 indexSize, const simd_f32_4* centroids = nullptr);
+		uint32 vertexSize, uint32 indexSize, const f32x4* centroids = nullptr);
 	/**
 	 * @brief Recreates BVH from the AABB array.
 	 *
@@ -162,7 +162,7 @@ public:
 	 * @param aabbCount AABB array size
 	 * @param centroids precalculated centroid array or null
 	 */
-	void recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const simd_f32_4* centroids = nullptr);
+	void recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const f32x4* centroids = nullptr);
 
 	// TODO: add traverse function
 };

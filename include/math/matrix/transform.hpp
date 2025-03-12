@@ -14,89 +14,83 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common matrix transformation functions.
- * @details Based on this project: https://github.com/g-truc/glm
+ * @brief Common SIMD matrix transformation functions.
  */
 
 #pragma once
-#include "math/simd/matrix/transform.hpp"
+#include "math/matrix.hpp"
+#include "math/quaternion.hpp"
 
 namespace math
 {
 
 /**
- * @brief Returns total matrix translation transformation of an object in 3D space.
- * @param[in] m target model matrix to extract from
+ * @brief Returns total SIMD matrix translation transformation of an object in 3D space.
+ * @param[in] m target model SIMD matrix to extract from
  */
-static constexpr float3 getTranslation(const float4x4& m) noexcept
+static f32x4 getTranslation(const f32x4x4& m) noexcept
 {
-	return (float3)m.c3;
+	return m.c3;
 }
 /**
- * @brief Sets total matrix translation transformation of an object in 3D space.
+ * @brief Sets total SIMD matrix translation transformation of an object in 3D space.
  * 
- * @param[out] m target model matrix to set
+ * @param[out] m target model SIMD matrix to set
  * @param t target object position
  */
-static constexpr void setTranslation(float4x4& m, float3 t) noexcept
+static void setTranslation(f32x4x4& m, f32x4 t) noexcept
 {
-	m.c3 = float4(t, m.c3.w);
+	m.c3 = f32x4(t, m.c3.getW());
 }
 
 /**
- * @brief Creates a new matrix with a specified object position in 3D space.
+ * @brief Creates a new SIMD matrix with a specified object position in 3D space.
  * @param t target object translation
  */
-static constexpr float4x4 translate(float3 t) noexcept
+static f32x4x4 translate(f32x4 t) noexcept
 {
-	return float4x4(
-		1.0f, 0.0f, 0.0f, t.x,
-		0.0f, 1.0f, 0.0f, t.y,
-		0.0f, 0.0f, 1.0f, t.z,
-		0.0f, 0.0f, 0.0f, 1.0f);
+	return f32x4x4(f32x4(1.0f, 0.0f, 0.0f, 0.0f), f32x4(0.0f, 1.0f, 0.0f, 0.0f),
+		f32x4(0.0f, 0.0f, 1.0f, 0.0f), f32x4(t, 1.0f));
 }
 /**
  * @brief Applies translation transformation to an object in 3D space. [r = m * translate(t)]
  * 
- * @param[in] m target model matrix to translate
+ * @param[in] m target model SIMD matrix to translate
  * @param t target object translation
  */
-static constexpr float4x4 translate(const float4x4& m, float3 t) noexcept
+static f32x4x4 translate(const f32x4x4& m, f32x4 t) noexcept
 {
-	return float4x4(m.c0, m.c1, m.c2, m.c0 * t.x + m.c1 * t.y + m.c2 * t.z + m.c3);
+	return f32x4x4(m.c0, m.c1, m.c2, f32x4(m.c3 + multiply3x3(m, t), m.c3.getW()));
 }
 /**
  * @brief Applies translation transformation to an object in 3D space. [r = translate(t) * m]
  * 
  * @param t target object translation
- * @param[in] m target model matrix to translate
+ * @param[in] m target model SIMD matrix to translate
  */
-static constexpr float4x4 translate(float3 t, const float4x4& m) noexcept
+static f32x4x4 translate(f32x4 t, const f32x4x4& m) noexcept
 {
-	return float4x4(m.c0, m.c1, m.c2, float4(getTranslation(m) + t, m.c3.w));
+	return f32x4x4(m.c0, m.c1, m.c2, f32x4(m.c3 + t, m.c3.getW()));
 }
 
 /***********************************************************************************************************************
- * @brief Creates a new matrix with a specified object scale in 3D space.
+ * @brief Creates a new SIMD matrix with a specified object scale in 3D space.
  * @param s target object scale
  */
-static constexpr float4x4 scale(float3 s) noexcept
+static f32x4x4 scale(f32x4 s) noexcept
 {
-	return float4x4(
-		s.x, 0.0f, 0.0f, 0.0f,
-		0.0f, s.y, 0.0f, 0.0f,
-		0.0f, 0.0f, s.z, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f);
+	return f32x4x4(f32x4(s.getX(), 0.0f, 0.0f, 0.0f), f32x4(0.0f, s.getY(), 0.0f, 0.0f),
+		f32x4(0.0f, 0.0f, s.getZ(), 0.0f), f32x4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 /**
  * @brief Applies scale transformation to an object in 3D space. [r = m * scale(s)]
  *
- * @param[in] m target model matrix to scale
+ * @param[in] m target model SIMD matrix to scale
  * @param s target object scale
  */
-static constexpr float4x4 scale(const float4x4& m, float3 s) noexcept
+static f32x4x4 scale(const f32x4x4& m, f32x4 s) noexcept
 {
-	return float4x4(m.c0 * s.x, m.c1 * s.y, m.c2 * s.z, m.c3);
+	return f32x4x4(m.c0 * f32x4(s.getX()), m.c1 * f32x4(s.getY()), m.c2 * f32x4(s.getZ()), m.c3);
 }
 /**
  * @brief Applies scale transformation to an object in 3D space. [r = scale(s) * m]
@@ -104,119 +98,113 @@ static constexpr float4x4 scale(const float4x4& m, float3 s) noexcept
  * @param[in] m target model SIMD matrix to scale
  * @param s target object scale
  */
-static constexpr float4x4 scale(float3 s, const float4x4& m) noexcept
+static f32x4x4 scale(f32x4 s, const f32x4x4& m) noexcept
 {
 	auto sm = scale(s);
-	return float4x4(sm * m.c0, sm * m.c1, sm * m.c2, sm * m.c3);
+	return f32x4x4(sm * m.c0, sm * m.c1, sm * m.c2, sm * m.c3);
 }
 
 /**
- * @brief Extracts total matrix scale transformation of an object in 3D space.
- * @param[in] m target model matrix to extract from
+ * @brief Extracts total SIMD matrix scale transformation of an object in 3D space.
+ * @param[in] m target model SIMD matrix to extract from
  */
-static float3 extractScale(const float4x4& m) noexcept
+static f32x4 extractScale(const f32x4x4& m) noexcept
 {
-	return float3(length((float3)m.c0), length((float3)m.c1), length((float3)m.c2));
+	return f32x4(lengthSq3(m.c0), lengthSq3(m.c1), lengthSq3(m.c2));
 }
 /**
- * @brief Extracts total matrix 2D scale transformation of an object in 3D space.
- * @param[in] m target model matrix to extract from
+ * @brief Extracts total SIMD matrix 2D scale transformation of an object in 3D space.
+ * @param[in] m target model SIMD matrix to extract from
  */
-static float2 extractScale2(const float4x4& m) noexcept
+static float2 extractScale2(const f32x4x4& m) noexcept
 {
-	return float2(length((float3)m.c0), length((float3)m.c1));
+	return float2(lengthSq3(m.c0), length3(m.c1));
 }
 
 /***********************************************************************************************************************
- * @brief Creates a new matrix with a specified object rotation in 3D space.
+ * @brief Creates a new SIMD matrix with a specified object rotation in 3D space.
  * @param q target object rotation
  */
-static constexpr float4x4 rotate(quat q) noexcept
+static f32x4x4 rotate(quat q) noexcept
 {
-	auto xx = q.x * q.x, yy = q.y * q.y, zz = q.z * q.z;
-	auto xz = q.x * q.z, xy = q.x * q.y, yz = q.y * q.z;
-	auto wx = q.w * q.x, wy = q.w * q.y, wz = q.w * q.z;
+	auto x = q.getX(), y = q.getY(), z = q.getZ(), w = q.getW();
+	auto xx = x * x, yy = y * y, zz = z * z;
+	auto xz = x * z, xy = x * y, yz = y * z;
+	auto wx = w * x, wy = w * y, wz = w * z;
 
-	return float4x4(
-		1.0f - 2.0f * (yy + zz), 2.0f * (xy - wz), 2.0f * (xz + wy), 0.0f,
-		2.0f * (xy + wz), 1.0f - 2.0f * (xx + zz), 2.0f * (yz - wx), 0.0f,
-		2.0f * (xz - wy), 2.0f * (yz + wx), 1.0f - 2.0f * (xx + yy), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f);
+	return f32x4x4(
+		f32x4(1.0f - 2.0f * (yy + zz), 2.0f * (xy + wz), 2.0f * (xz - wy), 0.0f),
+		f32x4(2.0f * (xy - wz), 1.0f - 2.0f * (xx + zz), 2.0f * (yz + wx), 0.0f),
+		f32x4(2.0f * (xz + wy), 2.0f * (yz - wx), 1.0f - 2.0f * (xx + yy), 0.0f),
+		f32x4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 /**
- * @brief Calculates a new rotation matrix from look vectors in 3D space.
+ * @brief Calculates a new rotation SIMD matrix from look vectors in 3D space.
  *
  * @param lookFrom viewer position in 3D space
  * @param lookTo object position in 3D space
  * @param up space up direction vector
  */
-static float4x4 rotate(float3 lookFrom, float3 lookTo, float3 up = float3::top) noexcept
+static f32x4x4 rotate(f32x4 lookFrom, f32x4 lookTo, f32x4 up = f32x4::top) noexcept
 {
-	auto f = normalize(lookTo - lookFrom);
-	auto s = normalize(cross(up, f));
-	auto u = cross(f, s);
+	auto f = normalize3(lookTo - lookFrom);
+	auto s = normalize3(cross3(up, f));
+	auto u = cross3(f, s);
 
-	return float4x4(
-		s.x, s.y, s.z, 0.0f,
-		u.x, u.y, u.z, 0.0f,
-		f.x, f.y, f.z, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f);
+	return f32x4x4(f32x4(s, 0.0f), f32x4(u, 0.0f), 
+		f32x4(f, 0.0f), f32x4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 /**
- * @brief Calculates a new matrix from direction vector in 3D space.
+ * @brief Calculates a new SIMD matrix from direction vector in 3D space.
  *
  * @param front view direction vector in 3D space
  * @param up space up direction vector
  */
-static float4x4 rotate(float3 front, float3 up = float3::top) noexcept
+static f32x4x4 rotate(f32x4 front, f32x4 up = f32x4::top) noexcept
 {
-	auto f = front;
-	auto s = normalize(cross(up, f));
-	auto u = cross(f, s);
+	auto s = normalize3(cross3(up, front));
+	auto u = cross3(front, s);
 
-	return float4x4(
-		s.x, s.y, s.z, 0.0f,
-		u.x, u.y, u.z, 0.0f,
-		f.x, f.y, f.z, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f);
+	return f32x4x4(f32x4(s, 0.0f), f32x4(u, 0.0f), 
+		f32x4(front, 0.0f), f32x4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 /**
- * @brief Extracts total matrix rotation transformation of an object in 3D space.
- * @param[in] m target model matrix to extract from
+ * @brief Extracts total SIMD matrix rotation transformation of an object in 3D space.
+ * @param[in] m target model SIMD matrix to extract from
  */
-static float4x4 extractRotation(const float4x4& m) noexcept
+static f32x4x4 extractRotation(const f32x4x4& m) noexcept
 {
 	auto invScale = 1.0f / extractScale(m);
-	auto c0 = (float3)m.c0 * invScale.x;
-	auto c1 = (float3)m.c1 * invScale.y;
-	auto c2 = (float3)m.c2 * invScale.z;
-	return float4x4(float4(c0, 0.0f), float4(c1, 0.0f), float4(c2, 0.0f), float4(0.0f, 0.0f, 0.0f, 1.0f));
+	auto c0 = m.c0 * invScale.getX();
+	auto c1 = m.c1 * invScale.getY();
+	auto c2 = m.c2 * invScale.getZ();
+	
+	return f32x4x4(f32x4(c0, 0.0f), f32x4(c1, 0.0f), 
+		f32x4(c2, 0.0f), f32x4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 /**
- * @brief Extracts total matrix rotation transformation of an object in 3D space.
+ * @brief Extracts total SIMD matrix rotation transformation of an object in 3D space.
  * @warning Matrix should be only translated and/or rotated, without scaling!!!
- * @param[in] m target model matrix to extract from
+ * @param[in] m target model SIMD matrix to extract from
  */
-static float4x4 extractRotationOnly(const float4x4& m) noexcept
+static f32x4x4 extractRotationOnly(const f32x4x4& m) noexcept
 {
-	return float4x4(
-		float4((float3)m.c0, 0.0f), 
-		float4((float3)m.c1, 0.0f), 
-		float4((float3)m.c2, 0.0f), 
-		float4(0.0f, 0.0f, 0.0f, 1.0f));
+	return f32x4x4(f32x4(m.c0, 0.0f), f32x4(m.c1, 0.0f), 
+		f32x4(m.c2, 0.0f), f32x4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 /**
- * @brief Extracts total matrix rotation quaternion of an object in 3D space.
- * @param m target rotation matrix to extract from
+ * @brief Extracts total SIMD matrix rotation quaternion of an object in 3D space.
+ * @param m target rotation SIMD matrix to extract from
  */
-static quat extractQuat(float3x3 m) noexcept
+static quat extractQuat(f32x4x4 m) noexcept
 {
-	auto fourXSquaredMinus1 = m.c0.x - m.c1.y - m.c2.z;
-	auto fourYSquaredMinus1 = m.c1.y - m.c0.x - m.c2.z;
-	auto fourZSquaredMinus1 = m.c2.z - m.c0.x - m.c1.y;
-	auto fourWSquaredMinus1 = m.c0.x + m.c1.y + m.c2.z;
+	auto c0X = m.c0.getX(), c1Y = m.c1.getY(), c2Z = m.c2.getZ();
+	auto fourXSquaredMinus1 = c0X - c1Y - c2Z;
+	auto fourYSquaredMinus1 = c1Y - c0X - c2Z;
+	auto fourZSquaredMinus1 = c2Z - c0X - c1Y;
+	auto fourWSquaredMinus1 = c0X + c1Y + c2Z;
 
 	int biggestIndex = 0;
 	auto fourBiggestSquaredMinus1 = fourWSquaredMinus1;
@@ -241,104 +229,98 @@ static quat extractQuat(float3x3 m) noexcept
 
 	switch (biggestIndex)
 	{
-	case 0: return quat((m.c1.z - m.c2.y) * mult, (m.c2.x - m.c0.z) * mult, (m.c0.y - m.c1.x) * mult, biggestVal);
-	case 1: return quat(biggestVal, (m.c0.y + m.c1.x) * mult, (m.c2.x + m.c0.z) * mult, (m.c1.z - m.c2.y) * mult);
-	case 2: return quat((m.c0.y + m.c1.x) * mult, biggestVal, (m.c1.z + m.c2.y) * mult, (m.c2.x - m.c0.z) * mult);
-	case 3: return quat((m.c2.x + m.c0.z) * mult, (m.c1.z + m.c2.y) * mult, biggestVal, (m.c0.y - m.c1.x) * mult);
+	case 0: return quat((m.c1.getZ() - m.c2.getY()) * mult, 
+		(m.c2.getX() - m.c0.getZ()) * mult, (m.c0.getY() - m.c1.getX()) * mult, biggestVal);
+	case 1: return quat(biggestVal, (m.c0.getY() + m.c1.getX()) * mult, 
+		(m.c2.getX() + m.c0.getZ()) * mult, (m.c1.getZ() - m.c2.getY()) * mult);
+	case 2: return quat((m.c0.getY() + m.c1.getX()) * mult, biggestVal, 
+		(m.c1.getZ() + m.c2.getY()) * mult, (m.c2.getX() - m.c0.getZ()) * mult);
+	case 3: return quat((m.c2.getX() + m.c0.getZ()) * mult, 
+		(m.c1.getZ() + m.c2.getY()) * mult, biggestVal, (m.c0.getY() - m.c1.getX()) * mult);
 	default: abort();
 	}
 }
-/**
- * @brief Extracts total matrix rotation quaternion of an object in 3D space.
- * @param[in] m target rotation matrix to extract from
- */
-static quat extractQuat(const float4x4& m) noexcept
-{
-	return extractQuat((float3x3)m);
-}
 
 /***********************************************************************************************************************
- * @brief Calculates object model matrix from it position, rotation and scale.
+ * @brief Calculates object model SIMD matrix from it position, rotation and scale.
  *
- * @param[in] position object position in 3D space
- * @param[in] rotation object rotation in 3D space
- * @param[in] scale object scale in 3D space
+ * @param position object position in 3D space
+ * @param rotation object rotation in 3D space
+ * @param scale object scale in 3D space
  */
-static float4x4 calcModel(float3 position = float3::zero,
-	quat rotation = quat::identity, float3 scale = float3::one) noexcept
+static f32x4x4 calcModel(f32x4 position = f32x4::zero,
+	quat rotation = quat::identity, f32x4 scale = f32x4::one) noexcept
 {
-	return scale == float3::one ? translate(position, rotate(normalize(rotation))) :
+	return scale == f32x4::one ? translate(position, rotate(normalize(rotation))) :
 		translate(position) * rotate(normalize(rotation)) * math::scale(scale);
 }
 /**
- * @brief Extracts total matrix position, rotation and scale of an object in 3D space. (Decompose)
+ * @brief Extracts total SIMD matrix position, rotation and scale of an object in 3D space. (Decompose)
  *
- * @param[in] m target model matrix to extract from
+ * @param[in] m target model SIMD matrix to extract from
  * @param[out] position object position in 3D space
- * @param[out] scale object scale in 3D space
  * @param[out] rotation object rotation in 3D space
+ * @param[out] scale object scale in 3D space
  */
-static void extractTransform(const float4x4& m, float3& position, quat& rotation, float3& scale) noexcept
+static void extractTransform(const f32x4x4& m, f32x4& position, quat& rotation, f32x4& scale) noexcept
 {
 	position = getTranslation(m);
 	rotation = extractQuat(extractRotation(m));
 	scale = extractScale(m);
 }
 /**
- * @brief Extracts total matrix position and rotation of an object in 3D space. (Decompose)
+ * @brief Extracts total SIMD matrix position and rotation of an object in 3D space. (Decompose)
  *
- * @param[in] m target model matrix to extract from
+ * @param[in] m target model SIMD matrix to extract from
  * @param[out] position object position in 3D space
  * @param[out] rotation object rotation in 3D space
  */
-static void extractTransform(const float4x4& m, float3& position, quat& rotation) noexcept
+static void extractTransform(const f32x4x4& m, f32x4& position, quat& rotation) noexcept
 {
 	position = getTranslation(m);
 	rotation = extractQuat(extractRotationOnly(m));
 }
 
 /***********************************************************************************************************************
- * @brief Calculates a new model matrix from look vectors in 3D space.
+ * @brief Calculates a new SIMD model matrix from look vectors in 3D space.
  *
- * @param from viewer position in 3D space
- * @param to object position in 3D space
- * @param up space up direction vector
+ * @param[in] from viewer position in 3D space
+ * @param[in] to object position in 3D space
+ * @param[in] up space up direction vector
  */
-static float4x4 lookAt(float3 from, float3 to, float3 up = float3::top) noexcept
+static f32x4x4 lookAt(f32x4 from, f32x4 to, f32x4 up = f32x4::top) noexcept
 {
-	auto f = normalize(to - from);
-	auto s = normalize(cross(up, f));
-	auto u = cross(f, s);
-	return float4x4(
-		s.x, s.y, s.z, -dot(s, from),
-		u.x, u.y, u.z, -dot(u, from),
-		f.x, f.y, f.z, -dot(f, from),
-		0.0f, 0.0f, 0.0f, 1.0f);
+	auto f = normalize3(to - from);
+	auto s = normalize3(cross3(up, f));
+	auto u = cross3(f, s);
+
+	return transpose4x4(f32x4x4(f32x4(s, -dot3(s, from)), f32x4(u, -dot3(u, from)), 
+		f32x4(f, -dot3(f, from)), f32x4(0.0f, 0.0f, 0.0f, 1.0f)));
 }
 /**
- * @brief Calculates a new quaternion from direction vector in 3D space.
+ * @brief Calculates a new SIMD quaternion from direction vector in 3D space.
  *
  * @param direction viewer direction in 3D space
  * @param up space up direction vector
  */
-static quat lookAtQuat(float3 direction, float3 up = float3::top) noexcept
+static quat lookAtQuat(f32x4 direction, f32x4 up = f32x4::top) noexcept
 {
-	auto right = cross(up, direction);
-	auto c0 = right * (1.0f / std::sqrt(std::max(0.00001f, dot(right, right))));
-	auto c1 = cross(right, c0);
-	auto m = float3x3(c0, c1, direction);
+	auto right = cross3(up, direction);
+	auto c0 = right * (1.0f / std::sqrt(std::max(0.00001f, dot3(right, right))));
+	auto c1 = cross3(right, c0);
+	auto m = f32x4x4(c0, c1, direction);
 	return extractQuat(m);
 }
 
 /**
- * @brief Calculates translated/rotated matrix inverse.
+ * @brief Calculates translated/rotated SIMD matrix inverse.
  * @warning Matrix should be only translated and/or rotated, without scaling!!!
- * @param[in] m target matrix to inverse
+ * @param[in] m target SIMD matrix to inverse
  */
-static float4x4 inverseTransRot(const float4x4& m)
+static f32x4x4 inverseTransRot(const f32x4x4& m)
 {
-	auto t = transpose(m);
-	setTranslation(t, -((float3x3)t * getTranslation(m)));
+	auto t = transpose4x4(m);
+	setTranslation(t, -multiply3x3(t, getTranslation(m)));
 	return t;
 }
 

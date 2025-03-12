@@ -33,11 +33,11 @@ struct [[nodiscard]] Line
 	/**
 	 * @brief Line start point in 3D space.
 	 */
-	simd_f32_4 start = simd_f32_4::zero;
+	f32x4 start = f32x4::zero;
 	/**
 	 * @brief Line end point in 3D space.
 	 */
-	simd_f32_4 end = simd_f32_4::zero;
+	f32x4 end = f32x4::zero;
 
 	/**
 	 * @brief Creates a new line structure. (In 3D space)
@@ -45,7 +45,7 @@ struct [[nodiscard]] Line
 	 * @param start target line start point in the space
 	 * @param end target line end point in the space
 	 */
-	Line(simd_f32_4 start, simd_f32_4 end) noexcept : start(start), end(end) { }
+	Line(f32x4 start, f32x4 end) noexcept : start(start), end(end) { }
 	/**
 	 * @brief Creates a new zero size line structure.
 	 */
@@ -55,19 +55,21 @@ struct [[nodiscard]] Line
 	 * @brief Returns line direction vector in 3D space.
 	 * @param normalize is direction vector should be normalized
 	 */
-	simd_f32_4 getDirection(bool normalize = true) const noexcept
+	f32x4 getDirection(bool normalize = true) const noexcept
 	{
 		return normalize ? normalize3(end - start) : end - start;
 	}
 
-	Line operator*(simd_f32_4 v) const noexcept { return Line(start * v, end * v); }
-	Line operator/(simd_f32_4 v) const noexcept { return Line(start / v, end / v); }
-	Line operator+(simd_f32_4 v) const noexcept { return Line(start + v, end + v); }
-	Line operator-(simd_f32_4 v) const noexcept { return Line(start - v, end - v); }
-	Line& operator*=(simd_f32_4 v) noexcept { start *= v; end *= v; return *this; }
-	Line& operator/=(simd_f32_4 v) noexcept { start /= v; end /= v; return *this; }
-	Line& operator+=(simd_f32_4 v) noexcept { start += v; end += v; return *this; }
-	Line& operator-=(simd_f32_4 v) noexcept { start -= v; end -= v; return *this; }
+	Line operator*(f32x4 v) const noexcept { return Line(start * v, end * v); }
+	Line operator/(f32x4 v) const noexcept { return Line(start / v, end / v); }
+	Line operator+(f32x4 v) const noexcept { return Line(start + v, end + v); }
+	Line operator-(f32x4 v) const noexcept { return Line(start - v, end - v); }
+	Line& operator*=(f32x4 v) noexcept { start *= v; end *= v; return *this; }
+	Line& operator/=(f32x4 v) noexcept { start /= v; end /= v; return *this; }
+	Line& operator+=(f32x4 v) noexcept { start += v; end += v; return *this; }
+	Line& operator-=(f32x4 v) noexcept { start -= v; end -= v; return *this; }
+	bool operator==(const Line& v) const noexcept { return !memcmp(this, &v, sizeof(Line)); }
+	bool operator!=(const Line& v) const noexcept { return memcmp(this, &v, sizeof(Line)); }
 };
 
 /**
@@ -76,11 +78,11 @@ struct [[nodiscard]] Line
  * @param[in] line target line to use
  * @param point target point in 3D space
  */
-static simd_f32_4 closestPoint(const Line& line, simd_f32_4 point) noexcept
+static f32x4 closestPoint(const Line& line, f32x4 point) noexcept
 {
 	auto a = line.start, d = line.getDirection(false);
 	auto t = dot3(point - a, d) / dot3(d, d);
-	return fma(d, simd_f32_4(std::clamp(t, 0.0f, 1.0f)), a);
+	return fma(d, f32x4(std::clamp(t, 0.0f, 1.0f)), a);
 }
 /**
  * @brief Returns closest point on line to the specified one in 3D space.
@@ -89,11 +91,11 @@ static simd_f32_4 closestPoint(const Line& line, simd_f32_4 point) noexcept
  * @param point target point in 3D space
  * @param[out] t distance to the closest point
  */
-static simd_f32_4 closestPoint(const Line& line, simd_f32_4 point, float& t) noexcept
+static f32x4 closestPoint(const Line& line, f32x4 point, float& t) noexcept
 {
 	auto a = line.start, d = line.getDirection(false);
 	t = dot3(point - a, d) / dot3(d, d);
-	return fma(d, simd_f32_4(std::clamp(t, 0.0f, 1.0f)), a);
+	return fma(d, f32x4(std::clamp(t, 0.0f, 1.0f)), a);
 }
 
 } // namespace math

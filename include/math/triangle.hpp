@@ -35,9 +35,9 @@ struct [[nodiscard]] Triangle
 	 */
 	static constexpr int32 pointCount = 3;
 
-	simd_f32_4 p0 = simd_f32_4::zero; /**< First triangle vertex position. */
-	simd_f32_4 p1 = simd_f32_4::zero; /**< Second triangle vertex position. */
-	simd_f32_4 p2 = simd_f32_4::zero; /**< Third triangle vertex position. */
+	f32x4 p0 = f32x4::zero; /**< First triangle vertex position. */
+	f32x4 p1 = f32x4::zero; /**< Second triangle vertex position. */
+	f32x4 p2 = f32x4::zero; /**< Third triangle vertex position. */
 
 	/**
 	 * @brief Creates a new triangle (polygon) structure. (In 3D space)
@@ -46,20 +46,22 @@ struct [[nodiscard]] Triangle
 	 * @param p1 second triangle vertex position in 3D space
 	 * @param p2 third triangle vertex position in 3D space
 	 */
-	Triangle(simd_f32_4 p0, simd_f32_4 p1, simd_f32_4 p2) noexcept : p0(p0), p1(p1), p2(p2) { }
+	Triangle(f32x4 p0, f32x4 p1, f32x4 p2) noexcept : p0(p0), p1(p1), p2(p2) { }
 	/**
 	 * @brief Creates a new zero size triangle (polygon) structure.
 	 */
 	Triangle() = default;
 
-	Triangle operator*(simd_f32_4 v) const noexcept { return Triangle(p0 * v, p1 * v, p2 * v); }
-	Triangle operator/(simd_f32_4 v) const noexcept { return Triangle(p0 / v, p1 / v, p2 / v); }
-	Triangle operator+(simd_f32_4 v) const noexcept { return Triangle(p0 + v, p1 + v, p2 + v); }
-	Triangle operator-(simd_f32_4 v) const noexcept { return Triangle(p0 - v, p1 - v, p2 - v); }
-	Triangle& operator*=(simd_f32_4 v) noexcept { p0 *= v; p1 *= v; p2 *= v; return *this; }
-	Triangle& operator/=(simd_f32_4 v) noexcept { p0 /= v; p1 /= v; p2 /= v; return *this; }
-	Triangle& operator+=(simd_f32_4 v) noexcept { p0 += v; p1 += v; p2 += v; return *this; }
-	Triangle& operator-=(simd_f32_4 v) noexcept { p0 -= v; p1 -= v; p2 -= v; return *this; }
+	Triangle operator*(f32x4 v) const noexcept { return Triangle(p0 * v, p1 * v, p2 * v); }
+	Triangle operator/(f32x4 v) const noexcept { return Triangle(p0 / v, p1 / v, p2 / v); }
+	Triangle operator+(f32x4 v) const noexcept { return Triangle(p0 + v, p1 + v, p2 + v); }
+	Triangle operator-(f32x4 v) const noexcept { return Triangle(p0 - v, p1 - v, p2 - v); }
+	Triangle& operator*=(f32x4 v) noexcept { p0 *= v; p1 *= v; p2 *= v; return *this; }
+	Triangle& operator/=(f32x4 v) noexcept { p0 /= v; p1 /= v; p2 /= v; return *this; }
+	Triangle& operator+=(f32x4 v) noexcept { p0 += v; p1 += v; p2 += v; return *this; }
+	Triangle& operator-=(f32x4 v) noexcept { p0 -= v; p1 -= v; p2 -= v; return *this; }
+	bool operator==(const Triangle& v) const noexcept { return !memcmp(this, &v, sizeof(Triangle)); }
+	bool operator!=(const Triangle& v) const noexcept { return memcmp(this, &v, sizeof(Triangle)); }
 };
 
 /**
@@ -68,7 +70,7 @@ struct [[nodiscard]] Triangle
  * @param[in] sphere target triangle to check
  * @param point target point in 3D space
  */
-static bool isInside(const Triangle& triangle, simd_f32_4 point) noexcept
+static bool isInside(const Triangle& triangle, f32x4 point) noexcept
 {
 	auto p0 = triangle.p0 - point, p1 = triangle.p1 - point, p2 = triangle.p2 - point;
 	auto u = cross3(p1, p2), v = cross3(p2, p0), w = cross3(p0, p1);
@@ -84,7 +86,7 @@ static bool isInside(const Triangle& triangle, simd_f32_4 point) noexcept
  * @param[in] triangle target triangle to use
  * @param point target point in 3D space
  */
-static simd_f32_4 calcBarycentric(const Triangle& triangle, simd_f32_4 point) noexcept
+static f32x4 calcBarycentric(const Triangle& triangle, f32x4 point) noexcept
 {
 	// Cramer's rule
 	auto p0 = triangle.p0;
@@ -94,7 +96,7 @@ static simd_f32_4 calcBarycentric(const Triangle& triangle, simd_f32_4 point) no
 	auto invDenom = 1.0f / (d00 * d11 - d01 * d01);
 	auto v = (d11 * d20 - d01 * d21) * invDenom;
 	auto w = (d00 * d21 - d01 * d20) * invDenom;
-	return simd_f32_4(1.0f - v - w, v, w, 0.0f);
+	return f32x4(1.0f - v - w, v, w, 0.0f);
 }
 
 } // namespace math

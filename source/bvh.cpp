@@ -16,8 +16,6 @@
 // Based on this: https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/
 
 #include "math/bvh.hpp"
-
-#include <cfloat>
 #include <functional>
 
 // TODO: Utilize Jolt BVH building and update optimizations.
@@ -29,16 +27,16 @@ static Aabb calculateNodeAabb(const Bvh::Node* node, const uint8* vertices, cons
 	const uint32* primitives, uint32 vertexSize, uint32 indexSize, const function<uint32(const uint8*)>& getIndex)
 {
 	auto lastPrimitive = node->getFirstPrimitive() + node->getPrimitiveCount();
-	simd_f32_4 min = simd_f32_4::max, max = simd_f32_4::minusMax;
+	f32x4 min = f32x4::max, max = f32x4::minusMax;
 	for (uint32 i = node->getFirstPrimitive(); i < lastPrimitive; i++)
 	{
 		auto offset = primitives[i] * Triangle::pointCount;
 		auto i0 = getIndex(indices + (offset    ) * indexSize);
 		auto i1 = getIndex(indices + (offset + 1) * indexSize);
 		auto i2 = getIndex(indices + (offset + 2) * indexSize);
-		auto v0 = simd_f32_4(*(const float3*)(vertices + i0 * vertexSize));
-		auto v1 = simd_f32_4(*(const float3*)(vertices + i1 * vertexSize));
-		auto v2 = simd_f32_4(*(const float3*)(vertices + i2 * vertexSize));
+		auto v0 = f32x4(*(const float3*)(vertices + i0 * vertexSize));
+		auto v1 = f32x4(*(const float3*)(vertices + i1 * vertexSize));
+		auto v2 = f32x4(*(const float3*)(vertices + i2 * vertexSize));
 		min = math::min(math::min(math::min(min, v0), v1), v2); 
 		max = math::max(math::max(math::max(max, v0), v1), v2);
 	}
@@ -48,7 +46,7 @@ static Aabb calculateNodeAabb(const Bvh::Node* node, const uint8* vertices, cons
 static Aabb calculateNodeAabb(const Bvh::Node* node, const Aabb* aabbs, const uint32* primitives)
 {
 	auto lastPrimitive = node->getFirstPrimitive() + node->getPrimitiveCount();
-	simd_f32_4 min = simd_f32_4::max, max = simd_f32_4::minusMax;
+	f32x4 min = f32x4::max, max = f32x4::minusMax;
 	for (uint32 i = node->getFirstPrimitive(); i < lastPrimitive; i++)
 	{
 		auto aabb = aabbs[primitives[i]];
@@ -65,13 +63,15 @@ namespace
 {
 	struct Bin final
 	{
-		simd_f32_4 min = simd_f32_4::max;
-		simd_f32_4 max = simd_f32_4::minusMax;
+		f32x4 min = f32x4::max;
+		f32x4 max = f32x4::minusMax;
+
+		int32& primitiveCount() noexcept { return max.ints.w; }
 	};
 }
 
 static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, uint32 vertexSize, uint32 indexSize,
-	const uint8* vertices, const uint8* indices, const uint32* primitives, const simd_f32_4* centroids,
+	const uint8* vertices, const uint8* indices, const uint32* primitives, const f32x4* centroids,
 	const function<uint32(const uint8*)>& getIndex, int32& axis, float& split, float& cost)
 {
 	auto bestAxis = 0;
@@ -100,32 +100,32 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, uint
 			auto i0 = getIndex(indices + (offset    ) * indexSize);
 			auto i1 = getIndex(indices + (offset + 1) * indexSize);
 			auto i2 = getIndex(indices + (offset + 2) * indexSize);
-			auto v0 = simd_f32_4(*(const float3*)(vertices + i0 * vertexSize));
-			auto v1 = simd_f32_4(*(const float3*)(vertices + i1 * vertexSize));
-			auto v2 = simd_f32_4(*(const float3*)(vertices + i2 * vertexSize));
+			auto v0 = f32x4(*(const float3*)(vertices + i0 * vertexSize));
+			auto v1 = f32x4(*(const float3*)(vertices + i1 * vertexSize));
+			auto v2 = f32x4(*(const float3*)(vertices + i2 * vertexSize));
 
 			auto binIndex = std::min((int32)(BIN_COUNT - 1), (int32)((
 				centroids[index][a] - boundsMin) * scale));
 			auto& bin = bins[binIndex];
 			bin.min = min(min(min(bin.min, v0), v1), v2);
 			bin.max = max(max(max(bin.max, v0), v1), v2);
-			bin.max.ints.w++;
+			bin.primitiveCount()++;
 		}
 
 		float leftArea[BIN_COUNT - 1], rightArea[BIN_COUNT - 1];
 		int32 leftCount[BIN_COUNT - 1], rightCount[BIN_COUNT - 1];
-		simd_f32_4 leftMin = simd_f32_4::max, leftMax = simd_f32_4::minusMax;
-		simd_f32_4 rightMin = simd_f32_4::max, rightMax = simd_f32_4::minusMax;
+		f32x4 leftMin = f32x4::max, leftMax = f32x4::minusMax;
+		f32x4 rightMin = f32x4::max, rightMax = f32x4::minusMax;
 		int32 leftSum = 0, rightSum = 0;
 
 		for (int i = 0; i < BIN_COUNT - 1; i++)
 		{
-			leftSum += bins[i].max.ints.w;
+			leftSum += bins[i].primitiveCount();
 			leftCount[i] = leftSum;
 			leftMin = min(leftMin, bins[i].min);
 			leftMax = max(leftMax, bins[i].max);
 			leftArea[i] = Aabb(leftMin, leftMax).calcArea();
-			rightSum += bins[(BIN_COUNT - 1) - i].max.ints.w;
+			rightSum += bins[(BIN_COUNT - 1) - i].primitiveCount();
 			rightCount[(BIN_COUNT - 2) - i] = rightSum;
 			rightMin = min(rightMin, bins[(BIN_COUNT - 1) - i].min);
 			rightMax = max(rightMax, bins[(BIN_COUNT - 1) - i].max);
@@ -153,7 +153,7 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, uint
 
 //**********************************************************************************************************************
 static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, const Aabb* aabbs,
-	const uint32* primitives, const simd_f32_4* centroids, int32& axis, float& split, float& cost)
+	const uint32* primitives, const f32x4* centroids, int32& axis, float& split, float& cost)
 {
 	auto bestAxis = 0;
 	auto bestSplit = 0.0f, bestCost = FLT_MAX;
@@ -183,24 +183,24 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, cons
 			auto& bin = bins[binIndex];
 			bin.min = min(bin.min, aabb.getMin());
 			bin.max = max(bin.max, aabb.getMax());
-			bin.max.ints.w++;
+			bin.primitiveCount()++;
 		}
 
 		// TODO: share this function part with a previous one?
 		float leftArea[BIN_COUNT - 1], rightArea[BIN_COUNT - 1];
 		int32 leftCount[BIN_COUNT - 1], rightCount[BIN_COUNT - 1];
-		simd_f32_4 leftMin = simd_f32_4::max, leftMax = simd_f32_4::minusMax;
-		simd_f32_4 rightMin = simd_f32_4::max, rightMax = simd_f32_4::minusMax;
+		f32x4 leftMin = f32x4::max, leftMax = f32x4::minusMax;
+		f32x4 rightMin = f32x4::max, rightMax = f32x4::minusMax;
 		int32 leftSum = 0, rightSum = 0;
 
 		for (int i = 0; i < BIN_COUNT - 1; i++)
 		{
-			leftSum += bins[i].max.ints.w;
+			leftSum += bins[i].primitiveCount();
 			leftCount[i] = leftSum;
 			leftMin = min(leftMin, bins[i].min);
 			leftMax = max(leftMax, bins[i].max);
 			leftArea[i] = Aabb(leftMin, leftMax).calcArea();
-			rightSum += bins[(BIN_COUNT - 1) - i].max.ints.w;
+			rightSum += bins[(BIN_COUNT - 1) - i].primitiveCount();
 			rightCount[(BIN_COUNT - 2) - i] = rightSum;
 			rightMin = min(rightMin, bins[(BIN_COUNT - 1) - i].min);
 			rightMax = max(rightMax, bins[(BIN_COUNT - 1) - i].max);
@@ -228,17 +228,17 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, cons
 
 //**********************************************************************************************************************
 Bvh::Bvh(const uint8* vertices, const uint8* indices, const Aabb& aabb,
-	uint32 indexCount, uint32 vertexSize, uint32 indexSize, const simd_f32_4* _centroids)
+	uint32 indexCount, uint32 vertexSize, uint32 indexSize, const f32x4* _centroids)
 {
 	recreate(vertices, indices, aabb, indexCount, vertexSize, indexSize, _centroids);
 }
-Bvh::Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const simd_f32_4* _centroids)
+Bvh::Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const f32x4* _centroids)
 {
 	recreate(aabbs, aabb, aabbCount, _centroids);
 }
 
 void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb,
-	uint32 indexCount, uint32 vertexSize, uint32 indexSize, const simd_f32_4* _centroids)
+	uint32 indexCount, uint32 vertexSize, uint32 indexSize, const f32x4* _centroids)
 {
 	assert(vertices);
 	assert(indices);
@@ -261,7 +261,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 		getIndex = getIndex16;
 	else if (indexSize != sizeof(uint32)) abort();
 
-	const simd_f32_4* centroidData;
+	const f32x4* centroidData;
 	if (!_centroids)
 	{
 		centroids.resize(primitiveCount);
@@ -273,9 +273,9 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 			auto i0 = getIndex(indices + (offset    ) * indexSize);
 			auto i1 = getIndex(indices + (offset + 1) * indexSize);
 			auto i2 = getIndex(indices + (offset + 2) * indexSize);
-			auto v0 = simd_f32_4(*(const float3*)(vertices + i0 * vertexSize));
-			auto v1 = simd_f32_4(*(const float3*)(vertices + i1 * vertexSize));
-			auto v2 = simd_f32_4(*(const float3*)(vertices + i2 * vertexSize));
+			auto v0 = f32x4(*(const float3*)(vertices + i0 * vertexSize));
+			auto v1 = f32x4(*(const float3*)(vertices + i1 * vertexSize));
+			auto v2 = f32x4(*(const float3*)(vertices + i2 * vertexSize));
 			centroids[i] = (v0 + v1 + v2) * (1.0f / 3.0f);
 		}
 	}
@@ -382,7 +382,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 }
 
 //**********************************************************************************************************************
-void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const simd_f32_4* _centroids)
+void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const f32x4* _centroids)
 {
 	assert(aabbs);
 	assert(aabbCount > 0);
@@ -393,7 +393,7 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const 
 	for (uint32 i = 0; i < aabbCount; i++)
 		primitiveData[i] = i;
 
-	const simd_f32_4* centroidData;
+	const f32x4* centroidData;
 	if (!_centroids)
 	{
 		centroids.resize(aabbCount);

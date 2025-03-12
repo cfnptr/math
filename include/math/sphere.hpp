@@ -31,7 +31,7 @@ namespace math
 struct [[nodiscard]] Sphere
 {
 protected:
-	simd_f32_4 posRad;
+	f32x4 posRad;
 public:
 	/**
 	 * @brief Creates a new sphere structure.
@@ -39,7 +39,7 @@ public:
 	 * @param radius target sphere radius
 	 * @param position sphere position in 3D space
 	 */
-	Sphere(float radius = 0.0f, simd_f32_4 position = simd_f32_4::zero) noexcept :
+	Sphere(float radius = 0.0f, f32x4 position = f32x4::zero) noexcept :
 		posRad(position) { posRad.setW(radius); }
 
 	/**
@@ -55,12 +55,15 @@ public:
 	/**
 	 * @brief Returns position of the sphere in 3D space.
 	 */
-	const simd_f32_4& getPosition() const noexcept { return posRad; }
+	f32x4 getPosition() const noexcept { return posRad; }
 	/**
 	 * @brief Sets position of the sphere in 3D space.
 	 * @param position target sphere position in 3D space
 	 */
-	void setPosition(simd_f32_4 position) noexcept { posRad = simd_f32_4(position, posRad.getW()); }
+	void setPosition(f32x4 position) noexcept { posRad = f32x4(position, posRad.getW()); }
+
+	bool operator==(const Sphere& v) const noexcept { return !memcmp(this, &v, sizeof(Sphere)); }
+	bool operator!=(const Sphere& v) const noexcept { return memcmp(this, &v, sizeof(Sphere)); }
 
 	static const Sphere one, two, half;
 };
@@ -75,7 +78,7 @@ inline const Sphere Sphere::half = Sphere(0.25f);
  * @param[in] sphere target sphere to check
  * @param point target point in 3D space
  */
-static bool isInside(const Sphere& sphere, simd_f32_4 point) noexcept
+static bool isInside(const Sphere& sphere, f32x4 point) noexcept
 {
 	auto difference = sphere.getPosition() - point;
 	auto radius = sphere.getRadius();
@@ -88,7 +91,7 @@ static bool isInside(const Sphere& sphere, simd_f32_4 point) noexcept
  * @param[in] sphere target sphere to use
  * @param point target point in 3D space
  */
-static simd_f32_4 closestPoint(const Sphere& sphere, simd_f32_4 point) noexcept
+static f32x4 closestPoint(const Sphere& sphere, f32x4 point) noexcept
 {
 	auto sphereToPoint = normalize3(point - sphere.getPosition());
 	return sphere.getPosition() + sphereToPoint * sphere.getRadius();

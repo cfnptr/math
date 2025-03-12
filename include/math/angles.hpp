@@ -20,11 +20,6 @@
 #pragma once
 #include "math/vector.hpp"
 
-#if _WIN32
-#define _USE_MATH_DEFINES
-#endif
-#include <math.h>
-
 namespace math
 {
 
@@ -52,7 +47,7 @@ static constexpr float4 radians(float4 degrees) noexcept { return degrees * ((fl
  * @brief Converts specified SIMD vector in degrees to radians.
  * @param degrees target SIMD vector in degrees
  */
-static simd_f32_4 radians(simd_f32_4 degrees) noexcept { return degrees * (float)M_PI / 180.0f; }
+static f32x4 radians(f32x4 degrees) noexcept { return degrees * (float)M_PI / 180.0f; }
 
 /**
  * @brief Converts specified value in radians to degrees.
@@ -78,6 +73,6 @@ static constexpr float4 degrees(float4 radians) noexcept { return radians * (180
  * @brief Converts specified SIMD vector in radians to degrees.
  * @param degrees target SIMD vector in radians
  */
-static simd_f32_4 degrees(simd_f32_4 radians) noexcept { return radians * 180.0f / (float)M_PI; }
+static f32x4 degrees(f32x4 radians) noexcept { return radians * 180.0f / (float)M_PI; }
 
 }; // namespace math

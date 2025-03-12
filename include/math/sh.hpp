@@ -138,7 +138,7 @@ static void multiply(const float m[25], const float v[5], float r[5]) noexcept
 }
 
 //**********************************************************************************************************************
-static float3 rotateSphericalHarmonicBand1(const float3& band1, const float3x3& m) noexcept
+static float3 rotateSphericalHarmonicBand1(float3 band1, const float3x3& m) noexcept
 {
 	constexpr auto invA1TimesK = float3x3(0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f);
     auto mn0 = m[0], mn1 = m[1], mn2 = m[2];
@@ -268,7 +268,7 @@ static float shmin(float shw[shCoeffCount]) noexcept
 }
 
 //**********************************************************************************************************************
-static void deringingSH(float4 sh[shCoeffCount]) noexcept
+static void deringingSH(f32x4 sh[shCoeffCount]) noexcept
 {
 	auto cutoff = (float)(shBandCount * 4 + 1);
 	float shw[shCoeffCount];
@@ -306,7 +306,7 @@ static void deringingSH(float4 sh[shCoeffCount]) noexcept
 	}
 }
 
-static void shaderPreprocessSH(float4 sh[shCoeffCount]) noexcept
+static void shaderPreprocessSH(f32x4 sh[shCoeffCount]) noexcept
 {
 	static constexpr float ca[shCoeffCount] =
 	{

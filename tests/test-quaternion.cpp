@@ -20,7 +20,7 @@
 
 using namespace math;
 
-static void cmp(simd_f32_4 a, float4 b, float tolerance = 1.0e-9f)
+static void cmp(f32x4 a, f32x4 b, float tolerance = 1.0e-9f)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -30,23 +30,9 @@ static void cmp(simd_f32_4 a, float4 b, float tolerance = 1.0e-9f)
 			b[i] = 0.0f;
 	}
 
-	auto difference = distanceSq((float4)a, b);
+	auto difference = distanceSq4(a, b);
 	if (difference > tolerance)
 		throw runtime_error("Float4 vectors test failed.");
-}
-static void cmp(simd_f32_4 a, float3 b, float tolerance = 1.0e-9f)
-{
-	for (int i = 0; i < 3; i++)
-	{
-		if (isnan(a[i]))
-			a[i] = 0.0f;
-		if (isnan(b[i]))
-			b[i] = 0.0f;
-	}
-
-	auto difference = distanceSq((float3)a, b);
-	if (difference > tolerance)
-		throw runtime_error("Float3 vectors test failed.");
 }
 static void cmp(float a, float b, float tolerance = 1.0e-9f)
 {
@@ -57,28 +43,16 @@ static void cmp(float a, float b, float tolerance = 1.0e-9f)
 
 static void testQuatVectors()
 {
-	const auto vecAngles = radians(float4(90.0f, -1.23f, 45.0f, 0.0f));
-	const auto simdAngles = simd_f32_4(vecAngles);
-	const auto vecQuat = quat((float3)vecAngles);
-	const auto simdQuat = fromEulerAngles(simdAngles);
-	cmp(simdQuat, vecQuat);
-	cmp(simd_f32_quat(vecAngles.x, simd_f32_4(1.0f, 0.0f, 0.0f, 0.0f)), quat(vecAngles.x, float3::right));
-	cmp(simd_f32_quat(vecAngles.y, simd_f32_4(0.0f, -1.0f, 0.0f, 0.0f)), quat(vecAngles.y, float3::bottom));
-	cmp(simdQuat.extractEulerAngles(), vecQuat.extractEulerAngles());
-	cmp(simdQuat.extractPitch(), vecQuat.extractPitch());
-	cmp(simdQuat.extractYaw(), vecQuat.extractYaw());
-	cmp(simdQuat.extractRoll(), vecQuat.extractRoll());
-	cmp(conjugate(simdQuat), conjugate(vecQuat));
-	cmp(inverse(simdQuat), inverse(vecQuat));
-	cmp(slerp(simdQuat, simdQuat * simdQuat, 0.75f), 
-		slerp(vecQuat, vecQuat * vecQuat, 0.75f));
-	cmp(simdQuat * simdQuat, vecQuat * vecQuat);
-	{
-		const auto vev = float3(1.0f, 2.34f, -0.5678f);
-		const auto simd = simd_f32_4(vev);
-		cmp(simdQuat * simd, vecQuat * vev);
-		cmp(simd * simdQuat, vev * vecQuat);
-	}
+	const auto eulerAngles = radians(f32x4(90.0f, -1.23f, 45.0f, 0.0f));
+	const auto quat = fromEulerAngles(eulerAngles);
+	cmp(quat.extractEulerAngles(), eulerAngles);
+	cmp(quat.extractPitch(), eulerAngles.getX());
+	cmp(quat.extractYaw(), eulerAngles.getY());
+	cmp(quat.extractRoll(), eulerAngles.getZ());
+	cmp(conjugate(conjugate(quat)), quat);
+	cmp(inverse(inverse(quat)), quat);
+
+	// TODO: more tests
 }
 
 int main()

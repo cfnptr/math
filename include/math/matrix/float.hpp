@@ -24,7 +24,7 @@
  */
 
 #pragma once
-#include "math/quaternion.hpp"
+#include "math/vector.hpp"
 
 namespace math
 {
@@ -45,13 +45,6 @@ struct [[nodiscard]] float2x2
 	constexpr explicit float2x2(float n = 0.0f) noexcept : c0(n), c1(n) { }
 	/**
 	 * @brief Creates a new floating point 2x2 matrix structure.
-	 * 
-	 * @param c0 first matrix column value
-	 * @param c1 second matrix column value
-	 */
-	constexpr float2x2(float2 c0, float2 c1) noexcept : c0(c0), c1(c1) { }
-	/**
-	 * @brief Creates a new floating point 2x2 matrix structure.
 	 * @details See the @ref float2x2.
 	 */
 	constexpr float2x2(
@@ -59,6 +52,13 @@ struct [[nodiscard]] float2x2
 		float c0r1, float c1r1) noexcept :
 		c0(float2(c0r0, c0r1)),
 		c1(float2(c1r0, c1r1)) { }
+	/**
+	 * @brief Creates a new floating point 2x2 matrix structure.
+	 * 
+	 * @param c0 first matrix column value
+	 * @param c1 second matrix column value
+	 */
+	constexpr float2x2(float2 c0, float2 c1) noexcept : c0(c0), c1(c1) { }
 	
 	/**
 	 * @brief Returns matrix column by index.
@@ -152,14 +152,6 @@ struct [[nodiscard]] float3x3
 	constexpr explicit float3x3(float n = 0.0f) noexcept : c0(n), c1(n), c2(n) { }
 	/**
 	 * @brief Creates a new floating point 3x3 matrix structure.
-	 *
-	 * @param[in] c0 first matrix column value
-	 * @param[in] c1 second matrix column value
-	 * @param[in] c2 third matrix column value
-	 */
-	constexpr float3x3(const float3& c0, const float3& c1, const float3& c2) noexcept : c0(c0), c1(c1), c2(c2) { }
-	/**
-	 * @brief Creates a new floating point 3x3 matrix structure.
 	 * @details See the @ref float3x3.
 	 */
 	constexpr float3x3(
@@ -169,6 +161,14 @@ struct [[nodiscard]] float3x3
 		c0(float3(c0r0, c0r1, c0r2)),
 		c1(float3(c1r0, c1r1, c1r2)),
 		c2(float3(c2r0, c2r1, c2r2)) { }
+	/**
+	 * @brief Creates a new floating point 3x3 matrix structure.
+	 *
+	 * @param c0 first matrix column value
+	 * @param c1 second matrix column value
+	 * @param c2 third matrix column value
+	 */
+	constexpr float3x3(float3 c0, float3 c1, float3 c2) noexcept : c0(c0), c1(c1), c2(c2) { }
 
 	/**
 	 * @brief Returns matrix 2x2 part.
@@ -188,7 +188,7 @@ struct [[nodiscard]] float3x3
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	const float3& operator[](psize i) const noexcept
+	float3 operator[](psize i) const noexcept
 	{
 		assert(i <= 2);
 		return ((float3*)this)[i];
@@ -271,16 +271,6 @@ struct [[nodiscard]] float4x3
 	constexpr explicit float4x3(float n = 0.0f) noexcept : c0(n), c1(n), c2(n), c3(n) { }
 	/**
 	 * @brief Creates a new floating point 4x3 matrix structure.
-	 *
-	 * @param[in] c0 first matrix column value
-	 * @param[in] c1 second matrix column value
-	 * @param[in] c2 third matrix column value
-	 * @param[in] c3 fourth matrix column value
-	 */
-	constexpr float4x3(const float3& c0, const float3& c1, const float3& c2, const float3& c3)
-		noexcept : c0(c0), c1(c1), c2(c2), c3(c3) { }
-	/**
-	 * @brief Creates a new floating point 4x3 matrix structure.
 	 * @details See the @ref float3x3.
 	 */
 	constexpr float4x3(
@@ -291,6 +281,15 @@ struct [[nodiscard]] float4x3
 		c1(float3(c1r0, c1r1, c1r2)),
 		c2(float3(c2r0, c2r1, c2r2)),
 		c3(float3(c3r0, c3r1, c3r2)) { }
+	/**
+	 * @brief Creates a new floating point 4x3 matrix structure.
+	 *
+	 * @param c0 first matrix column value
+	 * @param c1 second matrix column value
+	 * @param c2 third matrix column value
+	 * @param c3 fourth matrix column value
+	 */
+	constexpr float4x3(float3 c0, float3 c1, float3 c2, float3 c3) noexcept : c0(c0), c1(c1), c2(c2), c3(c3) { }
 
 	/**
 	 * @brief Returns matrix 2x2 part.
@@ -314,7 +313,7 @@ struct [[nodiscard]] float4x3
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	const float3& operator[](psize i) const noexcept
+	float3 operator[](psize i) const noexcept
 	{
 		assert(i <= 2);
 		return ((float3*)this)[i];
@@ -387,19 +386,8 @@ struct [[nodiscard]] float4x4
 	 * @param[in] c2 third matrix column value
 	 * @param[in] c3 fourth matrix column value
 	 */
-	constexpr float4x4(const float4& c0, const float4& c1, const float4& c2, const float4& c3) noexcept : 
+	constexpr float4x4(float4 c0, float4 c1, float4 c2, float4 c3) noexcept : 
 		c0(c0), c1(c1), c2(c2), c3(c3) { }
-	/**
-	 * @brief Creates a new floating point 4x4 matrix structure.
-	 *
-	 * @param[in] m4x3 target 4x3 matrix
-	 * @param c0r3 first matrix column fourth component value
-	 * @param c1r3 second matrix column fourth component value
-	 * @param c2r3 third matrix column fourth component value
-	 * @param c3r3 fourth matrix column fourth component value
-	 */
-	constexpr float4x4(const float4x3& m4x3, float c0r3, float c1r3, float c2r3, float c3r3) noexcept :
-		c0(float4(m4x3.c0, c0r3)), c1(float4(m4x3.c1, c1r3)), c2(float4(m4x3.c2, c2r3)), c3(float4(m4x3.c3, c3r3)) { }
 	/**
 	 * @brief Creates a new floating point 4x4 matrix structure.
 	 * @details See the @ref float4x4.
@@ -413,6 +401,23 @@ struct [[nodiscard]] float4x4
 		c1(float4(c1r0, c1r1, c1r2, c1r3)),
 		c2(float4(c2r0, c2r1, c2r2, c2r3)),
 		c3(float4(c3r0, c3r1, c3r2, c3r3)) { }
+	/**
+	 * @brief Creates a new floating point 4x4 matrix structure.
+	 *
+	 * @param[in] m4x3 target 4x3 matrix
+	 * @param r3 third rows vector
+	 */
+	constexpr float4x4(const float4x3& m4x3, float4 r3 = float4::zero) noexcept :
+		c0(float4(m4x3.c0, r3.x)), c1(float4(m4x3.c1, r3.y)), c2(float4(m4x3.c2, r3.z)), c3(float4(m4x3.c3, r3.w)) { }
+	/**
+	 * @brief Creates a new floating point 4x4 matrix structure.
+	 * 
+	 * @param[in] m target 3x3 matrix value
+	 * @param c3 third columns SIMD vector
+	 * @param r3 third rows SIMD vector
+	 */
+	constexpr float4x4(const float3x3& m, float4 c3 = float4::zero, float4 r3 = float4::zero) noexcept : 
+		c0(float4(m.c0, r3.x)), c1(float4(m.c1, r3.y)), c2(float4(m.c2, r3.z)), c3(c3) { }
 
 	/**
 	 * @brief Returns matrix 4x3 part.
@@ -443,7 +448,7 @@ struct [[nodiscard]] float4x4
 	 * @brief Returns matrix column by index.
 	 * @param i target column index
 	 */
-	const float4& operator[](psize i) const noexcept
+	float4 operator[](psize i) const noexcept
 	{
 		assert(i <= 3);
 		return ((float4*)this)[i];

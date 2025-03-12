@@ -79,13 +79,13 @@ static constexpr float2 hammersley(uint32 index, float invSampleCount) noexcept
  * @param u spherical coordinates
  * @param a roughness value
  */
-static float3 importanceSamplingNdfDggx(float2 u, float a) noexcept
+static f32x4 importanceSamplingNdfDggx(float2 u, float a) noexcept
 {
     auto phi = 2.0f * (float)M_PI * u.x;
     auto cosTheta2 = (1.0f - u.y) / (1.0f + (a + 1.0f) * ((a - 1.0f) * u.y));
     auto cosTheta = std::sqrt(cosTheta2);
     auto sinTheta = std::sqrt(1.0f - cosTheta2);
-    return float3(sinTheta * std::cos(phi), sinTheta * std::sin(phi), cosTheta);
+    return f32x4(sinTheta * std::cos(phi), sinTheta * std::sin(phi), cosTheta);
 }
 
 /**

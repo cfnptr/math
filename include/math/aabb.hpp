@@ -40,7 +40,7 @@ namespace math
 struct [[nodiscard]] Aabb
 {
 protected:
-	simd_f32_4 min, max;
+	f32x4 min, max;
 public:
 	/**
 	 * @brief Creates a new Axis Aligned Bounding Box in 3D space. (AABB)
@@ -48,7 +48,7 @@ public:
 	 * @param min minimum bounding box corner position in 3D space
 	 * @param max maximum bounding box corner position in 3d space
 	 */
-	Aabb(simd_f32_4 min = simd_f32_4::zero, simd_f32_4 max = simd_f32_4::zero) noexcept : min(min), max(max)
+	Aabb(f32x4 min = f32x4::zero, f32x4 max = f32x4::zero) noexcept : min(min), max(max)
 	{
 		assert(areAllTrue(min <= max));
 	}
@@ -57,19 +57,19 @@ public:
 	 * @brief Returns minimum AABB corner position in 3D space.
 	 * @details The point that has the smallest values for all axes.
 	 */
-	const simd_f32_4& getMin() const noexcept { return min; }
+	f32x4 getMin() const noexcept { return min; }
 	/**
 	 * @brief Returns maximum AABB corner position in 3D space.
 	 * @details The point that has the biggest values for all axes.
 	 */
-	const simd_f32_4& getMax() const noexcept { return max; }
+	f32x4 getMax() const noexcept { return max; }
 
 	/**
 	 * @brief Sets minimum AABB corner position in 3D space.
 	 * @details See the @ref getMin().
 	 * @param min minimum bounding box corner position in 3D space
 	 */
-	void setMin(simd_f32_4 min) noexcept
+	void setMin(f32x4 min) noexcept
 	{
 		assert(areAllTrue(min <= this->max));
 		this->min = min;
@@ -79,11 +79,12 @@ public:
 	 * @details See the @ref setMax().
 	 * @param max maximum bounding box corner position in 3D space
 	 */
-	void setMax(simd_f32_4 max) noexcept
+	void setMax(f32x4 max) noexcept
 	{
 		assert(areAllTrue(max >= this->min));
 		this->max = max;
 	}
+
 	/**
 	 * @brief Sets minimum and maximum AABB corner position in 3D space.
 	 * @details See the @ref getMin() and @ref getMax().
@@ -91,17 +92,32 @@ public:
 	 * @param min minimum bounding box corner position in 3D space
 	 * @param max maximum bounding box corner position in 3D space
 	 */
-	void set(simd_f32_4 min, simd_f32_4 max) noexcept
+	void set(f32x4 min, f32x4 max) noexcept
 	{
 		assert(areAllTrue(min <= max));
 		this->min = min; this->max = max;
+	}
+	/**
+	 * @brief Tries to set minimum and maximum AABB corner position in 3D space.
+	 * @return True if min and max values are valid, otherwise false.
+	 * @details See the @ref getMin() and @ref getMax().
+	 * 
+	 * @param min minimum bounding box corner position in 3D space
+	 * @param max maximum bounding box corner position in 3D space
+	 */
+	bool trySet(f32x4 min, f32x4 max) noexcept
+	{
+		if (areAllTrue(min > max))
+			return false;
+		this->min = min; this->max = max;
+		return true;
 	}
 	
 	/**
 	 * @brief Sets size of the bounding box.
 	 * @param size target size of the bounding box
 	 */
-	void setSize(simd_f32_4 size) noexcept
+	void setSize(f32x4 size) noexcept
 	{
 		assert(areAllTrue(size >= 0.0f));
 		auto extent = size * 0.5f;
@@ -113,7 +129,7 @@ public:
 	 * @param size target size of the bounding box
 	 * @param position target position of the bounding box in 3D space
 	 */
-	void setSize(simd_f32_4 size, simd_f32_4 position) noexcept
+	void setSize(f32x4 size, f32x4 position) noexcept
 	{
 		assert(areAllTrue(size >= 0.0f));
 		auto extent = size * 0.5f;
@@ -123,17 +139,17 @@ public:
 	/**
 	 * @brief Returns size of the bounding box.
 	 */
-	simd_f32_4 getSize() const noexcept { return max - min; }
+	f32x4 getSize() const noexcept { return max - min; }
 	/**
 	 * @brief Returns position of the bounding box in 3D space.
 	 */
-	simd_f32_4 getPosition() const noexcept { return (min + max) * 0.5f; }
+	f32x4 getPosition() const noexcept { return (min + max) * 0.5f; }
 
 	/*******************************************************************************************************************
 	 * @brief Sets extent and position of the bounding box in 3D space.
 	 * @param extent target extent of the bounding box (half size)
 	 */
-	void setExtent(simd_f32_4 extent) noexcept
+	void setExtent(f32x4 extent) noexcept
 	{
 		assert(areAllTrue(extent >= 0.0f));
 		min = -extent; max = extent;
@@ -144,7 +160,7 @@ public:
 	 * @param extent target extent of the bounding box (half size)
 	 * @param position target position of the bounding box in 3D space
 	 */
-	void setExtent(simd_f32_4 extent, simd_f32_4 position) noexcept
+	void setExtent(f32x4 extent, f32x4 position) noexcept
 	{
 		assert(areAllTrue(extent >= 0.0f));
 		min = position - extent; max = position + extent;
@@ -153,14 +169,14 @@ public:
 	/**
 	 * @brief Returns extent of the bounding box. (half size)
 	 */
-	simd_f32_4 getExtent() const noexcept { return (max - min) * 0.5f; }
+	f32x4 getExtent() const noexcept { return (max - min) * 0.5f; }
 	/**
 	 * @brief Returns extent and position of the bounding box in 3D space.
 	 * 
 	 * @param extent target extent of the bounding box (half size)
 	 * @param position target position of the bounding box in 3D space
 	 */
-	void getExtent(simd_f32_4& extent, simd_f32_4& position) const noexcept
+	void getExtent(f32x4& extent, f32x4& position) const noexcept
 	{
 		extent = (max - min) * 0.5f; position = min + extent;
 	}
@@ -169,7 +185,7 @@ public:
 	 * @brief Extends bounding box min and max corner positions in 3D space.
 	 * @param point target point to include into the bounding box in 3D space
 	 */
-	void extend(simd_f32_4 point) noexcept
+	void extend(f32x4 point) noexcept
 	{
 		min = math::min(min, point); max = math::max(max, point); 
 	}
@@ -186,12 +202,12 @@ public:
 	 * @brief Translates bounding box in 3D space.
 	 * @param translation target translation transformation in 3D space
 	 */
-	void translate(simd_f32_4 translation) noexcept { min += translation; max += translation; }
+	void translate(f32x4 translation) noexcept { min += translation; max += translation; }
 	/**
 	 * @brief Scales bounding box in 3D space.
 	 * @param scale target scale transformation in 3D space
 	 */
-	void scale(simd_f32_4 scale) noexcept { min *= scale; max *= scale; }
+	void scale(f32x4 scale) noexcept { min *= scale; max *= scale; }
 
 	// TODO: update min max using rotation matrix
 
@@ -212,22 +228,24 @@ public:
 		return extent.getX() * extent.getY() * extent.getZ();
 	}
 
-	Aabb operator*(simd_f32_4 v) const noexcept { return Aabb(min * v, max * v); }
-	Aabb operator/(simd_f32_4 v) const noexcept { return Aabb(min / v, max / v); }
-	Aabb operator+(simd_f32_4 v) const noexcept { return Aabb(min + v, max + v); }
-	Aabb operator-(simd_f32_4 v) const noexcept { return Aabb(min - v, max - v); }
-	Aabb& operator*=(simd_f32_4 v) noexcept { min *= v; max *= v; return *this; }
-	Aabb& operator/=(simd_f32_4 v) noexcept { min /= v; max /= v; return *this; }
-	Aabb& operator+=(simd_f32_4 v) noexcept { min += v; max += v; return *this; }
-	Aabb& operator-=(simd_f32_4 v) noexcept { min -= v; max -= v; return *this; }
+	Aabb operator*(f32x4 v) const noexcept { return Aabb(min * v, max * v); }
+	Aabb operator/(f32x4 v) const noexcept { return Aabb(min / v, max / v); }
+	Aabb operator+(f32x4 v) const noexcept { return Aabb(min + v, max + v); }
+	Aabb operator-(f32x4 v) const noexcept { return Aabb(min - v, max - v); }
+	Aabb& operator*=(f32x4 v) noexcept { min *= v; max *= v; return *this; }
+	Aabb& operator/=(f32x4 v) noexcept { min /= v; max /= v; return *this; }
+	Aabb& operator+=(f32x4 v) noexcept { min += v; max += v; return *this; }
+	Aabb& operator-=(f32x4 v) noexcept { min -= v; max -= v; return *this; }
+	bool operator==(const Aabb& v) const noexcept { return !memcmp(this, &v, sizeof(Aabb)); }
+	bool operator!=(const Aabb& v) const noexcept { return memcmp(this, &v, sizeof(Aabb)); }
 	
 	static const Aabb zero, one, two, half;
 };
 
-inline const Aabb Aabb::zero = Aabb(simd_f32_4::zero, simd_f32_4::zero);
-inline const Aabb Aabb::one = Aabb(simd_f32_4(-0.5f), simd_f32_4(0.5f));
-inline const Aabb Aabb::two = Aabb(simd_f32_4::minusOne, simd_f32_4::one);
-inline const Aabb Aabb::half = Aabb(simd_f32_4(-0.25f), simd_f32_4(0.25f));
+inline const Aabb Aabb::zero = Aabb(f32x4::zero, f32x4::zero);
+inline const Aabb Aabb::one = Aabb(f32x4(-0.5f), f32x4(0.5f));
+inline const Aabb Aabb::two = Aabb(f32x4::minusOne, f32x4::one);
+inline const Aabb Aabb::half = Aabb(f32x4(-0.25f), f32x4(0.25f));
 
 /**
  * @brief Returns true if first AABB binary representation is less than the second.
@@ -243,7 +261,7 @@ static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(
  * @param[in] aabb target AABB to check
  * @param point target point in the space
  */
-static bool isInside(const Aabb& aabb, simd_f32_4 point) noexcept
+static bool isInside(const Aabb& aabb, f32x4 point) noexcept
 {
 	return areAllTrue(aabb.getMin() <= point & aabb.getMax() >= point);
 }
@@ -264,7 +282,7 @@ static bool isInside(const Aabb& aabb, const Aabb& other) noexcept
  * @param[in] aabb target AABB to use
  * @param point target point in the space
  */
-static simd_f32_4 closestPoint(const Aabb& aabb, simd_f32_4 point) noexcept
+static f32x4 closestPoint(const Aabb& aabb, f32x4 point) noexcept
 {
 	return clamp(point, aabb.getMin(), aabb.getMax());
 }
@@ -280,21 +298,21 @@ static float2 raycast2I(Aabb aabb, Ray ray) noexcept
 {
 	auto t1 = (aabb.getMin() - ray.origin) * ray.getDirection();
 	auto t2 = (aabb.getMax() - ray.origin) * ray.getDirection();
-	auto tMin = select(ray.getParallel(), simd_f32_4::minusMax, min(t1, t2));
-	auto tMax = select(ray.getParallel(), simd_f32_4::max, max(t1, t2));
+	auto tMin = select(ray.getParallel(), f32x4::minusMax, min(t1, t2));
+	auto tMax = select(ray.getParallel(), f32x4::max, max(t1, t2));
 	tMin = max(tMin, tMin.swizzle<SwY, SwZ, SwX>());
 	tMin = max(tMin, tMin.swizzle<SwZ, SwX, SwY>());
 	tMax = min(tMax, tMax.swizzle<SwY, SwZ, SwX>());
 	tMax = min(tMax, tMax.swizzle<SwZ, SwX, SwY>());
 
 	auto noParallelOverlap = (ray.origin < aabb.getMin()) | (ray.origin > aabb.getMax());
-	auto noIntersection = (tMin > tMax) | (tMax < simd_f32_4::zero) | (ray.getParallel() & noParallelOverlap);
+	auto noIntersection = (tMin > tMax) | (tMax < f32x4::zero) | (ray.getParallel() & noParallelOverlap);
 	noIntersection |= noIntersection.splatY();
 	noIntersection |= noIntersection.splatZ();
 
 	return float2(
-		select(noIntersection, simd_f32_4::max, tMin).getX(), 
-		select(noIntersection, simd_f32_4::minusMax, tMax).getX());
+		select(noIntersection, f32x4::max, tMin).getX(), 
+		select(noIntersection, f32x4::minusMax, tMax).getX());
 }
 /**
  * @brief Calculates where ray intersects the AABB in 3D space.
@@ -305,7 +323,7 @@ static float2 raycast2I(Aabb aabb, Ray ray) noexcept
  */
 static float2 raycast2(const Aabb& aabb, Ray ray) noexcept
 {
-	ray.setDirection(simd_f32_4::one / ray.getDirection());
+	ray.setDirection(f32x4::one / ray.getDirection());
 	return raycast2I(aabb, ray);
 }
 
@@ -320,18 +338,18 @@ static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
 {
 	auto t1 = (aabb.getMin() - ray.origin) * ray.getDirection();
 	auto t2 = (aabb.getMax() - ray.origin) * ray.getDirection();
-	auto tMin = select(ray.getParallel(), simd_f32_4::minusMax, min(t1, t2));
-	auto tMax = select(ray.getParallel(), simd_f32_4::max, max(t1, t2));
+	auto tMin = select(ray.getParallel(), f32x4::minusMax, min(t1, t2));
+	auto tMax = select(ray.getParallel(), f32x4::max, max(t1, t2));
 	tMin = max(tMin, tMin.swizzle<SwY, SwZ, SwX>());
 	tMin = max(tMin, tMin.swizzle<SwZ, SwX, SwY>());
 	tMax = min(tMax, tMax.swizzle<SwY, SwZ, SwX>());
 	tMax = min(tMax, tMax.swizzle<SwZ, SwX, SwY>());
 
 	auto noParallelOverlap = (ray.origin < aabb.getMin()) | (ray.origin > aabb.getMax());
-	auto noIntersection = (tMin > tMax) | (tMax < simd_f32_4::zero) | (ray.getParallel() & noParallelOverlap);
+	auto noIntersection = (tMin > tMax) | (tMax < f32x4::zero) | (ray.getParallel() & noParallelOverlap);
 	noIntersection |= noIntersection.splatY();
 	noIntersection |= noIntersection.splatZ();
-	return select(noIntersection, simd_f32_4::max, tMin).getX();
+	return select(noIntersection, f32x4::max, tMin).getX();
 }
 /**
  * @brief Calculates where ray intersects the AABB in 3D space.
@@ -342,7 +360,7 @@ static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
  */
 static float raycast1(const Aabb& aabb, Ray ray) noexcept
 {
-	ray.setDirection(simd_f32_4::one / ray.getDirection());
+	ray.setDirection(f32x4::one / ray.getDirection());
 	return raycast1I(aabb, ray);
 }
 
@@ -396,7 +414,7 @@ static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
  * @param extent target AABB extent (half size)
  * @param[in] triangle target triangle in the space
  */
-bool isAabbIntersected(simd_f32_4 position, simd_f32_4 extent, const Triangle& triangle) noexcept;
+bool isAabbIntersected(f32x4 position, f32x4 extent, const Triangle& triangle) noexcept;
 
 /**
  * @brief Returns true if AABB is behind the frustum planes.
@@ -412,27 +430,27 @@ bool isAabbIntersected(simd_f32_4 position, simd_f32_4 extent, const Triangle& t
  * @param[in] planes target frustum planes
  * @param planeCount frustum plane count
  */
-static bool isBehindFrustum(const Aabb& aabb, const simd_f32_4x4& model,
+static bool isBehindFrustum(const Aabb& aabb, const f32x4x4& model,
 	const Plane* planes, uint8 planeCount = Plane::frustumCount) noexcept
 {
 	auto min = aabb.getMin(), max = aabb.getMax();
 	auto minX = min.getX(), minY = min.getY(), minZ = min.getZ();
 	auto maxX = max.getX(), maxY = max.getY(), maxZ = max.getZ();
 
-	auto v0 = model * simd_f32_4(min, 1.0f);
-	auto v1 = model * simd_f32_4(minX, minY, maxZ, 1.0f);
-	auto v2 = model * simd_f32_4(minX, maxY, minZ, 1.0f);
-	auto v3 = model * simd_f32_4(minX, maxY, maxZ, 1.0f);
-	auto v4 = model * simd_f32_4(maxX, minY, minZ, 1.0f);
-	auto v5 = model * simd_f32_4(maxX, minY, maxZ, 1.0f);
-	auto v6 = model * simd_f32_4(maxX, maxY, minZ, 1.0f);
-	auto v7 = model * simd_f32_4(max, 1.0f);
+	auto v0 = model * f32x4(min, 1.0f);
+	auto v1 = model * f32x4(minX, minY, maxZ, 1.0f);
+	auto v2 = model * f32x4(minX, maxY, minZ, 1.0f);
+	auto v3 = model * f32x4(minX, maxY, maxZ, 1.0f);
+	auto v4 = model * f32x4(maxX, minY, minZ, 1.0f);
+	auto v5 = model * f32x4(maxX, minY, maxZ, 1.0f);
+	auto v6 = model * f32x4(maxX, maxY, minZ, 1.0f);
+	auto v7 = model * f32x4(max, 1.0f);
 
 	for (uint8 i = 0; i < planeCount; i++)
 	{
 		auto plane = planes[i];
-		auto d0 = simd_f32_4(distance3(plane, v0), distance3(plane, v1), distance3(plane, v2), distance3(plane, v3));
-		auto d1 = simd_f32_4(distance3(plane, v4), distance3(plane, v5), distance3(plane, v6), distance3(plane, v7)); // TODO: use simd_f32_8?
+		auto d0 = f32x4(distance3(plane, v0), distance3(plane, v1), distance3(plane, v2), distance3(plane, v3));
+		auto d1 = f32x4(distance3(plane, v4), distance3(plane, v5), distance3(plane, v6), distance3(plane, v7)); // TODO: use f32x4x8?
 		
 		if (areAllTrue(d0 < 0.0f & d1 < 0.0f))
 			return true;

@@ -18,7 +18,7 @@
 
 using namespace math;
 
-static void cmp(simd_f32_4 a, float4 b, float tolerance = 1.0e-9f)
+static void cmp(f32x4 a, float4 b, float tolerance = 1.0e-9f)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -32,7 +32,7 @@ static void cmp(simd_f32_4 a, float4 b, float tolerance = 1.0e-9f)
 	if (difference > tolerance)
 		throw runtime_error("Float4 vectors test failed.");
 }
-static void cmp(simd_f32_4 a, float3 b, float tolerance = 1.0e-9f)
+static void cmp(f32x4 a, float3 b, float tolerance = 1.0e-9f)
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -46,12 +46,12 @@ static void cmp(simd_f32_4 a, float3 b, float tolerance = 1.0e-9f)
 	if (difference > tolerance)
 		throw runtime_error("Float3 vectors test failed.");
 }
-static void cmp(simd_i32_4 a, int4 b)
+static void cmp(i32x4 a, int4 b)
 {
 	if ((int4)a != b)
 		throw runtime_error("Int4 vectors test failed.");
 }
-static void cmp(simd_u32_4 a, uint4 b)
+static void cmp(u32x4 a, uint4 b)
 {
 	if ((uint4)a != b)
 		throw runtime_error("Uint4 vectors test failed.");
@@ -71,7 +71,7 @@ static void cmp(int a, int b)
 static void testFloatVectors()
 {
 	const auto vecLeft = float4(0.0f, 2.3f, 4.56f, 78.9f), vecRight = float4(1.0f, -23.0f, 4.56f, -0.0789);
-	const auto simdLeft = simd_f32_4(vecLeft), simdRight = simd_f32_4(vecRight);
+	const auto simdLeft = f32x4(vecLeft), simdRight = f32x4(vecRight);
 	cmp(simdLeft, vecLeft);
 	cmp(simdRight, vecRight);
 	cmp(simdLeft + simdRight, vecLeft + vecRight);
@@ -94,8 +94,8 @@ static void testFloatVectors()
 	cmp(notEqual(simdLeft, simdLeft), notEqual(vecLeft, vecLeft));
 	cmp(notEqual(simdRight, simdRight), notEqual(vecRight, vecRight));
 	cmp(notEqual(simdLeft, simdRight), notEqual(vecLeft, vecRight));
-	cmp(select(simd_u32_4(1, 0, 0, 1), simdLeft, simdRight), select(uint4(1, 0, 0, 1), vecLeft, vecRight));
-	cmp(select(simd_u32_4(0, 1, 0, 1), simdRight, simdLeft), select(uint4(0, 1, 0, 1), vecRight, vecLeft));
+	cmp(select(u32x4(1, 0, 0, 1), simdLeft, simdRight), select(uint4(1, 0, 0, 1), vecLeft, vecRight));
+	cmp(select(u32x4(0, 1, 0, 1), simdRight, simdLeft), select(uint4(0, 1, 0, 1), vecRight, vecLeft));
 	cmp(min(simdLeft, simdRight), min(vecLeft, vecRight));
 	cmp(max(simdLeft, simdRight), max(vecLeft, vecRight));
 	cmp(min3(simdLeft), min(vecLeft.x, vecLeft.y, vecLeft.z));
@@ -142,7 +142,7 @@ static void testFloatVectors()
 	cmp(exp(simdRight), exp(vecRight));
 	{
 		const auto vecPow = float4(2.0f, 1.0f, 0.5f, 0.0f);
-		const auto simdPow = simd_f32_4(vecPow);
+		const auto simdPow = f32x4(vecPow);
 		cmp(mod(simdLeft, simdPow), mod(vecLeft, vecPow));
 		cmp(mod(simdRight, simdPow), mod(vecRight, vecPow));
 		cmp(pow(simdLeft, simdPow), pow(vecLeft, vecPow));
@@ -151,7 +151,7 @@ static void testFloatVectors()
 		cmp(fastPow(simdRight, simdPow), pow(vecRight, vecPow), 1.0e-6f);
 	}
 	{
-		simd_f32_4 simdSin, simdCos;
+		f32x4 simdSin, simdCos;
 		sinCos(simdLeft, simdSin, simdCos);
 		cmp(simdSin, sin(vecLeft));
 		cmp(simdCos, cos(vecLeft));
@@ -163,7 +163,7 @@ static void testFloatVectors()
 static void testIntVectors()
 {
 	auto vecLeft = int4(0, 23, 4, 56789), vecRight = int4(1, -123, 4, -56789);
-	auto simdLeft = simd_i32_4(vecLeft), simdRight = simd_i32_4(vecRight);
+	auto simdLeft = i32x4(vecLeft), simdRight = i32x4(vecRight);
 	cmp(simdLeft, vecLeft);
 	cmp(simdRight, vecRight);
 	cmp(simdLeft + simdRight, vecLeft + vecRight);
@@ -174,8 +174,8 @@ static void testIntVectors()
 	cmp(simdLeft & simdRight, vecLeft & vecRight);
 	cmp(simdLeft | simdRight, vecLeft | vecRight);
 	cmp(simdLeft ^ simdRight, vecLeft ^ vecRight);
-	cmp(simdRight >> simd_i32_4(1, 0, 4, 8), vecRight >> int4(1, 0, 4, 8));
-	cmp(simdRight << simd_i32_4(1, 0, 4, 8), vecRight << int4(1, 0, 4, 8));
+	cmp(simdRight >> i32x4(1, 0, 4, 8), vecRight >> int4(1, 0, 4, 8));
+	cmp(simdRight << i32x4(1, 0, 4, 8), vecRight << int4(1, 0, 4, 8));
 	cmp(simdLeft >> 4, vecLeft >> 4);
 	cmp(simdLeft << 4, vecLeft << 4);
 	cmp(-simdLeft, -vecLeft);
@@ -198,15 +198,15 @@ static void testIntVectors()
 	cmp(notEqual(simdLeft, simdLeft), notEqual(vecLeft, vecLeft));
 	cmp(notEqual(simdRight, simdRight), notEqual(vecRight, vecRight));
 	cmp(notEqual(simdLeft, simdRight), notEqual(vecLeft, vecRight));
-	cmp(select(simd_u32_4(1, 0, 0, 1), simdLeft, simdRight), select(uint4(1, 0, 0, 1), vecLeft, vecRight));
-	cmp(select(simd_u32_4(0, 1, 0, 1), simdRight, simdLeft), select(uint4(0, 1, 0, 1), vecRight, vecLeft));
+	cmp(select(u32x4(1, 0, 0, 1), simdLeft, simdRight), select(uint4(1, 0, 0, 1), vecLeft, vecRight));
+	cmp(select(u32x4(0, 1, 0, 1), simdRight, simdLeft), select(uint4(0, 1, 0, 1), vecRight, vecLeft));
 	cmp(min(simdLeft, simdRight), min(vecLeft, vecRight));
 	cmp(max(simdLeft, simdRight), max(vecLeft, vecRight));
 }
 static void testUintVectors()
 {
 	auto vecLeft = uint4(0, 1, 23, 456789), vecRight = uint4(123, 4, 5, 6789);
-	auto simdLeft = simd_u32_4(vecLeft), simdRight = simd_u32_4(vecRight);
+	auto simdLeft = u32x4(vecLeft), simdRight = u32x4(vecRight);
 	cmp(simdLeft, vecLeft);
 	cmp(simdRight, vecRight);
 	cmp(simdLeft + simdRight, vecLeft + vecRight);
@@ -217,8 +217,8 @@ static void testUintVectors()
 	cmp(simdLeft & simdRight, vecLeft & vecRight);
 	cmp(simdLeft | simdRight, vecLeft | vecRight);
 	cmp(simdLeft ^ simdRight, vecLeft ^ vecRight);
-	cmp(simdLeft >> simd_u32_4(1, 0, 4, 8), vecLeft >> uint4(1, 0, 4, 8));
-	cmp(simdLeft << simd_u32_4(1, 0, 4, 8), vecLeft << uint4(1, 0, 4, 8));
+	cmp(simdLeft >> u32x4(1, 0, 4, 8), vecLeft >> uint4(1, 0, 4, 8));
+	cmp(simdLeft << u32x4(1, 0, 4, 8), vecLeft << uint4(1, 0, 4, 8));
 	cmp(simdLeft >> 4, vecLeft >> 4);
 	cmp(simdLeft << 4, vecLeft << 4);
 	cmp(!simdLeft, !vecLeft);
@@ -233,17 +233,17 @@ static void testUintVectors()
 	cmp(simdLeft > simdRight, vecLeft > vecRight);
 	cmp(simdLeft <= simdRight, vecLeft <= vecRight);
 	cmp(simdLeft >= simdRight, vecLeft >= vecRight);
-	cmp(areAllTrue(simd_u32_4(UINT32_MAX)), areAllTrue(uint4(UINT32_MAX)));
-	cmp(areAllFalse(simd_u32_4(0u)), areAllTrue(uint4(0u)));
-	cmp(areAnyTrue(simd_u32_4(0, 1, 0, 0)), areAllTrue(uint4(0, 1, 0, 0)));
+	cmp(areAllTrue(u32x4(UINT32_MAX)), areAllTrue(uint4(UINT32_MAX)));
+	cmp(areAllFalse(u32x4(0u)), areAllTrue(uint4(0u)));
+	cmp(areAnyTrue(u32x4(0, 1, 0, 0)), areAllTrue(uint4(0, 1, 0, 0)));
 	cmp(equal(simdLeft, simdLeft), equal(vecLeft, vecLeft));
 	cmp(equal(simdRight, simdRight), equal(vecRight, vecRight));
 	cmp(equal(simdLeft, simdRight), equal(vecLeft, vecRight));
 	cmp(notEqual(simdLeft, simdLeft), notEqual(vecLeft, vecLeft));
 	cmp(notEqual(simdRight, simdRight), notEqual(vecRight, vecRight));
 	cmp(notEqual(simdLeft, simdRight), notEqual(vecLeft, vecRight));
-	cmp(select(simd_u32_4(1, 0, 1, 0), simdLeft, simdRight), select(uint4(1, 0, 1, 0), vecLeft, vecRight));
-	cmp(select(simd_u32_4(0, 1, 1, 0), simdRight, simdLeft), select(uint4(0, 1, 1, 0), vecRight, vecLeft));
+	cmp(select(u32x4(1, 0, 1, 0), simdLeft, simdRight), select(uint4(1, 0, 1, 0), vecLeft, vecRight));
+	cmp(select(u32x4(0, 1, 1, 0), simdRight, simdLeft), select(uint4(0, 1, 1, 0), vecRight, vecLeft));
 	cmp(min(simdLeft, simdRight), min(vecLeft, vecRight));
 	cmp(max(simdLeft, simdRight), max(vecLeft, vecRight));
 }

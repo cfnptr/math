@@ -100,9 +100,9 @@ struct [[nodiscard]] Color
 	 * @brief Creates a new sRGB color structure from the normalized RGBA channels. (Red, Green, Blue, Alpha)
 	 * @param normRgba target normalized RGBA channel color SIMD values
 	 */
-	explicit Color(simd_f32_4 normRgba)
+	explicit Color(f32x4 normRgba)
 	{
-		auto c = clamp(normRgba, simd_f32_4::zero, simd_f32_4::one) * 255.0f + 0.5f;
+		auto c = clamp(normRgba, f32x4::zero, f32x4::one) * 255.0f + 0.5f;
 		r = (uint8)c.getX(), g = (uint8)c.getY(), b = (uint8)c.getZ(), a = (uint8)c.getW();
 	}
 	
@@ -121,7 +121,7 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Converts sRGB color to the normalized RGBA SIMD vector. (Red, Green, Blue, Alpha)
 	 */
-	explicit operator simd_f32_4() const noexcept { return simd_f32_4(r, g, b, a) * (1.0f / 255.0f); }
+	explicit operator f32x4() const noexcept { return f32x4(r, g, b, a) * (1.0f / 255.0f); }
 	/**
 	 * @brief Returns color binary data.
 	 */
@@ -206,12 +206,12 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Converts sRGB color to the normalized linear RGB color space.
 	 */
-	simd_f32_4 toLinear() const noexcept { return srgbToRgb((simd_f32_4)*this); }
+	f32x4 toLinear() const noexcept { return srgbToRgb((f32x4)*this); }
 
 	/**
 	 * @brief Converts normalized linear RGB color to the sRGB color space.
 	 */
-	static Color fromLinear(simd_f32_4 normRGBA) noexcept { return Color(rgbToSrgb(normRGBA)); }
+	static Color fromLinear(f32x4 normRGBA) noexcept { return Color(rgbToSrgb(normRGBA)); }
 
 	//******************************************************************************************************************
 	constexpr bool operator==(Color c) const noexcept { return r == c.r && g == c.g && b == c.b && a == c.a; }

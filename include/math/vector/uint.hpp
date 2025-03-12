@@ -21,14 +21,8 @@
 #pragma once
 #include "math/types.hpp"
 
-#if _WIN32
-#define _USE_MATH_DEFINES
-#define NOMINMAX
-#endif
-
 #include <string>
 #include <algorithm>
-
 #include <cmath>
 #include <cassert>
 #include <cstring>
@@ -624,22 +618,22 @@ static constexpr uint2 clamp(uint2 v, uint2 min, uint2 max) noexcept
 }
 
 //**********************************************************************************************************************
-static constexpr uint3 operator+(uint32 n, const uint3& v) noexcept { return uint3(n) + v; }
-static constexpr uint3 operator-(uint32 n, const uint3& v) noexcept { return uint3(n) - v; }
-static constexpr uint3 operator*(uint32 n, const uint3& v) noexcept { return uint3(n) * v; }
-static constexpr uint3 operator/(uint32 n, const uint3& v) noexcept { return uint3(n) / v; }
-static constexpr uint3 operator%(uint32 n, const uint3& v) noexcept { return uint3(n) % v; }
-static constexpr uint3 operator&(uint32 n, const uint3& v) noexcept { return uint3(n) & v; }
-static constexpr uint3 operator|(uint32 n, const uint3& v) noexcept { return uint3(n) | v; }
-static constexpr uint3 operator^(uint32 n, const uint3& v) noexcept { return uint3(n) ^ v; }
-static constexpr uint3 operator>>(uint32 n, const uint3& v) noexcept { return uint3(n) >> v; }
-static constexpr uint3 operator<<(uint32 n, const uint3& v) noexcept { return uint3(n) << v; }
-static constexpr bool operator==(uint32 n, const uint3& v) noexcept { return uint3(n) == v; }
-static constexpr bool operator!=(uint32 n, const uint3& v) noexcept { return uint3(n) != v; }
-static constexpr uint3 operator<(uint32 n, const uint3& v) noexcept { return uint3(n) < v; }
-static constexpr uint3 operator>(uint32 n, const uint3& v) noexcept { return uint3(n) > v; }
-static constexpr uint3 operator<=(uint32 n, const uint3& v) noexcept { return uint3(n) <= v; }
-static constexpr uint3 operator>=(uint32 n, const uint3& v) noexcept { return uint3(n) >= v; }
+static constexpr uint3 operator+(uint32 n, uint3 v) noexcept { return uint3(n) + v; }
+static constexpr uint3 operator-(uint32 n, uint3 v) noexcept { return uint3(n) - v; }
+static constexpr uint3 operator*(uint32 n, uint3 v) noexcept { return uint3(n) * v; }
+static constexpr uint3 operator/(uint32 n, uint3 v) noexcept { return uint3(n) / v; }
+static constexpr uint3 operator%(uint32 n, uint3 v) noexcept { return uint3(n) % v; }
+static constexpr uint3 operator&(uint32 n, uint3 v) noexcept { return uint3(n) & v; }
+static constexpr uint3 operator|(uint32 n, uint3 v) noexcept { return uint3(n) | v; }
+static constexpr uint3 operator^(uint32 n, uint3 v) noexcept { return uint3(n) ^ v; }
+static constexpr uint3 operator>>(uint32 n, uint3 v) noexcept { return uint3(n) >> v; }
+static constexpr uint3 operator<<(uint32 n, uint3 v) noexcept { return uint3(n) << v; }
+static constexpr bool operator==(uint32 n, uint3 v) noexcept { return uint3(n) == v; }
+static constexpr bool operator!=(uint32 n, uint3 v) noexcept { return uint3(n) != v; }
+static constexpr uint3 operator<(uint32 n, uint3 v) noexcept { return uint3(n) < v; }
+static constexpr uint3 operator>(uint32 n, uint3 v) noexcept { return uint3(n) > v; }
+static constexpr uint3 operator<=(uint32 n, uint3 v) noexcept { return uint3(n) <= v; }
+static constexpr uint3 operator>=(uint32 n, uint3 v) noexcept { return uint3(n) >= v; }
 
 /**
  * @brief Converts vector to the string. (space separated)

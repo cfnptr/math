@@ -44,18 +44,18 @@ constexpr float defaultGamma = 2.2f;
  * @param color target color to gamma correct
  * @param invGamma inverse gamma correction value (1.0/x)
  */
-static simd_f32_4 fastGammaCorrection(simd_f32_4 color, float invGamma) noexcept
+static f32x4 fastGammaCorrection(f32x4 color, float invGamma) noexcept
 {
-	return simd_f32_4(fastPow(color, simd_f32_4(invGamma)), color.getW());
+	return f32x4(fastPow(color, f32x4(invGamma)), color.getW());
 }
 /**
  * @brief Applies gamma correction to the specified color. (Fast approximation)
  * @details See the @ref gammaCorrection().
  * @param color target color to gamma correct
  */
-static simd_f32_4 fastGammaCorrection(simd_f32_4 color) noexcept
+static f32x4 fastGammaCorrection(f32x4 color) noexcept
 {
-	return simd_f32_4(fastPow(color, simd_f32_4(1.0f / defaultGamma)), color.getW());
+	return f32x4(fastPow(color, f32x4(1.0f / defaultGamma)), color.getW());
 }
 
 } // namespace math
