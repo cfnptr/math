@@ -23,12 +23,13 @@
 using namespace math;
 
 //**********************************************************************************************************************
-static Aabb calculateNodeAabb(const Bvh::Node* node, const uint8* vertices, const uint8* indices,
+static Aabb calculateNodeAabb(uint32 firstPrimitive, uint32 primitiveCount, const uint8* vertices, const uint8* indices,
 	const uint32* primitives, uint32 vertexSize, uint32 indexSize, const function<uint32(const uint8*)>& getIndex)
 {
-	auto lastPrimitive = node->getFirstPrimitive() + node->getPrimitiveCount();
+	auto lastPrimitive = firstPrimitive + primitiveCount;
 	f32x4 min = f32x4::max, max = f32x4::minusMax;
-	for (uint32 i = node->getFirstPrimitive(); i < lastPrimitive; i++)
+
+	for (uint32 i = firstPrimitive; i < lastPrimitive; i++)
 	{
 		auto offset = primitives[i] * Triangle::pointCount;
 		auto i0 = getIndex(indices + (offset    ) * indexSize);
@@ -43,11 +44,12 @@ static Aabb calculateNodeAabb(const Bvh::Node* node, const uint8* vertices, cons
 	return Aabb(min, max);
 }
 
-static Aabb calculateNodeAabb(const Bvh::Node* node, const Aabb* aabbs, const uint32* primitives)
+static Aabb calculateNodeAabb(uint32 firstPrimitive, uint32 primitiveCount, const Aabb* aabbs, const uint32* primitives)
 {
-	auto lastPrimitive = node->getFirstPrimitive() + node->getPrimitiveCount();
+	auto lastPrimitive = firstPrimitive + primitiveCount;
 	f32x4 min = f32x4::max, max = f32x4::minusMax;
-	for (uint32 i = node->getFirstPrimitive(); i < lastPrimitive; i++)
+
+	for (uint32 i = firstPrimitive; i < lastPrimitive; i++)
 	{
 		auto aabb = aabbs[primitives[i]];
 		min = math::min(min, aabb.getMin());
@@ -59,7 +61,7 @@ static Aabb calculateNodeAabb(const Bvh::Node* node, const Aabb* aabbs, const ui
 //**********************************************************************************************************************
 #define BIN_COUNT 8
 
-namespace
+namespace math
 {
 	struct Bin final
 	{
@@ -68,6 +70,14 @@ namespace
 
 		int32& primitiveCount() noexcept { return max.ints.w; }
 	};
+}
+
+static float calcArea(f32x4 min, f32x4 max) // Faster than native Aabb calcArea.
+{
+	auto extent = max - min;
+	auto extentXXY = extent.swizzle<SwX, SwX, SwY>();
+	auto extentYZZ = extent.swizzle<SwY, SwZ, SwZ>();
+	return dot3(extentXXY, extentYZZ);
 }
 
 static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, uint32 vertexSize, uint32 indexSize,
@@ -124,12 +134,12 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, uint
 			leftCount[i] = leftSum;
 			leftMin = min(leftMin, bins[i].min);
 			leftMax = max(leftMax, bins[i].max);
-			leftArea[i] = Aabb(leftMin, leftMax).calcArea();
+			leftArea[i] = calcArea(leftMin, leftMax);
 			rightSum += bins[(BIN_COUNT - 1) - i].primitiveCount();
 			rightCount[(BIN_COUNT - 2) - i] = rightSum;
 			rightMin = min(rightMin, bins[(BIN_COUNT - 1) - i].min);
 			rightMax = max(rightMax, bins[(BIN_COUNT - 1) - i].max);
-			rightArea[(BIN_COUNT - 2) - i] = Aabb(rightMin, rightMax).calcArea();
+			rightArea[(BIN_COUNT - 2) - i] = calcArea(rightMin, rightMax);
 		}
 
 		scale = (boundsMax - boundsMin) / BIN_COUNT;
@@ -199,12 +209,12 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, cons
 			leftCount[i] = leftSum;
 			leftMin = min(leftMin, bins[i].min);
 			leftMax = max(leftMax, bins[i].max);
-			leftArea[i] = Aabb(leftMin, leftMax).calcArea();
+			leftArea[i] = calcArea(leftMin, leftMax);
 			rightSum += bins[(BIN_COUNT - 1) - i].primitiveCount();
 			rightCount[(BIN_COUNT - 2) - i] = rightSum;
 			rightMin = min(rightMin, bins[(BIN_COUNT - 1) - i].min);
 			rightMax = max(rightMax, bins[(BIN_COUNT - 1) - i].max);
-			rightArea[(BIN_COUNT - 2) - i] = Aabb(rightMin, rightMax).calcArea();
+			rightArea[(BIN_COUNT - 2) - i] = calcArea(rightMin, rightMax);
 		}
 
 		scale = (boundsMax - boundsMin) / BIN_COUNT;
@@ -227,17 +237,17 @@ static void findBestSplitPlane(uint32 firstPrimitive, uint32 lastPrimitive, cons
 }
 
 //**********************************************************************************************************************
-Bvh::Bvh(const uint8* vertices, const uint8* indices, const Aabb& aabb,
+Bvh::Bvh(const uint8* vertices, const uint8* indices, const Aabb& rootAabb,
 	uint32 indexCount, uint32 vertexSize, uint32 indexSize, const f32x4* _centroids)
 {
-	recreate(vertices, indices, aabb, indexCount, vertexSize, indexSize, _centroids);
+	recreate(vertices, indices, rootAabb, indexCount, vertexSize, indexSize, _centroids);
 }
-Bvh::Bvh(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const f32x4* _centroids)
+Bvh::Bvh(const Aabb* aabbs, const Aabb& rootAabb, uint32 aabbCount, const f32x4* _centroids)
 {
-	recreate(aabbs, aabb, aabbCount, _centroids);
+	recreate(aabbs, rootAabb, aabbCount, _centroids);
 }
 
-void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb,
+void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& rootAabb,
 	uint32 indexCount, uint32 vertexSize, uint32 indexSize, const f32x4* _centroids)
 {
 	assert(vertices);
@@ -245,6 +255,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 	assert(indexCount > 0);
 	assert(vertexSize > 0);
 	assert(indexSize > 0);
+	assert(nodeStack.empty());
 
 	auto primitiveCount = indexCount / Triangle::pointCount;
 	nodes.resize(primitiveCount * 2 - 1);
@@ -286,7 +297,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 
 	auto nodeCount = (uint32)1;
 	auto node = &nodes[0];
-	node->aabb = aabb;
+	node->aabb = rootAabb;
 	node->setPrimitiveCount(primitiveCount);
 	node->setFirstPrimitive(0);
 
@@ -299,8 +310,8 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 		int32 axis; float split, cost;
 		findBestSplitPlane(firstPrimitive, lastPrimitive, vertexSize, indexSize,
 			vertices, indices, primitives.data(), centroidData, getIndex, axis, split, cost);
+		auto nodeCost = calcArea(node->aabb.getMin(), node->aabb.getMax()) * primitiveCount;
 
-		auto nodeCost = node->aabb.calcArea() * primitiveCount;
 		if (cost >= nodeCost)
 		{
 			if (nodeStack.empty())
@@ -309,7 +320,9 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 			}
 			else
 			{
-				node = nodeStack.top();  nodeStack.pop(); continue;
+				node = nodeStack.top();
+				nodeStack.pop();
+				continue;
 			}
 		}
 
@@ -331,7 +344,9 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 			}
 			else
 			{
-				node = nodeStack.top(); nodeStack.pop(); continue;
+				node = nodeStack.top();
+				nodeStack.pop();
+				continue;
 			}
 		}
 
@@ -343,16 +358,16 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 		node->setPrimitiveCount(0);
 	
 		auto node1 = &nodes[leftNodeID];
+		node1->aabb = calculateNodeAabb(firstPrimitive, count1, vertices, 
+			indices, primitives.data(), vertexSize, indexSize, getIndex);
 		node1->setFirstPrimitive(firstPrimitive);
 		node1->setPrimitiveCount(count1);
-		node1->aabb = calculateNodeAabb(node1, vertices, indices, 
-			primitives.data(), vertexSize, indexSize, getIndex);
 
 		auto node2 = &nodes[rightNodeID];
+		node2->aabb = calculateNodeAabb(i, count2, vertices, indices, 
+			primitives.data(), vertexSize, indexSize, getIndex);
 		node2->setFirstPrimitive(i);
 		node2->setPrimitiveCount(count2);
-		node2->aabb = calculateNodeAabb(node2, vertices, indices, 
-			primitives.data(), vertexSize, indexSize, getIndex);
 
 		if (count2 > count1)
 		{
@@ -374,7 +389,9 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 		}
 		else
 		{
-			node = nodeStack.top(); nodeStack.pop(); continue;
+			node = nodeStack.top();
+			nodeStack.pop();
+			continue;
 		}
 	}
 
@@ -382,13 +399,15 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& aabb
 }
 
 //**********************************************************************************************************************
-void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const f32x4* _centroids)
+void Bvh::recreate(const Aabb* aabbs, const Aabb& rootAabb, uint32 aabbCount, const f32x4* _centroids)
 {
 	assert(aabbs);
 	assert(aabbCount > 0);
-	nodes.resize(aabbCount * 2 - 1);
+	assert(nodeStack.empty());
 
+	nodes.resize(aabbCount * 2 - 1);
 	primitives.resize(aabbCount);
+
 	auto primitiveData = primitives.data();
 	for (uint32 i = 0; i < aabbCount; i++)
 		primitiveData[i] = i;
@@ -413,7 +432,7 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const 
 	auto nodeData = nodes.data();
 	auto nodeCount = (uint32)1;
 	auto node = &nodeData[0];
-	node->aabb = aabb;
+	node->aabb = rootAabb;
 	node->setPrimitiveCount(aabbCount);
 	node->setFirstPrimitive(0);
 
@@ -426,8 +445,8 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const 
 		int32 axis; float split, cost;
 		findBestSplitPlane(firstPrimitive, lastPrimitive, aabbs,
 			primitiveData, centroidData, axis, split, cost);
+		auto nodeCost = calcArea(node->aabb.getMin(), node->aabb.getMax()) * primitiveCount;
 
-		auto nodeCost = node->aabb.calcArea() * primitiveCount;
 		if (cost >= nodeCost)
 		{
 			if (nodeStack.empty())
@@ -458,7 +477,9 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const 
 			}
 			else
 			{
-				node = nodeStack.top(); nodeStack.pop(); continue;
+				node = nodeStack.top();
+				nodeStack.pop();
+				continue;
 			}
 		}
 
@@ -470,14 +491,14 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const 
 		node->setPrimitiveCount(0);
 	
 		auto node1 = &nodeData[leftNodeID];
+		node1->aabb = calculateNodeAabb(firstPrimitive, count1, aabbs, primitiveData);
 		node1->setFirstPrimitive(firstPrimitive);
 		node1->setPrimitiveCount(count1);
-		node1->aabb = calculateNodeAabb(node1, aabbs, primitiveData);
 
 		auto node2 = &nodeData[rightNodeID];
+		node2->aabb = calculateNodeAabb(i, count2, aabbs, primitiveData);
 		node2->setFirstPrimitive(i);
 		node2->setPrimitiveCount(count2);
-		node2->aabb = calculateNodeAabb(node2, aabbs, primitiveData);
 
 		if (count2 > count1)
 		{
@@ -499,9 +520,62 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& aabb, uint32 aabbCount, const 
 		}
 		else
 		{
-			node = nodeStack.top(); nodeStack.pop(); continue;
+			node = nodeStack.top();
+			nodeStack.pop();
+			continue;
 		}
 	}
 
 	nodes.resize(nodeCount);
+}
+
+//**********************************************************************************************************************
+uint32 Bvh::collectInFrustum(const Plane* planes, uint8 planeCount, uint32* primitives, stack<Node*>* _nodeStack)
+{
+	assert(planes);
+	assert(planeCount > 0);
+
+	if (nodes.empty())
+		return 0;
+
+	auto nodeStack = _nodeStack ? _nodeStack : &this->nodeStack;
+	assert(nodeStack->empty());
+
+	auto nodeData = nodes.data();
+	auto thisPrimitiveData = this->primitives.data();
+	auto node = &nodeData[0];
+	uint32 outPrimitiveCount = 0;
+
+	while (true)
+	{
+		if (isBehindFrustum(planes, planeCount, node->aabb))
+		{
+			if (nodeStack->empty())
+				break;
+			node = nodeStack->top();
+			nodeStack->pop();
+			continue;
+		}
+
+		if (node->isLeaf())
+		{
+			auto firstPrimitive = node->getFirstPrimitive();
+			auto primitiveCount = node->getPrimitiveCount();
+			auto lastPrimitive = firstPrimitive + primitiveCount;
+			for (uint32 i = firstPrimitive; i < lastPrimitive; i++)
+				primitives[outPrimitiveCount++] = thisPrimitiveData[i];
+
+			if (nodeStack->empty())
+				break;
+			node = nodeStack->top();
+			nodeStack->pop();
+			continue;
+		}
+
+		auto leftNode = node->getLeftNode();
+		node = &nodeData[leftNode];
+		nodeStack->push(&nodeData[leftNode + 1]);
+	}
+
+	return outPrimitiveCount;
 }

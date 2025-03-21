@@ -50,7 +50,7 @@ public:
 	 */
 	Aabb(f32x4 min = f32x4::zero, f32x4 max = f32x4::zero) noexcept : min(min), max(max)
 	{
-		assert(areAllTrue(min <= max));
+		assert(areAllTrue(f32x4(min, 0.0f) <= f32x4(max, 1.0f)));
 	}
 
 	/**
@@ -71,7 +71,7 @@ public:
 	 */
 	void setMin(f32x4 min) noexcept
 	{
-		assert(areAllTrue(min <= this->max));
+		assert(areAllTrue(f32x4(min, 0.0f) <= f32x4(this->max, 1.0f)));
 		this->min = min;
 	}
 	/**
@@ -81,7 +81,7 @@ public:
 	 */
 	void setMax(f32x4 max) noexcept
 	{
-		assert(areAllTrue(max >= this->min));
+		assert(areAllTrue(f32x4(this->min, 0.0f) <= f32x4(max, 1.0f)));
 		this->max = max;
 	}
 
@@ -94,7 +94,7 @@ public:
 	 */
 	void set(f32x4 min, f32x4 max) noexcept
 	{
-		assert(areAllTrue(min <= max));
+		assert(areAllTrue(f32x4(min, 0.0f) <= f32x4(max, 1.0f)));
 		this->min = min; this->max = max;
 	}
 	/**
@@ -107,7 +107,7 @@ public:
 	 */
 	bool trySet(f32x4 min, f32x4 max) noexcept
 	{
-		if (areAllTrue(min > max))
+		if (areAllTrue(f32x4(min, 0.0f) > f32x4(max, 1.0f)))
 			return false;
 		this->min = min; this->max = max;
 		return true;
@@ -119,7 +119,7 @@ public:
 	 */
 	void setSize(f32x4 size) noexcept
 	{
-		assert(areAllTrue(size >= 0.0f));
+		assert(areAllTrue(f32x4(size, 1.0f) >= 0.0f));
 		auto extent = size * 0.5f;
 		min = -extent; max = extent;
 	}
@@ -131,7 +131,7 @@ public:
 	 */
 	void setSize(f32x4 size, f32x4 position) noexcept
 	{
-		assert(areAllTrue(size >= 0.0f));
+		assert(areAllTrue(f32x4(size, 1.0f) >= 0.0f));
 		auto extent = size * 0.5f;
 		min = position - extent; max = position + extent;
 	}
@@ -151,7 +151,7 @@ public:
 	 */
 	void setExtent(f32x4 extent) noexcept
 	{
-		assert(areAllTrue(extent >= 0.0f));
+		assert(areAllTrue(f32x4(extent, 1.0f) >= 0.0f));
 		min = -extent; max = extent;
 	}
 	/**
@@ -162,7 +162,7 @@ public:
 	 */
 	void setExtent(f32x4 extent, f32x4 position) noexcept
 	{
-		assert(areAllTrue(extent >= 0.0f));
+		assert(areAllTrue(f32x4(extent, 1.0f) >= 0.0f));
 		min = position - extent; max = position + extent;
 	}
 
@@ -217,7 +217,9 @@ public:
 	float calcArea() const noexcept
 	{
 		auto extent = max - min;
-		return 2.0f * (extent.getX() * extent.getY() + extent.getX() * extent.getZ() + extent.getY() * extent.getZ());
+		auto extentXXY = extent.swizzle<SwX, SwX, SwY>();
+		auto extentYZZ = extent.swizzle<SwY, SwZ, SwZ>();
+		return dot3(extentXXY, extentYZZ) * 2.0f;
 	}
 	/**
 	 * @brief Calculates volume of the bounding box.
@@ -287,7 +289,7 @@ static f32x4 closestPoint(const Aabb& aabb, f32x4 point) noexcept
 	return clamp(point, aabb.getMin(), aabb.getMax());
 }
 
-/**
+/***********************************************************************************************************************
  * @brief Calculates where ray intersects the AABB in 3D space. (Ray is inversed!)
  * @return Distance to the intersection points, or FLT_MAX; -FLT_MAX if no hit.
  *
@@ -327,7 +329,7 @@ static float2 raycast2(const Aabb& aabb, Ray ray) noexcept
 	return raycast2I(aabb, ray);
 }
 
-/**
+/***********************************************************************************************************************
  * @brief Calculates where ray intersects the AABB in 3D space. (Ray is inversed!)
  * @return Distance to the first intersection point, or FLT_MAX; -FLT_MAX if no hit.
  *
@@ -374,7 +376,7 @@ static constexpr bool isAabbIntersected(float2 raycastDists) noexcept
 	return raycastDists.x <= raycastDists.y && raycastDists.y >= 0.0f;
 }
 
-/**
+/***********************************************************************************************************************
  * @brief Returns true if ray intersects the AABB in 3D space.
  * 
  * @param[in] aabb target AABB to raycast
@@ -416,7 +418,7 @@ static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
  */
 bool isAabbIntersected(f32x4 position, f32x4 extent, const Triangle& triangle) noexcept;
 
-/**
+/***********************************************************************************************************************
  * @brief Returns true if AABB is behind the frustum planes.
  * 
  * @details
@@ -425,13 +427,12 @@ bool isAabbIntersected(f32x4 position, f32x4 extent, const Triangle& triangle) n
  * frustum is a truncated pyramid-shaped volume that represents everything the camera can potentially see in the 
  * scene, based on its position, orientation, and field of view.
  *
- * @param[in] aabb target AABB to check
- * @param[in] model AABB transformation matrix
  * @param[in] planes target frustum planes
  * @param planeCount frustum plane count
+ * @param[in] aabb target AABB to check
+ * @param[in] model AABB transformation matrix
  */
-static bool isBehindFrustum(const Aabb& aabb, const f32x4x4& model,
-	const Plane* planes, uint8 planeCount = Plane::frustumCount) noexcept
+static bool isBehindFrustum(const Plane* planes, uint8 planeCount, const Aabb& aabb, const f32x4x4& model) noexcept
 {
 	auto min = aabb.getMin(), max = aabb.getMax();
 	auto minX = min.getX(), minY = min.getY(), minZ = min.getZ();
@@ -451,6 +452,42 @@ static bool isBehindFrustum(const Aabb& aabb, const f32x4x4& model,
 		auto plane = planes[i];
 		auto d0 = f32x4(distance3(plane, v0), distance3(plane, v1), distance3(plane, v2), distance3(plane, v3));
 		auto d1 = f32x4(distance3(plane, v4), distance3(plane, v5), distance3(plane, v6), distance3(plane, v7)); // TODO: use f32x4x8?
+		
+		if (areAllTrue(d0 < 0.0f & d1 < 0.0f))
+			return true;
+	}
+
+	return false;
+}
+
+/**
+ * @brief Returns true if AABB is behind the frustum planes.
+ * @details See the @ref isBehindFrustum().
+ *
+ * @param[in] planes target frustum planes
+ * @param planeCount frustum plane count
+ * @param[in] aabb target AABB to check
+ */
+static bool isBehindFrustum(const Plane* planes, uint8 planeCount, const Aabb& aabb) noexcept
+{
+	auto min = aabb.getMin(), max = aabb.getMax();
+	auto minX = min.getX(), minY = min.getY(), minZ = min.getZ();
+	auto maxX = max.getX(), maxY = max.getY(), maxZ = max.getZ();
+
+	auto v0 = f32x4(min, 1.0f);
+	auto v1 = f32x4(minX, minY, maxZ, 1.0f);
+	auto v2 = f32x4(minX, maxY, minZ, 1.0f);
+	auto v3 = f32x4(minX, maxY, maxZ, 1.0f);
+	auto v4 = f32x4(maxX, minY, minZ, 1.0f);
+	auto v5 = f32x4(maxX, minY, maxZ, 1.0f);
+	auto v6 = f32x4(maxX, maxY, minZ, 1.0f);
+	auto v7 = f32x4(max, 1.0f);
+
+	for (uint8 i = 0; i < planeCount; i++)
+	{
+		auto plane = planes[i];
+		auto d0 = f32x4(distance3(plane, v0), distance3(plane, v1), distance3(plane, v2), distance3(plane, v3));
+		auto d1 = f32x4(distance3(plane, v4), distance3(plane, v5), distance3(plane, v6), distance3(plane, v7));
 		
 		if (areAllTrue(d0 < 0.0f & d1 < 0.0f))
 			return true;
