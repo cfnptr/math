@@ -200,7 +200,6 @@ public:
 			return;
 
 		auto nodeData = nodes.data();
-		auto primitiveData = primitives.data();
 		auto node = &nodeData[0];
 
 		while (true)
