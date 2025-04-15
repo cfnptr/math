@@ -199,6 +199,23 @@ public:
 	}
 
 	/**
+	 * @brief Shrinks bounding box min and max corner positions in 3D space.
+	 * @param point target point to limit the bounding box with in 3D space
+	 */
+	void shrink(f32x4 point) noexcept
+	{
+		min = math::max(min, point); max = math::min(max, point); 
+	}
+	/**
+	 * @brief Extends bounding box min and max corner positions in 3D space.
+	 * @param[in] aabb target AABB to limit the bounding box with
+	 */
+	void shrink(const Aabb& aabb) noexcept
+	{
+		min = math::max(min, aabb.min); max = math::min(max, aabb.max); 
+	}
+
+	/**
 	 * @brief Translates bounding box in 3D space.
 	 * @param translation target translation transformation in 3D space
 	 */
