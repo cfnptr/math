@@ -258,13 +258,15 @@ public:
 	bool operator==(const Aabb& v) const noexcept { return !memcmp(this, &v, sizeof(Aabb)); }
 	bool operator!=(const Aabb& v) const noexcept { return memcmp(this, &v, sizeof(Aabb)); }
 	
-	static const Aabb zero, one, two, half;
+	static const Aabb zero, one, two, half, full, inf;
 };
 
 inline const Aabb Aabb::zero = Aabb(f32x4::zero, f32x4::zero);
 inline const Aabb Aabb::one = Aabb(f32x4(-0.5f), f32x4(0.5f));
 inline const Aabb Aabb::two = Aabb(f32x4::minusOne, f32x4::one);
 inline const Aabb Aabb::half = Aabb(f32x4(-0.25f), f32x4(0.25f));
+inline const Aabb Aabb::full = Aabb(f32x4::min, f32x4::max);
+inline const Aabb Aabb::inf = Aabb(f32x4::minusInf, f32x4::inf);
 
 /**
  * @brief Returns true if first AABB binary representation is less than the second.
