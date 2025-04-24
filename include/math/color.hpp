@@ -48,6 +48,13 @@ struct [[nodiscard]] Color
 	 * @param a alpha channel color value (transparency)
 	 */
 	constexpr Color(uint8 r, uint8 g, uint8 b, uint8 a) noexcept : r(r), g(g), b(b), a(a) { }
+	/**
+	 * @brief Creates a new sRGB color structure.
+	 * 
+	 * @param rgb red green and blue channel color value
+	 * @param a alpha channel color value (transparency)
+	 */
+	 constexpr Color(Color rgb, uint8 a) noexcept : r(rgb.r), g(rgb.g), b(rgb.b), a(a) { }
 
 	/**
 	 * @brief Creates a new sRGB color structure from the binary data.
