@@ -154,19 +154,19 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Sets sRGB color normalizer R channel. (Red)
 	 */
-	constexpr void setNormR(float r) noexcept { this->r = std::clamp(r, 0.0f, 1.0f) * 255.0f; }
+	constexpr void setNormR(float r) noexcept { this->r = std::clamp(r, 0.0f, 1.0f) * 255.0f + 0.5f; }
 	/**
 	 * @brief Sets sRGB color normalizer G channel. (Green)
 	 */
-	constexpr void setNormG(float g) noexcept { this->g = std::clamp(g, 0.0f, 1.0f) * 255.0f; }
+	constexpr void setNormG(float g) noexcept { this->g = std::clamp(g, 0.0f, 1.0f) * 255.0f + 0.5f; }
 	/**
 	 * @brief Sets sRGB color normalizer B channel. (Blue)
 	 */
-	constexpr void setNormB(float b) noexcept { this->b = std::clamp(b, 0.0f, 1.0f) * 255.0f; }
+	constexpr void setNormB(float b) noexcept { this->b = std::clamp(b, 0.0f, 1.0f) * 255.0f + 0.5f; }
 	/**
 	 * @brief Sets sRGB color normalizer A channel. (Alpha)
 	 */
-	constexpr void setNormA(float a) noexcept { this->a = std::clamp(a, 0.0f, 1.0f) * 255.0f; }
+	constexpr void setNormA(float a) noexcept { this->a = std::clamp(a, 0.0f, 1.0f) * 255.0f + 0.5f; }
 
 	/*******************************************************************************************************************
 	 * @brief Converts sRGB color to the string. (Space separated)
