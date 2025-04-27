@@ -35,24 +35,24 @@ var NAVTREE =
     [ "Building", "index.html#building-cihttpsgithubcomcfnptrmathactionsworkflowscmakeymlbadgesvg", [
       [ "Inspired by", "index.html#inspired-by", null ]
     ] ],
-    [ "Build instructions", "md__b_u_i_l_d_i_n_g.html", [
-      [ "Operating Systems", "md__b_u_i_l_d_i_n_g.html#operating-systems", null ],
-      [ "Windows (10/11)", "md__b_u_i_l_d_i_n_g.html#windows-1011", [
-        [ "Install Visual Studio Community (Or any other IDE)", "md__b_u_i_l_d_i_n_g.html#autotoc_md1-install-visual-studio-community-or-any-other-ide", null ],
-        [ "Install Git", "md__b_u_i_l_d_i_n_g.html#autotoc_md2-install-git", null ],
-        [ "Install CMake", "md__b_u_i_l_d_i_n_g.html#autotoc_md3-install-cmake", null ]
+    [ "Build instructions", "md_BUILDING.html", [
+      [ "Operating Systems", "md_BUILDING.html#operating-systems", null ],
+      [ "Windows (10/11)", "md_BUILDING.html#windows-1011", [
+        [ "Install Visual Studio Community (Or any other IDE)", "md_BUILDING.html#autotoc_md1-install-visual-studio-community-or-any-other-ide", null ],
+        [ "Install Git", "md_BUILDING.html#autotoc_md2-install-git", null ],
+        [ "Install CMake", "md_BUILDING.html#autotoc_md3-install-cmake", null ]
       ] ],
-      [ "Ubuntu (22.04/24.04)", "md__b_u_i_l_d_i_n_g.html#ubuntu-22042404", [
-        [ "Install Visual Studio Code (Or any other IDE)", "md__b_u_i_l_d_i_n_g.html#autotoc_md1-install-visual-studio-code-or-any-other-ide", null ],
-        [ "Install required packages", "md__b_u_i_l_d_i_n_g.html#autotoc_md2-install-required-packages", null ]
+      [ "Ubuntu (22.04/24.04)", "md_BUILDING.html#ubuntu-22042404", [
+        [ "Install Visual Studio Code (Or any other IDE)", "md_BUILDING.html#autotoc_md1-install-visual-studio-code-or-any-other-ide", null ],
+        [ "Install required packages", "md_BUILDING.html#autotoc_md2-install-required-packages", null ]
       ] ],
-      [ "macOS (14/15)", "md__b_u_i_l_d_i_n_g.html#macos-1415", [
-        [ "Install Xcode (Or any other IDE)", "md__b_u_i_l_d_i_n_g.html#autotoc_md1-install-xcode-or-any-other-ide", null ],
-        [ "Install required packages", "md__b_u_i_l_d_i_n_g.html#autotoc_md2-install-required-packages-1", null ]
+      [ "macOS (14/15)", "md_BUILDING.html#macos-1415", [
+        [ "Install Xcode (Or any other IDE)", "md_BUILDING.html#autotoc_md1-install-xcode-or-any-other-ide", null ],
+        [ "Install required packages", "md_BUILDING.html#autotoc_md2-install-required-packages-1", null ]
       ] ],
-      [ "Build Project", "md__b_u_i_l_d_i_n_g.html#build-project", [
-        [ "Visual Studio (2022)", "md__b_u_i_l_d_i_n_g.html#visual-studio-2022", null ],
-        [ "Visual Studio Code (VS Code)", "md__b_u_i_l_d_i_n_g.html#visual-studio-code-vs-code", null ]
+      [ "Build Project", "md_BUILDING.html#build-project", [
+        [ "Visual Studio (2022)", "md_BUILDING.html#visual-studio-2022", null ],
+        [ "Visual Studio Code (VS Code)", "md_BUILDING.html#visual-studio-code-vs-code", null ]
       ] ]
     ] ],
     [ "Classes", "annotated.html", [
@@ -74,9 +74,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "aabb_8hpp.html",
-"structmath_1_1_version.html#af10e9e61880483a48bf0e54b71df972f",
-"structmath_1_1int4.html#a6d56c2bc71e3167edc4397ad292cf376"
+"structmath_1_1Version.html#a5af01816d3499e968ecea06052049a7e",
+"structmath_1_1int4.html#a299f6dc3e08da24f9a3257b46f7b5997"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';

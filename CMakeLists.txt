@@ -22,7 +22,7 @@ if(TARGET math-static)
 	return()
 endif()
 
-project(math VERSION 0.0.1 LANGUAGES CXX
+project(math VERSION 0.1.0 LANGUAGES CXX
 	DESCRIPTION "Linear algebra mathematics library."
 	HOMEPAGE_URL "https://github.com/cfnptr/math")
 

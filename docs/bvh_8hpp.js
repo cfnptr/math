@@ -1,5 +1,5 @@
 var bvh_8hpp =
 [
-    [ "Bvh", "structmath_1_1_bvh.html", "structmath_1_1_bvh" ],
-    [ "Node", "unionmath_1_1_bvh_1_1_node.html", "unionmath_1_1_bvh_1_1_node" ]
+    [ "Bvh", "structmath_1_1Bvh.html", "structmath_1_1Bvh" ],
+    [ "Node", "structmath_1_1Bvh_1_1Node.html", "structmath_1_1Bvh_1_1Node" ]
 ];

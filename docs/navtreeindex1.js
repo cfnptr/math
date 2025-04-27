@@ -1,6 +1,15 @@
 var NAVTREEINDEX1 =
 {
-"structmath_1_1_version.html#af10e9e61880483a48bf0e54b71df972f":[6,0,0,30,8],
+"structmath_1_1Version.html#a5af01816d3499e968ecea06052049a7e":[6,0,0,30,0],
+"structmath_1_1Version.html#a61fde47c147970efa396f272344aa047":[6,0,0,30,7],
+"structmath_1_1Version.html#a7bbebaec687d4f6ed92c8d044a2a3e44":[6,0,0,30,2],
+"structmath_1_1Version.html#a80f11dcf632ee4bf07c6450b379ccd4c":[6,0,0,30,5],
+"structmath_1_1Version.html#a8a6a0826ca33a3e0d46590b437fd798d":[6,0,0,30,4],
+"structmath_1_1Version.html#a9b056b6d8d6e156b9427c8b357e43b94":[6,0,0,30,11],
+"structmath_1_1Version.html#a9f325281e569458bdc537e2440d7ae34":[6,0,0,30,6],
+"structmath_1_1Version.html#aa6a4b620ead50cd4395a3da332c98ff1":[6,0,0,30,3],
+"structmath_1_1Version.html#ab16d733f60ba1b627dbb84da9261a659":[6,0,0,30,12],
+"structmath_1_1Version.html#af10e9e61880483a48bf0e54b71df972f":[6,0,0,30,8],
 "structmath_1_1f32x4.html":[6,0,0,3],
 "structmath_1_1f32x4.html#a07eddbb1ed48c8042e40527a2e365e97":[6,0,0,3,20],
 "structmath_1_1f32x4.html#a219f1ec1e9844d010e8e97525cf422d7":[6,0,0,3,0],
@@ -240,14 +249,5 @@ var NAVTREEINDEX1 =
 "structmath_1_1int3.html#afe5ac4581e5eae1e56b129e89f66cf34":[6,0,0,16,4],
 "structmath_1_1int4.html":[6,0,0,17],
 "structmath_1_1int4.html#a081a4cfb588c79c90517e17b7665b792":[6,0,0,17,21],
-"structmath_1_1int4.html#a08b00de1ba61b65ff16ed5eac82bc89f":[6,0,0,17,14],
-"structmath_1_1int4.html#a299f6dc3e08da24f9a3257b46f7b5997":[6,0,0,17,9],
-"structmath_1_1int4.html#a2d260e9cb25cc2a64b999f6582489fc9":[6,0,0,17,0],
-"structmath_1_1int4.html#a3407aff753cf9847b8edaf080c69f9aa":[6,0,0,17,19],
-"structmath_1_1int4.html#a4291ef00bdd6070fcb07cbb25635df89":[6,0,0,17,15],
-"structmath_1_1int4.html#a4c60d8dcf9aba69ef6fa8c15f2925c1d":[6,0,0,17,17],
-"structmath_1_1int4.html#a5de978445ebb0191a253be8343dde83b":[6,0,0,17,1],
-"structmath_1_1int4.html#a6176aa3a19b6d01455655f1422773994":[6,0,0,17,2],
-"structmath_1_1int4.html#a62593bdc6f33939d9757958bfe254b7c":[6,0,0,17,5],
-"structmath_1_1int4.html#a6aafeaf05e314162fc1bfaf91bdc5ab7":[6,0,0,17,10]
+"structmath_1_1int4.html#a08b00de1ba61b65ff16ed5eac82bc89f":[6,0,0,17,14]
 };

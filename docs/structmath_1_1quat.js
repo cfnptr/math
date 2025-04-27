@@ -5,7 +5,7 @@ var structmath_1_1quat =
     [ "quat", "structmath_1_1quat.html#ab52e350b6a2ad67750af993782a34d76", null ],
     [ "operator*", "structmath_1_1quat.html#a72e14f091cbd84879f5e7a978db09ccb", null ],
     [ "operator*", "structmath_1_1quat.html#af29f6486f671d9ad3954cb91ece01dd9", null ],
-    [ "operator*=", "structmath_1_1quat.html#aabdf19bb892619cc64bb2c41d8671984", null ],
+    [ "operator*=", "structmath_1_1quat.html#aeea1b348e42424c8df0598f0440ba94a", null ],
     [ "extractPitch", "structmath_1_1quat.html#afafff5d06497ee6332d6fc9cc20c48aa", null ],
     [ "extractYaw", "structmath_1_1quat.html#a3048605b5f116efff358e9abf8e58eca", null ],
     [ "extractRoll", "structmath_1_1quat.html#a481b92783dbe0972e711176c6848beee", null ],
