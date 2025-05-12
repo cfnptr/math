@@ -103,7 +103,7 @@ protected:
 	vector<Node> nodes;
 	vector<uint32> primitives;
 	vector<f32x4> centroids;
-	stack<Node*> nodeStack;
+	stack<Node*, vector<Node*>> nodeStack;
 public:
 	/*******************************************************************************************************************
 	 * @brief Creates a new BVH from the triangle array.
@@ -147,7 +147,7 @@ public:
 	/**
 	 * @brief Returns BVH node stack cache.
 	 */
-	stack<Node*>& getNodeStack() noexcept { return nodeStack; }
+	stack<Node*, vector<Node*>>& getNodeStack() noexcept { return nodeStack; }
 
 	/**
 	 * @brief Recreates BVH from the triangle array.
@@ -181,7 +181,7 @@ public:
 	 * @param[in] nodeStack local node stack or null
 	 */
 	uint32 collectInFrustum(const Plane* planes, uint8 planeCount, 
-		uint32* primitives, stack<Node*>* nodeStack = nullptr);
+		uint32* primitives, stack<Node*, vector<Node*>>* nodeStack = nullptr);
 
 	/**
 	 * @brief Traverses BVH tree.

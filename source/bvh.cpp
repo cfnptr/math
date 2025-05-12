@@ -530,7 +530,7 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& rootAabb, uint32 aabbCount, co
 }
 
 //**********************************************************************************************************************
-uint32 Bvh::collectInFrustum(const Plane* planes, uint8 planeCount, uint32* primitives, stack<Node*>* _nodeStack)
+uint32 Bvh::collectInFrustum(const Plane* planes, uint8 planeCount, uint32* primitives, stack<Node*, vector<Node*>>* _nodeStack)
 {
 	assert(planes);
 	assert(planeCount > 0);
