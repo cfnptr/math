@@ -274,7 +274,7 @@ inline const Aabb Aabb::inf = Aabb(f32x4::minusInf, f32x4::inf);
  * @param[in] a first AABB to binary compare
  * @param[in] b second AABB to binary compare
  */
-static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(&a, &b, sizeof(float3) * 2) < 0; }
+static bool isBinaryLess(const Aabb& a, const Aabb& b) noexcept { return memcmp(&a, &b, sizeof(Aabb)) < 0; }
 
 /***********************************************************************************************************************
  * @brief Returns true if point is inside the AABB in 3D space.
@@ -317,10 +317,10 @@ static f32x4 closestPoint(const Aabb& aabb, f32x4 point) noexcept
  */
 static float2 raycast2I(Aabb aabb, Ray ray) noexcept
 {
-	auto t1 = (aabb.getMin() - ray.origin) * ray.getDirection();
-	auto t2 = (aabb.getMax() - ray.origin) * ray.getDirection();
-	auto tMin = select(ray.getParallel(), f32x4::minusMax, min(t1, t2));
-	auto tMax = select(ray.getParallel(), f32x4::max, max(t1, t2));
+	auto t0 = (aabb.getMin() - ray.origin) * ray.getDirection();
+	auto t1 = (aabb.getMax() - ray.origin) * ray.getDirection();
+	auto tMin = select(ray.getParallel(), f32x4::minusMax, min(t0, t1));
+	auto tMax = select(ray.getParallel(), f32x4::max, max(t0, t1));
 	tMin = max(tMin, tMin.swizzle<SwY, SwZ, SwX>());
 	tMin = max(tMin, tMin.swizzle<SwZ, SwX, SwY>());
 	tMax = min(tMax, tMax.swizzle<SwY, SwZ, SwX>());
@@ -328,8 +328,7 @@ static float2 raycast2I(Aabb aabb, Ray ray) noexcept
 
 	auto noParallelOverlap = (ray.origin < aabb.getMin()) | (ray.origin > aabb.getMax());
 	auto noIntersection = (tMin > tMax) | (tMax < f32x4::zero) | (ray.getParallel() & noParallelOverlap);
-	noIntersection |= noIntersection.splatY();
-	noIntersection |= noIntersection.splatZ();
+	noIntersection |= noIntersection.splatY() | noIntersection.splatZ();
 
 	return float2(
 		select(noIntersection, f32x4::max, tMin).getX(), 
@@ -357,10 +356,10 @@ static float2 raycast2(const Aabb& aabb, Ray ray) noexcept
  */
 static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
 {
-	auto t1 = (aabb.getMin() - ray.origin) * ray.getDirection();
-	auto t2 = (aabb.getMax() - ray.origin) * ray.getDirection();
-	auto tMin = select(ray.getParallel(), f32x4::minusMax, min(t1, t2));
-	auto tMax = select(ray.getParallel(), f32x4::max, max(t1, t2));
+	auto t0 = (aabb.getMin() - ray.origin) * ray.getDirection();
+	auto t1 = (aabb.getMax() - ray.origin) * ray.getDirection();
+	auto tMin = select(ray.getParallel(), f32x4::minusMax, min(t0, t1));
+	auto tMax = select(ray.getParallel(), f32x4::max, max(t0, t1));
 	tMin = max(tMin, tMin.swizzle<SwY, SwZ, SwX>());
 	tMin = max(tMin, tMin.swizzle<SwZ, SwX, SwY>());
 	tMax = min(tMax, tMax.swizzle<SwY, SwZ, SwX>());
@@ -368,8 +367,7 @@ static float raycast1I(const Aabb& aabb, const Ray& ray) noexcept
 
 	auto noParallelOverlap = (ray.origin < aabb.getMin()) | (ray.origin > aabb.getMax());
 	auto noIntersection = (tMin > tMax) | (tMax < f32x4::zero) | (ray.getParallel() & noParallelOverlap);
-	noIntersection |= noIntersection.splatY();
-	noIntersection |= noIntersection.splatZ();
+	noIntersection |= noIntersection.splatY() | noIntersection.splatZ();
 	return select(noIntersection, f32x4::max, tMin).getX();
 }
 /**

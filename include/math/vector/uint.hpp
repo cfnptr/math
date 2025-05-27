@@ -692,7 +692,7 @@ static uint3 notEqual(uint3 a, uint3 b) noexcept
  * @param[in] a first vector to binary compare
  * @param[in] b second vector to binary compare
  */
-static bool isBinaryLess(const uint3& a, const uint3& b) noexcept { return memcmp(&a, &b, sizeof(uint32) * 3) < 0; }
+static bool isBinaryLess(const uint3& a, const uint3& b) noexcept { return memcmp(&a, &b, sizeof(uint3)) < 0; }
 
 /**
  * @brief Selects between two vector components based on the control vector values.
@@ -835,7 +835,7 @@ static uint4 notEqual(uint4 a, uint4 b) noexcept
  * @param[in] a first vector to binary compare
  * @param[in] b second vector to binary compare
  */
-static bool isBinaryLess(const uint4& a, const uint4& b) noexcept { return memcmp(&a, &b, sizeof(uint32) * 4) < 0; }
+static bool isBinaryLess(const uint4& a, const uint4& b) noexcept { return memcmp(&a, &b, sizeof(uint4)) < 0; }
 
 /**
  * @brief Selects between two vector components based on the control vector values.
