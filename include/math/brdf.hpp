@@ -59,7 +59,7 @@ static constexpr float ggx(float noh, float roughness) noexcept
  */
 static constexpr float2 hammersley(uint32 index, float invSampleCount) noexcept
 {
-    constexpr auto tof = 0.5f / 0x80000000U;
+    constexpr auto tof = 0.5f / 0x80000000u;
     auto bits = index;
     bits = (bits << 16u) | (bits >> 16u);
     bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);

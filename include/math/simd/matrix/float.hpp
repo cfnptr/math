@@ -131,6 +131,13 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 		return float4x3((float3)c0, (float3)c1, (float3)c2, (float3)c3);
 	}
 	/**
+	 * @brief Returns SIMD matrix as 3x4 floating point matrix.
+	 */
+	explicit operator float3x4() const noexcept
+	{
+		return float3x4((float4)c0, (float4)c1, (float4)c2);
+	}
+	/**
 	 * @brief Returns SIMD matrix as 3x3 floating point matrix.
 	 */
 	explicit operator float3x3() const noexcept
