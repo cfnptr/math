@@ -89,6 +89,28 @@ static f32x4 importanceSamplingNdfDggx(float2 u, float a) noexcept
 }
 
 /**
+ * @brief Computes diffuse irradiance from spherical harmonics (SH) using a 3rd-order.
+ *
+ * @details
+ * This function evaluates irradiance (light arriving at a surface) from an environment map, 
+ * encoded using spherical harmonics (SH), for a given surface normal.
+ * 
+ * @param normal target sample normal vector
+ * @param[in] shBuffer IBL spherical harmonics buffer 
+ */
+static f32x4 diffuseIrradiance(float3 normal, const f32x4* shBuffer) noexcept
+{
+	f32x4 irradiance = shBuffer[0] +
+		shBuffer[1] * (normal.y) + shBuffer[2] * (normal.z) + shBuffer[3] * (normal.x) +
+		shBuffer[4] * (normal.y * normal.x) +
+		shBuffer[5] * (normal.y * normal.z) +
+		shBuffer[6] * (3.0f * normal.z * normal.z - 1.0f) +
+		shBuffer[7] * (normal.z * normal.x) +
+		shBuffer[8] * (normal.x * normal.x - normal.y * normal.y);
+	return max(irradiance, f32x4::zero);
+}
+
+/**
  * @brief Converts IOR value to the remapped reflectance.
  * @param ior target index of refraction
  */
