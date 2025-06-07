@@ -24,31 +24,57 @@ namespace math
 {
 
 /**
+ * @brief Encodes RGBA color to the packed 8-bits per channel.
+ * @param rgba target RGBA color
+ */
+static uint32 encodeRgba(f32x4 rgba) noexcept
+{
+	auto d = u32x4(fma(rgba, f32x4(255.0f), f32x4(0.5f))) & 255u;
+	return (d.getX() << 24u) | (d.getY() << 16u) | (d.getZ() << 8u) | d.getW();
+}
+/**
+ * @brief Decodes RGBA color from the packed 8-bits per channel.
+ * @param rgba target encoded RGBA color
+ */
+static f32x4 decodeRgba(uint32 rgba) noexcept
+{
+	auto d = u32x4(rgba >> 24u, rgba >> 16u, rgba >> 8u, rgba);
+	return f32x4(d & 255u) * (1.0f / 255.0f);
+}
+
+/**
  * @brief Converts linear RGBA color to the sRGB color space.
  * @param rgba target linear RGBA color
  */
 static f32x4 rgbToSrgb(f32x4 rgba) noexcept
 {
-	static const auto c = f32x4(0.0031308f);
-	auto h = rgba * 12.92f;
 	auto l = fma(pow(rgba, f32x4(1.0f / 2.4f)), f32x4(1.055f), f32x4(-0.055f));
-	auto r = select(rgba <= c, h, l);
-	r.setW(rgba.getW());
+	auto h = rgba * 12.92f;
+	auto r = select(rgba <= f32x4(0.0031308f), h, l); r.setW(rgba.getW());
 	return r;
 }
 /**
  * @brief Converts sRGB color to the linear RGBA color space.
- * @param srgb target sRGB color
+ * @param sRGB target sRGB color
  */
 static f32x4 srgbToRgb(f32x4 sRGB) noexcept
 {
-	static const auto c = f32x4(0.04045f);
-	auto h = sRGB * (1.0f / 12.92f);
 	auto l = pow((sRGB + 0.055f) * (1.0f / 1.055f), f32x4(2.4f));
-	auto r = select(sRGB <= c, h, l);
-	r.setW(sRGB.getW());
+	auto h = sRGB * (1.0f / 12.92f);
+	auto r = select(sRGB <= f32x4(0.04045f), h, l); r.setW(sRGB.getW());
 	return r;
 }
+
+/**
+ * @brief Converts encoded linear RGBA color to the sRGB color space.
+ * @param rgba target encoded linear RGBA color
+ */
+static f32x4 rgbToSrgb(uint32 rgba) noexcept { return rgbToSrgb(decodeRgba(rgba)); }
+/**
+ * @brief Converts encoded sRGB color to the linear RGBA color space.
+ * @param sRGB target encoded sRGB color
+ */
+static f32x4 srgbToRgb(uint32 sRGB) noexcept { return srgbToRgb(decodeRgba(sRGB)); }
 
 /**
  * @brief Converts linear RGB color to the XYZ color space. (CIE 1931)
