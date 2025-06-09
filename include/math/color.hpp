@@ -80,7 +80,7 @@ struct [[nodiscard]] Color
 	 * @brief Creates a new sRGB color structure from the normalized R and G channels. (Red, Green)
 	 * @param normRg target normalized R and G channel color values
 	 */
-	constexpr explicit Color(float2 normRg)
+	explicit Color(float2 normRg)
 	{
 		auto c = fma(clamp(normRg, float2(0.0f), float2(1.0f)), float2(255.0f), float2(0.5f));
 		r = (uint8)c.x, g = (uint8)c.y, b = a = 0;
@@ -89,7 +89,7 @@ struct [[nodiscard]] Color
 	 * @brief Creates a new sRGB color structure from the normalized RGB channels. (Red, Green, Blue)
 	 * @param normRgb target normalized RGB channel color values
 	 */
-	constexpr explicit Color(float3 normRgb)
+	explicit Color(float3 normRgb)
 	{
 		auto c = fma(clamp(normRgb, float3(0.0f), float3(1.0f)), float3(255.0f), float3(0.5f));
 		r = (uint8)c.x, g = (uint8)c.y, b = (uint8)c.z, a = 0;
@@ -98,7 +98,7 @@ struct [[nodiscard]] Color
 	 * @brief Creates a new sRGB color structure from the normalized RGBA channels. (Red, Green, Blue, Alpha)
 	 * @param normRgba target normalized RGBA channel color values
 	 */
-	constexpr explicit Color(float4 normRgba)
+	explicit Color(float4 normRgba)
 	{
 		auto c = fma(clamp(normRgba, float4(0.0f), float4(1.0f)), float4(255.0f), float4(0.5f));
 		r = (uint8)c.x, g = (uint8)c.y, b = (uint8)c.z, a = (uint8)c.w;
@@ -154,19 +154,19 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Sets sRGB color normalizer R channel. (Red)
 	 */
-	constexpr void setNormR(float r) noexcept { this->r = std::fma(std::clamp(r, 0.0f, 1.0f), 255.0f, 0.5f); }
+	void setNormR(float r) noexcept { this->r = std::fma(std::clamp(r, 0.0f, 1.0f), 255.0f, 0.5f); }
 	/**
 	 * @brief Sets sRGB color normalizer G channel. (Green)
 	 */
-	constexpr void setNormG(float g) noexcept { this->g = std::fma(std::clamp(g, 0.0f, 1.0f), 255.0f, 0.5f); }
+	void setNormG(float g) noexcept { this->g = std::fma(std::clamp(g, 0.0f, 1.0f), 255.0f, 0.5f); }
 	/**
 	 * @brief Sets sRGB color normalizer B channel. (Blue)
 	 */
-	constexpr void setNormB(float b) noexcept { this->b = std::fma(std::clamp(b, 0.0f, 1.0f), 255.0f, 0.5f); }
+	void setNormB(float b) noexcept { this->b = std::fma(std::clamp(b, 0.0f, 1.0f), 255.0f, 0.5f); }
 	/**
 	 * @brief Sets sRGB color normalizer A channel. (Alpha)
 	 */
-	constexpr void setNormA(float a) noexcept { this->a = std::fma(std::clamp(a, 0.0f, 1.0f), 255.0f, 0.5f); }
+	void setNormA(float a) noexcept { this->a = std::fma(std::clamp(a, 0.0f, 1.0f), 255.0f, 0.5f); }
 
 	/*******************************************************************************************************************
 	 * @brief Converts sRGB color to the string. (Space separated)
