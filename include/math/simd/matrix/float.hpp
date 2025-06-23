@@ -256,7 +256,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 		return areAnyTrue(notEqual(c0, m.c0) | notEqual(c1, m.c1) | notEqual(c2, m.c2) | notEqual(c3, m.c3));
 	}
 
-	static const f32x4x4 zero, one, minusOne, min, minusMin, max, minusMax, epsilon, inf, minusInf, nan, identity;
+	static const f32x4x4 zero, one, minusOne, min, minusMin, max, minusMax, 
+		epsilon, inf, minusInf, nan, identity, ndcToUV, uvToNDC;
 };
 
 //**********************************************************************************************************************
@@ -271,11 +272,27 @@ inline const f32x4x4 f32x4x4::epsilon = f32x4x4(FLT_EPSILON);
 inline const f32x4x4 f32x4x4::inf = f32x4x4(INFINITY);
 inline const f32x4x4 f32x4x4::minusInf = f32x4x4(-INFINITY);
 inline const f32x4x4 f32x4x4::nan = f32x4x4(NAN);
-inline const f32x4x4 f32x4x4::identity = f32x4x4(
+
+inline const f32x4x4 f32x4x4::identity = f32x4x4
+(
 	f32x4(1.0f, 0.0f, 0.0f, 0.0f),
 	f32x4(0.0f, 1.0f, 0.0f, 0.0f),
 	f32x4(0.0f, 0.0f, 1.0f, 0.0f),
 	f32x4(0.0f, 0.0f, 0.0f, 1.0f)
+);
+inline const f32x4x4 f32x4x4::ndcToUV = f32x4x4
+(
+	f32x4(0.5f, 0.0f, 0.0f, 0.5f),
+	f32x4(0.0f, 0.5f, 0.0f, 0.5f),
+	f32x4(0.0f, 0.0f, 1.0f, 0.0f),
+	f32x4(0.0f, 0.0f, 0.0f, 1.0f)
+);
+inline const f32x4x4 f32x4x4::uvToNDC = f32x4x4
+(
+	f32x4(2.0f, 0.0f, 0.0f, -1.0f),
+	f32x4(0.0f, 2.0f, 0.0f, -1.0f),
+	f32x4(0.0f, 0.0f, 1.0f,  0.0f),
+	f32x4(0.0f, 0.0f, 0.0f,  1.0f)
 );
 
 /**
