@@ -119,7 +119,7 @@ static constexpr float4x4 calcOrthoProj(float2 width, float2 height, float2 dept
  * @param fieldOfView camera field of view in radians
  * @param height camera height in pixels
  */
-static constexpr float calcAnglePerPixel(float fieldOfView, float height)
+static float calcAnglePerPixel(float fieldOfView, float height) noexcept
 {
 	return std::atan((2.0f * std::tan(fieldOfView * 0.5f)) / height);
 }
