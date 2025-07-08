@@ -86,7 +86,7 @@ static float4x4 calcPerspProj(float fieldOfView, float aspectRatio, float nearPl
  * @brief Calculates reversed Z orthographic projection matrix.
  *
  * @param width camera width (ex. from -1.0 to 1.0)
- * @param height camera heIght (ex. from -1.0 to 1.0)
+ * @param height camera height (ex. from -1.0 to 1.0)
  * @param depth camera depth (ex. from 0.0 to 1.0)
  */
 static constexpr float4x4 calcOrthoProjRevZ(float2 width, float2 height, float2 depth) noexcept
@@ -111,6 +111,17 @@ static constexpr float4x4 calcOrthoProj(float2 width, float2 height, float2 dept
 		0.0f, -2.0f / (height.y - height.x), 0.0f, (height.y + height.x) / (height.y - height.x),
 		0.0f, 0.0f, 1.0f / (depth.y - depth.x), -depth.x / (depth.y - depth.x),
 		0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+/**
+ * @brief Calculates the angle per pixel in radians.
+ * 
+ * @param fieldOfView camera field of view in radians
+ * @param height camera height in pixels
+ */
+static constexpr float calcAnglePerPixel(float fieldOfView, float height)
+{
+	return std::atan((2.0f * std::tan(fieldOfView * 0.5f)) / height);
 }
 
 } // namespace math
