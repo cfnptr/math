@@ -42,8 +42,8 @@ namespace math::brdf
  */
 static constexpr float ggx(float noh, float roughness) noexcept
 {
-    auto f = (roughness - 1.0f) * ((roughness + 1.0f) * (noh * noh)) + 1.0f;
-    return (roughness * roughness) / ((float)M_PI * f * f);
+	auto f = (roughness - 1.0f) * ((roughness + 1.0f) * (noh * noh)) + 1.0f;
+	return (roughness * roughness) / ((float)M_PI * f * f);
 }
 
 /**
@@ -59,14 +59,14 @@ static constexpr float ggx(float noh, float roughness) noexcept
  */
 static constexpr float2 hammersley(uint32 index, float invSampleCount) noexcept
 {
-    constexpr auto tof = 0.5f / 0x80000000u;
-    auto bits = index;
-    bits = (bits << 16u) | (bits >> 16u);
-    bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
-    bits = ((bits & 0x33333333u) << 2u) | ((bits & 0xCCCCCCCCu) >> 2u);
-    bits = ((bits & 0x0F0F0F0Fu) << 4u) | ((bits & 0xF0F0F0F0u) >> 4u);
-    bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
-    return float2(index * invSampleCount, bits * tof);
+	constexpr auto tof = 0.5f / 0x80000000u;
+	auto bits = index;
+	bits = (bits << 16u) | (bits >> 16u);
+	bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
+	bits = ((bits & 0x33333333u) << 2u) | ((bits & 0xCCCCCCCCu) >> 2u);
+	bits = ((bits & 0x0F0F0F0Fu) << 4u) | ((bits & 0xF0F0F0F0u) >> 4u);
+	bits = ((bits & 0x00FF00FFu) << 8u) | ((bits & 0xFF00FF00u) >> 8u);
+	return float2(index * invSampleCount, bits * tof);
 }
 /**
  * @brief DGGX NDF importance sampling function.
@@ -81,11 +81,11 @@ static constexpr float2 hammersley(uint32 index, float invSampleCount) noexcept
  */
 static f32x4 importanceSamplingNdfDggx(float2 u, float a) noexcept
 {
-    auto phi = 2.0f * (float)M_PI * u.x;
-    auto cosTheta2 = (1.0f - u.y) / (1.0f + (a + 1.0f) * ((a - 1.0f) * u.y));
-    auto cosTheta = std::sqrt(cosTheta2);
-    auto sinTheta = std::sqrt(1.0f - cosTheta2);
-    return f32x4(sinTheta * std::cos(phi), sinTheta * std::sin(phi), cosTheta);
+	auto phi = (float)(2.0 * M_PI) * u.x;
+	auto cosTheta2 = (1.0f - u.y) / (1.0f + (a + 1.0f) * ((a - 1.0f) * u.y));
+	auto cosTheta = std::sqrt(cosTheta2);
+	auto sinTheta = std::sqrt(1.0f - cosTheta2);
+	return f32x4(sinTheta * std::cos(phi), sinTheta * std::sin(phi), cosTheta);
 }
 
 /**
@@ -116,8 +116,17 @@ static f32x4 diffuseIrradiance(float3 normal, const f32x4* shBuffer) noexcept
  */
 static float iorToReflectance(float ior) noexcept
 {
-    auto f0 = ((ior - 1.0f) * (ior - 1.0f)) / ((ior + 1.0f) * (ior + 1.0f));
-    return std::sqrt(f0 * (1.0f / 0.16f));
+	auto f0 = ((ior - 1.0f) * (ior - 1.0f)) / ((ior + 1.0f) * (ior + 1.0f));
+	return std::sqrt(f0 * (1.0f / 0.16f));
+}
+/**
+ * @brief Converts remapped reflectance to the index of refraction.
+ * @param reflectance target remapped reflectance
+ */
+static float reflectanceToIOR(float reflectance) noexcept
+{
+	auto sqrtF0 = reflectance * 0.4f;
+	return (1.0f + sqrtF0) / (1.0f - sqrtF0);
 }
 
 } // namespace math::brdf
