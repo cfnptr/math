@@ -50,7 +50,7 @@ public:
 	 */
 	Aabb(f32x4 min = f32x4::zero, f32x4 max = f32x4::zero) noexcept : min(min), max(max)
 	{
-		assert(areAllTrue(f32x4(min, 0.0f) <= f32x4(max, 1.0f)));
+		assert(areAllTrue(u32x4(min <= max, UINT32_MAX)));
 	}
 
 	/**
@@ -71,7 +71,7 @@ public:
 	 */
 	void setMin(f32x4 min) noexcept
 	{
-		assert(areAllTrue(f32x4(min, 0.0f) <= f32x4(this->max, 1.0f)));
+		assert(areAllTrue(u32x4(min <= this->max, UINT32_MAX)));
 		this->min = min;
 	}
 	/**
@@ -81,7 +81,7 @@ public:
 	 */
 	void setMax(f32x4 max) noexcept
 	{
-		assert(areAllTrue(f32x4(this->min, 0.0f) <= f32x4(max, 1.0f)));
+		assert(areAllTrue(u32x4(this->min <= max, UINT32_MAX)));
 		this->max = max;
 	}
 
@@ -94,7 +94,7 @@ public:
 	 */
 	void set(f32x4 min, f32x4 max) noexcept
 	{
-		assert(areAllTrue(f32x4(min, 0.0f) <= f32x4(max, 1.0f)));
+		assert(areAllTrue(u32x4(min <= max, UINT32_MAX)));
 		this->min = min; this->max = max;
 	}
 	/**
@@ -107,7 +107,7 @@ public:
 	 */
 	bool trySet(f32x4 min, f32x4 max) noexcept
 	{
-		if (areAllTrue(f32x4(min, 0.0f) > f32x4(max, 1.0f)))
+		if (areAnyTrue(u32x4(min > max, 0)))
 			return false;
 		this->min = min; this->max = max;
 		return true;
@@ -119,7 +119,7 @@ public:
 	 */
 	void setSize(f32x4 size) noexcept
 	{
-		assert(areAllTrue(f32x4(size, 1.0f) >= 0.0f));
+		assert(areAllTrue(size >= 0.0f));
 		auto extent = size * 0.5f;
 		min = -extent; max = extent;
 	}
@@ -131,7 +131,7 @@ public:
 	 */
 	void setSize(f32x4 size, f32x4 position) noexcept
 	{
-		assert(areAllTrue(f32x4(size, 1.0f) >= 0.0f));
+		assert(areAllTrue(size >= 0.0f));
 		auto extent = size * 0.5f;
 		min = position - extent; max = position + extent;
 	}
@@ -151,7 +151,7 @@ public:
 	 */
 	void setExtent(f32x4 extent) noexcept
 	{
-		assert(areAllTrue(f32x4(extent, 1.0f) >= 0.0f));
+		assert(areAllTrue(extent >= 0.0f));
 		min = -extent; max = extent;
 	}
 	/**
@@ -162,7 +162,7 @@ public:
 	 */
 	void setExtent(f32x4 extent, f32x4 position) noexcept
 	{
-		assert(areAllTrue(f32x4(extent, 1.0f) >= 0.0f));
+		assert(areAllTrue(extent >= 0.0f));
 		min = position - extent; max = position + extent;
 	}
 

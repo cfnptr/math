@@ -555,7 +555,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 	u32x4 operator<(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
-		return _mm_cmplt_epi32(data, v.data);
+		const auto mask = _mm_set1_epi32(0x80000000u);
+		return _mm_cmplt_epi32(_mm_xor_si128(data, mask), _mm_xor_si128(v.data, mask));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcltq_u32(data, v.data);
 		#else
@@ -565,7 +566,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 	u32x4 operator>(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
-		return _mm_cmpgt_epi32(data, v.data);
+		const auto mask = _mm_set1_epi32(0x80000000u);
+		return _mm_cmpgt_epi32(_mm_xor_si128(data, mask), _mm_xor_si128(v.data, mask));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcgtq_u32(data, v.data);
 		#else
@@ -575,7 +577,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 	u32x4 operator<=(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
-		return _mm_or_si128(_mm_cmplt_epi32(data, v.data), _mm_cmpeq_epi32(data, v.data));
+		const auto mask = _mm_set1_epi32(0x80000000u);
+		auto l = _mm_xor_si128(data, mask), r = _mm_xor_si128(v.data, mask);
+		return _mm_or_si128(_mm_cmplt_epi32(l, r), _mm_cmpeq_epi32(l, r));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcleq_u32(data, v.data);
 		#else
@@ -585,7 +589,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 	u32x4 operator>=(u32x4 v) const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
-		return _mm_or_si128(_mm_cmpgt_epi32(data, v.data), _mm_cmpeq_epi32(data, v.data));
+		const auto mask = _mm_set1_epi32(0x80000000u);
+		auto l = _mm_xor_si128(data, mask), r = _mm_xor_si128(v.data, mask);
+		return _mm_or_si128(_mm_cmpgt_epi32(l, r), _mm_cmpeq_epi32(l, r));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcgeq_u32(data, v.data);
 		#else
