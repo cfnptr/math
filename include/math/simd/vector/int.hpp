@@ -871,4 +871,19 @@ static i32x4 clamp(i32x4 v, i32x4 min, i32x4 max) noexcept
 	return math::max(math::min(v, max), min);
 }
 
+/**
+ * @brief Returns absolute value for each component of the SIMD vector.
+ * @param v target SIMD vector
+ */
+static i32x4 abs(i32x4 v) noexcept
+{
+	#if defined(MATH_SIMD_SUPPORT_SSE)
+	return _mm_abs_epi32(v.data);
+	#elif defined(MATH_SIMD_SUPPORT_NEON)
+	return vabsq_s32(v.data);
+	#else
+	return f32x4(abs(v.ints));
+	#endif
+}
+
 } // namespace math
