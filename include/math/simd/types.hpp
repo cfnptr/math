@@ -23,6 +23,7 @@
 
 #include <xmmintrin.h>
 #include <emmintrin.h>
+#include <tmmintrin.h>
 #define MATH_SIMD_SUPPORT_SSE
 #define MATH_SIMD_VECTOR_ALIGNMENT 16
 
