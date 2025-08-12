@@ -31,6 +31,42 @@ namespace math::brdf
 {
 
 /**
+ * @brief Calculates gaussian blur kernel buffer coefficient count.
+ * @param kernelWidth gaussian blur kernel width
+ */
+static constexpr uint8 calcGaussCoeffCount(uint8 kernelWidth) noexcept
+{
+	return (kernelWidth - 1u) / 4u + 1u;
+}
+
+static constexpr uint32 ggxKernelWidth = 21;
+static constexpr float ggxSigma0 = (ggxKernelWidth + 1) / 6.0f;
+static constexpr auto ggxCoeffCount = calcGaussCoeffCount(ggxKernelWidth);
+
+/**
+ * @brief Calculates spherical GGX distribution blur LOD count.
+ * @param bufferSize target blur buffer size in texels
+ */
+static uint8 calcGgxBlurLodCount(uint2 bufferSize) noexcept
+{
+	auto lodCount = calcMipCount(bufferSize); 
+	// Note: We don't go lower than 16 texel in one dimension.
+	return (uint8)std::max(std::min(4, (int)lodCount), (int)lodCount - 4);
+}
+/**
+ * @brief Calculates spherical GGX distribution blur LOD offset.
+ * 
+ * @param bufferSize target blur buffer size in texels
+ * @param fieldOfView camera field of view in radians
+ */
+static float calcGgxLodOffset(uint2 bufferSize, float fieldOfView) noexcept
+{
+	constexpr float d = 1.0f; // Note: Texel size of the blur buffer in world units at 1 meter.
+	auto texelSizeAtOneMeter = (d * std::tan(fieldOfView * 0.5f)) / bufferSize.y;
+	return -std::log2((M_SQRT2 * ggxSigma0) * texelSizeAtOneMeter);
+}
+
+/***********************************************************************************************************************
  * @brief GGX microfacet distribution function. (Ground Glass Model)
  * 
  * @details 
