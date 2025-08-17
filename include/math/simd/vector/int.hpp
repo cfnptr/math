@@ -319,7 +319,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 
 	/**
 	 * @brief Sets SIMD vector Z component value to the W component.
-	 * @note Usefull when you want to prevent SIMD division by zero.
+	 * @note Useful when you want to prevent SIMD division by zero.
 	 */
 	void fixW() noexcept { ints.w = getZ(); }
 

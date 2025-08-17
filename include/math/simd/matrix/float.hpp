@@ -420,7 +420,7 @@ static f32x4x4 transpose3x3(const f32x4x4& m) noexcept
 }
 
 /**
- * @brief Calculates 4x4 SIMD matrix inverse. (Usefull for undoing transformations)
+ * @brief Calculates 4x4 SIMD matrix inverse. (Useful for undoing transformations)
  * @param[in] m target SIMD matrix to inverse
  */
 static f32x4x4 inverse4x4(const f32x4x4& m) noexcept

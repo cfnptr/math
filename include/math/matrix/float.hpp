@@ -773,7 +773,7 @@ static constexpr float4x4 transpose(float4x4 m) noexcept
 }
 
 /***********************************************************************************************************************
- * @brief Calculates matrix inverse. (Usefull for undoing transformations)
+ * @brief Calculates matrix inverse. (Useful for undoing transformations)
  * @param matrix target matrix to inverse
  */
 static constexpr float2x2 inverse(float2x2 m) noexcept
@@ -783,7 +783,7 @@ static constexpr float2x2 inverse(float2x2 m) noexcept
 		-m.c1.x * oneOverDeterminant, m.c0.x * oneOverDeterminant);
 }
 /**
- * @brief Calculates matrix inverse. (Usefull for undoing transformations)
+ * @brief Calculates matrix inverse. (Useful for undoing transformations)
  * @param matrix target matrix to inverse
  */
 static constexpr float3x3 inverse(float3x3 m) noexcept
@@ -804,7 +804,7 @@ static constexpr float3x3 inverse(float3x3 m) noexcept
 		(m.c0.x * m.c2.y - m.c1.x * m.c0.y) * oneOverDeterminant);
 }
 /**
- * @brief Calculates matrix inverse. (Usefull for undoing transformations)
+ * @brief Calculates matrix inverse. (Useful for undoing transformations)
  * @param[in] m target matrix to inverse
  */
 static float4x4 inverse(float4x4 m) noexcept

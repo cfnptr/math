@@ -427,7 +427,7 @@ static bool isIntersected(const Aabb& a, const Aabb& b) noexcept
 
 /**
  * @brief Returns true if triangle intersects the AABB.
- * @details Usefull for a fast 3D model voxelization.
+ * @details Useful for a fast 3D model voxelization.
  *
  * @param position target AABB position in 3D space
  * @param extent target AABB extent (half size)
@@ -439,7 +439,7 @@ bool isAabbIntersected(f32x4 position, f32x4 extent, const Triangle& triangle) n
  * @brief Returns true if AABB is behind the frustum planes.
  * 
  * @details
- * Usefull for a fast view frustum culling. It is a technique used in 3D rendering and game engines to improve 
+ * Useful for a fast view frustum culling. It is a technique used in 3D rendering and game engines to improve 
  * performance by avoiding the rendering of objects that are outside the camera's view, or view frustum. The view 
  * frustum is a truncated pyramid-shaped volume that represents everything the camera can potentially see in the 
  * scene, based on its position, orientation, and field of view.
