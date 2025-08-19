@@ -116,7 +116,7 @@ static bool isIntersected(Sphere a, Sphere b) noexcept
  */
 static bool isIntersected(Sphere sphere, const Aabb& aabb) noexcept
 {
-	auto position = sphere.getPosition(), radius = sphere.getRadius();
+	auto position = sphere.getPosition(); radius = sphere.getRadius();
 	auto closPos = closestPoint(aabb, position);
 	return lengthSq3(position - closPos) < radius * radius;
 }
