@@ -71,18 +71,18 @@ public:
 	{
 		if constexpr (Bits == 1)
 		{
-			auto& byte = ptr[i / 8]; auto shift = (uint8)(i % 8);
-			byte = (byte & ~((uint8)0x01 << shift)) | ((value & (uint8)0x01) << shift);
+			auto& b = ptr[i / 8]; auto shift = (uint8)(i % 8);
+			b = (b & ~((uint8)0x01 << shift)) | ((value & (uint8)0x01) << shift);
 		}
 		else if constexpr (Bits == 2)
 		{
-			auto& byte = ptr[i / 4]; auto shift = (uint8)((i % 4) * 2);
-			byte = (byte & ~((uint8)0x03 << shift)) | ((value & (uint8)0x03) << shift);
+			auto& b = ptr[i / 4]; auto shift = (uint8)((i % 4) * 2);
+			b = (b & ~((uint8)0x03 << shift)) | ((value & (uint8)0x03) << shift);
 		}
 		else if constexpr (Bits == 4)
 		{
-			auto& byte = ptr[i / 2]; auto shift = (uint8)((i % 2) * 4);
-			byte = (byte & ~((uint8)0x0F << shift)) | ((value & (uint8)0x0F) << shift);
+			auto& b = ptr[i / 2]; auto shift = (uint8)((i % 2) * 4);
+			b = (b & ~((uint8)0x0F << shift)) | ((value & (uint8)0x0F) << shift);
 		}
 	}
 	uint8 set(psize i, uint8 value) noexcept

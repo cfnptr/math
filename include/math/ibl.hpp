@@ -33,15 +33,6 @@ namespace math::ibl
 {
 
 /**
- * @brief Size of the Diffuse Fresnel Glossiness Look-Up Table in pixels. (DFG LUT)
- * 
- * @details 
- * This table is used to precompute certain values related to specular reflections and Fresnel effects, optimizing 
- * the real-time rendering of materials, especially those with varying roughness and reflectance.
- */
-constexpr int32 iblDfgSize = 128;
-
-/**
  * @brief Spherical harmonics band count.
  */
 constexpr int32 shBandCount = 3;

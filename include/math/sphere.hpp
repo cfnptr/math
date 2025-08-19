@@ -19,6 +19,7 @@
  */
 
 #pragma once
+#include "math/ray.hpp"
 #include "math/aabb.hpp"
 
 namespace math
@@ -62,8 +63,8 @@ public:
 	 */
 	void setPosition(f32x4 position) noexcept { posRad = f32x4(position, posRad.getW()); }
 
-	bool operator==(const Sphere& v) const noexcept { return !memcmp(this, &v, sizeof(Sphere)); }
-	bool operator!=(const Sphere& v) const noexcept { return memcmp(this, &v, sizeof(Sphere)); }
+	bool operator==(Sphere v) const noexcept { return !memcmp(this, &v, sizeof(Sphere)); }
+	bool operator!=(Sphere v) const noexcept { return memcmp(this, &v, sizeof(Sphere)); }
 
 	static const Sphere one, two, half;
 };
@@ -75,51 +76,49 @@ inline const Sphere Sphere::half = Sphere(0.25f);
 /**
  * @brief Returns true if point is inside the sphere in 3D space.
  *
- * @param[in] sphere target sphere to check
+ * @param sphere target sphere to check
  * @param point target point in 3D space
  */
-static bool isInside(const Sphere& sphere, f32x4 point) noexcept
+static bool isInside(Sphere sphere, f32x4 point) noexcept
 {
-	auto difference = sphere.getPosition() - point;
 	auto radius = sphere.getRadius();
-	return lengthSq3(difference) < radius * radius;
+	return lengthSq3(sphere.getPosition() - point) < radius * radius;
 }
 
 /**
  * @brief Calculates closest point on sphere to the specified one in 3D space.
  *
- * @param[in] sphere target sphere to use
+ * @param sphere target sphere to use
  * @param point target point in 3D space
  */
-static f32x4 closestPoint(const Sphere& sphere, f32x4 point) noexcept
+static f32x4 closestPoint(Sphere sphere, f32x4 point) noexcept
 {
-	auto sphereToPoint = normalize3(point - sphere.getPosition());
-	return sphere.getPosition() + sphereToPoint * sphere.getRadius();
+	auto dir = normalize3(point - sphere.getPosition());
+	return fma(dir, f32x4(sphere.getRadius()), sphere.getPosition());
 }
 
 /**
  * @brief Returns true if one sphere intersects another.
  *
- * @param[in] a first sphere to check
- * @param[in] b second sphere to check
+ * @param a first sphere to check
+ * @param b second sphere to check
  */
-static bool isIntersected(const Sphere& a, const Sphere& b) noexcept
+static bool isIntersected(Sphere a, Sphere b) noexcept
 {
-	auto d = a.getPosition() - b.getPosition();
 	auto s = a.getRadius() + b.getRadius();
-	return lengthSq3(d) <= s * s;
+	return lengthSq3(a.getPosition() - b.getPosition()) <= s * s;
 }
 /**
  * @brief Returns true if sphere intersects AABB.
  *
- * @param[in] a target sphere to check
- * @param[in] b target AABB to check
+ * @param sphere target sphere to check
+ * @param[in] aabb target AABB to check
  */
-static bool isIntersected(const Sphere& a, const Aabb& b) noexcept
+static bool isIntersected(Sphere sphere, const Aabb& aabb) noexcept
 {
-	auto c = closestPoint(b, a.getPosition());
-	auto d2 = lengthSq3(a.getPosition() - c), radius = a.getRadius();
-	return d2 < radius * radius;
+	auto position = sphere.getPosition(), radius = sphere.getRadius();
+	auto closPos = closestPoint(aabb, position);
+	return lengthSq3(position - closPos) < radius * radius;
 }
 
 } // namespace math
