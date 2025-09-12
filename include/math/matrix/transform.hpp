@@ -324,4 +324,12 @@ static f32x4x4 inverseTransRot(const f32x4x4& m)
 	return t;
 }
 
+inline static const f32x4x4 leftLookAt = lookAt(f32x4::zero, f32x4::left, f32x4::top);
+inline static const f32x4x4 rightLookAt = lookAt(f32x4::zero, f32x4::right, f32x4::top);
+inline static const f32x4x4 bottomLookAt = lookAt(f32x4::zero, f32x4::bottom, f32x4::front);
+inline static const f32x4x4 topLookAt = lookAt(f32x4::zero, f32x4::top, f32x4::back);
+inline static const f32x4x4 backLookAt = lookAt(f32x4::zero, f32x4::back, f32x4::top);
+inline static const f32x4x4 frontLookAt = lookAt(f32x4::zero, f32x4::front, f32x4::top);
+inline static const f32x4x4 sideLookAts[6] = { leftLookAt, rightLookAt, bottomLookAt, topLookAt, backLookAt, frontLookAt };
+
 } // namespace math
