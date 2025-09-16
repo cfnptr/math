@@ -62,12 +62,12 @@ static float3 stToDir(float2 st, uint32 face) noexcept
 	float3 dir;
 	switch (face)
 	{
-	case 0: dir = float3( 1.0f,  st.y,  st.x); break;
-	case 1: dir = float3(-1.0f,  st.y, -st.x); break;
-	case 2: dir = float3(-st.x,  1.0f, -st.y); break;
-	case 3: dir = float3(-st.x, -1.0f,  st.y); break;
-	case 4: dir = float3(-st.x,  st.y,  1.0f); break;
-	case 5: dir = float3( st.x,  st.y, -1.0f); break;
+	case 0: dir = float3(-1.0f,  st.y,  st.x); break;
+	case 1: dir = float3( 1.0f,  st.y, -st.x); break;
+	case 2: dir = float3(-st.x, -1.0f, -st.y); break;
+	case 3: dir = float3(-st.x,  1.0f,  st.y); break;
+	case 4: dir = float3(-st.x,  st.y, -1.0f); break;
+	case 5: dir = float3( st.x,  st.y,  1.0f); break;
 	default: abort();
 	}
 	return normalize(dir);

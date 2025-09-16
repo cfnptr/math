@@ -71,7 +71,6 @@ static float sphereQuadrantArea(float x, float y) noexcept
 static float calcSolidAngle(float2 st, float invDim) noexcept
 {
 	auto v0 = st - invDim, v1 = st + invDim;
-
 	return sphereQuadrantArea(v0.x, v0.y) - sphereQuadrantArea(v0.x, v1.y) -
 		sphereQuadrantArea(v1.x, v0.y) + sphereQuadrantArea(v1.x, v1.y);
 }
@@ -278,9 +277,7 @@ static void deringingSH(f32x4 sh[shCoeffCount]) noexcept
 		for (uint32 i = 0; i < shCoeffCount; i++)
 			shw[i] = sh[i][channel];
 
-		float l = shBandCount;
-		float r = cutoff;
-
+		float l = shBandCount, r = cutoff;
 		for (uint32 i = 0; i < 16 && l + 0.1f < r; i++)
 		{
 			float m = 0.5f * (l + r);
@@ -295,10 +292,10 @@ static void deringingSH(f32x4 sh[shCoeffCount]) noexcept
 
 	for (int32 l = 0; l < shBandCount; l++)
 	{
-		float w = sincWindow(l, cutoff);
+		auto w = sincWindow(l, cutoff);
 		sh[shIndex(0, l)] *= w;
 
-		for (int m = 1; m <= l; m++)
+		for (int32 m = 1; m <= l; m++)
 		{
 			sh[shIndex(-m, l)] *= w;
 			sh[shIndex(m, l)] *= w;
