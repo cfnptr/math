@@ -137,14 +137,14 @@ static void multiply(const float m[25], const float v[5], float r[5]) noexcept
 }
 
 //**********************************************************************************************************************
-static float3 rotateSphericalHarmonicBand1(float3 band1, const float3x3& m) noexcept
+static float3 rotateShBand1(float3 band1, const float3x3& m) noexcept
 {
 	constexpr auto invA1TimesK = float3x3(0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f);
     auto mn0 = m[0], mn1 = m[1], mn2 = m[2];
 	auto r1OverK = float3x3(-mn0.y, mn0.z, -mn0.x, -mn1.y, mn1.z, -mn1.x, -mn2.y, mn2.z, -mn2.x);
 	return r1OverK * (invA1TimesK * band1);
 }
-static void rotateSphericalHarmonicBand2(const float band2[5], const float3x3& m, float r[5]) noexcept
+static void rotateShBand2(const float band2[5], const float3x3& m, float r[5]) noexcept
 {
 	static constexpr float invATimesK[25] =
 	{
@@ -180,29 +180,27 @@ static void rotateSh3Bands(const float shw[shCoeffCount], const float3x3& m, flo
 {
 	auto b0 = shw[0];
 	auto band1 = float3(shw[1], shw[2], shw[3]);
-	auto b1 = rotateSphericalHarmonicBand1(band1, m);
+	auto b1 = rotateShBand1(band1, m);
 	float band2[5] = { shw[4], shw[5], shw[6], shw[7], shw[8] }; float b2[5];
-	rotateSphericalHarmonicBand2(band2, m, b2);
+	rotateShBand2(band2, m, b2);
 	r[0] = b0; r[1] = b1[0]; r[2] = b1[1]; r[3] = b1[2];
 	r[4] = b2[0]; r[5] = b2[1]; r[6] = b2[2]; r[7] = b2[3]; r[8] = b2[4];
 }
 
 //**********************************************************************************************************************
-static float sincWindow(int32 l, float w) noexcept
+static float sincShWindow(int32 l, float w) noexcept
 {
-	if (l == 0)
-		return 1.0f;
-	else if (l >= w)
-		return 0.0f;
+	if (l == 0) return 1.0f;
+	else if (l >= w) return 0.0f;
 	auto x = ((float)M_PI * l) / w;
 	x = std::sin(x) / x;
 	return x * x * x * x;
 }
-static void windowing(float shw[shCoeffCount], float cutoff) noexcept
+static void shWindowing(float shw[shCoeffCount], float cutoff) noexcept
 {
 	for (int32 l = 0; l < shBandCount; l++)
 	{
-		auto w = sincWindow(l, cutoff);
+		auto w = sincShWindow(l, cutoff);
 		shw[shIndex(0, l)] *= w;
 
 		for (int32 m = 1; m <= l; m++)
@@ -212,7 +210,7 @@ static void windowing(float shw[shCoeffCount], float cutoff) noexcept
 		}
 	}
 }
-static float shmin(float shw[shCoeffCount]) noexcept
+static float shMin(float shw[shCoeffCount]) noexcept
 {
 	static constexpr float ca[shCoeffCount] =
 	{
@@ -267,7 +265,12 @@ static float shmin(float shw[shCoeffCount]) noexcept
 }
 
 //**********************************************************************************************************************
-static void deringingSH(f32x4 sh[shCoeffCount]) noexcept
+static void applyShKi(f32x4 sh[shCoeffCount]) noexcept
+{
+	for (uint32 i = 0; i < shCoeffCount; i++)
+		sh[i] *= ki[i];
+}
+static void deringSH(f32x4 sh[shCoeffCount]) noexcept
 {
 	auto cutoff = (float)(shBandCount * 4 + 1);
 	float shw[shCoeffCount];
@@ -281,18 +284,16 @@ static void deringingSH(f32x4 sh[shCoeffCount]) noexcept
 		for (uint32 i = 0; i < 16 && l + 0.1f < r; i++)
 		{
 			float m = 0.5f * (l + r);
-			windowing(shw, m);
-			if (shmin(shw) < 0.0f)
-				r = m;
-			else
-				l = m;
+			shWindowing(shw, m);
+			if (shMin(shw) < 0.0f) r = m;
+			else l = m;
 			cutoff = std::min(cutoff, l);
 		}
 	}
 
 	for (int32 l = 0; l < shBandCount; l++)
 	{
-		auto w = sincWindow(l, cutoff);
+		auto w = sincShWindow(l, cutoff);
 		sh[shIndex(0, l)] *= w;
 
 		for (int32 m = 1; m <= l; m++)
@@ -307,15 +308,15 @@ static void shaderPreprocessSH(f32x4 sh[shCoeffCount]) noexcept
 {
 	static constexpr float ca[shCoeffCount] =
 	{
-		(float)( 1.0      / (2.0 * M_SQRT_PI) * M_1_PI),
-		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI) * M_1_PI),
-		(float)( M_SQRT3  / (2.0 * M_SQRT_PI) * M_1_PI),
-		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI) * M_1_PI),
-		(float)( M_SQRT15 / (2.0 * M_SQRT_PI) * M_1_PI),
-		(float)(-M_SQRT15 / (2.0 * M_SQRT_PI) * M_1_PI),
-		(float)( M_SQRT5  / (4.0 * M_SQRT_PI) * M_1_PI),
-		(float)(-M_SQRT15 / (2.0 * M_SQRT_PI) * M_1_PI),
-		(float)( M_SQRT15 / (4.0 * M_SQRT_PI) * M_1_PI)
+		(float)( 1.0      / (2.0 * M_SQRT_PI)),
+		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI)),
+		(float)( M_SQRT3  / (2.0 * M_SQRT_PI)),
+		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI)),
+		(float)( M_SQRT15 / (2.0 * M_SQRT_PI)),
+		(float)(-M_SQRT15 / (2.0 * M_SQRT_PI)),
+		(float)( M_SQRT5  / (4.0 * M_SQRT_PI)),
+		(float)(-M_SQRT15 / (2.0 * M_SQRT_PI)),
+		(float)( M_SQRT15 / (4.0 * M_SQRT_PI))
 	};
 	
 	for (uint32 i = 0; i < shCoeffCount; i++)
