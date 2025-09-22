@@ -113,4 +113,14 @@ static f32x4 closestPoint(const Ray& ray, f32x4 point) noexcept
 	return fma(ray.getDirection(), f32x4(std::max(t, 0.0f)), a);
 }
 
+/**
+ * @brief Returns true if ray is intersecting the shape.
+ * @param raycastDists resulting raycast distances
+ */
+static bool isIntersected(float2 raycastDists) noexcept
+{
+	// If tMax < 0.0f, ray is intersecting shape, but whole shape is behind us.
+	return raycastDists.y > std::max(raycastDists.x, 0.0f);
+}
+
 } // namespace math

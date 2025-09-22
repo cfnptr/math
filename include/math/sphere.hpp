@@ -73,7 +73,7 @@ inline const Sphere Sphere::one = Sphere(0.5f);
 inline const Sphere Sphere::two = Sphere(1.0f);
 inline const Sphere Sphere::half = Sphere(0.25f);
 
-/**
+/***********************************************************************************************************************
  * @brief Returns true if point is inside the sphere in 3D space.
  *
  * @param sphere target sphere to check
@@ -119,6 +119,36 @@ static bool isIntersected(Sphere sphere, const Aabb& aabb) noexcept
 	auto position = sphere.getPosition(); auto radius = sphere.getRadius();
 	auto closPos = closestPoint(aabb, position);
 	return lengthSq3(position - closPos) < radius * radius;
+}
+
+/***********************************************************************************************************************
+ * @brief Calculates where ray intersects the sphere in 3D space.
+ * @return Distance to the intersection points, or -FLT_MAX if no hit.
+ *
+ * @param sphere target sphere to raycast
+ * @param[in] ray target ray in the space
+ */
+static float2 raycast2(Sphere sphere, const Ray& ray)
+{
+	auto radius = sphere.getRadius(); auto direction = ray.getDirection();
+	auto l = ray.origin - sphere.getPosition();
+	auto b = 2.0f * dot3(direction, l); auto c = dot3(l, l) - radius * radius;
+	auto discriminant = b * b - 4.0f * c;
+	if (discriminant < 0.0f)
+		return float2::minusMax;
+
+	auto discrSqrt = std::sqrt(discriminant);
+	return float2(-b - discrSqrt, -b + discrSqrt) * 0.5f;
+}
+/**
+ * @brief Returns true if ray intersects the sphere in 3D space.
+ * 
+ * @param[in] sphere target sphere to raycast
+ * @param[in] ray target ray in the space
+ */
+static bool raycast(Sphere sphere, const Ray& ray) noexcept
+{
+	return isIntersected(raycast2(sphere, ray));
 }
 
 } // namespace math

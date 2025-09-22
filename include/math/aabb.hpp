@@ -383,16 +383,6 @@ static float raycast1(const Aabb& aabb, Ray ray) noexcept
 	return raycast1I(aabb, ray);
 }
 
-/**
- * @brief Returns true if ray is intersecting the AABB.
- * @param raycastDists resulting raycast distances
- */
-static constexpr bool isAabbIntersected(float2 raycastDists) noexcept
-{
-	// If tMax < 0.0f, ray is intersecting AABB, but whole AABB is behind us.
-	return raycastDists.x <= raycastDists.y && raycastDists.y >= 0.0f;
-}
-
 /***********************************************************************************************************************
  * @brief Returns true if ray intersects the AABB in 3D space.
  * 
@@ -401,7 +391,7 @@ static constexpr bool isAabbIntersected(float2 raycastDists) noexcept
  */
 static bool raycast(const Aabb& aabb, const Ray& ray) noexcept
 {
-	return isAabbIntersected(raycast2(aabb, ray));
+	return isIntersected(raycast2(aabb, ray));
 }
 /**
  * @brief Returns true if ray intersects the AABB. (Ray is inversed!)
@@ -411,7 +401,7 @@ static bool raycast(const Aabb& aabb, const Ray& ray) noexcept
  */
 static bool raycastI(const Aabb& aabb, const Ray& ray) noexcept
 {
-	return isAabbIntersected(raycast2I(aabb, ray));
+	return isIntersected(raycast2I(aabb, ray));
 }
 
 /**
