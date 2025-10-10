@@ -191,24 +191,11 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Converts sRGB color to the RGB hexadecimal string.
 	 */
-	string toHex4() const noexcept
-	{
-		auto hex = math::toHex(r);
-		hex += math::toHex(g);
-		hex += math::toHex(b);
-		hex += math::toHex(a);
-		return hex;
-	}
+	string toHex4() const noexcept { return math::toHex8((const uint8*)this, 4); }
 	/**
 	 * @brief Converts sRGB color to the RGBA hexadecimal string.
 	 */
-	string toHex3() const noexcept
-	{
-		auto hex = math::toHex(r);
-		hex += math::toHex(g);
-		hex += math::toHex(b);
-		return hex;
-	}
+	string toHex3() const noexcept { return math::toHex8((const uint8*)this, 3); }
 
 	/**
 	 * @brief Converts sRGB color to the normalized linear RGB color space.

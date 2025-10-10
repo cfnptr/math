@@ -21,7 +21,9 @@ namespace math
 
 using namespace std;
 
-/***********************************************************************************************************************
+static constexpr const char* hexDigits = "0123456789ABCDEF"; /**< Hexadecimal digits array. */
+
+/**
  * @brief Converts integer value to the hexadecimal string.
  * 
  * @tparam T integer value type
@@ -31,14 +33,50 @@ using namespace std;
 template <typename T>
 static string toHex(T value, psize length = sizeof(T) << 1) noexcept
 {
-	constexpr const char* digits = "0123456789ABCDEF";
 	string hex(length, '0');
 	for (psize i = 0, j = (length - 1) * 4; i < length; i++, j -= 4)
-		hex[i] = digits[(value >> j) & 0x0f];
+		hex[i] = hexDigits[(value >> j) & 0x0F];
+	return hex;
+}
+/**
+ * @brief Converts integer array to the hexadecimal string.
+ * 
+ * @tparam T integer value type
+ * @param[in] data target integer array
+ * @param size integer array size
+ */
+template <typename T>
+static string toHex(const T* data, psize size) noexcept
+{
+	constexpr auto length = sizeof(T) << 1;
+	string hex(size * length, '0');
+	for (uint32 n = 0; n < size; n++)
+	{
+		auto offset = n * length; auto value = data[n];
+		for (psize i = 0, j = (length - 1) * 4; i < length; i++, j -= 4)
+			hex[i + offset] = hexDigits[(value >> j) & 0x0F];
+	}
+	return hex;
+}
+/**
+ * @brief Converts binary data to the hexadecimal string.
+ * 
+ * @param[in] data target binary array
+ * @param size array size in bytes
+ */
+static string toHex8(const uint8* data, psize size) noexcept
+{
+	auto count = size * 2; string hex(count, '0');
+	for (psize i = 0; i < size; i++)
+	{
+        auto value = data[i];
+        hex[i * 2    ] = hexDigits[value >> 4];
+        hex[i * 2 + 1] = hexDigits[value & 0x0F];
+    }
 	return hex;
 }
 
-/**
+/***********************************************************************************************************************
  * @brief Converts hexadecimal string to the 32bit integer value.
  * @param[in] hex target hexadecimal string
  */
