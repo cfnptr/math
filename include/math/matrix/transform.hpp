@@ -110,7 +110,7 @@ static f32x4x4 scale(f32x4 s, const f32x4x4& m) noexcept
  */
 static f32x4 extractScale(const f32x4x4& m) noexcept
 {
-	return f32x4(lengthSq3(m.c0), lengthSq3(m.c1), lengthSq3(m.c2));
+	return f32x4(length3(m.c0), length3(m.c1), length3(m.c2));
 }
 /**
  * @brief Extracts total SIMD matrix 2D scale transformation of an object in 3D space.
@@ -118,7 +118,7 @@ static f32x4 extractScale(const f32x4x4& m) noexcept
  */
 static float2 extractScale2(const f32x4x4& m) noexcept
 {
-	return float2(lengthSq3(m.c0), length3(m.c1));
+	return float2(length3(m.c0), length3(m.c1));
 }
 
 /***********************************************************************************************************************
