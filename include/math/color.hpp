@@ -20,6 +20,7 @@
 #pragma once
 #include "math/hex.hpp"
 #include "math/color-space.hpp"
+#include <string_view>
 
 namespace math
 {
@@ -63,17 +64,38 @@ struct [[nodiscard]] Color
 	constexpr explicit Color(uint32 data) { *(uint32*)this = data; }
 	/**
 	 * @brief Creates a new sRGB color structure from the hexadecimal string.
-	 * @param[in] hex target hexadecimal color string
+	 * @param hex target hexadecimal color string
 	 */
-	explicit Color(const string& hex)
+	explicit Color(string_view hex)
 	{
 		assert(hex.length() == 8 || hex.length() == 6);
-		r = toInt32(string(hex.c_str(), 2));
-		g = toInt32(string(hex.c_str() + 2, 2));
-		b = toInt32(string(hex.c_str() + 4, 2));
+		char buffer[3]; buffer[2] = '\0';
+		auto data = hex.data();
+
+		buffer[0] = data[0]; buffer[1] = data[1];
+		r = std::stoul(buffer, nullptr, 16);
+		buffer[0] = data[2]; buffer[1] = data[3];
+		g = std::stoul(buffer, nullptr, 16);
+		buffer[0] = data[4]; buffer[1] = data[5];
+		b = std::stoul(buffer, nullptr, 16);
 
 		if (hex.length() == 8)
-			a = toInt32(string(hex.c_str() + 6, 2));
+		{
+			buffer[0] = data[6]; buffer[1] = data[7];
+			a = std::stoul(buffer, nullptr, 16);
+		}
+	}
+	/**
+	 * @brief Creates a new sRGB color structure from the hexadecimal string.
+	 * @param hex target hexadecimal color string
+	 */
+	explicit Color(u32string_view hex)
+	{
+		assert(hex.length() == 8 || hex.length() == 6);
+		char buffer[8]; auto data = hex.data();
+		for (psize i = 0; i < hex.length(); i++)
+			buffer[i] = (char)data[i]; // Note: ASCII hex string maps directly.
+		*this = Color(string_view(buffer, hex.length()));
 	}
 	
 	/**
