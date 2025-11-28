@@ -33,12 +33,16 @@ public:
 	PackedVector()
 	{
 		static_assert(Bits > 0, "Should be at least 1 bit.");
-		static_assert(Bits == 1 || Bits == 2 || Bits == 4, "Partial support of packing."); // TODO: pack odd bit sizes.
+		static_assert(Bits == 1 || Bits == 2 || Bits == 4, "Partial support of packing.");
+		ptr = data();
 	}
 	PackedVector(psize elementCount)
 	{
+		static_assert(Bits > 0, "Should be at least 1 bit.");
+		static_assert(Bits == 1 || Bits == 2 || Bits == 4, "Partial support of packing.");
 		resize(elementCount);
 	}
+	// TODO: pack odd bit sizes.
 
 	uint8 unsafeGet(psize i) const noexcept
 	{
