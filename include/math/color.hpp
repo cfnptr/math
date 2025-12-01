@@ -272,23 +272,6 @@ static constexpr bool operator>=(uint8 n, Color c) noexcept { return Color(n) >=
  */
 static bool isBinaryLess(Color a, Color b) noexcept { return  *((const uint32*)&a) < *((const uint32*)&b); }
 
-/**
- * @brief Encodes sRGB color to the packed 8-bits per channel.
- * @param sRGB target sRGB color
- */
-static constexpr uint32 encodeColor(Color sRGB) noexcept
-{
-	return (sRGB.r << 24u) | (sRGB.g << 16u) | (sRGB.b << 8u) | sRGB.a;
-}
-/**
- * @brief Decodes sRGB color from the packed 8-bits per channel.
- * @param sRGB target encoded sRGB color
- */
-static constexpr Color decodeColor(uint32 sRGB) noexcept
-{
-	return Color(sRGB >> 24u, sRGB >> 16u, sRGB >> 8u, sRGB);
-}
-
 // TODO: color conversion functions.
 
 } // namespace math
