@@ -65,12 +65,12 @@ static void cmp(float a, float b, float tolerance = 1.0e-9f)
 static void cmp(uint32 a, uint32 b)
 {
 	if (a != b)
-		throw runtime_error("Int test failed.");
+		throw runtime_error("Uint test failed.");
 }
 static void cmp(bool a, bool b)
 {
 	if (a != b)
-		throw runtime_error("Int test failed.");
+		throw runtime_error("Bool test failed.");
 }
 
 static void testFloatVectors()

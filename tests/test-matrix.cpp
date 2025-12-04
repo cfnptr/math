@@ -82,7 +82,7 @@ static void cmp(f32x4x4 a, float3x3 b, float tolerance = 1.0e-9f)
 static void cmp(uint32 a, uint32 b)
 {
 	if (a != b)
-		throw runtime_error("Int test failed.");
+		throw runtime_error("Uint test failed.");
 }
 
 static constexpr auto matLeft = float4x4(
