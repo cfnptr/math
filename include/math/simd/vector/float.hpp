@@ -1463,7 +1463,7 @@ static uint32 compressUnit3(f32x4 v) noexcept
  */
 static f32x4 decompressUnitVector(uint32 v) noexcept
 {
-	constexpr uint bitCount = 14, mask = (1u << bitCount) - 1;
+	constexpr uint32 bitCount = 14, mask = (1u << bitCount) - 1;
 	auto vector = f32x4(u32x4(v, (v >> bitCount), (v >> (bitCount * 2)), 0) & mask) * 
 		((float)M_SQRT1_2 * 2.0f / mask) - f32x4(M_SQRT1_2, M_SQRT1_2, M_SQRT1_2, 0.0f);
 	assert(vector.getZ() == 0.0f);
