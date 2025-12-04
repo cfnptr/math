@@ -359,7 +359,7 @@ static f32x4 multiply3x3(const f32x4x4& m, f32x4 v) noexcept
 	auto t = float3x3((float3)m.c0, (float3)m.c1, (float3)m.c2) * (float3)v;
 	result = f32x4(t.x, t.y, t.z, t.z);
 	#endif
-	return result.swizzle<SwX, SwY, SwZ, SwU>();
+	return result.swizzle<SwX, SwY, SwZ>();
 }
 
 /**

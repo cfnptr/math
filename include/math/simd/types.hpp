@@ -18,12 +18,14 @@
  */
 
 #pragma once
+#include "math/types.hpp"
 
 #if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
 
 #include <xmmintrin.h>
 #include <emmintrin.h>
 #include <tmmintrin.h>
+
 #define MATH_SIMD_SUPPORT_SSE
 #define MATH_SIMD_VECTOR_ALIGNMENT 16
 
@@ -48,6 +50,10 @@
 #define MATH_SIMD_VECTOR_ALIGNMENT 8
 #endif
 
+#if defined(_MSC_VER)
+#include <intrin.h>
+#endif
+
 namespace math
 {
 
@@ -64,5 +70,75 @@ typedef float _simd_f128[4];
 typedef int32 _simd_i128[4];
 typedef uint32 _simd_u128[4];
 #endif
+
+/**
+ * @brief Returns number of trailing zero bits. (How many low bits are zero)
+ * @param v target value to count
+ */
+static uint32 countTrailingZeros(uint32 v) noexcept
+{
+	#if defined(__BMI__) || defined(__BMI1__)
+	return _tzcnt_u32(v);
+	#elif defined(_MSC_VER)
+	if (v == 0u) return 32u;
+	unsigned long result;
+	_BitScanForward(&result, v);
+	return result;
+	#else
+	return v ? __builtin_ctz(v) : 32u;
+	#endif
+}
+/**
+ * @brief Returns number of leading zero bits. (How many high bits are zero)
+ * @param v target value to count
+ */
+static uint32 countLeadingZeros(uint32 v) noexcept
+{
+	#if defined(__LZCNT__)
+	return _lzcnt_u32(v);
+	#elif defined(_MSC_VER)
+		#if defined(__arm__)
+		return _CountLeadingZeros(v);
+		#else
+		if (v == 0u) return 32u;
+		unsigned long result;
+		_BitScanReverse(&result, v);
+		return 31u - result;
+		#endif
+	#else
+	return v ? __builtin_clz(v) : 32u;
+	#endif
+}
+
+/**
+ * @brief Returns number of 1 bits in a value
+ * @param v target value to count
+ */
+inline uint32 countBits(uint32 v)
+{
+	#if defined(__POPCNT__)
+	return _mm_popcnt_u32(v);
+	#elif defined(_MSC_VER)
+		#if defined(__arm__)
+		return _CountOneBits(v);
+		#else
+		v = v - ((v >> 1u) & 0x55555555u);
+		v = (v & 0x33333333u) + ((v >> 2u) & 0x33333333u);
+		v = (v + (v >> 4u)) & 0x0F0F0F0Fu;
+		return (v * 0x01010101u) >> 24u;
+		#endif
+	#else
+	return __builtin_popcount(v);
+	#endif
+}
+
+/**
+ * @brief Returns next higher power of 2 of a value, or the value itself.
+ * @param v target value to use
+ */
+static uint32 calcNextPowerOf2(uint32 v) noexcept
+{
+	return v <= 1 ? 1 : 1u << (32u - countLeadingZeros(v - 1u));
+}
 
 } // namespace math

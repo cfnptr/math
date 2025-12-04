@@ -797,27 +797,6 @@ static i32x4 max(i32x4 a, i32x4 b) noexcept
 }
 
 /**
- * @brief Returns minimum value of all SIMD vector components.
- * @param v target SIMD vector
- */
-static int32 min(i32x4 v) noexcept
-{
-	auto m = min(v, v.swizzle<SwY, SwU, SwW, SwU>());
-	m = min(m, m.swizzle<SwZ, SwU, SwU, SwU>());
-	return m.getX();
-}
-/**
- * @brief Returns maximum value of all SIMD vector components.
- * @param v target SIMD vector
- */
-static int32 max(i32x4 v) noexcept
-{
-	auto m = max(v, v.swizzle<SwY, SwU, SwW, SwU>());
-	m = max(m, m.swizzle<SwZ, SwU, SwU, SwU>());
-	return m.getX();
-}
-
-/**
  * @brief Returns minimum value of 4D SIMD vector components.
  * @param v target SIMD vector
  */
@@ -844,8 +823,8 @@ static int32 max4(i32x4 v) noexcept
  */
 static int32 min3(i32x4 v) noexcept
 {
-	auto m = min(v, v.swizzle<SwY, SwU, SwZ, SwU>());
-	m = min(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	auto m = min(v, v.swizzle<SwY, SwU, SwZ>());
+	m = min(m, m.swizzle<SwZ, SwU, SwU>());
 	return m.getX();
 }
 /**
@@ -854,8 +833,8 @@ static int32 min3(i32x4 v) noexcept
  */
 static int32 max3(i32x4 v) noexcept
 {
-	auto m = max(v, v.swizzle<SwY, SwU, SwZ, SwU>());
-	m = max(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	auto m = max(v, v.swizzle<SwY, SwU, SwZ>());
+	m = max(m, m.swizzle<SwZ, SwU, SwU>());
 	return m.getX();
 }
 

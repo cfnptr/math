@@ -113,4 +113,16 @@ static float gain(float x, float k) noexcept
 	return (x < 0.5f) ? a : 1.0f - a;
 }
 
+/**
+ * @brief Returns true if specified value is a power of 2.
+ * 
+ * @tparam T type of the value
+ * @param v target value to check
+ */
+template <typename T>
+static constexpr bool isPowerOf2(T v) noexcept
+{
+	return v > 0 && (v & (v - 1)) == 0;
+}
+
 } // namespace math

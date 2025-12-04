@@ -799,8 +799,8 @@ static float max4(f32x4 v) noexcept
  */
 static float min3(f32x4 v) noexcept
 {
-	auto m = min(v, v.swizzle<SwY, SwU, SwZ, SwU>());
-	m = min(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	auto m = min(v, v.swizzle<SwY, SwU, SwZ>());
+	m = min(m, m.swizzle<SwZ, SwU, SwU>());
 	return m.getX();
 }
 /**
@@ -809,8 +809,8 @@ static float min3(f32x4 v) noexcept
  */
 static float max3(f32x4 v) noexcept
 {
-	auto m = max(v, v.swizzle<SwY, SwU, SwZ, SwU>());
-	m = max(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	auto m = max(v, v.swizzle<SwY, SwU, SwZ>());
+	m = max(m, m.swizzle<SwZ, SwU, SwU>());
 	return m.getX();
 }
 
@@ -892,7 +892,7 @@ static f32x4 sign(f32x4 v) noexcept
  * @brief Returns sign bits of the SIMD vector. (4 bits)
  * @param v target SIMD vector
  */
-static int signBits(f32x4 v) noexcept
+static uint32 signBits(f32x4 v) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_movemask_ps(v.data);
@@ -902,6 +902,27 @@ static int signBits(f32x4 v) noexcept
 	#else
 	return signBits(v.floats);
 	#endif
+}
+
+/**
+ * @brief Returns index of the highest SIMD vector component value.
+ * @param v target SIMD vector
+ */
+static uint32 getHighest(f32x4 v) noexcept
+{
+	auto m = max(v, v.swizzle<SwY, SwX, SwW, SwZ>());
+	m = max(m, m.swizzle<SwZ, SwW, SwX, SwY>());
+	return countTrailingZeros(getTrues(equal(v, m)));
+}
+/**
+ * @brief Returns index of the lowest SIMD vector component value.
+ * @param v target SIMD vector
+ */
+static uint32 getLowest(f32x4 v) noexcept
+{
+	auto m = min(v, v.swizzle<SwY, SwX, SwW, SwZ>());
+	m = min(m, m.swizzle<SwZ, SwW, SwX, SwY>());
+	return countTrailingZeros(getTrues(equal(v, m)));
 }
 
 /**
@@ -1369,6 +1390,87 @@ static f32x4 lerp(f32x4 a, f32x4 b, float t) noexcept { return a * (1.0f - t) + 
 static f32x4 lerpDelta(f32x4 a, f32x4 b, float f, float dt) noexcept
 {
 	return a + (1.0f - std::pow(f, dt)) * (b - a);
+}
+
+/***********************************************************************************************************************
+ * @brief Compresses 4D SIMD unit vector into the 4 byte value.
+ * @details Precision is around 0.0005f, or 0.5 degree for a quaternion.
+ * @param v target SIMD unit vector to compress
+ */
+static uint32 compressUnit(f32x4 v) noexcept
+{
+	constexpr uint32 bitCount = 9, mask = (1 << bitCount) - 1u;
+	auto highestIdx = getHighest(abs(v)); uint32 value = 0;
+	if (v[highestIdx] < 0.0f) { value = 0x80000000u; v = -v; }
+	value |= highestIdx << 29u;
+
+	auto compressed = (u32x4)clamp(fma(v + M_SQRT1_2, f32x4(mask / 
+		((float)M_SQRT1_2) * 2.0f), f32x4(0.5f)), f32x4::zero, f32x4(mask));
+
+	switch (highestIdx)
+	{
+		case 0: compressed = compressed.swizzle<SwY, SwZ, SwW, SwU>(); break;
+		case 1: compressed = compressed.swizzle<SwX, SwZ, SwW, SwU>(); break;
+		case 2: compressed = compressed.swizzle<SwX, SwY, SwW, SwU>(); break;
+		default: abort();
+	}
+	return value | compressed.getX() | (compressed.getY() << bitCount) | (compressed.getZ() << (bitCount * 2));
+}
+/**
+ * @brief Decompresses 4D SIMD unit vector from the 4 byte value.
+ * @param v target compressed unit vector value
+ */
+static f32x4 decompressUnit(uint32 v) noexcept
+{
+	constexpr uint32 bitCount = 9, mask = (1u << bitCount) - 1u;
+	auto vector = f32x4(u32x4(v, (v >> bitCount), (v >> (bitCount * 2)), 0) & mask) * 
+		((float)M_SQRT1_2 * 2.0f / mask) - f32x4(M_SQRT1_2, M_SQRT1_2, M_SQRT1_2, 0.0f);
+	assert(vector.getW() == 0.0f);
+
+	vector.setW(std::sqrt(std::max(1.0f - lengthSq4(vector), 0.0f)));
+	if ((v & 0x80000000u) != 0u) vector = -vector;
+
+	// Swizzle the components in place
+	switch ((v >> 29u) & 3u)
+	{
+		case 0: vector = vector.swizzle<SwW, SwX, SwY, SwZ>(); break;
+		case 1: vector = vector.swizzle<SwX, SwW, SwY, SwZ>(); break;
+		case 2: vector = vector.swizzle<SwX, SwY, SwW, SwZ>(); break;
+		default: abort();
+	}
+	return vector;
+}
+
+/***********************************************************************************************************************
+ * @brief Compresses 3D SIMD unit vector into the 4 byte value. (Precision is around 0.0001f)
+ * @param v target SIMD unit vector to compress
+ */
+static uint32 compressUnit3(f32x4 v) noexcept
+{
+	constexpr uint32 bitCount = 14, mask = (1u << bitCount) - 1u;
+	auto highestIdx = getHighest(abs(v)); uint32 value = 0;
+	if (v[highestIdx] < 0.0f) { value = 0x80000000u; v = -v; }
+	value |= highestIdx << 29;
+
+	auto compressed = (u32x4)clamp(fma(v + M_SQRT1_2, f32x4(mask / 
+		((float)M_SQRT1_2) * 2.0f), f32x4(0.5f)), f32x4::zero, f32x4(mask));
+	compressed = highestIdx == 0 ? compressed.swizzle<SwY, SwZ, SwU>() : compressed.swizzle<SwX, SwZ, SwU>();
+	return value | compressed.getX() | (compressed.getY() << bitCount);
+}
+/**
+ * @brief Decompresses 3D SIMD unit vector from the 4 uint value.
+ * @param v target compressed unit vector value
+ */
+static f32x4 decompressUnitVector(uint32 v) noexcept
+{
+	constexpr uint bitCount = 14, mask = (1u << bitCount) - 1;
+	auto vector = f32x4(u32x4(v, (v >> bitCount), (v >> (bitCount * 2)), 0) & mask) * 
+		((float)M_SQRT1_2 * 2.0f / mask) - f32x4(M_SQRT1_2, M_SQRT1_2, M_SQRT1_2, 0.0f);
+	assert(vector.getZ() == 0.0f);
+
+	vector.setZ(std::sqrt(std::max(1.0f - lengthSq4(vector), 0.0f)));
+	if ((v & 0x80000000u) != 0u) vector = -vector;
+	return ((v >> 29u) & 3u) == 0u ? vector.swizzle<SwZ, SwX, SwY>() : vector.swizzle<SwX, SwZ, SwY>();
 }
 
 } // namespace math

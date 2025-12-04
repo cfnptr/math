@@ -670,7 +670,7 @@ static float2 sign(float2 v) noexcept { return float2(sign(v.x), sign(v.y)); }
  * @brief Returns sign bits of the vector. (2 bits)
  * @param v target vector
  */
-static int signBits(float2 v) noexcept { return (std::signbit(v.x) ? 1 : 0) | (std::signbit(v.y) ? 2 : 0); }
+static uint32 signBits(float2 v) noexcept { return (std::signbit(v.x) ? 1u : 0u) | (std::signbit(v.y) ? 2u : 0u); }
 
 /**
  * @brief Rounds each component of the vector to nearest integer. (1.5 -> 2.0; -1.5 -> -2.0)
@@ -941,9 +941,9 @@ static float3 sign(float3 v) noexcept { return float3(sign(v.x), sign(v.y), sign
  * @brief Returns sign bits of the vector. (3 bits)
  * @param v target vector
  */
-static int signBits(float3 v) noexcept
+static uint32 signBits(float3 v) noexcept
 {
-	return (std::signbit(v.x) ? 1 : 0) | (std::signbit(v.y) ? 2 : 0) | (std::signbit(v.z) ? 4 : 0);
+	return (std::signbit(v.x) ? 1u : 0u) | (std::signbit(v.y) ? 2u : 0u) | (std::signbit(v.z) ? 4u : 0u);
 }
 
 /**
@@ -1239,10 +1239,10 @@ static float4 sign(float4 v) noexcept { return float4(sign(v.x), sign(v.y), sign
  * @brief Returns sign bits of the vector. (4 bits)
  * @param v target vector
  */
-static int signBits(float4 v) noexcept
+static uint32 signBits(float4 v) noexcept
 {
-	return (std::signbit(v.x) ? 1 : 0) | (std::signbit(v.y) ? 2 : 0) | 
-		(std::signbit(v.z) ? 4 : 0) | (std::signbit(v.w) ? 8 : 0);
+	return (std::signbit(v.x) ? 1u : 0u) | (std::signbit(v.y) ? 2u : 0u) | 
+		(std::signbit(v.z) ? 4u : 0u) | (std::signbit(v.w) ? 8u : 0u);
 }
 
 /**

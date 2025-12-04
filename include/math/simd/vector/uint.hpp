@@ -322,7 +322,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 	 * @tparam Z third vector component swizzle index
 	 * @tparam W fourth vector component swizzle index
 	 */
-	template<uint32 X, uint32 Y, uint32 Z, uint32 W>
+	template<uint32 X, uint32 Y, uint32 Z, uint32 W = SwU>
 	u32x4 swizzle() const noexcept
 	{
 		static_assert(X <= 3, "X template parameter out of range");
@@ -826,27 +826,6 @@ static u32x4 max(u32x4 a, u32x4 b) noexcept
 }
 
 /**
- * @brief Returns minimum value of all SIMD vector components.
- * @param v target SIMD vector
- */
-static uint32 min(u32x4 v) noexcept
-{
-	auto m = min(v, v.swizzle<SwY, SwU, SwW, SwU>());
-	m = min(m, m.swizzle<SwZ, SwU, SwU, SwU>());
-	return m.getX();
-}
-/**
- * @brief Returns maximum value of all SIMD vector components.
- * @param v target SIMD vector
- */
-static uint32 max(u32x4 v) noexcept
-{
-	auto m = max(v, v.swizzle<SwY, SwU, SwW, SwU>());
-	m = max(m, m.swizzle<SwZ, SwU, SwU, SwU>());
-	return m.getX();
-}
-
-/**
  * @brief Returns minimum value of 4D SIMD vector components.
  * @param v target SIMD vector
  */
@@ -873,8 +852,8 @@ static uint32 max4(u32x4 v) noexcept
  */
 static uint32 min3(u32x4 v) noexcept
 {
-	auto m = min(v, v.swizzle<SwY, SwU, SwZ, SwU>());
-	m = min(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	auto m = min(v, v.swizzle<SwY, SwU, SwZ>());
+	m = min(m, m.swizzle<SwZ, SwU, SwU>());
 	return m.getX();
 }
 /**
@@ -883,8 +862,8 @@ static uint32 min3(u32x4 v) noexcept
  */
 static uint32 max3(u32x4 v) noexcept
 {
-	auto m = max(v, v.swizzle<SwY, SwU, SwZ, SwU>());
-	m = max(m, m.swizzle<SwZ, SwU, SwU, SwU>());
+	auto m = max(v, v.swizzle<SwY, SwU, SwZ>());
+	m = max(m, m.swizzle<SwZ, SwU, SwU>());
 	return m.getX();
 }
 
