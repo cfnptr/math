@@ -79,7 +79,7 @@ static void cmp(f32x4x4 a, float3x3 b, float tolerance = 1.0e-9f)
 			throw runtime_error("Float4 matrices test failed.");
 	}
 }
-static void cmp(int a, int b)
+static void cmp(uint32 a, uint32 b)
 {
 	if (a != b)
 		throw runtime_error("Int test failed.");
