@@ -239,6 +239,11 @@ public:
 		return extent.getX() * extent.getY() * extent.getZ();
 	}
 
+	/**
+	 * @brief Returns invalid inverted axis aligned bounding box.
+	 */
+	static Aabb inv() noexcept { Aabb aabb; aabb.min = f32x4::inf; aabb.max = f32x4::minusInf; return aabb; }
+
 	Aabb operator*(f32x4 v) const noexcept { return Aabb(min * v, max * v); }
 	Aabb operator/(f32x4 v) const noexcept { return Aabb(min / v, max / v); }
 	Aabb operator+(f32x4 v) const noexcept { return Aabb(min + v, max + v); }
