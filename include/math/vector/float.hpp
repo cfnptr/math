@@ -754,6 +754,11 @@ static bool isNormalized(float2 v, float tolerance = 1.0e-6f) noexcept
 {
 	return std::abs(lengthSq(v) - 1.0f) <= tolerance;
 }
+/**
+ * @brief Returns true if any vector element is not a number.
+ * @param v target vector to check
+ */
+static bool isNan(float2 v) noexcept { return isnan(v.x) || isnan(v.y); }
 
 /**
  * @brief Remaps each component of vector to the 0.0 - 1.0 range.
@@ -1038,6 +1043,11 @@ static bool isNormalized(float3 v, float tolerance = 1.0e-6f) noexcept
 {
 	return std::abs(lengthSq(v) - 1.0f) <= tolerance;
 }
+/**
+ * @brief Returns true if any vector element is not a number.
+ * @param v target vector to check
+ */
+static bool isNan(float3 v) noexcept { return isnan(v.x) || isnan(v.y) || isnan(v.z); }
 
 /**
  * @brief Remaps each component of vector to the 0.0 - 1.0 range.
@@ -1339,6 +1349,11 @@ static bool isNormalized(float4 v, float tolerance = 1.0e-6f) noexcept
 {
 	return std::abs(lengthSq(v) - 1.0f) <= tolerance;
 }
+/**
+ * @brief Returns true if any vector element is not a number.
+ * @param v target vector to check
+ */
+static bool isNan(float4 v) noexcept { return isnan(v.x) || isnan(v.y) || isnan(v.z) || isnan(v.w); }
 
 /**
  * @brief Remaps each component of vector to the 0.0 - 1.0 range.

@@ -1172,7 +1172,7 @@ static f32x4 normalize3(f32x4 v) noexcept
 }
 
 /**
- * @brief Returns true if SIMD vector is normalized with specified tolerance.
+ * @brief Returns true if 4D SIMD vector is normalized with specified tolerance.
  * 
  * @param v target SIMD vector to check
  * @param tolerance floating point precision tolerance
@@ -1182,7 +1182,7 @@ static bool isNormalized4(f32x4 v, float tolerance = 1.0e-6f) noexcept
 	return std::abs(lengthSq4(v) - 1.0f) <= tolerance;
 }
 /**
- * @brief Returns true if SIMD vector is normalized with specified tolerance.
+ * @brief Returns true if 3D SIMD vector is normalized with specified tolerance.
  * 
  * @param v target SIMD vector to check
  * @param tolerance floating point precision tolerance
@@ -1190,6 +1190,36 @@ static bool isNormalized4(f32x4 v, float tolerance = 1.0e-6f) noexcept
 static bool isNormalized3(f32x4 v, float tolerance = 1.0e-6f) noexcept
 {
 	return std::abs(lengthSq3(v) - 1.0f) <= tolerance;
+}
+
+/**
+ * @brief Returns true if any SIMD vector element is not a number.
+ * @param v target SIMD vector to check
+ */
+static bool isNan4(f32x4 v) noexcept
+{
+	#if defined(MATH_SIMD_SUPPORT_SSE)
+	return _mm_movemask_ps(_mm_cmpunord_ps(v.data, v.data)) != 0;
+	#elif defined(MATH_SIMD_SUPPORT_NEON)
+	return vaddvq_u32(vshrq_n_u32(vceqq_f32(v.data, v.data), 31)) != 4;
+	#else
+	return isNan((float4)v);
+	#endif
+}
+/**
+ * @brief Returns true if any SIMD vector element is not a number.
+ * @param v target SIMD vector to check
+ */
+static bool isNan3(f32x4 v) noexcept
+{
+	#if defined(MATH_SIMD_SUPPORT_SSE)
+	return (_mm_movemask_ps(_mm_cmpunord_ps(v.data, v.data)) & 0x7) != 0;
+	#elif defined(MATH_SIMD_SUPPORT_NEON)
+	auto mask = (uint32x4_t){ 1, 1, 1, 0 };
+	return vaddvq_u32(vandq_u32(vceqq_f32(v.data, v.data), mask)) != 3;
+	#else
+	return isNan((float3)v);
+	#endif
 }
 
 /***********************************************************************************************************************
