@@ -94,7 +94,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) quat : public f32x4
 	f32x4 operator*(f32x4 v) const noexcept
 	{
 		auto cq = cross3(*this, v), ccq = cross3(*this, cq);
-		return fma(fma(cq, f32x4(getW()), ccq), f32x4(2.0f), v);
+		return fma(fma(cq, splatW(), ccq), f32x4(2.0f), v);
 	}
 	/**
 	 * @brief Rotates this SIMD quaternion by the specified one.
@@ -198,8 +198,7 @@ static quat slerp(quat a, quat b, float t) noexcept
  */
 static quat conjugate(quat q) noexcept
 {
-	static const auto mask = floatAsUint(f32x4(-0.0f, -0.0f, -0.0f, 0.0f));
-	return uintAsFloat(floatAsUint(q) ^ mask);
+	return q.flipSign<-1, -1, -1, 1>();
 }
 /**
  * @brief Calculates inverse of the SIMD quaternion.

@@ -32,6 +32,10 @@
 namespace math
 {
 
+struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4;
+static u32x4 floatAsUint(f32x4 v) noexcept;
+static f32x4 uintAsFloat(u32x4 v) noexcept;
+
 /**
  * @brief SIMD 4 component 32bit floating point vector structure. (float4)
  * @details Commonly used to represent: points, positions, directions, velocities, etc.
@@ -376,6 +380,21 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 	f32x4 splatZ() const noexcept { return swizzle<SwZ, SwZ, SwZ, SwZ>(); }
 	f32x4 splatW() const noexcept { return swizzle<SwW, SwW, SwW, SwW>(); }
 
+	/**
+	 * @brief Flips sign of the SIMD vector components.
+	 *
+	 * @tparam X first vector component flip value, 1 or -1
+	 * @tparam Y second vector component flip value, 1 or -1
+	 * @tparam Z third vector component flip value, 1 or -1
+	 * @tparam W fourth vector component flip value, 1 or -1
+	 */
+	template<int X, int Y, int Z, int W = 1>
+	f32x4 flipSign() const noexcept
+	{
+		return *this ^ f32x4(X > 0 ? 0.0f : -0.0f, Y > 0 ? 0.0f : -0.0f, 
+			Z > 0 ? 0.0f : -0.0f, W > 0 ? 0.0f : -0.0f);
+	}
+
 	/*******************************************************************************************************************
 	 * @brief Returns SIMD vector component by index.
 	 * @param i target component index
@@ -472,6 +491,10 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		return f32x4(floats / v.floats);
 		#endif
 	}
+	f32x4 operator^(f32x4 v) const noexcept
+	{
+		return uintAsFloat(floatAsUint(*this) ^ floatAsUint(v));
+	}
 	f32x4 operator-() const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -493,15 +516,18 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		#endif
 	}
 	f32x4 operator/(float n) const noexcept { return *this / f32x4(n); }
+	f32x4 operator^(float n) const noexcept { return *this ^ f32x4(n); }
 
 	f32x4& operator+=(f32x4 v) noexcept { *this = *this + v; return *this; }
 	f32x4& operator-=(f32x4 v) noexcept { *this = *this - v; return *this; }
 	f32x4& operator*=(f32x4 v) noexcept { *this = *this * v; return *this; }
 	f32x4& operator/=(f32x4 v) noexcept { *this = *this / v; return *this; }
+	f32x4& operator^=(f32x4 v) noexcept { *this = *this ^ v; return *this; }
 	f32x4& operator+=(float n) noexcept { *this = *this + n; return *this; }
 	f32x4& operator-=(float n) noexcept { *this = *this - n; return *this; }
 	f32x4& operator*=(float n) noexcept { *this = *this * n; return *this; }
 	f32x4& operator/=(float n) noexcept { *this = *this / n; return *this; }
+	f32x4& operator^=(float n) noexcept { *this = *this ^ n; return *this; }
 	f32x4& operator=(float n) noexcept { *this = f32x4(n); return *this; }
 
 	//******************************************************************************************************************
@@ -1429,13 +1455,14 @@ static f32x4 lerpDelta(f32x4 a, f32x4 b, float f, float dt) noexcept
  */
 static uint32 compressUnit(f32x4 v) noexcept
 {
-	constexpr uint32 bitCount = 9, mask = (1 << bitCount) - 1u;
+	constexpr uint32 bitCount = 9, mask = (1 << bitCount) - 1u, maxValue = mask - 1;
+	constexpr float scale = maxValue / (2.0f * (float)M_SQRT1_2);
+
 	auto highestIdx = getHighest(abs(v)); uint32 value = 0;
 	if (v[highestIdx] < 0.0f) { value = 0x80000000u; v = -v; }
 	value |= highestIdx << 29u;
 
-	auto compressed = (u32x4)clamp(fma(v + M_SQRT1_2, f32x4(mask / 
-		((float)M_SQRT1_2) * 2.0f), f32x4(0.5f)), f32x4::zero, f32x4(mask));
+	auto compressed = (u32x4)clamp(fma(v + M_SQRT1_2, f32x4(scale), f32x4(0.5f)), f32x4::zero, f32x4(maxValue));
 
 	switch (highestIdx)
 	{
@@ -1452,11 +1479,11 @@ static uint32 compressUnit(f32x4 v) noexcept
  */
 static f32x4 decompressUnit(uint32 value) noexcept
 {
-	constexpr uint32 bitCount = 9, mask = (1u << bitCount) - 1u;
-	auto v = f32x4(u32x4(value, (value >> bitCount), (value >> (bitCount * 2)), 0) & mask) * 
-		((float)M_SQRT1_2 * 2.0f / mask) - f32x4(M_SQRT1_2, M_SQRT1_2, M_SQRT1_2, 0.0f);
-	assert(v.getW() == 0.0f);
+	constexpr uint32 bitCount = 9, mask = (1u << bitCount) - 1u, maxValue = mask - 1;
+	constexpr float scale = maxValue / (2.0f * (float)M_SQRT1_2);
 
+	auto v = f32x4(u32x4(value, (value >> bitCount), (value >> (bitCount * 2)), 0) & 
+		mask) * scale - f32x4(M_SQRT1_2, M_SQRT1_2, M_SQRT1_2, 0.0f);
 	v.setW(std::sqrt(std::max(1.0f - lengthSq4(v), 0.0f)));
 	if ((value & 0x80000000u) != 0u) v = -v;
 
@@ -1475,13 +1502,14 @@ static f32x4 decompressUnit(uint32 value) noexcept
  */
 static uint32 compressUnit3(f32x4 v) noexcept
 {
-	constexpr uint32 bitCount = 14, mask = (1u << bitCount) - 1u;
+	constexpr uint32 bitCount = 14, mask = (1u << bitCount) - 1u, maxValue = mask - 1;
+	constexpr float scale = maxValue / (2.0f * (float)M_SQRT1_2);
+
 	auto highestIdx = getHighest(abs(v)); uint32 value = 0;
 	if (v[highestIdx] < 0.0f) { value = 0x80000000u; v = -v; }
 	value |= highestIdx << 29;
 
-	auto compressed = (u32x4)clamp(fma(v + M_SQRT1_2, f32x4(mask / 
-		((float)M_SQRT1_2) * 2.0f), f32x4(0.5f)), f32x4::zero, f32x4(mask));
+	auto compressed = (u32x4)clamp(fma(v + M_SQRT1_2, f32x4(scale), f32x4(0.5f)), f32x4::zero, f32x4(maxValue));
 	compressed = highestIdx == 0 ? compressed.swizzle<SwY, SwZ, SwU>() : compressed.swizzle<SwX, SwZ, SwU>();
 	return value | compressed.getX() | (compressed.getY() << bitCount);
 }
@@ -1491,13 +1519,14 @@ static uint32 compressUnit3(f32x4 v) noexcept
  */
 static f32x4 decompressUnit3(uint32 value) noexcept
 {
-	constexpr uint32 bitCount = 14, mask = (1u << bitCount) - 1;
-	auto v = f32x4(u32x4(value, (value >> bitCount), (value >> (bitCount * 2)), 0) & mask) * 
-		((float)M_SQRT1_2 * 2.0f / mask) - f32x4(M_SQRT1_2, M_SQRT1_2, M_SQRT1_2, 0.0f);
-	assert(v.getZ() == 0.0f);
+	constexpr uint32 bitCount = 14, mask = (1u << bitCount) - 1, maxValue = mask - 1;
+	constexpr float scale = maxValue / (2.0f * (float)M_SQRT1_2);
 
-	v.setZ(std::sqrt(std::max(1.0f - lengthSq4(v), 0.0f)));
+	auto v = f32x4(u32x4(value, (value >> bitCount), 0, 0) & 
+		mask) * scale - f32x4(M_SQRT1_2, M_SQRT1_2, 0.0f, 0.0f);
+	v.setZ(std::sqrt(std::max(1.0f - lengthSq3(v), 0.0f)));
 	if ((value & 0x80000000u) != 0u) v = -v;
+
 	return ((value >> 29u) & 3u) == 0u ? v.swizzle<SwZ, SwX, SwY>() : v.swizzle<SwX, SwZ, SwY>();
 }
 
