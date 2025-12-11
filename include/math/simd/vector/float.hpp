@@ -1254,10 +1254,19 @@ static bool isNan3(f32x4 v) noexcept
  * @param n quatient numerator SIMD vector
  * @param d quatient denominator SIMD vector
  */
-static f32x4 mod(f32x4 n, f32x4 d) noexcept
-{
-    return n - floor(n / d) * d;
-}
+static f32x4 mod(f32x4 n, f32x4 d) noexcept { return n - floor(n / d) * d; }
+/**
+ * @brief Returns float remainder of numerator for each element of the SIMD vector.
+ * @param n quatient numerator SIMD vector
+ */
+static f32x4 mod(f32x4 n) noexcept { return n - floor(n); }
+/**
+ * @brief Returns float remainder of numerator for each element of the SIMD vector.
+ *
+ * @param n quatient numerator SIMD vector
+ * @param[out] i reference to the float integral part
+ */
+static f32x4 mod(f32x4 n, f32x4& i) noexcept { i = floor(n); return n - i; }
 
 /**
  * @brief Returns natural logarithm for each element of the SIMD vector. [r = inv(e^x)]
