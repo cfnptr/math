@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "math/angles.hpp"
-#include "math/sphere.hpp"
+#include "math/frustum.hpp"
 #include "math/matrix/projection.hpp"
 #include <stdexcept>
 
@@ -25,10 +25,9 @@ static void testPlanes()
 	if (!isNormalized3(plane.getNormal()))
 		throw runtime_error("Plane is not normalized.");
 
-	Plane frustumPlanes[Plane::frustumCount];
 	auto viewProj = calcPerspProjInfRevZ(radians(90.0f), 16.0f / 9.0f, 0.01f);
-	extractFrustumPlanes(f32x4x4(viewProj), frustumPlanes);
-	normalizePlanes(frustumPlanes, Plane::frustumCount);
+	auto frustum = Frustum((f32x4x4)viewProj);
+	frustum.normalize();
 }
 
 // TODO: test other containers.
