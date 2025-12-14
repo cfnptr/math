@@ -20,7 +20,6 @@
 
 #pragma once
 #include "math/ray.hpp"
-#include "math/plane.hpp"
 #include "math/frustum.hpp"
 
 // TODO: Port more Jolt optimized BBox functions.
