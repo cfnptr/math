@@ -20,7 +20,6 @@
 
 #pragma once
 #include "math/line.hpp"
-#include "math/matrix.hpp"
 #include "math/triangle.hpp"
 
 namespace math
@@ -32,11 +31,7 @@ namespace math
  */
 struct [[nodiscard]] Plane
 {
-public:
-	/**
-	 * @brief Frustum plane count. (Box side count)
-	 */
-	static constexpr uint8 frustumCount = 6;
+
 protected:
 	f32x4 normDist = f32x4::zero;
 public:
@@ -154,38 +149,6 @@ static f32x4 closestPoint(const Triangle& triangle, f32x4 point) noexcept
 	if (m == v.getY())
 		return c1;
 	return c2;
-}
-
-/***********************************************************************************************************************
- * @brief Extracts projection matrix frustum planes.
- * @warning Returned planes are unnormalized! Use @ref normalizePlanes().
- *
- * @param[in] frustum target projection matrix
- * @param[out] planes frustum plane array (6 planes)
- */
-static void extractFrustumPlanes(const f32x4x4& frustum, Plane* planes) noexcept
-{
-	auto t = transpose4x4(frustum);
-	auto c0W = t.c0.getW(), c1W = t.c1.getW(), c2W = t.c2.getW(), c3W = t.c3.getW();
-	
-	// Gribb & Hartmann method
-	planes[0] = Plane(f32x4(t.c3 + t.c0, 0.0f), c3W + c0W, false);
-	planes[1] = Plane(f32x4(t.c3 - t.c0, 0.0f), c3W - c0W, false);
-	planes[2] = Plane(f32x4(t.c3 - t.c1, 0.0f), c3W - c1W, false); // Flipped Vulkan NDC!
-	planes[3] = Plane(f32x4(t.c3 + t.c1, 0.0f), c3W + c1W, false); // Flipped Vulkan NDC!
-	planes[4] = Plane(f32x4(t.c2,        0.0f),       c2W, false);
-	planes[5] = Plane(f32x4(t.c3 - t.c2, 0.0f), c3W - c2W, false);
-}
-/**
- * @brief Normalizes specified planes.
- *
- * @param[out] planes target plane array
- * @param planeCount plane array size
- */
-static void normalizePlanes(Plane* planes, psize planeCount) noexcept
-{
-	for (psize i = 0; i < planeCount; i++)
-		planes[i].normalize();
 }
 
 } // namespace math

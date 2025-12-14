@@ -21,6 +21,7 @@
 #pragma once
 #include "math/ray.hpp"
 #include "math/plane.hpp"
+#include "math/frustum.hpp"
 
 // TODO: Port more Jolt optimized BBox functions.
 
@@ -431,12 +432,11 @@ bool isAabbIntersected(f32x4 position, f32x4 extent, const Triangle& triangle) n
  * frustum is a truncated pyramid-shaped volume that represents everything the camera can potentially see in the 
  * scene, based on its position, orientation, and field of view.
  *
- * @param[in] planes target frustum planes
- * @param planeCount frustum plane count
+ * @param[in] frustum target view frustum
  * @param[in] aabb target AABB to check
  * @param[in] model AABB transformation matrix
  */
-static bool isBehindFrustum(const Plane* planes, uint8 planeCount, const Aabb& aabb, const f32x4x4& model) noexcept
+static bool isBehindFrustum(const Frustum& frustum, const Aabb& aabb, const f32x4x4& model) noexcept
 {
 	auto min = aabb.getMin(), max = aabb.getMax();
 	auto minX = min.getX(), minY = min.getY(), minZ = min.getZ();
@@ -450,17 +450,17 @@ static bool isBehindFrustum(const Plane* planes, uint8 planeCount, const Aabb& a
 	auto v5 = model * f32x4(maxX, minY, maxZ, 1.0f);
 	auto v6 = model * f32x4(maxX, maxY, minZ, 1.0f);
 	auto v7 = model * f32x4(max, 1.0f);
+	auto planeCount = frustum.getPlaneCount();
 
 	for (uint8 i = 0; i < planeCount; i++)
 	{
-		auto plane = planes[i];
+		auto plane = frustum.planes[i];
 		auto d0 = f32x4(distance3(plane, v0), distance3(plane, v1), distance3(plane, v2), distance3(plane, v3));
 		auto d1 = f32x4(distance3(plane, v4), distance3(plane, v5), distance3(plane, v6), distance3(plane, v7)); // TODO: use f32x4x8?
 		
 		if (areAllTrue(d0 < 0.0f & d1 < 0.0f))
 			return true;
 	}
-
 	return false;
 }
 
@@ -468,11 +468,10 @@ static bool isBehindFrustum(const Plane* planes, uint8 planeCount, const Aabb& a
  * @brief Returns true if AABB is behind the frustum planes.
  * @details See the @ref isBehindFrustum().
  *
- * @param[in] planes target frustum planes
- * @param planeCount frustum plane count
+ * @param[in] frustum target view frustum
  * @param[in] aabb target AABB to check
  */
-static bool isBehindFrustum(const Plane* planes, uint8 planeCount, const Aabb& aabb) noexcept
+static bool isBehindFrustum(const Frustum& frustum, const Aabb& aabb) noexcept
 {
 	auto min = aabb.getMin(), max = aabb.getMax();
 	auto minX = min.getX(), minY = min.getY(), minZ = min.getZ();
@@ -486,17 +485,17 @@ static bool isBehindFrustum(const Plane* planes, uint8 planeCount, const Aabb& a
 	auto v5 = f32x4(maxX, minY, maxZ, 1.0f);
 	auto v6 = f32x4(maxX, maxY, minZ, 1.0f);
 	auto v7 = f32x4(max, 1.0f);
+	auto planeCount = frustum.getPlaneCount();
 
 	for (uint8 i = 0; i < planeCount; i++)
 	{
-		auto plane = planes[i];
+		auto plane = frustum.planes[i];
 		auto d0 = f32x4(distance3(plane, v0), distance3(plane, v1), distance3(plane, v2), distance3(plane, v3));
 		auto d1 = f32x4(distance3(plane, v4), distance3(plane, v5), distance3(plane, v6), distance3(plane, v7));
 		
 		if (areAllTrue(d0 < 0.0f & d1 < 0.0f))
 			return true;
 	}
-
 	return false;
 }
 

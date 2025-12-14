@@ -175,13 +175,12 @@ public:
 	/**
 	 * @brief Collects all primitives inside specified frustum.
 	 * 
-	 * @param[in] planes target frustum planes
-	 * @param planeCount frustum plane count
+	 * @param[in] frustum target view frustum
 	 * @param[out] primitives collected primitives array
 	 * @param[in] nodeStack local node stack or null
 	 */
-	uint32 collectInFrustum(const Plane* planes, uint8 planeCount, 
-		uint32* primitives, stack<Node*, vector<Node*>>* nodeStack = nullptr);
+	uint32 collectInFrustum(const Frustum& frustum, uint32* primitives, 
+		stack<Node*, vector<Node*>>* nodeStack = nullptr);
 
 	/**
 	 * @brief Traverses BVH tree.
