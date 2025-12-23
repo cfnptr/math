@@ -673,6 +673,17 @@ static float2 sign(float2 v) noexcept { return float2(sign(v.x), sign(v.y)); }
 static uint32 signBits(float2 v) noexcept { return (std::signbit(v.x) ? 1u : 0u) | (std::signbit(v.y) ? 2u : 0u); }
 
 /**
+ * @brief Returns index of the highest vector component value.
+ * @param v target vector
+ */
+static constexpr uint32 getHighest(float2 v) noexcept { return v.x > v.y ? 0 : 1; }
+/**
+ * @brief Returns index of the lowest vector component value.
+ * @param v target vector
+ */
+static constexpr uint32 getLowest3(float2 v) noexcept { return v.x < v.y ? 0 : 1; }
+
+/**
  * @brief Rounds each component of the vector to nearest integer. (1.5 -> 2.0; -1.5 -> -2.0)
  * @param v target vector
  */
@@ -950,6 +961,17 @@ static uint32 signBits(float3 v) noexcept
 {
 	return (std::signbit(v.x) ? 1u : 0u) | (std::signbit(v.y) ? 2u : 0u) | (std::signbit(v.z) ? 4u : 0u);
 }
+
+/**
+ * @brief Returns index of the highest vector component value.
+ * @param v target vector
+ */
+static constexpr uint32 getHighest(float3 v) noexcept { return v.x > v.y ? (v.z > v.x ? 2 : 0) : (v.z > v.y ? 2 : 1); }
+/**
+ * @brief Returns index of the lowest vector component value.
+ * @param v target vector
+ */
+static constexpr uint32 getLowest(float3 v) noexcept { return v.x < v.y ? (v.z < v.x ? 2 : 0) : (v.z < v.y ? 2 : 1); }
 
 /**
  * @brief Rounds each component of the vector to nearest integer. (1.5 -> 2.0; -1.5 -> -2.0)

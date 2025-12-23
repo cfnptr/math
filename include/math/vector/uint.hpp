@@ -506,9 +506,9 @@ static string toString(uint2 v) { return to_string(v.x) + " " + to_string(v.y); 
 /***********************************************************************************************************************
  * @brief Returns mask of vector components set to true. (2bits)
  */
-static constexpr int getTrues(uint2 v) noexcept
+static constexpr uint32 getTrues(uint2 v) noexcept
 {
-	return (v.x >> 31) | ((v.y >> 31) << 1);
+	return (v.x >> 31u) | ((v.y >> 31u) << 1u);
 }
 /**
  * @brief Returns true if all vector component bits are set true.
@@ -644,9 +644,9 @@ static string toString(uint3 v) { return to_string(v.x) + " " + to_string(v.y) +
 /***********************************************************************************************************************
  * @brief Returns mask of vector components set to true. (3bits)
  */
-static constexpr int getTrues(uint3 v) noexcept
+static constexpr uint32 getTrues(uint3 v) noexcept
 {
-	return (v.x >> 31) | ((v.y >> 31) << 1) | ((v.z >> 31) << 2);
+	return (v.x >> 31u) | ((v.y >> 31u) << 1u) | ((v.z >> 31u) << 2u);
 }
 /**
  * @brief Returns true if all vector component bits are set true.
@@ -785,9 +785,9 @@ static string toString(uint4 v)
 /***********************************************************************************************************************
  * @brief Returns mask of vector components set to true. (4bits)
  */
-static constexpr int getTrues(uint4 v) noexcept
+static constexpr uint32 getTrues(uint4 v) noexcept
 {
-	return (v.x >> 31) | ((v.y >> 31) << 1) | ((v.z >> 31) << 2) | ((v.w >> 31) << 3);
+	return (v.x >> 31u) | ((v.y >> 31u) << 1u) | ((v.z >> 31u) << 2u) | ((v.w >> 31u) << 3u);
 }
 /**
  * @brief Returns true if all vector component bits are set true.

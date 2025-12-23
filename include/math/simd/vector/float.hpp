@@ -931,24 +931,41 @@ static uint32 signBits(f32x4 v) noexcept
 }
 
 /**
- * @brief Returns index of the highest SIMD vector component value.
+ * @brief Returns index of the highest 4D SIMD vector component value.
  * @param v target SIMD vector
  */
-static uint32 getHighest(f32x4 v) noexcept
+static uint32 getHighest4(f32x4 v) noexcept
 {
 	auto m = max(v, v.swizzle<SwY, SwX, SwW, SwZ>());
 	m = max(m, m.swizzle<SwZ, SwW, SwX, SwY>());
 	return countTrailingZeros(getTrues(equal(v, m)));
 }
 /**
- * @brief Returns index of the lowest SIMD vector component value.
+ * @brief Returns index of the highest 3D SIMD vector component value.
  * @param v target SIMD vector
  */
-static uint32 getLowest(f32x4 v) noexcept
+static uint32 getHighest3(f32x4 v) noexcept
+{
+	return v.getX() > v.getY() ? (v.getZ() > v.getX() ? 2 : 0) : (v.getZ() > v.getY() ? 2 : 1);
+}
+
+/**
+ * @brief Returns index of the lowest 4D SIMD vector component value.
+ * @param v target SIMD vector
+ */
+static uint32 getLowest4(f32x4 v) noexcept
 {
 	auto m = min(v, v.swizzle<SwY, SwX, SwW, SwZ>());
 	m = min(m, m.swizzle<SwZ, SwW, SwX, SwY>());
 	return countTrailingZeros(getTrues(equal(v, m)));
+}
+/**
+ * @brief Returns index of the lowest 3D SIMD vector component value.
+ * @param v target SIMD vector
+ */
+static uint32 getLowest3(f32x4 v) noexcept
+{
+	return v.getX() < v.getY() ? (v.getZ() < v.getX() ? 2 : 0) : (v.getZ() < v.getY() ? 2 : 1);
 }
 
 /**
@@ -1467,7 +1484,7 @@ static uint32 compressUnit(f32x4 v) noexcept
 	constexpr uint32 bitCount = 9, mask = (1 << bitCount) - 1u, maxValue = mask - 1;
 	constexpr float scale = maxValue / (2.0f * (float)M_SQRT1_2);
 
-	auto highestIdx = getHighest(abs(v)); uint32 value = 0;
+	auto highestIdx = getHighest4(abs(v)); uint32 value = 0;
 	if (v[highestIdx] < 0.0f) { value = 0x80000000u; v = -v; }
 	value |= highestIdx << 29u;
 
@@ -1514,7 +1531,7 @@ static uint32 compressUnit3(f32x4 v) noexcept
 	constexpr uint32 bitCount = 14, mask = (1u << bitCount) - 1u, maxValue = mask - 1;
 	constexpr float scale = maxValue / (2.0f * (float)M_SQRT1_2);
 
-	auto highestIdx = getHighest(abs(v)); uint32 value = 0;
+	auto highestIdx = getHighest3(abs(v)); uint32 value = 0;
 	if (v[highestIdx] < 0.0f) { value = 0x80000000u; v = -v; }
 	value |= highestIdx << 29;
 

@@ -642,7 +642,7 @@ static string toString(u32x4 v)
 /***********************************************************************************************************************
  * @brief Returns mask of SIMD vector components set to true. (4bits)
  */
-static int getTrues(u32x4 v) noexcept
+static uint32 getTrues(u32x4 v) noexcept
 {
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	return _mm_movemask_ps(_mm_castsi128_ps(v.data));

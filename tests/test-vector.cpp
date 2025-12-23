@@ -269,7 +269,7 @@ int main()
 		" NEON"
 		#endif
 	;
-	cout << "SIMD levels:" << simdLevels;
+	cout << "SIMD levels:" << simdLevels << endl;
 
 	testFloatVectors();
 	testIntVectors();
