@@ -50,7 +50,7 @@ struct [[nodiscard]] alignas(8) f16x4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vdup_n_f16(0.0f);
 		#else
-		memset(data, 0, sizeof(half) * 4);
+		memset(floats, 0, sizeof(half) * 4);
 		#endif
 	}
 	/**
@@ -123,7 +123,8 @@ struct [[nodiscard]] alignas(8) f16x4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vcvt_f16_f32(v.data);
 		#else
-		floats[0] = v.floats[0]; floats[1] = v.floats[1]; floats[2] = v.floats[2]; floats[3] = v.floats[3];
+		floats[0] = (half)v.floats[0]; floats[1] = (half)v.floats[1];
+		floats[2] = (half)v.floats[2]; floats[3] = (half)v.floats[3];
 		#endif
 	}
 
