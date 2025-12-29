@@ -191,7 +191,7 @@ struct [[nodiscard]] alignas(8) f16x4
 		#if defined(__F16C__)
 		return _mm_cvtph_ps(_mm_loadl_epi64((__m128i*)&data));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		return vcvt_f32_f16(v.data);
+		return vcvt_f32_f16(data);
 		#else
 		return f32x4(floats[0], floats[1], floats[2], floats[3]);
 		#endif
