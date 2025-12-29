@@ -14,7 +14,7 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common single instruction multiple data (SIMD) signed integer vector functions.
+ * @brief Common single instruction multiple data (SIMD) 32-bit signed integer vector functions.
  */
 
 #pragma once
@@ -38,8 +38,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		float4 floats;
 	};
 
-	i32x4(const i32x4& v) = default;
-	i32x4& operator=(const i32x4& v) = default;
+	i32x4(const i32x4& v) noexcept = default;
+	i32x4& operator=(const i32x4& v) noexcept = default;
 
 	/**
 	 * @brief Creates a new zero initialized SIMD 4 component 32bit signed integer vector structure. (int4)
@@ -128,14 +128,14 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 	 * @brief Creates a new SIMD 4 component 32bit signed integer vector structure. (int4)
 	 * @param data target vector SIMD data
 	 */
-	i32x4(_simd_i128 data) : data(data) { }
+	i32x4(_simd_i128 data) noexcept : data(data) { }
 	#endif
 
 	/**
 	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (int4)
 	 * @param v target vector unsigned integer SIMD data
 	 */
-	explicit i32x4(u32x4 v)
+	explicit i32x4(u32x4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		data = v.data;

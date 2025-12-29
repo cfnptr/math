@@ -59,14 +59,17 @@ namespace math
 
 #if defined(MATH_SIMD_SUPPORT_SSE)
 typedef __m128 _simd_f128;
+typedef uint64 _simd_f64;
 typedef __m128i _simd_i128;
 typedef __m128i _simd_u128;
 #elif defined(MATH_SIMD_SUPPORT_NEON)
 typedef float32x4_t _simd_f128;
+typedef float16x4_t _simd_f64;
 typedef int32x4_t _simd_i128;
 typedef uint32x4_t _simd_u128;
 #else
 typedef float _simd_f128[4];
+typedef half _simd_f64[4];
 typedef int32 _simd_i128[4];
 typedef uint32 _simd_u128[4];
 #endif

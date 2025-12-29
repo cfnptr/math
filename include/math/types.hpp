@@ -18,6 +18,8 @@
  */
 
 #pragma once
+
+#define __STDC_WANT_IEC_60559_TYPES_EXT__
 #include <cstdint>
 #include <cstddef>
 
@@ -62,5 +64,10 @@ typedef uint64_t uint64;
  * @brief Unsigned pointer type. (CPU architecture dependant)
  */
 typedef size_t psize;
+
+/**
+ * @brief Signed 16bit floating point type. (Half precission float)
+ */
+typedef _Float16 half;
 
 } // namespace math

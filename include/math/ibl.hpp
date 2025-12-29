@@ -34,7 +34,6 @@ namespace math::ibl
 
 constexpr int32 shBandCount = 3;    /**< Spherical harmonics band count. */
 constexpr int32 shCoeffCount = 9;   /**< Spherical harmonics coefficient count. (3 * 3) */
-constexpr int32 shBinarySize = 144; /**< Spherical harmonics size in bytes. (9 * 4 * 4) */
 
 /***********************************************************************************************************************
  * @brief Converts texture coordinates to the clip space.
