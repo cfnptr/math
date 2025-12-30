@@ -20,7 +20,7 @@
 #pragma once
 #include "math/simd/vector/float.hpp"
 
-#if defined(MATH_SIMD_SUPPORT_AVX2)
+#if defined(MATH_SIMD_SUPPORT_AVX2) || defined(MATH_SIMD_SUPPORT_NEON) || defined(FLT16_MIN)
 namespace math
 {
 
@@ -202,4 +202,4 @@ struct [[nodiscard]] alignas(8) f16x4
 };
 
 } // namespace math
-#endif // MATH_SIMD_SUPPORT_AVX2
+#endif
