@@ -20,6 +20,7 @@
 #pragma once
 #include "math/simd/vector/float.hpp"
 
+#if defined(MATH_SIMD_SUPPORT_AVX2)
 namespace math
 {
 
@@ -45,7 +46,7 @@ struct [[nodiscard]] alignas(8) f16x4
 	 */
 	f16x4() noexcept
 	{
-		#if defined(__F16C__)
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		data = 0;
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vdup_n_f16(0.0f);
@@ -59,7 +60,7 @@ struct [[nodiscard]] alignas(8) f16x4
 	 */
 	explicit f16x4(half xyzw) noexcept
 	{
-		#if defined(__F16C__)
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		_mm_storel_epi64((__m128i*)&data, _mm_cvtps_ph(_mm_set1_ps(xyzw), _MM_FROUND_TO_NEAREST_INT));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vdup_n_f16(xyzw);
@@ -77,7 +78,7 @@ struct [[nodiscard]] alignas(8) f16x4
 	 */
 	f16x4(half x, half y, half z, half w) noexcept
 	{
-		#if defined(__F16C__)
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		_mm_storel_epi64((__m128i*)&data, _mm_cvtps_ph(_mm_set_ps(w, z, y, x), _MM_FROUND_TO_NEAREST_INT));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = (float16x4_t){ x, y, z, w };
@@ -95,7 +96,7 @@ struct [[nodiscard]] alignas(8) f16x4
 	 */
 	f16x4(half x, half y, half z) noexcept
 	{
-		#if defined(__F16C__)
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		_mm_storel_epi64((__m128i*)&data, _mm_cvtps_ph(_mm_set_ps(z, z, y, x), _MM_FROUND_TO_NEAREST_INT));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = (float16x4_t){ x, y, z, z };
@@ -118,7 +119,7 @@ struct [[nodiscard]] alignas(8) f16x4
 	 */
 	explicit f16x4(f32x4 v) noexcept
 	{
-		#if defined(__F16C__)
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		_mm_storel_epi64((__m128i*)&data, _mm_cvtps_ph(v.data, _MM_FROUND_TO_NEAREST_INT));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vcvt_f16_f32(v.data);
@@ -188,7 +189,7 @@ struct [[nodiscard]] alignas(8) f16x4
 	 */
 	explicit operator f32x4() const noexcept
 	{
-		#if defined(__F16C__)
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		return _mm_cvtph_ps(_mm_loadl_epi64((__m128i*)&data));
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcvt_f32_f16(data);
@@ -201,3 +202,4 @@ struct [[nodiscard]] alignas(8) f16x4
 };
 
 } // namespace math
+#endif // MATH_SIMD_SUPPORT_AVX2

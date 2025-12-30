@@ -164,6 +164,8 @@ static void testFloatVectors()
 		cmp(simdSin, sin(vecRight));
 		cmp(simdCos, cos(vecRight));
 	}
+	cmp((f32x4)(f16x4)simdLeft, vecLeft, 1.0e-3f);
+	cmp((f32x4)(f16x4)simdRight, vecRight, 1.0e-3f);
 }
 static void testIntVectors()
 {

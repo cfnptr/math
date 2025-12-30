@@ -20,8 +20,13 @@
 #pragma once
 
 #define __STDC_WANT_IEC_60559_TYPES_EXT__
+#include <cfloat>
 #include <cstdint>
 #include <cstddef>
+
+#ifndef FLT16_MIN
+#define _Float16 uint16_t // Note: MSVC fix
+#endif
 
 namespace math
 {
