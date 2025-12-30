@@ -136,13 +136,19 @@ static f32x4 importanceSamplingNdfDggx(float2 u, float a) noexcept
  */
 static f32x4 diffuseIrradiance(float3 normal, const f32x4* shBuffer) noexcept
 {
-	f32x4 irradiance = shBuffer[0] +
-		shBuffer[1] * (normal.y) + shBuffer[2] * (normal.z) + shBuffer[3] * (normal.x) +
-		shBuffer[4] * (normal.y * normal.x) +
-		shBuffer[5] * (normal.y * normal.z) +
-		shBuffer[6] * (3.0f * normal.z * normal.z - 1.0f) +
-		shBuffer[7] * (normal.z * normal.x) +
-		shBuffer[8] * (normal.x * normal.x - normal.y * normal.y);
+	auto qb = float4(normal.y * normal.x, normal.y * normal.z, 
+		std::fma(normal.z * normal.z, 3.0f, -1.0f), normal.z * normal.x);
+	auto ft = normal.x * normal.x - normal.y * normal.y;
+
+	auto irradiance = shBuffer[0];
+	irradiance += shBuffer[1] * normal.y;
+	irradiance += shBuffer[2] * normal.z;
+	irradiance += shBuffer[3] * normal.x;
+	irradiance += shBuffer[4] * qb.x;
+	irradiance += shBuffer[5] * qb.y;
+	irradiance += shBuffer[6] * qb.z;
+	irradiance += shBuffer[7] * qb.w;
+	irradiance += shBuffer[8] * ft;
 	return max(irradiance, f32x4::zero);
 }
 
