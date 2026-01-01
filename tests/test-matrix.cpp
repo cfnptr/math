@@ -1,4 +1,4 @@
-// Copyright 2022-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2022-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -85,6 +85,7 @@ static void cmp(uint32 a, uint32 b)
 		throw runtime_error("Uint test failed.");
 }
 
+//**********************************************************************************************************************
 static constexpr auto matLeft = float4x4(
 	0.0f, 2.3f, 4.56f, 78.9f,
 	1.0f, 0.023f, 4.5f, 6789.0f,

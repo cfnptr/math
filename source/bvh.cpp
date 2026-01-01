@@ -1,4 +1,4 @@
-// Copyright 2022-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2022-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@
 
 using namespace math;
 
-//**********************************************************************************************************************
 static Aabb calculateNodeAabb(uint32 firstPrimitive, uint32 primitiveCount, const uint8* vertices, const uint8* indices,
 	const uint32* primitives, uint32 vertexSize, uint32 indexSize, const function<uint32(const uint8*)>& getIndex)
 {

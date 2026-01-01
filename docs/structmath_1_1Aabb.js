@@ -17,7 +17,6 @@ var structmath_1_1Aabb =
     [ "getExtent", "structmath_1_1Aabb.html#a7ba98a54026e640b8264aff80b29380b", null ],
     [ "extend", "structmath_1_1Aabb.html#a9d0cfc4b930ee32b92bfbe397b062abe", null ],
     [ "extend", "structmath_1_1Aabb.html#ac64d11dbe34bc5bfdc850395848e9e08", null ],
-    [ "shrink", "structmath_1_1Aabb.html#aa57b5928f58aac60d72e2d246162a170", null ],
     [ "shrink", "structmath_1_1Aabb.html#aa7bf5a06f3037f878b1805de53b873e5", null ],
     [ "translate", "structmath_1_1Aabb.html#a914a937e96e356fe63a1572e4ac111d8", null ],
     [ "scale", "structmath_1_1Aabb.html#a31411b9ac63327e715bee14cfca85a3e", null ],

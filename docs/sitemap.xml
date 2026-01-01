@@ -11,16 +11,49 @@
     <loc>https://cfnptr.github.io/math/angles_8hpp.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/plane_8hpp.html</loc>
+    <loc>https://cfnptr.github.io/math/brdf_8hpp.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/brdf_8hpp.html</loc>
+    <loc>https://cfnptr.github.io/math/color-space_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/bvh_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/color_8hpp.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/line_8hpp.html</loc>
   </url>
   <url>
+    <loc>https://cfnptr.github.io/math/matrix_2float_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/frustum_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/simd_2matrix_2float_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/random_8hpp.html</loc>
+  </url>
+  <url>
     <loc>https://cfnptr.github.io/math/common_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/simd_2vector_2uint_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/packed-vector_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/simd_2vector_2float_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/sh_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/plane_8hpp.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/ibl_8hpp.html</loc>
@@ -32,76 +65,55 @@
     <loc>https://cfnptr.github.io/math/matrix_8hpp.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/bvh_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/ray_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/quaternion_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/simd_2types_8hpp.html</loc>
-  </url>
-  <url>
     <loc>https://cfnptr.github.io/math/types_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/sh_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/simd_2matrix_2float_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/tone-mapping_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/simd_2vector_2float_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/version_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/simd_2vector_2int_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/vector_2int_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/simd_2vector_2uint_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/matrix_2float_8hpp.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/color_8hpp.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/projection_8hpp.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/color-space_8hpp.html</loc>
-  </url>
-  <url>
     <loc>https://cfnptr.github.io/math/sphere_8hpp.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/vector_8hpp.html</loc>
+    <loc>https://cfnptr.github.io/math/simd_2vector_2int_8hpp.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/packed-vector_8hpp.html</loc>
+    <loc>https://cfnptr.github.io/math/half_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/version_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/tone-mapping_8hpp.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/triangle_8hpp.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/vector_2uint_8hpp.html</loc>
+    <loc>https://cfnptr.github.io/math/quaternion_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/vector_2float_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/simd_2types_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/ray_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/metric_8hpp.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/pbr-colors_8hpp.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/vector_2float_8hpp.html</loc>
+    <loc>https://cfnptr.github.io/math/vector_2uint_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/vector_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/vector_2int_8hpp.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/md_BUILDING.html</loc>
@@ -110,55 +122,88 @@
     <loc>https://cfnptr.github.io/math/structmath_1_1Aabb.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1f32x4.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/unionmath_1_1f32x4_8____unnamed0____.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1float2x2.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1float3.html</loc>
-  </url>
-  <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1Color.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1float4x3.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1float4x4.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1i32x4.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/unionmath_1_1i32x4_8____unnamed0____.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1int2.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1int3.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1Line.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1Sphere.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float3x3.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1quat.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1Version.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float3x4.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/classmath_1_1PackedVector.html</loc>
   </url>
   <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1f32x4x4.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Frustum.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Sphere.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1uint3.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1int2.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float4x3.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/unionmath_1_1f32x4_8____unnamed0____.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Version.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1int4.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Bvh.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float2.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Triangle.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1u32x4.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float3.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1f32x4.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float4.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float4x4.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1int3.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1uint2.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1uint4.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float2x2.html</loc>
+  </url>
+  <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1Plane.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/unionmath_1_1i32x4_8____unnamed0____.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1Ray.html</loc>
@@ -167,49 +212,22 @@
     <loc>https://cfnptr.github.io/math/unionmath_1_1f32x4_8____unnamed0____-members.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1Triangle.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1i32x4.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1uint2.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1uint3.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1uint4.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1int4.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1float4.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1f32x4x4.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/unionmath_1_1i32x4_8____unnamed0____-members.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1float3x3.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1u32x4.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1float2.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1Bvh.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1quat.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/unionmath_1_1u32x4_8____unnamed0____.html</loc>
   </url>
   <url>
+    <loc>https://cfnptr.github.io/math/unionmath_1_1i32x4_8____unnamed0____-members.html</loc>
+  </url>
+  <url>
     <loc>https://cfnptr.github.io/math/unionmath_1_1u32x4_8____unnamed0____-members.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1Sphere-members.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Frustum-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/classmath_1_1PackedVector-members.html</loc>
@@ -218,37 +236,40 @@
     <loc>https://cfnptr.github.io/math/structmath_1_1Line-members.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1Ray-members.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1Triangle-members.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Sphere-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1Version-members.html</loc>
   </url>
   <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Triangle-members.html</loc>
+  </url>
+  <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1Plane-members.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1float2x2-members.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Ray-members.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float3x4-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1float4x3-members.html</loc>
   </url>
   <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float2x2-members.html</loc>
+  </url>
+  <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1float3x3-members.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1int2-members.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1float2-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1Bvh-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1Bvh_1_1Node.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1float2-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1uint2-members.html</loc>
@@ -260,7 +281,13 @@
     <loc>https://cfnptr.github.io/math/structmath_1_1float3-members.html</loc>
   </url>
   <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1int2-members.html</loc>
+  </url>
+  <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1uint3-members.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Bvh_1_1Node-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1Color-members.html</loc>
@@ -269,13 +296,10 @@
     <loc>https://cfnptr.github.io/math/structmath_1_1int3-members.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1f32x4x4-members.html</loc>
-  </url>
-  <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1float4-members.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1Bvh_1_1Node-members.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1Aabb-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1int4-members.html</loc>
@@ -284,19 +308,19 @@
     <loc>https://cfnptr.github.io/math/structmath_1_1uint4-members.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1Aabb-members.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1f32x4x4-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1quat-members.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1u32x4-members.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1i32x4-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/structmath_1_1f32x4-members.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/math/structmath_1_1i32x4-members.html</loc>
+    <loc>https://cfnptr.github.io/math/structmath_1_1u32x4-members.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/math/dir_d44c64559bbebec7f509842c48db8b23.html</loc>

@@ -1,4 +1,4 @@
-// Copyright 2022-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2022-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -73,6 +73,7 @@ static void cmp(bool a, bool b)
 		throw runtime_error("Bool test failed.");
 }
 
+//**********************************************************************************************************************
 static void testFloatVectors()
 {
 	const auto vecLeft = float4(0.0f, 2.3f, 4.56f, 78.9f), vecRight = float4(1.0f, -23.0f, 4.56f, -0.0789);
@@ -167,6 +168,8 @@ static void testFloatVectors()
 	cmp((f32x4)(f16x4)simdLeft, vecLeft, 1.0e-3f);
 	cmp((f32x4)(f16x4)simdRight, vecRight, 1.0e-3f);
 }
+
+//**********************************************************************************************************************
 static void testIntVectors()
 {
 	auto vecLeft = int4(0, 23, 4, 56789), vecRight = int4(1, -123, 4, -56789);

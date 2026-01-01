@@ -1,4 +1,4 @@
-// Copyright 2022-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2022-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ namespace math::ibl
 constexpr int32 shBandCount = 3;    /**< Spherical harmonics band count. */
 constexpr int32 shCoeffCount = 9;   /**< Spherical harmonics coefficient count. (3 * 3) */
 
-/***********************************************************************************************************************
+/**
  * @brief Converts texture coordinates to the clip space.
  * 
  * @param coords target texture coordinates.

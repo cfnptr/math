@@ -6,29 +6,32 @@ See the [documentation](https://cfnptr.github.io/math).
 
 ## Features
 
-* Vector (float2/3/4, int2/3/4)
+* Vector (float2/3/4, int2/3/4, half)
 * Matrix (float2x2/3x3/4x4)
 * Quaternion (float4)
-* Euler angles, radians conversion
+* SIMD optimized (f32x4, f32x4x4, f16x4)
+* Euler angles/radians conversion
 * Matrix translate, scale, rotate
 * Pespective, orthographics projection
 * Ray, line, plane, triangle, sphere...
 * Axis aligned bounding box (AABB)
+* Frustum culling, matrix extraction
 * Bounding volume hierarchy (BVH)
 * Color conversion (RGBA, linear)
 * Version (major, minor, patch, build)
 * Hexadecimal string conversion
+* Packed vector (1bit container)
 * Tone mapping, gamma correction
 * Image based lighting (IBL, BRDF)
 * Spherical harmonics (SH)
 * Enum class flags declaration
-* Simplified integer types (uint32, int8, etc)
+* Simplified integer types (int64, uint32, int8...)
 
 ## Supported operating systems
 
 * Windows (10/11)
 * Ubuntu (22.04/24.04)
-* macOS (14/15)
+* macOS (15/26)
 
 This list includes only those systems on which functionality testing is conducted.
 However, you can also compile it under any other Linux distribution or operating system.

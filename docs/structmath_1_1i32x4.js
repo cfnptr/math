@@ -5,7 +5,7 @@ var structmath_1_1i32x4 =
     [ "i32x4", "structmath_1_1i32x4.html#a7ab1b92a39041810bbe5e8a55e36cd00", null ],
     [ "i32x4", "structmath_1_1i32x4.html#a293ed697034a133c1e83387e3a633342", null ],
     [ "i32x4", "structmath_1_1i32x4.html#a7fb4244a09fffefa6bc8c27accca64eb", null ],
-    [ "i32x4", "structmath_1_1i32x4.html#a38d1a4861f7b25f021812927655ef3ab", null ],
+    [ "i32x4", "structmath_1_1i32x4.html#ad3f540193bd32dc923a0687614401633", null ],
     [ "i32x4", "structmath_1_1i32x4.html#a60ecf098f8cf72e4c46991241a87fe3f", null ],
     [ "i32x4", "structmath_1_1i32x4.html#a7b84fbb0b2d8a7189c8bc8b730b8d327", null ],
     [ "i32x4", "structmath_1_1i32x4.html#a2c9aa547fc8e1167bae7b38db554c731", null ],

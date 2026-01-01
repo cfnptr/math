@@ -12,6 +12,7 @@ var structmath_1_1f32x4x4 =
     [ "operator[]", "structmath_1_1f32x4x4.html#a45b375dd391d172bbab68fb0ffa4703f", null ],
     [ "operator float4x4", "structmath_1_1f32x4x4.html#a41f6f422774d61d84705ecd16e702943", null ],
     [ "operator float4x3", "structmath_1_1f32x4x4.html#a75e38e386b96e4d73621da5b783df3e1", null ],
+    [ "operator float3x4", "structmath_1_1f32x4x4.html#a5f17ff149599d7871f51ad9d1c4c9a90", null ],
     [ "operator float3x3", "structmath_1_1f32x4x4.html#a61b8364fd2341b10622e8db9f5c23ec2", null ],
     [ "operator float2x2", "structmath_1_1f32x4x4.html#a1776733888c0f199201599dcefd59649", null ],
     [ "operator+", "structmath_1_1f32x4x4.html#a78ce71828eb721421493c37e5e91fa60", null ],

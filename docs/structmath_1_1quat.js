@@ -23,6 +23,7 @@ var structmath_1_1quat =
     [ "setW", "structmath_1_1quat.html#a627d221b8e89313f0c7c55151c631594", null ],
     [ "fixW", "structmath_1_1quat.html#af0b3e54f95ca33e8b1ffd7023bd3d834", null ],
     [ "swizzle", "structmath_1_1quat.html#af721735e2f235a827cb6634339c2ee84", null ],
+    [ "flipSign", "structmath_1_1quat.html#ae5c8c6e4b4469cc18274c82d7aa62441", null ],
     [ "operator[]", "structmath_1_1quat.html#aeccd51d095c36911d7e114495bfed733", null ],
     [ "operator[]", "structmath_1_1quat.html#a7b1e2bfa084b1859994a1ff707f6074d", null ],
     [ "operator u32x4", "structmath_1_1quat.html#abca6aab9d0a2857f0d9310eaa33e35c5", null ],
