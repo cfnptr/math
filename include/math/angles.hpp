@@ -75,4 +75,4 @@ static constexpr float4 degrees(float4 radians) noexcept { return radians * (180
  */
 static f32x4 degrees(f32x4 radians) noexcept { return radians * 180.0f / (float)M_PI; }
 
-}; // namespace math
+} // namespace math
