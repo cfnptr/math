@@ -50,28 +50,56 @@ struct [[nodiscard]] Color
 	 */
 	constexpr Color(uint8 r, uint8 g, uint8 b, uint8 a) noexcept : r(r), g(g), b(b), a(a) { }
 	/**
+	 * @brief Creates a new sRGB color structure. (alpha = 255)
+	 * 
+	 * @param r red channel color value
+	 * @param g green channel color value
+	 * @param b blue channel color value
+	 */
+	constexpr Color(uint8 r, uint8 g, uint8 b) noexcept : r(r), g(g), b(b), a(255) { }
+	/**
 	 * @brief Creates a new sRGB color structure.
 	 * 
 	 * @param rgb red green and blue channel color value
 	 * @param a alpha channel color value (transparency)
 	 */
-	 constexpr Color(Color rgb, uint8 a) noexcept : r(rgb.r), g(rgb.g), b(rgb.b), a(a) { }
+	constexpr Color(Color rgb, uint8 a) noexcept : r(rgb.r), g(rgb.g), b(rgb.b), a(a) { }
+	/**
+	 * @brief Creates a new sRGB color structure.
+	 * 
+	 * @param rgb red green and blue channel color value
+	 * @param a alpha channel color value (transparency)
+	 */
+	constexpr Color(Color rgb, float a) noexcept : r(rgb.r), g(rgb.g), b(rgb.b), 
+		a(std::clamp(a, 0.0f, 1.0f) * 255.0f + 0.5f) { }
 
 	/**
 	 * @brief Creates a new sRGB color structure from the binary data.
 	 * @param data target binary color data
 	 */
-	constexpr explicit Color(uint32 data) { *(uint32*)this = data; }
+	constexpr explicit Color(uint32 data) noexcept { *(uint32*)this = data; }
 	/**
 	 * @brief Creates a new sRGB color structure from the hexadecimal string.
-	 * @param hex target hexadecimal color string
+	 * @param hex target hexadecimal color string (eg. #FFFFFFFF)
 	 */
-	explicit Color(string_view hex)
+	explicit Color(string_view hex) noexcept
 	{
-		assert(hex.length() == 8 || hex.length() == 6);
-		char buffer[3]; buffer[2] = '\0';
-		auto data = hex.data();
+		if (hex.empty())
+		{
+			r = g = b = a = 0;
+			return;
+		}
 
+		auto data = hex.data(); auto length = hex.length();
+		if (data[0] == '#') { data++; length--; }
+
+		if (length < 6)
+		{
+			r = g = b = a = 0;
+			return;
+		}
+
+		char buffer[3]; buffer[2] = '\0';
 		buffer[0] = data[0]; buffer[1] = data[1];
 		r = std::stoul(buffer, nullptr, 16);
 		buffer[0] = data[2]; buffer[1] = data[3];
@@ -79,57 +107,58 @@ struct [[nodiscard]] Color
 		buffer[0] = data[4]; buffer[1] = data[5];
 		b = std::stoul(buffer, nullptr, 16);
 
-		if (hex.length() == 8)
+		if (hex.length() >= 8)
 		{
 			buffer[0] = data[6]; buffer[1] = data[7];
 			a = std::stoul(buffer, nullptr, 16);
 		}
+		else a = 255;
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the hexadecimal string.
-	 * @param hex target hexadecimal color string
+	 * @param hex target hexadecimal color string (eg. #FFFFFFFF)
 	 */
-	explicit Color(u32string_view hex)
+	explicit Color(u32string_view hex) noexcept
 	{
-		assert(hex.length() == 8 || hex.length() == 6);
-		char buffer[8]; auto data = hex.data();
-		for (psize i = 0; i < hex.length(); i++)
+		auto length = std::min(hex.length(), (psize)9);
+		char buffer[9]; auto data = hex.data();
+		for (psize i = 0; i < length; i++)
 			buffer[i] = (char)data[i]; // Note: ASCII hex string maps directly.
-		*this = Color(string_view(buffer, hex.length()));
+		*this = Color(string_view(buffer, length));
 	}
 	
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized R and G channels. (Red, Green)
 	 * @param normRg target normalized R and G channel color values
 	 */
-	explicit Color(float2 normRg)
+	constexpr explicit Color(float2 normRg) noexcept
 	{
-		auto c = fma(clamp(normRg, float2(0.0f), float2(1.0f)), float2(255.0f), float2(0.5f));
-		r = (uint8)c.x, g = (uint8)c.y, b = a = 0;
+		auto c = clamp(normRg, float2(0.0f), float2(1.0f)) * float2(255.0f) + float2(0.5f);
+		r = (uint8)c.x, g = (uint8)c.y, b = 0; a = 255;
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized RGB channels. (Red, Green, Blue)
 	 * @param normRgb target normalized RGB channel color values
 	 */
-	explicit Color(float3 normRgb)
+	constexpr explicit Color(float3 normRgb) noexcept
 	{
-		auto c = fma(clamp(normRgb, float3(0.0f), float3(1.0f)), float3(255.0f), float3(0.5f));
-		r = (uint8)c.x, g = (uint8)c.y, b = (uint8)c.z, a = 0;
+		auto c = clamp(normRgb, float3(0.0f), float3(1.0f)) * float3(255.0f) + float3(0.5f);
+		r = (uint8)c.x, g = (uint8)c.y, b = (uint8)c.z, a = 255;
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized RGBA channels. (Red, Green, Blue, Alpha)
 	 * @param normRgba target normalized RGBA channel color values
 	 */
-	explicit Color(float4 normRgba)
+	constexpr explicit Color(float4 normRgba) noexcept
 	{
-		auto c = fma(clamp(normRgba, float4(0.0f), float4(1.0f)), float4(255.0f), float4(0.5f));
+		auto c = clamp(normRgba, float4(0.0f), float4(1.0f)) * float4(255.0f) + float4(0.5f);
 		r = (uint8)c.x, g = (uint8)c.y, b = (uint8)c.z, a = (uint8)c.w;
 	}
 	/**
 	 * @brief Creates a new sRGB color structure from the normalized RGBA channels. (Red, Green, Blue, Alpha)
 	 * @param normRgba target normalized RGBA channel color SIMD values
 	 */
-	explicit Color(f32x4 normRgba)
+	explicit Color(f32x4 normRgba) noexcept
 	{
 		auto c = fma(clamp(normRgba, f32x4::zero, f32x4::one), f32x4(255.0f), f32x4(0.5f));
 		r = (uint8)c.getX(), g = (uint8)c.getY(), b = (uint8)c.getZ(), a = (uint8)c.getW();
@@ -176,19 +205,19 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Sets sRGB color normalizer R channel. (Red)
 	 */
-	void setNormR(float r) noexcept { this->r = std::fma(std::clamp(r, 0.0f, 1.0f), 255.0f, 0.5f); }
+	constexpr void setNormR(float r) noexcept { this->r = std::clamp(r, 0.0f, 1.0f) * 255.0f + 0.5f; }
 	/**
 	 * @brief Sets sRGB color normalizer G channel. (Green)
 	 */
-	void setNormG(float g) noexcept { this->g = std::fma(std::clamp(g, 0.0f, 1.0f), 255.0f, 0.5f); }
+	constexpr void setNormG(float g) noexcept { this->g = std::clamp(g, 0.0f, 1.0f) * 255.0f + 0.5f; }
 	/**
 	 * @brief Sets sRGB color normalizer B channel. (Blue)
 	 */
-	void setNormB(float b) noexcept { this->b = std::fma(std::clamp(b, 0.0f, 1.0f), 255.0f, 0.5f); }
+	constexpr void setNormB(float b) noexcept { this->b = std::clamp(b, 0.0f, 1.0f) * 255.0f + 0.5f; }
 	/**
 	 * @brief Sets sRGB color normalizer A channel. (Alpha)
 	 */
-	void setNormA(float a) noexcept { this->a = std::fma(std::clamp(a, 0.0f, 1.0f), 255.0f, 0.5f); }
+	constexpr void setNormA(float a) noexcept { this->a = std::clamp(a, 0.0f, 1.0f) * 255.0f + 0.5f; }
 
 	/*******************************************************************************************************************
 	 * @brief Converts sRGB color to the string. (Space separated)
@@ -271,6 +300,16 @@ static constexpr bool operator>=(uint8 n, Color c) noexcept { return Color(n) >=
  * @param b second color to binary compare
  */
 static bool isBinaryLess(Color a, Color b) noexcept { return  *((const uint32*)&a) < *((const uint32*)&b); }
+
+/**
+ * @brief Creates a new sRGB color. (CSS style declaration)
+ * 
+ * @param r red channel color value
+ * @param g green channel color value
+ * @param b blue channel color value
+ * @param a alpha channel color value (transparency)
+ */
+static constexpr Color rgba(uint8 r, uint8 g, uint8 b, float a) noexcept { return Color(r, g, b, a); }
 
 // TODO: color conversion functions.
 
