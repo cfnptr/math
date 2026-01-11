@@ -46,66 +46,60 @@ static f32x4 srgbToRgb(f32x4 sRGB) noexcept
 	return r;
 }
 
+static const f32x4x4 rgbToXyzMat = f32x4x4
+(
+	0.41239079926595934f, 0.21263900587151027f, 0.01933081871559182f, 0.0f,
+	0.35758433938387800f, 0.71516867876775600f, 0.11919477979462598f, 0.0f,
+	0.18048078840183430f, 0.07219231536073371f, 0.95053215224966070f, 0.0f,
+	0.0f                , 0.0f                , 0.0f                , 0.0f
+);
+static const f32x4x4 xyzToRgbMat = f32x4x4
+(
+	 3.2409699419045226f, -0.96924363628087960f,  0.05563007969699366f, 0.0f,
+	-1.5373831775700940f,  1.87596750150772020f, -0.20397695888897652f, 0.0f,
+	-0.4986107602930034f,  0.04155505740717559f,  1.05697151424287860f, 0.0f,
+	 0.0f               ,  0.0f                ,  0.0f                , 0.0f
+);
+
 /**
- * @brief Converts linear RGB color to the XYZ color space. (CIE 1931)
- * @param rgb target linear RGB color
+ * @brief Converts linear sRGB color to the CIE XYZ color space.
+ * @param rgb target linear sRGB color
  */
-static f32x4 rgbToXyz(f32x4 rgb) noexcept
+static f32x4 rgbToXyz(f32x4 rgb) noexcept { return multiply3x3(rgbToXyzMat, rgb); }
+/**
+ * @brief Converts CIE XYZ color to the linear sRGB color space.
+ * @param xyz target CIE XYZ color
+ */
+static f32x4 xyzToRgb(f32x4 xyz) noexcept { return multiply3x3(xyzToRgbMat, xyz); }
+
+/**
+ * @brief Converts CIE XYZ color to the CIE xyY color space.
+ * @param xyz target CIE XYZ color
+ */
+static f32x4 xyzToXyy(f32x4 xyz) noexcept
 {
-	static const auto m = f32x4x4
-	(
-		0.4124564f, 0.2126729f, 0.0193339f, 0.0f,
-		0.3575761f, 0.7151522f, 0.1191920f, 0.0f,
-		0.1804375f, 0.0721750f, 0.9503041f, 0.0f,
-		0.0f      , 0.0f      , 0.0f      , 0.0f
-	);
-	return multiply3x3(m, rgb);
+	auto a = std::max(xyz.getX() + xyz.getY() + xyz.getZ(), 1e-5f);
+	return f32x4(xyz.getX() / a, xyz.getY() / a, xyz.getY());
 }
 /**
- * @brief Converts XYZ color to the linear RGB color space. (CIE 1931)
- * @param xyz target XYZ color
+ * @brief Converts CIE xyY color to the CIE XYZ color space.
+ * @param xyy target CIE xyY color
  */
-static f32x4 xyzToRgb(f32x4 xyz) noexcept
+static f32x4 xyyToXyz(f32x4 xyy) noexcept
 {
-	static const auto m = f32x4x4
-	(
-		 3.2404542f, -0.9692660f,  0.0556434f, 0.0f,
-		-1.5371385f,  1.8760108f, -0.2040259f, 0.0f,
-		-0.4985314f,  0.0415560f,  1.0572252f, 0.0f,
-		 0.0f      ,  0.0f      ,  0.0f      , 0.0f
-	);
-	return multiply3x3(m, xyz);
+	float a = xyy.getZ() / std::max(xyy.getY(), 1e-5f);
+	return f32x4(xyy.getX() * a, xyy.getZ(), (1.0f - xyy.getX() - xyy.getY()) * a);
 }
 
 /**
- * @brief Converts XYZ color to the YXY color space.
- * @param xyz target XYZ color
- */
-static f32x4 xyzToYxy(f32x4 xyz) noexcept
-{
-	auto y = xyz.getY();
-	auto inv = 1.0f / dot3(xyz, f32x4::one);
-	return f32x4(y, xyz.getX() * inv, y * inv);
-}
-/**
- * @brief Converts YXY color to the XYZ color space.
- * @param yxy target YXY color
- */
-static f32x4 yxyToXyz(f32x4 yxy) noexcept
-{
-	auto x = yxy.getX(), y = yxy.getY(), z = yxy.getZ();
-	return f32x4(x * y / z, x, x * (1.0f - y - z) / z);
-}
-
-/**
- * @brief Converts linear RGB color to the YXY color space.
+ * @brief Converts linear sRGB color to the CIE xyY color space.
  * @param rgb target linear RGB color
  */
-static f32x4 rgbToYxy(f32x4 rgb) noexcept { return xyzToYxy(rgbToXyz(rgb)); }
+static f32x4 rgbToXyy(f32x4 rgb) noexcept { return xyzToXyy(rgbToXyz(rgb)); }
 /**
- * @brief Converts YXY color to the linear RGB color space.
- * @param yxy target YXY color
+ * @brief Converts CIE xyY color to the linear sRGB color space.
+ * @param xyy target CIE xyY color
  */
-static f32x4 yxyToRgb(f32x4 yxy) noexcept { return xyzToRgb(yxyToXyz(yxy)); }
+static f32x4 xyyToRgb(f32x4 xyy) noexcept { return xyzToRgb(xyyToXyz(xyy)); }
 
 } // namespace math

@@ -40,7 +40,7 @@ static constexpr uint8 calcGaussCoeffCount(uint8 kernelWidth) noexcept
 }
 
 static constexpr uint32 ggxKernelWidth = 21;
-static constexpr float ggxSigma0 = (ggxKernelWidth + 1) / 6.0f;
+static constexpr double ggxSigma0 = (ggxKernelWidth + 1) / 6.0;
 static constexpr auto ggxCoeffCount = calcGaussCoeffCount(ggxKernelWidth);
 
 /**
@@ -63,7 +63,7 @@ static float calcGgxLodOffset(uint2 bufferSize, float fieldOfView) noexcept
 {
 	constexpr float d = 1.0f; // Note: Texel size of the blur buffer in world units at 1 meter.
 	auto texelSizeAtOneMeter = (d * std::tan(fieldOfView * 0.5f)) / bufferSize.y;
-	return -std::log2((M_SQRT2 * ggxSigma0) * texelSizeAtOneMeter);
+	return -std::log2(float(M_SQRT2 * ggxSigma0) * texelSizeAtOneMeter);
 }
 
 /***********************************************************************************************************************
@@ -74,12 +74,14 @@ static float calcGgxLodOffset(uint2 bufferSize, float fieldOfView) noexcept
  * degrees of roughness, such as metals, plastics, and other materials with glossy or shiny finishes.
  * 
  * @param noh dot product between the surface normal (n) and the half-vector (h)
- * @param roughness spread of microfacets on a surface (0.0-1.0 / smooth-rough)
+ * @param linearRoughness spread of microfacets on a surface (0.0-1.0 / smooth-rough)
  */
-static constexpr float ggx(float noh, float roughness) noexcept
+static constexpr float ggx(float noh, float linearRoughness) noexcept
 {
-	auto f = (roughness - 1.0f) * ((roughness + 1.0f) * (noh * noh)) + 1.0f;
-	return (roughness * roughness) / ((float)M_PI * f * f);
+	auto oneMinusNohSquared = 1.0f - noh * noh;
+	auto a = noh * linearRoughness;
+	auto k = linearRoughness / (a * a + oneMinusNohSquared);
+	return k * k * M_1_PI;
 }
 
 /**
@@ -115,14 +117,16 @@ static constexpr float2 hammersley(uint32 index, float invSampleCount) noexcept
  * @param u spherical coordinates
  * @param a roughness value
  */
-static f32x4 importanceSamplingNdfDggx(float2 u, float a) noexcept
+static f32x4 importanceSamplingNdfDggx(float2 u, float linearRoughness) noexcept
 {
-	auto phi = (float)(2.0 * M_PI) * u.x;
-	auto cosTheta2 = (1.0f - u.y) / (1.0f + (a + 1.0f) * ((a - 1.0f) * u.y));
+	auto a2 = linearRoughness * linearRoughness;
+	auto phi = u.x * float(M_PI * 2.0);
+	auto cosTheta2 = (1.0f - u.y) / std::fma(a2 - 1.0f, u.y, 1.0f);
 	auto cosTheta = std::sqrt(cosTheta2);
 	auto sinTheta = std::sqrt(1.0f - cosTheta2);
-	return f32x4(sinTheta * std::cos(phi), sinTheta * std::sin(phi), cosTheta);
+	return f32x4(std::cos(phi) * sinTheta, std::sin(phi) * sinTheta, cosTheta);
 }
+// TODO: use faster alg +7.5%: https://arxiv.org/pdf/2306.05044
 
 /**
  * @brief Computes diffuse irradiance from spherical harmonics (SH) using a 3rd-order.
