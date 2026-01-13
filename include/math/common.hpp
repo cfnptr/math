@@ -62,6 +62,12 @@ static constexpr int32 min(int32 a, int32 b, int32 c) { return std::min(std::min
 static constexpr int32 max(int32 a, int32 b, int32 c) { return std::max(std::max(a, b), c); }
 
 /**
+ * @brief Clamps float value between the 0.0f and 1.0f. (Inclusive range)
+ * @param v target float value to saturate
+ */
+static constexpr float saturate(float v) { return std::clamp(v, 0.0f, 1.0f); }
+
+/**
  * @brief Returns specified floating point value sign.
  * @param v target value
  */

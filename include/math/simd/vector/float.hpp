@@ -841,7 +841,7 @@ static float max3(f32x4 v) noexcept
 }
 
 /**
- * @brief Clamps SIMD vector components between min and max values.
+ * @brief Clamps SIMD vector components between min and max values. (Inclusive range)
  * 
  * @param v target SIMD vector to clamp
  * @param min SIMD vector with minimum values
@@ -850,6 +850,14 @@ static float max3(f32x4 v) noexcept
 static f32x4 clamp(f32x4 v, f32x4 min, f32x4 max) noexcept
 {
 	return math::max(math::min(v, max), min);
+}
+/**
+ * @brief Clamps SIMD vector components between the 0.0f and 1.0f. (Inclusive range)
+ * @param v target SIMD vector to saturate
+ */
+static f32x4 saturate(f32x4 v) noexcept
+{
+	return math::max(math::min(v, f32x4::one), f32x4::zero);
 }
 
 /***********************************************************************************************************************

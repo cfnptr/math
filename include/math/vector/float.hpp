@@ -629,7 +629,7 @@ static constexpr float2 min(float2 a, float2 b, float2 c) noexcept { return min(
 static constexpr float2 max(float2 a, float2 b, float2 c) noexcept { return max(max(a, b), c); }
 
 /**
- * @brief Clamps vector components between min and max values.
+ * @brief Clamps vector components between min and max values. (Inclusive range)
  * 
  * @param v target vector to clamp
  * @param min vector with minimum values
@@ -638,6 +638,14 @@ static constexpr float2 max(float2 a, float2 b, float2 c) noexcept { return max(
 static constexpr float2 clamp(float2 v, float2 min, float2 max) noexcept
 {
 	return float2(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y));
+}
+/**
+ * @brief Clamps vector components between the 0.0f and 1.0f. (Inclusive range)
+ * @param v target vector to saturate
+ */
+static constexpr float2 saturate(float2 v) noexcept
+{
+	return float2(std::clamp(v.x, 0.0f, 1.0f), std::clamp(v.y, 0.0f, 1.0f));
 }
 
 /***********************************************************************************************************************
@@ -916,7 +924,7 @@ static constexpr float3 min(float3 a, float3 b, float3 c) noexcept { return min(
 static constexpr float3 max(float3 a, float3 b, float3 c) noexcept { return max(max(a, b), c); }
 
 /**
- * @brief Clamps vector components between min and max values.
+ * @brief Clamps vector components between min and max values. (Inclusive range)
  * 
  * @param v target vector to clamp
  * @param min vector with minimum values
@@ -925,6 +933,14 @@ static constexpr float3 max(float3 a, float3 b, float3 c) noexcept { return max(
 static constexpr float3 clamp(float3 v, float3 min, float3 max) noexcept
 {
 	return float3(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y), std::clamp(v.z, min.z, max.z));
+}
+/**
+ * @brief Clamps vector components between the 0.0f and 1.0f. (Inclusive range)
+ * @param v target vector to saturate
+ */
+static constexpr float3 saturate(float3 v) noexcept
+{
+	return float3(std::clamp(v.x, 0.0f, 1.0f), std::clamp(v.y, 0.0f, 1.0f), std::clamp(v.z, 0.0f, 1.0f));
 }
 
 /***********************************************************************************************************************
@@ -1225,7 +1241,7 @@ static constexpr float4 min(float4 a, float4 b, float4 c) noexcept { return min(
 static constexpr float4 max(float4 a, float4 b, float4 c) noexcept { return max(max(a, b), c); }
 
 /**
- * @brief Clamps vector components between min and max values.
+ * @brief Clamps vector components between min and max values. (Inclusive range)
  * 
  * @param v target vector to clamp
  * @param min vector with minimum values
@@ -1235,6 +1251,15 @@ static constexpr float4 clamp(float4 v, float4 min, float4 max) noexcept
 {
 	return float4(std::clamp(v.x, min.x, max.x), std::clamp(v.y, min.y, max.y),
 		std::clamp(v.z, min.z, max.z), std::clamp(v.w, min.w, max.w));
+}
+/**
+ * @brief Clamps vector components between the 0.0f and 1.0f. (Inclusive range)
+ * @param v target vector to saturate
+ */
+static constexpr float4 saturate(float4 v) noexcept
+{
+	return float4(std::clamp(v.x, 0.0f, 1.0f), std::clamp(v.y, 0.0f, 1.0f),
+		std::clamp(v.z, 0.0f, 1.0f), std::clamp(v.w, 0.0f, 1.0f));
 }
 
 /***********************************************************************************************************************

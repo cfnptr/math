@@ -175,4 +175,7 @@ static float reflectanceToIOR(float reflectance) noexcept
 	return (1.0f + sqrtF0) / (1.0f - sqrtF0);
 }
 
+static const float minIOR = reflectanceToIOR(0.0f); /**< Minimal supported IOR value. */
+static const float maxIOR = reflectanceToIOR(1.0f); /**< Maximal supported IOR value. */
+
 } // namespace math::brdf

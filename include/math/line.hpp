@@ -82,7 +82,7 @@ static f32x4 closestPoint(const Line& line, f32x4 point) noexcept
 {
 	auto a = line.start, d = line.getDirection(false);
 	auto t = dot3(point - a, d) / dot3(d, d);
-	return fma(d, f32x4(std::clamp(t, 0.0f, 1.0f)), a);
+	return fma(d, f32x4(saturate(t)), a);
 }
 /**
  * @brief Returns closest point on line to the specified one in 3D space.
@@ -95,7 +95,7 @@ static f32x4 closestPoint(const Line& line, f32x4 point, float& t) noexcept
 {
 	auto a = line.start, d = line.getDirection(false);
 	t = dot3(point - a, d) / dot3(d, d);
-	return fma(d, f32x4(std::clamp(t, 0.0f, 1.0f)), a);
+	return fma(d, f32x4(saturate(t)), a);
 }
 
 } // namespace math
