@@ -78,4 +78,17 @@ static float3 coordsToDir(uint3 coords, float invDim) noexcept
 	return stToDir(st, coords.z);
 }
 
+// x = 1.0 / (Pi * 2), y =  1.0 / Pi
+static constexpr float2 SPH_INV_ATAN = float2(0.15915494309189533576f, 0.318309886183790671538f);
+
+/**
+ * @brief Converts spherical map direction to UV coordinates.
+ * @param v target spherical direction
+ */
+static float2 toSphericalMapUV(float3 v) noexcept
+{
+	auto st = float2(std::atan2(v.x, v.z), std::asin(-v.y));
+	return fma(float2(st.x, st.y), SPH_INV_ATAN, float2(0.5f));
+}
+
 } // namespace math::ibl
