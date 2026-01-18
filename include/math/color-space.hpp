@@ -30,8 +30,8 @@ namespace math
 static f32x4 rgbToSrgb(f32x4 rgba) noexcept
 {
 	auto l = fma(pow(rgba, f32x4(1.0f / 2.4f)), f32x4(1.055f), f32x4(-0.055f));
-	auto h = rgba * 12.92f;
-	auto r = select(rgba <= f32x4(0.0031308f), h, l); r.setW(rgba.getW());
+	auto r = select(rgba <= f32x4(0.0031308f), rgba * 12.92f, l);
+	r.setW(rgba.getW());
 	return r;
 }
 /**
@@ -41,8 +41,8 @@ static f32x4 rgbToSrgb(f32x4 rgba) noexcept
 static f32x4 srgbToRgb(f32x4 sRGB) noexcept
 {
 	auto l = pow((sRGB + 0.055f) * (1.0f / 1.055f), f32x4(2.4f));
-	auto h = sRGB * (1.0f / 12.92f);
-	auto r = select(sRGB <= f32x4(0.04045f), h, l); r.setW(sRGB.getW());
+	auto r = select(sRGB <= f32x4(0.04045f), sRGB * (1.0f / 12.92f), l);
+	r.setW(sRGB.getW());
 	return r;
 }
 

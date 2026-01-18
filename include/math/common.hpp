@@ -28,6 +28,8 @@ namespace math
 
 using namespace std;
 
+#define FLOAT_BIG_16 65504.0f
+
 /**
  * @brief Returns the minimum of three floating point values.
  * 
