@@ -114,8 +114,8 @@ static void testFloatMatrices()
 	cmp(simdLeft != simdRight, true);
 	cmp(simdRight == simdLeft, false);
 	cmp(simdRight == simdLeft, false);
-	cmp(multiply3x3(simdLeft, simdRight.c0), (float3x3)matLeft * (float3)matRight.c0);
-	cmp(multiply3x3(simdRight, simdRight.c0), (float3x3)matRight * (float3)matRight.c0);
+	cmp(dot3x3(simdLeft, simdRight.c0), (float3x3)matLeft * (float3)matRight.c0);
+	cmp(dot3x3(simdRight, simdRight.c0), (float3x3)matRight * (float3)matRight.c0);
 	cmp(transpose4x4(simdLeft), transpose(matLeft));
 	cmp(transpose3x3(simdRight), transpose((float3x3)matRight));
 	cmp(inverse4x4(simdLeft), inverse(matLeft));
