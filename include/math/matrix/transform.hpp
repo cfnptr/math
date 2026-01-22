@@ -60,7 +60,7 @@ static f32x4x4 translate(f32x4 t) noexcept
  */
 static f32x4x4 translate(const f32x4x4& m, f32x4 t) noexcept
 {
-	return f32x4x4(m.c0, m.c1, m.c2, f32x4(m.c3 + multiply3x3(m, t), m.c3.getW()));
+	return f32x4x4(m.c0, m.c1, m.c2, f32x4(m.c3 + dot3x3(m, t), m.c3.getW()));
 }
 /**
  * @brief Applies translation transformation to an object in 3D space. [r = translate(t) * m]
@@ -320,7 +320,7 @@ static quat lookAtQuat(f32x4 direction, f32x4 up = f32x4::top) noexcept
 static f32x4x4 inverseTransRot(const f32x4x4& m)
 {
 	auto t = transpose4x4(m);
-	setTranslation(t, -multiply3x3(t, getTranslation(m)));
+	setTranslation(t, -dot3x3(t, getTranslation(m)));
 	return t;
 }
 

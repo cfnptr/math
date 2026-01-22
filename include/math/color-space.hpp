@@ -24,6 +24,16 @@ namespace math
 {
 
 /**
+ * @brief Default gamma correction value.
+ * 
+ * @details
+ * The default gamma correction value of 2.2 is chosen because it approximates the natural response curve of CRT 
+ * monitors, which were the most common display technology when gamma correction became standard. Modern displays 
+ * have inherited this standard, as it closely matches how human vision perceives brightness non-linearly.
+ */
+constexpr float defaultGamma = 2.2f;
+
+/**
  * @brief Converts linear RGBA color to the sRGB color space.
  * @param rgba target linear RGBA color
  */
@@ -46,6 +56,65 @@ static f32x4 srgbToRgb(f32x4 sRGB) noexcept
 	return r;
 }
 
+/**
+ * @brief Applies gamma correction to the specified color.
+ * 
+ * @details
+ * Gamma correction is used to adjust the brightness of an image or display to match the 
+ * nonlinear response of display devices, such as monitors. It compensates for the fact that 
+ * displays do not linearly represent the light intensity of a color.
+ * 
+ * @param color target linear RGB color to gamma correct
+ * @param invGamma inverse gamma correction value (1.0/x)
+ */
+static f32x4 gammaCorrection(f32x4 color, float invGamma) noexcept
+{
+	return f32x4(pow(color, f32x4(invGamma)), color.getW());
+}
+/**
+ * @brief Applies gamma correction to the specified color.
+ * @details See the @ref gammaCorrection().
+ * @param color target linear RGB color to gamma correct
+ */
+static f32x4 gammaCorrection(f32x4 color) noexcept
+{
+	return f32x4(pow(color, f32x4(1.0f / defaultGamma)), color.getW());
+}
+
+/**
+ * @brief Applies gamma correction to the specified color. (Fast approximation)
+ * @details See the @ref gammaCorrection().
+ * 
+ * @param color target linear RGB color to gamma correct
+ * @param invGamma inverse gamma correction value (1.0/x)
+ */
+static f32x4 fastGammaCorrection(f32x4 color, float invGamma) noexcept
+{
+	return f32x4(fastPow(color, f32x4(invGamma)), color.getW());
+}
+/**
+ * @brief Applies gamma correction to the specified color. (Fast approximation)
+ * @details See the @ref gammaCorrection().
+ * @param color target linear RGB color to gamma correct
+ */
+static f32x4 fastGammaCorrection(f32x4 color) noexcept
+{
+	return f32x4(fastPow(color, f32x4(1.0f / defaultGamma)), color.getW());
+}
+
+/**
+ * @brief Calculates relative luminance of a color. (Rec. 709)
+ * @param x target linear color
+ */
+static float calcLum(f32x4 x) noexcept { return dot3(x, f32x4(0.2126f, 0.7152f, 0.0722f)); }
+/**
+ * @brief Calculates perceptual brightness (Luma) of a color. (Rec. 709)
+ * @param rgb target linear RGB color
+ */
+static float rgbToLuma(f32x4 rgb) noexcept { return calcLum(fastGammaCorrection(rgb)); }
+
+//**********************************************************************************************************************
+// Linear sRGB <-> CIE XYZ
 static const f32x4x4 rgbToXyzMat = f32x4x4
 (
 	0.41239079926595934f, 0.21263900587151027f, 0.01933081871559182f, 0.0f,
@@ -65,12 +134,12 @@ static const f32x4x4 xyzToRgbMat = f32x4x4
  * @brief Converts linear sRGB color to the CIE XYZ color space.
  * @param rgb target linear sRGB color
  */
-static f32x4 rgbToXyz(f32x4 rgb) noexcept { return multiply3x3(rgbToXyzMat, rgb); }
+static f32x4 rgbToXyz(f32x4 rgb) noexcept { return dot3x3(rgbToXyzMat, rgb); }
 /**
  * @brief Converts CIE XYZ color to the linear sRGB color space.
  * @param xyz target CIE XYZ color
  */
-static f32x4 xyzToRgb(f32x4 xyz) noexcept { return multiply3x3(xyzToRgbMat, xyz); }
+static f32x4 xyzToRgb(f32x4 xyz) noexcept { return dot3x3(xyzToRgbMat, xyz); }
 
 /**
  * @brief Converts CIE XYZ color to the CIE xyY color space.
@@ -101,5 +170,48 @@ static f32x4 rgbToXyy(f32x4 rgb) noexcept { return xyzToXyy(rgbToXyz(rgb)); }
  * @param xyy target CIE xyY color
  */
 static f32x4 xyyToRgb(f32x4 xyy) noexcept { return xyzToRgb(xyyToXyz(xyy)); }
+
+//**********************************************************************************************************************
+// Linear sRGB <-> LogLuv
+static const f32x4x4 rgbToLogLuvMat = f32x4x4
+(
+	0.2209f, 0.1138f, 0.0102f, 0.0f,
+	0.3390f, 0.6780f, 0.1130f, 0.0f,
+	0.4184f, 0.7319f, 0.2969f, 0.0f,
+	0.0f   , 0.0f   , 0.0f   , 0.0f
+);
+static const f32x4x4 logLuvToRgbMat = f32x4x4
+(
+	 6.0014f, -1.3320f,  0.3008f, 0.0f,
+	-2.7008f,  3.1029f, -1.0882f, 0.0f,
+	-1.7996f, -5.7721f,  5.6268f, 0.0f,
+	0.0f    ,  0.0f   ,  0.0f   , 0.0f
+);
+
+/**
+ * @brief Encodes linear RGB color (HDR) to the LogLuv format.
+ * @param rgb target linear RGB color
+ */
+static uint32 rgbToLogLuv(f32x4 rgb) noexcept
+{
+	auto luv = max(dot3x3(rgbToLogLuvMat, rgb), f32x4(1e-6f));
+	auto uv = (uint2)fma(saturate((float2)luv / luv.getZ()), float2(255.0f), float2(0.5f));
+	auto logLuv = (uint32)std::fma(saturate(std::fma(std::log2(
+		luv.getY()), 1.0f / 64.0f, 0.5f)), 65535.0f, 0.5f);
+	logLuv |= (uv.x << 24u) | (uv.y << 16u);
+	return dot3(rgb, rgb) > 0.0f ? logLuv : 0;
+}
+/**
+ * @brief Decodes linear RGB color (HDR) from the LogLuv format.
+ * @param logLuv target LogLuv encoded color
+ */
+static f32x4 logLuvToRgb(uint32 logLuv)
+{
+	if (logLuv == 0) return f32x4::zero;
+	f32x4 luv; auto uv = float2(uint2(logLuv >> 24u, logLuv >> 16u) & 255u) * (1.0f / 255.0f);
+	luv.floats.y = std::exp2(std::fma(logLuv & 65535u, (1.0f / 65535.0f) * 64.0f, -32.0f));
+	luv.floats.z = luv.floats.y / uv.y; luv.floats.x = luv.floats.z * uv.x;
+	return max(dot3x3(logLuvToRgbMat, luv), f32x4::zero);
+}
 
 } // namespace math

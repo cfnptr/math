@@ -187,7 +187,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 	}
 
 	/**
-	 * @brief Calculates dot product between two SIMD matrices.
+	 * @brief Calculates 4x4 dot product between two SIMD matrices.
 	 * @param[in] m target SIMD matrix to dot by
 	 */
 	f32x4x4 operator*(const f32x4x4& m) const noexcept
@@ -214,12 +214,12 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 			result[i].data = r;
 		}
 		#else
-		result = f32x4x4((*((const float4x4*)this) * (*((const float4x4*)&m))));
+		result = f32x4x4(*((const float4x4*)this) * (*((const float4x4*)&m)));
 		#endif
 		return result;
 	}
 	/**
-	 * @brief Calculates dot product between SIMD matrix and vector.
+	 * @brief Calculates 4x4 dot product between SIMD matrix and vector.
 	 * @param v target SIMD vector to dot by
 	 */
 	f32x4 operator*(f32x4 v) const noexcept
@@ -237,7 +237,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 		r = vmlaq_f32(r, c3.data, vdupq_laneq_f32(v.data, 3));
 		return r;
 		#else
-		return f32x4((*((const float4x4*)this) * (*((const float4*)&v))));
+		return f32x4(*((const float4x4*)this) * (*((const float4*)&v)));
 		#endif
 	}
 
@@ -307,11 +307,37 @@ static bool isBinaryLess(const f32x4x4& a, const f32x4x4& b) noexcept
 }
 
 /**
+ * @brief Calculates 4x4 dot product between vector and SIMD matrix. (v * m)
+ *
+ * @param v target SIMD vector to use
+ * @param[in] m target SIMD matrix to dot by
+ */
+static f32x4 operator*(f32x4 v, const f32x4x4& m) noexcept
+{
+	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_AVX2)
+	auto r = _mm_mul_ps(m.c0.data, v.data);
+	r = MATH_SIMD_FMA(m.c1.data, v.data, r);
+	r = MATH_SIMD_FMA(m.c2.data, v.data, r);
+	r = MATH_SIMD_FMA(m.c3.data, v.data, r);
+	return r;
+	#elif defined(MATH_SIMD_SUPPORT_NEON)
+	auto r = vmulq_f32(m.c0.data, v.data);
+	r = vmlaq_f32(r, m.c1.data, v.data);
+	r = vmlaq_f32(r, m.c2.data, v.data);
+	r = vmlaq_f32(r, m.c3.data, v.data);
+	return r;
+	#else
+	return f32x4(*((const float4*)&v) * (*((const float4x4*)this)));
+	#endif
+}
+
+/**
  * @brief Calculates 3x3 dot product between two SIMD matrices.
+ *
  * @param[in] a first SIMD matrix to use
  * @param[in] b second SIMD matrix to use
  */
-static f32x4x4 multiply3x3(const f32x4x4& a, const f32x4x4& b) noexcept
+static f32x4x4 dot3x3(const f32x4x4& a, const f32x4x4& b) noexcept
 {
 	f32x4x4 result; 
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_AVX2)
@@ -338,28 +364,48 @@ static f32x4x4 multiply3x3(const f32x4x4& a, const f32x4x4& b) noexcept
 	return result;
 }
 /**
- * @brief Calculates 3x3 dot product between SIMD matrix and vector.
+ * @brief Calculates 3x3 dot product between SIMD matrix and vector. (m * v)
+ *
  * @param[in] m target SIMD matrix to use
  * @param v target SIMD vector to dot by
  */
-static f32x4 multiply3x3(const f32x4x4& m, f32x4 v) noexcept
+static f32x4 dot3x3(const f32x4x4& m, f32x4 v) noexcept
 {
-	f32x4 result;
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_AVX2)
 	auto r = _mm_mul_ps(m.c0.data, _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(0, 0, 0, 0)));
 	r = MATH_SIMD_FMA(m.c1.data, _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(1, 1, 1, 1)), r);
 	r = MATH_SIMD_FMA(m.c2.data, _mm_shuffle_ps(v.data, v.data, _MM_SHUFFLE(2, 2, 2, 2)), r);
-	result = r;
+	return f32x4(r).swizzle<SwX, SwY, SwZ>();
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	auto r = vmulq_f32(m.c0.data, vdupq_laneq_f32(v.data, 0));
 	r = vmlaq_f32(r, m.c1.data, vdupq_laneq_f32(v.data, 1));
 	r = vmlaq_f32(r, m.c2.data, vdupq_laneq_f32(v.data, 2));
-	result = r;
+	return f32x4(r).swizzle<SwX, SwY, SwZ>();
 	#else
-	auto t = float3x3((float3)m.c0, (float3)m.c1, (float3)m.c2) * (float3)v;
-	result = f32x4(t.x, t.y, t.z, t.z);
+	return f32x4((float3)v * float3x3((float3)m.c0, (float3)m.c1, (float3)m.c2));
 	#endif
-	return result.swizzle<SwX, SwY, SwZ>();
+}
+/**
+ * @brief Calculates 3x3 dot product between SIMD matrix and vector. (v * m)
+ *
+ * @param v target SIMD vector to use
+ * @param[in] m target SIMD matrix to dot by
+ */
+static f32x4 dot3x3(f32x4 v, const f32x4x4& m) noexcept
+{
+	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_AVX2)
+	auto r = _mm_mul_ps(m.c0.data, v.data);
+	r = MATH_SIMD_FMA(m.c1.data, v.data, r);
+	r = MATH_SIMD_FMA(m.c2.data, v.data, r);
+	return f32x4(r).swizzle<SwX, SwY, SwZ>();
+	#elif defined(MATH_SIMD_SUPPORT_NEON)
+	auto r = vmulq_f32(m.c0.data, v.data);
+	r = vmlaq_f32(r, m.c1.data, v.data);
+	r = vmlaq_f32(r, m.c2.data, v.data);
+	return f32x4(r).swizzle<SwX, SwY, SwZ>();
+	#else
+	return f32x4((float3)v * float3x3((float3)m.c0, (float3)m.c1, (float3)m.c2));
+	#endif
 }
 
 /**
