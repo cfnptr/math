@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #pragma once
+#include "math/vector.hpp"
 
 /***********************************************************************************************************************
  * @file
@@ -22,31 +23,36 @@
 namespace math
 {
 
-	/**
+/**
  * @brief Converts metres to millimetres.
  * @param km target distance in kilometres
  */
-static constexpr float mToMm(float m) noexcept { return m * 1000.0f; }
+template<class V = float>
+static V mToMm(V m) noexcept { return m * 1000.0f; }
 /**
  * @brief Converts metres to centimetres.
  * @param km target distance in kilometres
  */
-static constexpr float mToCm(float m) noexcept { return m * 100.0f; }
+template<class V = float>
+static V mToCm(V m) noexcept { return m * 100.0f; }
 /**
  * @brief Converts metres to kilometres.
  * @param km target distance in kilometres
  */
-static constexpr float mToKm(float m) noexcept { return m * 0.001f; }
+template<class V = float>
+static V mToKm(V m) noexcept { return m * 0.001f; }
 
 /**
  * @brief Converts kilometres to centimetres.
  * @param km target distance in kilometres
  */
-static constexpr float kmToCm(float km) noexcept { return km * 100000.0f; }
+template<class V = float>
+static V kmToCm(V km) noexcept { return km * 100000.0f; }
 /**
  * @brief Converts kilometres to metres.
  * @param km target distance in kilometres
  */
-static constexpr float kmToM(float km) noexcept { return km * 1000.0f; }
+template<class V = float>
+static V kmToM(V km) noexcept { return km * 1000.0f; }
 
 } // namespace math

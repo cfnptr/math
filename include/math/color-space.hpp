@@ -117,18 +117,19 @@ static float rgbToLuma(f32x4 rgb) noexcept { return calcLum(fastGammaCorrection(
 // Linear sRGB <-> CIE XYZ
 static const f32x4x4 rgbToXyzMat = f32x4x4
 (
-	0.41239079926595934f, 0.21263900587151027f, 0.01933081871559182f, 0.0f,
-	0.35758433938387800f, 0.71516867876775600f, 0.11919477979462598f, 0.0f,
-	0.18048078840183430f, 0.07219231536073371f, 0.95053215224966070f, 0.0f,
-	0.0f                , 0.0f                , 0.0f                , 0.0f
+	f32x4(0.41239079926595934f, 0.21263900587151027f, 0.01933081871559182f, 0.0f),
+	f32x4(0.35758433938387800f, 0.71516867876775600f, 0.11919477979462598f, 0.0f),
+	f32x4(0.18048078840183430f, 0.07219231536073371f, 0.95053215224966070f, 0.0f),
+	f32x4::zero
 );
 static const f32x4x4 xyzToRgbMat = f32x4x4
 (
-	 3.2409699419045226f, -0.96924363628087960f,  0.05563007969699366f, 0.0f,
-	-1.5373831775700940f,  1.87596750150772020f, -0.20397695888897652f, 0.0f,
-	-0.4986107602930034f,  0.04155505740717559f,  1.05697151424287860f, 0.0f,
-	 0.0f               ,  0.0f                ,  0.0f                , 0.0f
+	f32x4( 3.2409699419045226f, -0.96924363628087960f,  0.05563007969699366f, 0.0f),
+	f32x4(-1.5373831775700940f,  1.87596750150772020f, -0.20397695888897652f, 0.0f),
+	f32x4(-0.4986107602930034f,  0.04155505740717559f,  1.05697151424287860f, 0.0f),
+	f32x4::zero
 );
+// Note: do not remove f32x4()'s, because value order differs from the GLSL!
 
 /**
  * @brief Converts linear sRGB color to the CIE XYZ color space.
@@ -175,17 +176,17 @@ static f32x4 xyyToRgb(f32x4 xyy) noexcept { return xyzToRgb(xyyToXyz(xyy)); }
 // Linear sRGB <-> LogLuv
 static const f32x4x4 rgbToLogLuvMat = f32x4x4
 (
-	0.2209f, 0.1138f, 0.0102f, 0.0f,
-	0.3390f, 0.6780f, 0.1130f, 0.0f,
-	0.4184f, 0.7319f, 0.2969f, 0.0f,
-	0.0f   , 0.0f   , 0.0f   , 0.0f
+	f32x4(0.2209f, 0.3390f, 0.4184f, 0.0f),
+	f32x4(0.1138f, 0.6780f, 0.7319f, 0.0f),
+	f32x4(0.0102f, 0.1130f, 0.2969f, 0.0f),
+	f32x4::zero
 );
 static const f32x4x4 logLuvToRgbMat = f32x4x4
 (
-	 6.0014f, -1.3320f,  0.3008f, 0.0f,
-	-2.7008f,  3.1029f, -1.0882f, 0.0f,
-	-1.7996f, -5.7721f,  5.6268f, 0.0f,
-	0.0f    ,  0.0f   ,  0.0f   , 0.0f
+	f32x4( 6.0014f, -2.7008f, -1.7996f, 0.0f),
+	f32x4(-1.3320f,  3.1029f, -5.7721f, 0.0f),
+	f32x4( 0.3008f, -1.0882f,  5.6268f, 0.0f),
+	f32x4::zero
 );
 
 /**
@@ -207,11 +208,10 @@ static uint32 rgbToLogLuv(f32x4 rgb) noexcept
  */
 static f32x4 logLuvToRgb(uint32 logLuv)
 {
-	if (logLuv == 0) return f32x4::zero;
 	f32x4 luv; auto uv = float2(uint2(logLuv >> 24u, logLuv >> 16u) & 255u) * (1.0f / 255.0f);
 	luv.floats.y = std::exp2(std::fma(logLuv & 65535u, (1.0f / 65535.0f) * 64.0f, -32.0f));
 	luv.floats.z = luv.floats.y / uv.y; luv.floats.x = luv.floats.z * uv.x;
-	return max(dot3x3(logLuvToRgbMat, luv), f32x4::zero);
+	return logLuv > 0 ? max(dot3x3(logLuvToRgbMat, luv), f32x4::zero) : f32x4::zero;
 }
 
 } // namespace math

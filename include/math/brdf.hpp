@@ -138,21 +138,21 @@ static f32x4 importanceSamplingNdfDggx(float2 u, float linearRoughness) noexcept
  * @param normal target sample normal vector
  * @param[in] shBuffer IBL spherical harmonics buffer 
  */
-static f32x4 diffuseIrradiance(float3 normal, const f32x4* shBuffer) noexcept
+static f32x4 diffuseIrradiance(f32x4 normal, const f32x4* shBuffer) noexcept
 {
-	auto qb = float4(normal.y * normal.x, normal.y * normal.z, 
-		std::fma(normal.z * normal.z, 3.0f, -1.0f), normal.z * normal.x);
-	auto ft = normal.x * normal.x - normal.y * normal.y;
+	auto qb = normal.swizzle<SwY, SwY, SwZ, SwZ>() * normal.swizzle<SwX, SwZ, SwZ, SwX>();
+	qb.setZ(std::fma(qb.getZ(), 3.0f, -1.0f));
+	auto ft = normal.getX() * normal.getX() - normal.getY() * normal.getY();
 
 	auto irradiance = shBuffer[0];
-	irradiance += shBuffer[1] * normal.y;
-	irradiance += shBuffer[2] * normal.z;
-	irradiance += shBuffer[3] * normal.x;
-	irradiance += shBuffer[4] * qb.x;
-	irradiance += shBuffer[5] * qb.y;
-	irradiance += shBuffer[6] * qb.z;
-	irradiance += shBuffer[7] * qb.w;
-	irradiance += shBuffer[8] * ft;
+	irradiance = fma(shBuffer[1], f32x4(normal.getY()), irradiance);
+	irradiance = fma(shBuffer[2], f32x4(normal.getZ()), irradiance);
+	irradiance = fma(shBuffer[3], f32x4(normal.getX()), irradiance);
+	irradiance = fma(shBuffer[4], f32x4(qb.getX()), irradiance);
+	irradiance = fma(shBuffer[5], f32x4(qb.getY()), irradiance);
+	irradiance = fma(shBuffer[6], f32x4(qb.getZ()), irradiance);
+	irradiance = fma(shBuffer[7], f32x4(qb.getW()), irradiance);
+	irradiance = fma(shBuffer[8], f32x4(ft), irradiance);
 	return max(irradiance, f32x4::zero);
 }
 
