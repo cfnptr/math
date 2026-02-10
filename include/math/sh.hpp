@@ -26,13 +26,15 @@
  * Based on this project: https://google.github.io/filament/Filament.html
  */
 
-// TODO: use here simd vectors and matrices?
-
 #pragma once
 #include "math/ibl.hpp"
 #include "math/matrix.hpp"
 
 // TODO: use SIMD where possible, but check if SH results are identical.
+
+constexpr math::int32 sh2Count = 4;  /**< L1 spherical harmonics coefficient count. (2 * 2) */
+constexpr math::int32 sh3Count = 9;  /**< L2 spherical harmonics coefficient count. (3 * 3) */
+constexpr math::int32 sh4Count = 16; /**< L3 spherical harmonics coefficient count. (4 * 4) */
 
 namespace math::sh
 {
@@ -45,14 +47,14 @@ using namespace math::ibl;
 #define M_SQRT15  3.87298334620741688517926539978239961
 
 /**
- * @brief Precomputed KI coefficients for the 3 band spherical harmonics.
+ * @brief Precomputed Lambertian reflection coefficients for the 3 band spherical harmonics.
  */
-constexpr float ki[shCoeffCount] =
+constexpr float ki3[sh3Count] =
 {
 	(float)0.886226925452757940959713778283912688,
-	(float)1.02332670794648827872208585176849738,
-	(float)1.02332670794648827872208585176849738,
-	(float)1.02332670794648827872208585176849738,
+	(float)1.023326707946488278722085851768497380,
+	(float)1.023326707946488278722085851768497380,
+	(float)1.023326707946488278722085851768497380,
 	(float)0.143014255134963907956091588857816532,
 	(float)0.286028510269927815912183177715633065,
 	(float)0.495415912200751318295033343019895256,
@@ -64,6 +66,7 @@ static constexpr int32 shIndex(int32 m, int32 l) noexcept
 {
 	return l * (l + 1) + m;
 }
+
 static float sphereQuadrantArea(float x, float y) noexcept
 {
 	return atan2(x * y, length(float3(x, y, 1.0f)));
@@ -74,58 +77,84 @@ static float calcSolidAngle(float2 st, float invDim) noexcept
 	return sphereQuadrantArea(v0.x, v0.y) - sphereQuadrantArea(v0.x, v1.y) -
 		sphereQuadrantArea(v1.x, v0.y) + sphereQuadrantArea(v1.x, v1.y);
 }
+static float calcSolidAngleFast(float2 st, float invDim) noexcept
+{
+	auto r2 = dot(st, st) + 1.0f;
+	return (invDim * invDim * 4.0f) / (r2 * std::sqrt(r2));
+}
+static float calcSolidAngleFastA(float2 st, float area) noexcept
+{
+	auto r2 = dot(st, st) + 1.0f;
+	return area / (r2 * std::sqrt(r2));
+}
 
 //**********************************************************************************************************************
-static void computeShBasis(float3 s, float shb[shCoeffCount]) noexcept
+static void computeShBasis(float3 n, float* shb, int32 bandCount) noexcept
 {
 	auto pml2 = 0.0f, pml1 = 1.0f;
 	shb[0] = pml1;
 
-	for (int32 l = 1; l < shBandCount; l++)
+	for (int32 l = 1; l < bandCount; l++)
 	{
-		auto pml = ((2 * l - 1) * pml1 * s.z - (l - 1) * pml2) / l;
+		auto pml = ((l * 2 - 1) * pml1 * 
+			n.z - (l - 1) * pml2) / l;
 		pml2 = pml1; pml1 = pml;
 		shb[shIndex(0, l)] = pml;
 	}
 
 	auto pmm = 1.0f;
-	for (int32 m = 1; m < shBandCount; m++)
+	for (int32 m = 1; m < bandCount; m++)
 	{
-		pmm = (1 - 2 * m) * pmm;
-		pml2 = pmm; pml1 = (2 * m + 1) * pmm * s.z;
+		pmm = (1 - m * 2) * pmm;
+		pml2 = pmm; pml1 = (m * 2 + 1) * pmm * n.z;
 
 		shb[shIndex(-m, m)] = pml2;
 		shb[shIndex( m, m)] = pml2;
 
-		if (m + 1 < shBandCount)
+		if (m + 1 < bandCount)
 		{
 			shb[shIndex(-m, m + 1)] = pml1;
 			shb[shIndex( m, m + 1)] = pml1;
 		}
 	}
 
-	auto cm = s.x, sm = s.y;
-	for (int32 m = 1; m <= shBandCount; m++)
+	auto cm = n.x, sm = n.y;
+	for (int32 m = 1; m <= bandCount; m++)
 	{
-		for (int32 l = m; l < shBandCount; l++)
+		for (int32 l = m; l < bandCount; l++)
 		{
 			shb[shIndex(-m, l)] *= sm;
 			shb[shIndex( m, l)] *= cm;
 		}
 
-		auto cm1 = cm * s.x - sm * s.y;
-		auto sm1 = sm * s.x + cm * s.y;
+		auto cm1 = cm * n.x - sm * n.y;
+		auto sm1 = sm * n.x + cm * n.y;
 		cm = cm1; sm = sm1;
 	}
 }
+
+static void computeSh3Basis(float3 n, float shb[sh3Count]) noexcept
+{
+	auto pml1 = n.z * -3.0f;
+	shb[0] = 1.0f;                                   // l = 0, m =  0
+	shb[1] = n.y * -1.0f;                            // l = 1, m = -1
+	shb[2] = n.z;                                    // l = 1, m =  0
+	shb[3] = n.x * -1.0f;                            // l = 1, m =  1
+	shb[4] = std::fma(n.y, n.x, n.x * n.y) * 3.0f;   // l = 2, m = -2
+	shb[5] = n.y * pml1;                             // l = 2, m = -1
+	shb[6] = std::fma(n.z * n.z, 3.0f, -1.0) * 0.5f; // l = 2, m =  0
+	shb[7] = n.x * pml1;                             // l = 2, m =  1
+	shb[8] = (n.x * n.x - n.y * n.y) * 3.0f;         // l = 2, m =  2
+}
+// TODO: SH2, SH4.
 
 static void projectVecToSH2K(float3 s, float r[5]) noexcept
 {
 	r[0] = s.y * s.x;
 	r[1] = -(s.y * s.z);
-	r[2] = 1.0f / (2.0f * (float)M_SQRT3) * ((3.0f * s.z * s.z - 1.0f));
+	r[2] = std::fma(s.z * s.z, 3.0f, -1.0f) * float(1.0 / (M_SQRT3 * 2.0));
 	r[3] = -(s.z * s.x);
-	r[4] = 0.5f * (s.x * s.x - s.y * s.y);
+	r[4] = (s.x * s.x - s.y * s.y) * 0.5f;
 }
 static void multiply(const float m[25], const float v[5], float r[5]) noexcept
 {
@@ -146,7 +175,7 @@ static float3 rotateShBand1(float3 band1, const float3x3& m) noexcept
 }
 static void rotateShBand2(const float band2[5], const float3x3& m, float r[5]) noexcept
 {
-	static constexpr float invATimesK[25] =
+	static constexpr float invAtimesK[25] =
 	{
 		 0.0f,           1.0f, 2.0f,  0.0f,  0.0f,
 		-1.0f,           0.0f, 0.0f,  0.0f, -2.0f,
@@ -156,14 +185,13 @@ static void rotateShBand2(const float band2[5], const float3x3& m, float r[5]) n
 	};
 
 	float invATimesKTimesBand2[5];
-	multiply(invATimesK, band2, invATimesKTimesBand2);
+	multiply(invAtimesK, band2, invATimesKTimesBand2);
 
 	float p0[5], p1[5], p2[5], p3[5], p4[5];
-	projectVecToSH2K(m[0], p0);
-	projectVecToSH2K(m[2], p1);
-	projectVecToSH2K((float)M_SQRT1_2 * (m[0] + m[1]), p2);
-	projectVecToSH2K((float)M_SQRT1_2 * (m[0] + m[2]), p3);
-	projectVecToSH2K((float)M_SQRT1_2 * (m[1] + m[2]), p4);
+	projectVecToSH2K(m[0], p0); projectVecToSH2K(m[2], p1);
+	projectVecToSH2K((m[0] + m[1]) * (float)M_SQRT1_2, p2);
+	projectVecToSH2K((m[0] + m[2]) * (float)M_SQRT1_2, p3);
+	projectVecToSH2K((m[1] + m[2]) * (float)M_SQRT1_2, p4);
 
 	float rOverK[25] =
 	{
@@ -176,15 +204,14 @@ static void rotateShBand2(const float band2[5], const float3x3& m, float r[5]) n
 
 	multiply(rOverK, invATimesKTimesBand2, r);
 }
-static void rotateSh3Bands(const float shw[shCoeffCount], const float3x3& m, float r[shCoeffCount]) noexcept
+static void rotateSh3Bands(const float shw[sh3Count], const float3x3& m, float r[sh3Count]) noexcept
 {
-	auto b0 = shw[0];
-	auto band1 = float3(shw[1], shw[2], shw[3]);
+	auto b0 = shw[0]; auto band1 = float3(shw[1], shw[2], shw[3]);
 	auto b1 = rotateShBand1(band1, m);
-	float band2[5] = { shw[4], shw[5], shw[6], shw[7], shw[8] }; float b2[5];
-	rotateShBand2(band2, m, b2);
-	r[0] = b0; r[1] = b1[0]; r[2] = b1[1]; r[3] = b1[2];
-	r[4] = b2[0]; r[5] = b2[1]; r[6] = b2[2]; r[7] = b2[3]; r[8] = b2[4];
+	float band2[5] = { shw[4], shw[5], shw[6], shw[7], shw[8] };
+	float b2[5]; rotateShBand2(band2, m, b2);
+	r[0] = b0; r[1] = b1[0]; r[2] = b1[1]; r[3] = b1[2]; r[4] = b2[0]; 
+	r[5] = b2[1]; r[6] = b2[2]; r[7] = b2[3]; r[8] = b2[4];
 }
 
 //**********************************************************************************************************************
@@ -192,13 +219,13 @@ static float sincShWindow(int32 l, float w) noexcept
 {
 	if (l == 0) return 1.0f;
 	else if (l >= w) return 0.0f;
-	auto x = ((float)M_PI * l) / w;
+	auto x = (l * (float)M_PI) / w;
 	x = std::sin(x) / x;
 	return x * x * x * x;
 }
-static void shWindowing(float shw[shCoeffCount], float cutoff) noexcept
+static void shWindowing(float* shw, float cutoff, int32 bandCount) noexcept
 {
-	for (int32 l = 0; l < shBandCount; l++)
+	for (int32 l = 0; l < bandCount; l++)
 	{
 		auto w = sincShWindow(l, cutoff);
 		shw[shIndex(0, l)] *= w;
@@ -210,9 +237,9 @@ static void shWindowing(float shw[shCoeffCount], float cutoff) noexcept
 		}
 	}
 }
-static float shMin(float shw[shCoeffCount]) noexcept
+static float shMin3(float shw[sh3Count]) noexcept
 {
-	static constexpr float ca[shCoeffCount] =
+	static constexpr float ca[sh3Count] =
 	{
 		(float)( 1.0      / (2.0 * M_SQRT_PI)),
 		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI)),
@@ -233,29 +260,26 @@ static float shMin(float shw[shCoeffCount]) noexcept
 	rotateSh3Bands(shw, m, shw);
 
 	auto m2max = ca[8] * std::sqrt(shw[8] * shw[8] + shw[4] * shw[4]);
-	auto a = 3.0f * ca[6] * shw[6] + m2max;
-	auto b = ca[2] * shw[2];
-	auto c = ca[0] * shw[0] - ca[6] * shw[6] - m2max;
+	auto a = std::fma(ca[6] * shw[6], 3.0f, m2max);
+	auto b = ca[2] * shw[2], c = ca[0] * shw[0] - ca[6] * shw[6] - m2max;
 
-	auto zmin = -b / (2.0f * a);
-	auto m0minZ = a * zmin * zmin + b * zmin + c;
+	auto zMin = b / (a * -2.0f);
+	auto m0minZ = std::fma(zMin * zMin, a, std::fma(b, zMin, c));
 	auto m0minB = std::min(a + b + c, a - b + c);
-	auto m0min = (a > 0 && zmin >= -1.0f && zmin <= 1.0f) ? m0minZ : m0minB;
+	auto m0min = (a > 0.0f && zMin >= -1.0f && zMin <= 1.0f) ? m0minZ : m0minB;
 	auto d = ca[4] * std::sqrt(shw[5] * shw[5] + shw[7] * shw[7]);
 
-	auto minimum = m0min - 0.5f * d;
+	auto minimum = std::fma(d, -0.5f, m0min);
 	if (minimum < 0.0f)
 	{
-		auto dz = 0.0f;
-		auto z = (float)-M_SQRT1_2;
-
+		auto dz = 0.0f, z = (float)-M_SQRT1_2;
 		do
 		{
-			minimum = (a * z * z + b * z + c) + (d * z * std::sqrt(1.0f - z * z));
-			dz = (z * z - 1.0f) * (d - 2.0f * d * z * z + (b + 2.0f * a * z) * std::sqrt(1.0f - z * z)) / 
-				(3.0f * d * z - 2.0f * d * z * z * z - 2.0f * a * std::pow(1.0f - z * z, 1.5f));
+			minimum = std::fma(z * z, a, std::fma(b, z, c)) + (d * z * std::sqrt(1.0f - z * z));
+			dz = std::fma(z, z, -1.0f) * (std::fma(d * z * z, -2.0f, d) + std::fma(a * z, 2.0f, b) * std::sqrt(1.0f - z * z)) / 
+				std::fma(a * std::pow(1.0f - z * z, 1.5f), -2.0f, std::fma(d * z, 3.0f, d * z * z * z * -2.0f));
 			z = z - dz;
-		} while (std::abs(z) <= 1.0 && std::abs(dz) > 1e-5f);
+		} while (std::abs(z) <= 1.0f && std::abs(dz) > 1e-5f);
 
 		if (std::abs(z) > 1.0f)
 			minimum = std::min(a + b + c, a - b + c);
@@ -265,33 +289,34 @@ static float shMin(float shw[shCoeffCount]) noexcept
 }
 
 //**********************************************************************************************************************
-static void applyShKi(f32x4 sh[shCoeffCount]) noexcept
+static void applyKiSh3(f32x4 sh[sh3Count]) noexcept
 {
-	for (uint32 i = 0; i < shCoeffCount; i++)
-		sh[i] *= ki[i];
+	for (uint32 i = 0; i < sh3Count; i++)
+		sh[i] *= ki3[i];
 }
-static void deringSH(f32x4 sh[shCoeffCount]) noexcept
+static void deringSh3(f32x4 sh[sh3Count]) noexcept
 {
-	auto cutoff = (float)(shBandCount * 4 + 1);
-	float shw[shCoeffCount];
+	constexpr int32 bandCount = 3;
+	auto cutoff = (float)(bandCount * 4 + 1);
+	float shw[sh3Count];
 
 	for (uint32 channel = 0; channel < 3; channel++)
 	{
-		for (uint32 i = 0; i < shCoeffCount; i++)
+		for (uint32 i = 0; i < sh3Count; i++)
 			shw[i] = sh[i][channel];
 
-		float l = shBandCount, r = cutoff;
+		float l = bandCount, r = cutoff;
 		for (uint32 i = 0; i < 16 && l + 0.1f < r; i++)
 		{
-			float m = 0.5f * (l + r);
-			shWindowing(shw, m);
-			if (shMin(shw) < 0.0f) r = m;
+			float m = (l + r) * 0.5f;
+			shWindowing(shw, m, bandCount);
+			if (shMin3(shw) < 0.0f) r = m;
 			else l = m;
 			cutoff = std::min(cutoff, l);
 		}
 	}
 
-	for (int32 l = 0; l < shBandCount; l++)
+	for (int32 l = 0; l < bandCount; l++)
 	{
 		auto w = sincShWindow(l, cutoff);
 		sh[shIndex(0, l)] *= w;
@@ -303,10 +328,11 @@ static void deringSH(f32x4 sh[shCoeffCount]) noexcept
 		}
 	}
 }
+// TODO: make sure it produces correct result: https://github.com/google/filament/blob/main/libs/ibl/src/CubemapSH.cpp
 
-static void shaderPreprocessSH(f32x4 sh[shCoeffCount]) noexcept
+static void preprocessSh3(f32x4 sh[sh3Count]) noexcept
 {
-	static constexpr float ca[shCoeffCount] =
+	static constexpr float ca[sh3Count] =
 	{
 		(float)( 1.0      / (2.0 * M_SQRT_PI)),
 		(float)(-M_SQRT3  / (2.0 * M_SQRT_PI)),
@@ -318,8 +344,8 @@ static void shaderPreprocessSH(f32x4 sh[shCoeffCount]) noexcept
 		(float)(-M_SQRT15 / (2.0 * M_SQRT_PI)),
 		(float)( M_SQRT15 / (4.0 * M_SQRT_PI))
 	};
-	
-	for (uint32 i = 0; i < shCoeffCount; i++)
+
+	for (uint32 i = 0; i < sh3Count; i++)
 		sh[i] *= ca[i];
 }
 

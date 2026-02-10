@@ -25,7 +25,7 @@
  */
 
 #pragma once
-#include "math/vector.hpp"
+#include "math/matrix.hpp"
 
 namespace math::brdf
 {
@@ -119,6 +119,7 @@ static constexpr float2 hammersley(uint32 index, float invSampleCount) noexcept
  */
 static f32x4 importanceSamplingNdfDggx(float2 u, float linearRoughness) noexcept
 {
+	// TODO: use faster alg +7.5%: https://arxiv.org/pdf/2306.05044
 	auto a2 = linearRoughness * linearRoughness;
 	auto phi = u.x * float(M_PI * 2.0);
 	auto cosTheta2 = (1.0f - u.y) / std::fma(a2 - 1.0f, u.y, 1.0f);
@@ -126,33 +127,25 @@ static f32x4 importanceSamplingNdfDggx(float2 u, float linearRoughness) noexcept
 	auto sinTheta = std::sqrt(1.0f - cosTheta2);
 	return f32x4(std::cos(phi) * sinTheta, std::sin(phi) * sinTheta, cosTheta);
 }
-// TODO: use faster alg +7.5%: https://arxiv.org/pdf/2306.05044
 
 /**
  * @brief Computes diffuse irradiance from spherical harmonics (SH) using a 3rd-order.
  *
  * @details
- * This function evaluates irradiance (light arriving at a surface) from an environment map, 
- * encoded using spherical harmonics (SH), for a given surface normal.
+ * This function evaluates diffuse irradiance (light arriving at a surface) from an 
+ * environment map, encoded using spherical harmonics (SH), for a given surface normal.
  * 
  * @param normal target sample normal vector
- * @param[in] shBuffer IBL spherical harmonics buffer 
+ * @param[in] shDiffuse diffuse irradiance SH matrices
  */
-static f32x4 diffuseIrradiance(f32x4 normal, const f32x4* shBuffer) noexcept
+static f32x4 diffuseIrradiance(f32x4 normal, const f32x4x4* shDiffuse) noexcept
 {
 	auto qb = normal.swizzle<SwY, SwY, SwZ, SwZ>() * normal.swizzle<SwX, SwZ, SwZ, SwX>();
-	qb.setZ(std::fma(qb.getZ(), 3.0f, -1.0f));
-	auto ft = normal.getX() * normal.getX() - normal.getY() * normal.getY();
-
-	auto irradiance = shBuffer[0];
-	irradiance = fma(shBuffer[1], f32x4(normal.getY()), irradiance);
-	irradiance = fma(shBuffer[2], f32x4(normal.getZ()), irradiance);
-	irradiance = fma(shBuffer[3], f32x4(normal.getX()), irradiance);
-	irradiance = fma(shBuffer[4], f32x4(qb.getX()), irradiance);
-	irradiance = fma(shBuffer[5], f32x4(qb.getY()), irradiance);
-	irradiance = fma(shBuffer[6], f32x4(qb.getZ()), irradiance);
-	irradiance = fma(shBuffer[7], f32x4(qb.getW()), irradiance);
-	irradiance = fma(shBuffer[8], f32x4(ft), irradiance);
+	auto b1 = f32x4(1.0f, normal.getY(), normal.getZ());
+	auto b2 = f32x4(normal.getX(), qb.getX(), qb.getY());
+	auto b3 = f32x4(std::fma(qb.getZ(), 3.0f, -1.0f), qb.getW(), 
+		normal.getX() * normal.getX() - normal.getY() * normal.getY());
+	auto irradiance = shDiffuse[0] * b1 + shDiffuse[1] * b2 + shDiffuse[2] * b3;
 	return max(irradiance, f32x4::zero);
 }
 

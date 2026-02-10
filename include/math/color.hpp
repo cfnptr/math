@@ -309,7 +309,7 @@ static bool isBinaryLess(Color a, Color b) noexcept { return  *((const uint32*)&
  * @param b blue channel color value
  * @param a alpha channel color value (transparency)
  */
-static constexpr Color rgba(uint8 r, uint8 g, uint8 b, float a) noexcept { return Color(r, g, b, a); }
+static constexpr Color rgba(uint8 r, uint8 g, uint8 b, float a) noexcept { return Color(Color(r, g, b), a); }
 
 // TODO: color conversion functions.
 

@@ -44,7 +44,15 @@ static f32x4x4 computeTBN(f32x4x4 model, f32x4 normal, f32x4 tangent) noexcept
 	return f32x4x4(t, b, n);
 }
 
-static float3x3 approximateTBN(float3 normal) noexcept // Branchless ONB (Duff et al. Orthonormal Basis)
+static f32x4x4 approximateTBN(f32x4 normal) noexcept
+{
+	auto up = std::abs(normal.getZ()) < 0.999f ? 
+		f32x4(0.0f, 0.0f, 1.0f) : f32x4(1.0f, 0.0f, 0.0f);
+	auto tangent = normalize3(cross3(up, normal));
+	auto bitangent = cross3(normal, tangent);
+	return f32x4x4(tangent, bitangent, normal);
+}
+static float3x3 fastApproximateTBN(float3 normal) noexcept // Branchless ONB (Duff et al. Orthonormal Basis)
 {
 	assert(normal == normalize(normal));
 	float signZ = normal.z >= 0.0f ? 1.0f : -1.0f;
