@@ -127,6 +127,12 @@ static f32x4 importanceSamplingNdfDggx(float2 u, float linearRoughness) noexcept
 	auto sinTheta = std::sqrt(1.0f - cosTheta2);
 	return f32x4(std::cos(phi) * sinTheta, std::sin(phi) * sinTheta, cosTheta);
 }
+static f32x4 sampleHemisphereCosine(float2 u) noexcept
+{
+	auto phi = u.x * float(M_PI * 2.0);
+	auto cosTheta = std::sqrt(u.y), sinTheta = std::sqrt(1.0f - u.y);
+	return f32x4(std::cos(phi) * sinTheta, std::sin(phi) * sinTheta, cosTheta);
+}
 
 /**
  * @brief Computes diffuse irradiance from spherical harmonics (SH) using a 3rd-order.
