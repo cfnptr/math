@@ -64,11 +64,11 @@ static float3x3 fastApproximateTBN(float3 normal) noexcept // Branchless ONB (Du
 }
 
 static f32x4x4 tbnToTangentSpace(f32x4x4 tbn) noexcept { return transpose3x3(tbn); }
-static f32x4 tbnGetTangent(f32x4x4 tbn) noexcept { return tbn[0]; }
-static f32x4 tbnGetBitangent(f32x4x4 tbn) noexcept { return tbn[1]; }
-static f32x4 tbnGetNormal(f32x4x4 tbn) noexcept { return tbn[2]; }
+static f32x4 getTbnTangent(f32x4x4 tbn) noexcept { return tbn[0]; }
+static f32x4 getTbnBitangent(f32x4x4 tbn) noexcept { return tbn[1]; }
+static f32x4 getTbnNormal(f32x4x4 tbn) noexcept { return tbn[2]; }
 
-static float3 snapNormal(float3 normal) noexcept
+static float3 snapToAxis(float3 normal) noexcept
 {
 	float3 a = abs(normal);
 	return a.x > a.y && a.x > a.z ? float3(sign(normal.x), 0.0f, 0.0f) : (a.y > a.z ? 
