@@ -73,7 +73,7 @@ typedef uint64_t uint64;
 typedef size_t psize;
 
 /**
- * @brief Signed 16bit floating point type. (Half precission float)
+ * @brief Signed 16bit floating point type. (Half precision float)
  */
 typedef _Float16 half;
 

@@ -24,33 +24,33 @@ namespace math
 {
 
 /**
- * @brief Converts metres to millimetres.
- * @param km target distance in kilometres
+ * @brief Converts metres to millimeters.
+ * @param km target distance in kilometers
  */
 template<class V = float>
 static V mToMm(V m) noexcept { return m * 1000.0f; }
 /**
- * @brief Converts metres to centimetres.
- * @param km target distance in kilometres
+ * @brief Converts metres to centimeters.
+ * @param km target distance in kilometers
  */
 template<class V = float>
 static V mToCm(V m) noexcept { return m * 100.0f; }
 /**
- * @brief Converts metres to kilometres.
- * @param km target distance in kilometres
+ * @brief Converts metres to kilometers.
+ * @param km target distance in kilometers
  */
 template<class V = float>
 static V mToKm(V m) noexcept { return m * 0.001f; }
 
 /**
- * @brief Converts kilometres to centimetres.
- * @param km target distance in kilometres
+ * @brief Converts kilometers to centimeters.
+ * @param km target distance in kilometers
  */
 template<class V = float>
 static V kmToCm(V km) noexcept { return km * 100000.0f; }
 /**
- * @brief Converts kilometres to metres.
- * @param km target distance in kilometres
+ * @brief Converts kilometers to metres.
+ * @param km target distance in kilometers
  */
 template<class V = float>
 static V kmToM(V km) noexcept { return km * 1000.0f; }
