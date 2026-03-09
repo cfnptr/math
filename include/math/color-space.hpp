@@ -176,30 +176,50 @@ static f32x4 xyyToRgb(f32x4 xyy) noexcept { return xyzToRgb(xyyToXyz(xyy)); }
 // Linear sRGB <-> LogLuv
 static const f32x4x4 rgbToLogLuvMat = f32x4x4
 (
-	f32x4(0.2209f, 0.3390f, 0.4184f, 0.0f),
-	f32x4(0.1138f, 0.6780f, 0.7319f, 0.0f),
-	f32x4(0.0102f, 0.1130f, 0.2969f, 0.0f),
+	f32x4(0.1832848040f, 0.2126390040f, 0.252131164f, 0.0f),
+	f32x4(0.1589263680f, 0.7151686540f, 0.788274765f, 0.0f),
+	f32x4(0.0802136883f, 0.0721923187f, 0.283475161f, 0.0f),
 	f32x4::zero
 );
 static const f32x4x4 logLuvToRgbMat = f32x4x4
 (
-	f32x4( 6.0014f, -2.7008f, -1.7996f, 0.0f),
-	f32x4(-1.3320f,  3.1029f, -5.7721f, 0.0f),
-	f32x4( 0.3008f, -1.0882f,  5.6268f, 0.0f),
+	f32x4( 7.666140550f, -2.211964610f, -0.667561352f, 0.0f),
+	f32x4( 0.955670714f,  1.668192390f, -5.488834380f, 0.0f),
+	f32x4(-2.412632940f,  0.201072842f,  5.114378450f, 0.0f),
 	f32x4::zero
 );
 
+static f32x4x4 calcLogLuvMat(const f32x4x4& rgbToXyzMat) noexcept
+{
+	static const f32x4x4 m1 = f32x4x4
+	(
+		f32x4(1.0f, 0.0f,  1.0f, 0.0f),
+		f32x4(0.0f, 1.0f, 15.0f, 0.0f),
+		f32x4(0.0f, 0.0f,  3.0f, 0.0f),
+		f32x4::zero
+	);
+	static const f32x4x4 m2 = f32x4x4
+	(
+		f32x4(4.0f / 9.0f, 0.0f,         0.0f, 0.0f),
+		f32x4(0.0f,        1.0f,         0.0f, 0.0f),
+		f32x4(0.0f,        0.0f, 0.62f / 9.0f, 0.0f),
+		f32x4::zero
+	);
+	return dot3x3(m2, dot3x3(m1, rgbToXyzMat));
+}
+
 /**
  * @brief Encodes linear RGB color (HDR) to the LogLuv format.
+ * @details Encodes log2(Y) in [-20,20) range.
  * @param rgb target linear RGB color
  */
 static uint32 rgbToLogLuv(f32x4 rgb) noexcept
 {
 	auto luv = max(dot3x3(rgbToLogLuvMat, rgb), f32x4(1e-6f));
-	auto uv = (uint2)fma(saturate((float2)luv / luv.getZ()), float2(255.0f), float2(0.5f));
-	auto logLuv = (uint32)std::fma(saturate(std::fma(std::log2(
-		luv.getY()), 1.0f / 64.0f, 0.5f)), 65535.0f, 0.5f);
-	logLuv |= (uv.x << 24u) | (uv.y << 16u);
+	auto uv = (uint2)fma(saturate((float2)luv / luv.getZ()), float2(511.0f), float2(0.5f));
+	auto le = (uint32)std::fma(saturate(std::fma(std::log2(
+		luv.getY()), (1.0f / 40.0f), 0.5f)), 16383.0f, 0.5f);
+	auto logLuv = (uv.y << 23u) | (uv.x << 14u) | le;
 	return dot3(rgb, rgb) > 0.0f ? logLuv : 0;
 }
 /**
@@ -208,8 +228,8 @@ static uint32 rgbToLogLuv(f32x4 rgb) noexcept
  */
 static f32x4 logLuvToRgb(uint32 logLuv)
 {
-	f32x4 luv; auto uv = float2(uint2(logLuv >> 24u, logLuv >> 16u) & 255u) * (1.0f / 255.0f);
-	luv.floats.y = std::exp2(std::fma(logLuv & 65535u, (1.0f / 65535.0f) * 64.0f, -32.0f));
+	f32x4 luv; auto uv = float2(uint2(logLuv >> 14u, logLuv >> 23u) & 511u) * (1.0f / 511.0f);
+	luv.floats.y = std::exp2(std::fma(logLuv & 16383u, 40.0f / 16383.0f, -20.0f));
 	luv.floats.z = luv.floats.y / uv.y; luv.floats.x = luv.floats.z * uv.x;
 	return logLuv > 0 ? max(dot3x3(logLuvToRgbMat, luv), f32x4::zero) : f32x4::zero;
 }

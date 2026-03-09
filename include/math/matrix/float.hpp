@@ -778,9 +778,9 @@ static constexpr float4x4 transpose(float4x4 m) noexcept
  */
 static constexpr float2x2 inverse(float2x2 m) noexcept
 {
-	auto oneOverDeterminant = 1.0f / (m.c0.x * m.c1.y - m.c1.x * m.c0.y);
-	return float2x2(m.c1.y * oneOverDeterminant, -m.c0.y * oneOverDeterminant,
-		-m.c1.x * oneOverDeterminant, m.c0.x * oneOverDeterminant);
+	auto invDeterminant = 1.0f / (m.c0.x * m.c1.y - m.c1.x * m.c0.y);
+	return float2x2(m.c1.y * invDeterminant, -m.c0.y * invDeterminant,
+		-m.c1.x * invDeterminant, m.c0.x * invDeterminant);
 }
 /**
  * @brief Calculates matrix inverse. (Useful for undoing transformations)
@@ -788,20 +788,20 @@ static constexpr float2x2 inverse(float2x2 m) noexcept
  */
 static constexpr float3x3 inverse(float3x3 m) noexcept
 {
-	auto oneOverDeterminant = 1.0f / (
-		m.c0.x * (m.c1.y * m.c2.z - m.c2.y * m.c1.z)
+	auto invDeterminant = 1.0f / (
+		 m.c0.x * (m.c1.y * m.c2.z - m.c2.y * m.c1.z)
 		-m.c1.x * (m.c0.y * m.c2.z - m.c2.y * m.c0.z) +
-		m.c2.x * (m.c0.y * m.c1.z - m.c1.y * m.c0.z));
+		 m.c2.x * (m.c0.y * m.c1.z - m.c1.y * m.c0.z));
 	return float3x3(
-		(m.c1.y * m.c2.z - m.c2.y * m.c1.z) * oneOverDeterminant,
-		-(m.c0.y * m.c2.z - m.c2.y * m.c0.z) * oneOverDeterminant,
-		(m.c0.y * m.c2.z - m.c1.y * m.c0.z) * oneOverDeterminant,
-		-(m.c1.x * m.c2.z - m.c2.x * m.c1.z) * oneOverDeterminant,
-		(m.c0.x * m.c2.z - m.c2.x * m.c0.z) * oneOverDeterminant,
-		-(m.c0.x * m.c2.z - m.c1.x * m.c0.z) * oneOverDeterminant,
-		(m.c1.x * m.c2.y - m.c2.x * m.c1.y) * oneOverDeterminant,
-		-(m.c0.x * m.c2.y - m.c2.x * m.c0.y) * oneOverDeterminant,
-		(m.c0.x * m.c2.y - m.c1.x * m.c0.y) * oneOverDeterminant);
+		 (m.c1.y * m.c2.z - m.c2.y * m.c1.z) * invDeterminant,
+		-(m.c1.x * m.c2.z - m.c2.x * m.c1.z) * invDeterminant,
+		 (m.c1.x * m.c2.y - m.c2.x * m.c1.y) * invDeterminant,
+		-(m.c0.y * m.c2.z - m.c2.y * m.c0.z) * invDeterminant,
+		 (m.c0.x * m.c2.z - m.c2.x * m.c0.z) * invDeterminant,
+		-(m.c0.x * m.c2.y - m.c2.x * m.c0.y) * invDeterminant,
+		 (m.c0.y * m.c1.z - m.c1.y * m.c0.z) * invDeterminant,
+		-(m.c0.x * m.c1.z - m.c1.x * m.c0.z) * invDeterminant,
+		 (m.c0.x * m.c1.y - m.c1.x * m.c0.y) * invDeterminant);
 }
 /**
  * @brief Calculates matrix inverse. (Useful for undoing transformations)

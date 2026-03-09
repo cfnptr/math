@@ -616,6 +616,32 @@ static f32x4x4 inverse4x4(const f32x4x4& m) noexcept
 	#endif
 }
 
-// TODO: inverse of the 3x3 matrix like in the Jolt lib.
+/**
+ * @brief Calculates 3x3 SIMD matrix determinant.
+ * @param[in] m target SIMD matrix
+ */
+static float calcDeterminant3x3(const f32x4x4& m) noexcept
+{
+	return dot3(m.c0, cross3(m.c1, m.c2));
+}
+/**
+ * @brief Calculates 3x3 SIMD matrix inverse. (Useful for undoing transformations)
+ * @param[in] m target SIMD matrix to inverse
+ */
+static f32x4x4 inverse3x3(const f32x4x4& m) noexcept
+{
+	auto invDeterminant = 1.0f / calcDeterminant3x3(m);
+	return f32x4x4(
+		 (m.c1[1] * m.c2[2] - m.c2[1] * m.c1[2]) * invDeterminant,
+		-(m.c1[0] * m.c2[2] - m.c2[0] * m.c1[2]) * invDeterminant,
+		 (m.c1[0] * m.c2[1] - m.c2[0] * m.c1[1]) * invDeterminant, 0.0f,
+		-(m.c0[1] * m.c2[2] - m.c2[1] * m.c0[2]) * invDeterminant,
+		 (m.c0[0] * m.c2[2] - m.c2[0] * m.c0[2]) * invDeterminant,
+		-(m.c0[0] * m.c2[1] - m.c2[0] * m.c0[1]) * invDeterminant, 0.0f,
+		 (m.c0[1] * m.c1[2] - m.c1[1] * m.c0[2]) * invDeterminant,
+		-(m.c0[0] * m.c1[2] - m.c1[0] * m.c0[2]) * invDeterminant,
+		 (m.c0[0] * m.c1[1] - m.c1[0] * m.c0[1]) * invDeterminant, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f);
+}
 
 } // namespace math
