@@ -71,13 +71,13 @@ struct [[nodiscard]] Color
 	 * @param a alpha channel color value (transparency)
 	 */
 	constexpr Color(Color rgb, float a) noexcept : r(rgb.r), g(rgb.g), b(rgb.b), 
-		a(saturate(a) * 255.0f + 0.5f) { }
+		a(uint8(saturate(a) * 255.0f + 0.5f)) { }
 
 	/**
 	 * @brief Creates a new sRGB color structure from the binary data.
 	 * @param data target binary color data
 	 */
-	constexpr explicit Color(uint32 data) noexcept { *(uint32*)this = data; }
+	explicit Color(uint32 data) noexcept { *(uint32*)this = data; }
 	/**
 	 * @brief Creates a new sRGB color structure from the hexadecimal string.
 	 * @param hex target hexadecimal color string (eg. #FFFFFFFF)
@@ -183,41 +183,41 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Returns color binary data.
 	 */
-	constexpr explicit operator uint32() const noexcept { return *(const uint32*)this; }
+	explicit operator uint32() const noexcept { return *(const uint32*)this; }
 
 	/*******************************************************************************************************************
 	 * @brief Returns sRGB color normalizer R channel. (Red)
 	 */
-	constexpr float getNormR() const noexcept { return r * (1.0f / 255.0f); }
+	constexpr float getNormR() const noexcept { return (float)r * (1.0f / 255.0f); }
 	/**
 	 * @brief Returns sRGB color normalizer G channel. (Green)
 	 */
-	constexpr float getNormG() const noexcept { return g * (1.0f / 255.0f); }
+	constexpr float getNormG() const noexcept { return (float)g * (1.0f / 255.0f); }
 	/**
 	 * @brief Returns sRGB color normalizer B channel. (Blue)
 	 */
-	constexpr float getNormB() const noexcept { return b * (1.0f / 255.0f); }
+	constexpr float getNormB() const noexcept { return (float)b * (1.0f / 255.0f); }
 	/**
 	 * @brief Returns sRGB color normalizer A channel. (Alpha)
 	 */
-	constexpr float getNormA() const noexcept { return a * (1.0f / 255.0f); }
+	constexpr float getNormA() const noexcept { return (float)a * (1.0f / 255.0f); }
 
 	/**
 	 * @brief Sets sRGB color normalizer R channel. (Red)
 	 */
-	constexpr void setNormR(float r) noexcept { this->r = saturate(r) * 255.0f + 0.5f; }
+	constexpr void setNormR(float r) noexcept { this->r = uint8(saturate(r) * 255.0f + 0.5f); }
 	/**
 	 * @brief Sets sRGB color normalizer G channel. (Green)
 	 */
-	constexpr void setNormG(float g) noexcept { this->g = saturate(g) * 255.0f + 0.5f; }
+	constexpr void setNormG(float g) noexcept { this->g = uint8(saturate(g) * 255.0f + 0.5f); }
 	/**
 	 * @brief Sets sRGB color normalizer B channel. (Blue)
 	 */
-	constexpr void setNormB(float b) noexcept { this->b = saturate(b) * 255.0f + 0.5f; }
+	constexpr void setNormB(float b) noexcept { this->b = uint8(saturate(b) * 255.0f + 0.5f); }
 	/**
 	 * @brief Sets sRGB color normalizer A channel. (Alpha)
 	 */
-	constexpr void setNormA(float a) noexcept { this->a = saturate(a) * 255.0f + 0.5f; }
+	constexpr void setNormA(float a) noexcept { this->a = uint8(saturate(a) * 255.0f + 0.5f); }
 
 	/*******************************************************************************************************************
 	 * @brief Converts sRGB color to the string. (Space separated)
@@ -242,11 +242,11 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Converts sRGB color to the RGB hexadecimal string.
 	 */
-	string toHex4() const noexcept { return math::toHex8((const uint8*)this, 4); }
+	string toHex4() const noexcept { return toHex8((const uint8*)this, 4); }
 	/**
 	 * @brief Converts sRGB color to the RGBA hexadecimal string.
 	 */
-	string toHex3() const noexcept { return math::toHex8((const uint8*)this, 3); }
+	string toHex3() const noexcept { return toHex8((const uint8*)this, 3); }
 
 	/**
 	 * @brief Converts sRGB color to the normalized linear RGB color space.

@@ -146,21 +146,21 @@ struct [[nodiscard]] float2
 		epsilon, inf, minusInf, nan, left, right, bottom, top;
 };
 
-inline const float2 float2::zero = float2(0.0f);
-inline const float2 float2::one = float2(1.0f);
-inline const float2 float2::minusOne = float2(-1.0f);
-inline const float2 float2::min = float2(FLT_MIN);
-inline const float2 float2::minusMin = float2(-FLT_MIN);
-inline const float2 float2::max = float2(FLT_MAX);
-inline const float2 float2::minusMax = float2(-FLT_MAX);
-inline const float2 float2::epsilon = float2(FLT_EPSILON);
-inline const float2 float2::inf = float2(INFINITY);
-inline const float2 float2::minusInf = float2(-INFINITY);
-inline const float2 float2::nan = float2(NAN);
-inline const float2 float2::left = float2(-1.0f, 0.0f);
-inline const float2 float2::right = float2(1.0f, 0.0f);
-inline const float2 float2::bottom = float2(0.0f, -1.0f);
-inline const float2 float2::top = float2(0.0f, 1.0f);
+inline constexpr float2 float2::zero = float2(0.0f);
+inline constexpr float2 float2::one = float2(1.0f);
+inline constexpr float2 float2::minusOne = float2(-1.0f);
+inline constexpr float2 float2::min = float2(FLT_MIN);
+inline constexpr float2 float2::minusMin = float2(-FLT_MIN);
+inline constexpr float2 float2::max = float2(FLT_MAX);
+inline constexpr float2 float2::minusMax = float2(-FLT_MAX);
+inline constexpr float2 float2::epsilon = float2(FLT_EPSILON);
+inline constexpr float2 float2::inf = float2(INFINITY);
+inline constexpr float2 float2::minusInf = float2(-INFINITY);
+inline constexpr float2 float2::nan = float2(NAN);
+inline constexpr float2 float2::left = float2(-1.0f, 0.0f);
+inline constexpr float2 float2::right = float2(1.0f, 0.0f);
+inline constexpr float2 float2::bottom = float2(0.0f, -1.0f);
+inline constexpr float2 float2::top = float2(0.0f, 1.0f);
 
 /***********************************************************************************************************************
  * @brief Floating point 3 component vector structure.
@@ -310,23 +310,23 @@ struct [[nodiscard]] float3
 		epsilon, inf, minusInf, nan, left, right, bottom, top, back, front;
 };
 
-inline const float3 float3::zero = float3(0.0f);
-inline const float3 float3::one = float3(1.0f);
-inline const float3 float3::minusOne = float3(-1.0f);
-inline const float3 float3::min = float3(FLT_MIN);
-inline const float3 float3::minusMin = float3(-FLT_MIN);
-inline const float3 float3::max = float3(FLT_MAX);
-inline const float3 float3::minusMax = float3(-FLT_MAX);
-inline const float3 float3::epsilon = float3(FLT_EPSILON);
-inline const float3 float3::inf = float3(INFINITY);
-inline const float3 float3::minusInf = float3(-INFINITY);
-inline const float3 float3::nan = float3(NAN);
-inline const float3 float3::left = float3(-1.0f, 0.0f, 0.0f);
-inline const float3 float3::right = float3(1.0f, 0.0f, 0.0f);
-inline const float3 float3::bottom = float3(0.0f, -1.0f, 0.0f);
-inline const float3 float3::top = float3(0.0f, 1.0f, 0.0f);
-inline const float3 float3::back = float3(0.0f, 0.0f, -1.0f);
-inline const float3 float3::front = float3(0.0f, 0.0f, 1.0f);
+inline constexpr float3 float3::zero = float3(0.0f);
+inline constexpr float3 float3::one = float3(1.0f);
+inline constexpr float3 float3::minusOne = float3(-1.0f);
+inline constexpr float3 float3::min = float3(FLT_MIN);
+inline constexpr float3 float3::minusMin = float3(-FLT_MIN);
+inline constexpr float3 float3::max = float3(FLT_MAX);
+inline constexpr float3 float3::minusMax = float3(-FLT_MAX);
+inline constexpr float3 float3::epsilon = float3(FLT_EPSILON);
+inline constexpr float3 float3::inf = float3(INFINITY);
+inline constexpr float3 float3::minusInf = float3(-INFINITY);
+inline constexpr float3 float3::nan = float3(NAN);
+inline constexpr float3 float3::left = float3(-1.0f, 0.0f, 0.0f);
+inline constexpr float3 float3::right = float3(1.0f, 0.0f, 0.0f);
+inline constexpr float3 float3::bottom = float3(0.0f, -1.0f, 0.0f);
+inline constexpr float3 float3::top = float3(0.0f, 1.0f, 0.0f);
+inline constexpr float3 float3::back = float3(0.0f, 0.0f, -1.0f);
+inline constexpr float3 float3::front = float3(0.0f, 0.0f, 1.0f);
 
 /***********************************************************************************************************************
  * @brief Floating point 4 component vector structure.
@@ -526,17 +526,17 @@ struct [[nodiscard]] float4
 	static const float4 zero, one, minusOne, min, minusMin, max, minusMax, epsilon, inf, minusInf, nan;
 };
 
-inline const float4 float4::zero = float4(0.0f);
-inline const float4 float4::one = float4(1.0f);
-inline const float4 float4::minusOne = float4(-1.0f);
-inline const float4 float4::min = float4(FLT_MIN);
-inline const float4 float4::minusMin = float4(-FLT_MIN);
-inline const float4 float4::max = float4(FLT_MAX);
-inline const float4 float4::minusMax = float4(-FLT_MAX);
-inline const float4 float4::epsilon = float4(FLT_EPSILON);
-inline const float4 float4::inf = float4(INFINITY);
-inline const float4 float4::minusInf = float4(-INFINITY);
-inline const float4 float4::nan = float4(NAN);
+inline constexpr float4 float4::zero = float4(0.0f);
+inline constexpr float4 float4::one = float4(1.0f);
+inline constexpr float4 float4::minusOne = float4(-1.0f);
+inline constexpr float4 float4::min = float4(FLT_MIN);
+inline constexpr float4 float4::minusMin = float4(-FLT_MIN);
+inline constexpr float4 float4::max = float4(FLT_MAX);
+inline constexpr float4 float4::minusMax = float4(-FLT_MAX);
+inline constexpr float4 float4::epsilon = float4(FLT_EPSILON);
+inline constexpr float4 float4::inf = float4(INFINITY);
+inline constexpr float4 float4::minusInf = float4(-INFINITY);
+inline constexpr float4 float4::nan = float4(NAN);
 
 //**********************************************************************************************************************
 static constexpr float2 operator+(float n, float2 v) noexcept { return float2(n) + v; }

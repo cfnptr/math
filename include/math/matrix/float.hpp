@@ -128,12 +128,12 @@ struct [[nodiscard]] float2x2
 	static const float2x2 zero, one, minusOne, identity;
 };
 
-inline const float2x2 float2x2::identity = float2x2(
+inline constexpr float2x2 float2x2::identity = float2x2(
 	1.0f, 0.0f,
 	0.0f, 1.0f);
-inline const float2x2 float2x2::zero = float2x2(0.0f);
-inline const float2x2 float2x2::one = float2x2(1.0f);
-inline const float2x2 float2x2::minusOne = float2x2(-1.0f);
+inline constexpr float2x2 float2x2::zero = float2x2(0.0f);
+inline constexpr float2x2 float2x2::one = float2x2(1.0f);
+inline constexpr float2x2 float2x2::minusOne = float2x2(-1.0f);
 
 /***********************************************************************************************************************
  * @brief Floating point 3x3 matrix structure.
@@ -245,13 +245,13 @@ struct [[nodiscard]] float3x3
 	static const float3x3 zero, one, minusOne, identity;
 };
 
-inline const float3x3 float3x3::identity = float3x3(
+inline constexpr float3x3 float3x3::identity = float3x3(
 	1.0f, 0.0f, 0.0f,
 	0.0f, 1.0f, 0.0f,
 	0.0f, 0.0f, 1.0f);
-inline const float3x3 float3x3::zero = float3x3(0.0f);
-inline const float3x3 float3x3::one = float3x3(1.0f);
-inline const float3x3 float3x3::minusOne = float3x3(-1.0f);
+inline constexpr float3x3 float3x3::zero = float3x3(0.0f);
+inline constexpr float3x3 float3x3::one = float3x3(1.0f);
+inline constexpr float3x3 float3x3::minusOne = float3x3(-1.0f);
 
 /***********************************************************************************************************************
  * @brief Floating point 4x3 matrix structure.
@@ -354,13 +354,13 @@ struct [[nodiscard]] float4x3
 	static const float4x3 zero, one, minusOne, identity;
 };
 
-inline const float4x3 float4x3::identity = float4x3(
+inline constexpr float4x3 float4x3::identity = float4x3(
 	1.0f, 0.0f, 0.0f, 0.0f,
 	0.0f, 1.0f, 0.0f, 0.0f,
 	0.0f, 0.0f, 1.0f, 0.0f);
-inline const float4x3 float4x3::zero = float4x3(0.0f);
-inline const float4x3 float4x3::one = float4x3(1.0f);
-inline const float4x3 float4x3::minusOne = float4x3(-1.0f);
+inline constexpr float4x3 float4x3::zero = float4x3(0.0f);
+inline constexpr float4x3 float4x3::one = float4x3(1.0f);
+inline constexpr float4x3 float4x3::minusOne = float4x3(-1.0f);
 
 /***********************************************************************************************************************
  * @brief Floating point 3x4 matrix structure.
@@ -462,14 +462,14 @@ struct [[nodiscard]] float3x4
 	static const float3x4 zero, one, minusOne, identity;
 };
 
-inline const float3x4 float3x4::identity = float3x4(
+inline constexpr float3x4 float3x4::identity = float3x4(
 	1.0f, 0.0f, 0.0f,
 	0.0f, 1.0f, 0.0f,
 	0.0f, 0.0f, 1.0f,
 	0.0f, 0.0f, 0.0f);
-inline const float3x4 float3x4::zero = float3x4(0.0f);
-inline const float3x4 float3x4::one = float3x4(1.0f);
-inline const float3x4 float3x4::minusOne = float3x4(-1.0f);
+inline constexpr float3x4 float3x4::zero = float3x4(0.0f);
+inline constexpr float3x4 float3x4::one = float3x4(1.0f);
+inline constexpr float3x4 float3x4::minusOne = float3x4(-1.0f);
 
 /***********************************************************************************************************************
  * @brief Floating point 4x4 matrix structure.
@@ -621,14 +621,14 @@ struct [[nodiscard]] float4x4
 	static const float4x4 zero, one, minusOne;
 };
 
-inline const float4x4 float4x4::identity = float4x4(
+inline constexpr float4x4 float4x4::identity = float4x4(
 	1.0f, 0.0f, 0.0f, 0.0f,
 	0.0f, 1.0f, 0.0f, 0.0f,
 	0.0f, 0.0f, 1.0f, 0.0f,
 	0.0f, 0.0f, 0.0f, 1.0f);
-inline const float4x4 float4x4::zero = float4x4(0.0f);
-inline const float4x4 float4x4::one = float4x4(1.0f);
-inline const float4x4 float4x4::minusOne = float4x4(-1.0f);
+inline constexpr float4x4 float4x4::zero = float4x4(0.0f);
+inline constexpr float4x4 float4x4::one = float4x4(1.0f);
+inline constexpr float4x4 float4x4::minusOne = float4x4(-1.0f);
 
 //**********************************************************************************************************************
 static constexpr float4x4 operator+(float n, const float4x4& m) noexcept
