@@ -12,7 +12,7 @@ See the [documentation](https://cfnptr.github.io/math).
 * SIMD optimized (f32x4, f32x4x4, f16x4)
 * Euler angles/radians conversion
 * Matrix translate, scale, rotate
-* Pespective, orthographics projection
+* Perspective, orthographic projection
 * Ray, line, plane, triangle, sphere...
 * Axis aligned bounding box (AABB)
 * Frustum culling, matrix extraction
@@ -26,15 +26,7 @@ See the [documentation](https://cfnptr.github.io/math).
 * Spherical harmonics (SH)
 * Enum class flags declaration
 * Simplified integer types (int64, uint32, int8...)
-
-## Supported operating systems
-
-* Windows (10/11)
-* Ubuntu (22.04/24.04)
-* macOS (15/26)
-
-This list includes only those systems on which functionality testing is conducted.
-However, you can also compile it under any other Linux distribution or operating system.
+* Supports Windows, macOS and Linux
 
 ## Build requirements
 
@@ -67,7 +59,7 @@ git clone https://github.com/cfnptr/math
 ## Building ![CI](https://github.com/cfnptr/math/actions/workflows/cmake.yml/badge.svg)
 
 * Windows: ```./scripts/build-release.bat```
-* macOS / Ubuntu: ```./scripts/build-release.sh```
+* macOS / Linux: ```./scripts/build-release.sh```
 
 ### Inspired by
 
