@@ -34,13 +34,13 @@ static constexpr enumType operator^(enumType a, enumType b) noexcept    \
 {                                                                       \
 	return (enumType)((uint64)a ^ (uint64)b);                           \
 }                                                                       \
-static constexpr enumType operator!(enumType a) noexcept                \
+static constexpr enumType operator!(enumType v) noexcept                \
 {                                                                       \
-	return (enumType)!((uint64)a);                                      \
+	return (enumType)!((uint64)v);                                      \
 }                                                                       \
-static constexpr enumType operator~(enumType a) noexcept                \
+static constexpr enumType operator~(enumType v) noexcept                \
 {                                                                       \
-	return (enumType)~((uint64)a);                                      \
+	return (enumType)~((uint64)v);                                      \
 }                                                                       \
 static constexpr enumType& operator|=(enumType& a, enumType b) noexcept \
 {                                                                       \
@@ -54,13 +54,21 @@ static constexpr enumType& operator^=(enumType& a, enumType b) noexcept \
 {                                                                       \
 	return a = a ^ b;                                                   \
 }                                                                       \
-static constexpr bool hasAnyFlag(enumType a, enumType flags) noexcept   \
+static constexpr bool hasAnyFlag(enumType v, enumType flags) noexcept   \
 {                                                                       \
-	return (uint64)(a & flags);                                         \
+	return (uint64)(v & flags) ? true : false;                          \
 }                                                                       \
-static constexpr bool hasOneFlag(enumType a, enumType flag) noexcept    \
+static constexpr bool hasOneFlag(enumType v, enumType flag) noexcept    \
 {                                                                       \
-	return (uint64)(a & flag) == (uint64)a;                             \
+	return (v & flag) == v;                                             \
+}                                                                       \
+static constexpr void setFlags(enumType& v, enumType flags) noexcept    \
+{                                                                       \
+	v |= flags;                                                         \
+}                                                                       \
+static constexpr void unsetFlags(enumType& v, enumType flags) noexcept  \
+{                                                                       \
+	v &= ~flags;                                                        \
 }
 
 } // namespace math

@@ -884,8 +884,7 @@ static f32x4 abs(f32x4 v) noexcept
 	#if defined(MATH_SIMD_SUPPORT_SSE)
 	if constexpr (std::numeric_limits<float>::is_iec559)
 		return _mm_and_ps(v.data, _mm_castsi128_ps(_mm_set1_epi32(0x7FFFFFFF)));
-	else
-		return _mm_max_ps(_mm_sub_ps(_mm_setzero_ps(), v.data), v.data);
+	else return _mm_max_ps(_mm_sub_ps(_mm_setzero_ps(), v.data), v.data);
 	#elif defined(MATH_SIMD_SUPPORT_NEON)
 	return vabsq_f32(v.data);
 	#else

@@ -330,8 +330,7 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& root
 		{
 			if (centroidData[primitives[i]][axis] < split)
 				i++;
-			else
-				std::swap(primitives[i], primitives[j--]);
+			else std::swap(primitives[i], primitives[j--]);
 		}
 
 		auto count1 = i - firstPrimitive;
@@ -463,8 +462,7 @@ void Bvh::recreate(const Aabb* aabbs, const Aabb& rootAabb, uint32 aabbCount, co
 		{
 			if (centroidData[primitiveData[i]][axis] < split)
 				i++;
-			else
-				std::swap(primitiveData[i], primitiveData[j--]);
+			else std::swap(primitiveData[i], primitiveData[j--]);
 		}
 
 		auto count1 = i - firstPrimitive;
