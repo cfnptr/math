@@ -80,11 +80,11 @@ static string toHex8(const uint8* data, psize size) noexcept
  * @brief Converts hexadecimal string to the 32bit integer value.
  * @param[in] hex target hexadecimal string
  */
-static uint32 toInt32(const string& hex) noexcept { return std::stoul(hex, nullptr, 16); }
+static uint32 toInt32(const string& hex) noexcept { return (uint32)std::stoul(hex, nullptr, 16); }
 /**
  * @brief Converts hexadecimal string to the 64bit integer value.
  * @param[in] hex target hexadecimal string
  */
-static uint64 toInt64(const string& hex) noexcept { return std::stoull(hex, nullptr, 16); }
+static uint64 toInt64(const string& hex) noexcept { return (uint64)std::stoull(hex, nullptr, 16); }
 
 } // namespace math
