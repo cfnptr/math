@@ -234,4 +234,33 @@ static f32x4 logLuvToRgb(uint32 logLuv)
 	return logLuv > 0 ? max(dot3x3(logLuvToRgbMat, luv), f32x4::zero) : f32x4::zero;
 }
 
+/**
+ * @brief Converts floating point value to the B10G11R11 value.
+ *
+ * @param value target floating point value
+ * @param bits packed mantissa bit count
+ * @param mask packed mantissa mask
+ */
+static uint32 encodeB10G11R11(float value, uint32 bits, uint32 mask) noexcept
+{
+	// TODO: use here SIMD vector instead, it all can be ported.
+	auto valueBits = *(const uint32*)&value;
+	auto exponent = (int32)((valueBits >> 23u) & 0xFFu) - 127 + 15; 
+	if (exponent <= 0) return 0; // 5-bit exponent bias 15
+	auto mantissa = (valueBits >> 12u) & mask;
+	return (exponent << bits) | mantissa;
+}
+/**
+ * @brief Converts 3D floating point vector to the B10G11R11 value.
+ * @param rgb target 3D floating point vector
+ */
+static uint32 encodeB10G11R11(f32x4 rgb) noexcept
+{
+	rgb = clamp(rgb, f32x4::zero, f32x4(FLOAT_BIG_16));
+	auto r = encodeB10G11R11(rgb.getX(), 6, 0b111111);
+	auto g = encodeB10G11R11(rgb.getY(), 6, 0b111111);
+	auto b = encodeB10G11R11(rgb.getZ(), 5, 0b11111);
+	return (b << 22u) | (g << 11u) | r;
+}
+
 } // namespace math

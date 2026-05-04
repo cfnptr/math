@@ -28,6 +28,7 @@
 #define _Float16 uint16_t // Note: MSVC fix
 #endif
 
+#define FLOAT_SMALL_16 0.00006103515625f
 #define FLOAT_BIG_16 65504.0f
 
 namespace math
