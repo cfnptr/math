@@ -26,7 +26,6 @@ var NAVTREE =
 [
   [ "Math", "index.html", [
     [ "Features", "index.html#features", null ],
-    [ "Supported operating systems", "index.html#supported-operating-systems", null ],
     [ "Build requirements", "index.html#build-requirements", [
       [ "CMake options", "index.html#cmake-options", null ],
       [ "CMake targets", "index.html#cmake-targets", null ]
@@ -37,23 +36,10 @@ var NAVTREE =
     ] ],
     [ "Build instructions", "md_BUILDING.html", [
       [ "Operating Systems", "md_BUILDING.html#operating-systems", null ],
-      [ "Windows (10/11)", "md_BUILDING.html#windows-1011", [
-        [ "1. Install Visual Studio Community (Or any other IDE)", "md_BUILDING.html#autotoc_md1-install-visual-studio-community-or-any-other-ide", null ],
-        [ "2. Install Git", "md_BUILDING.html#autotoc_md2-install-git", null ],
-        [ "3. Install CMake", "md_BUILDING.html#autotoc_md3-install-cmake", null ]
-      ] ],
-      [ "Ubuntu (22.04/24.04)", "md_BUILDING.html#ubuntu-22042404", [
-        [ "1. Install Visual Studio Code (Or any other IDE)", "md_BUILDING.html#autotoc_md1-install-visual-studio-code-or-any-other-ide", null ],
-        [ "2. Install required packages", "md_BUILDING.html#autotoc_md2-install-required-packages", null ]
-      ] ],
-      [ "macOS (15/26)", "md_BUILDING.html#macos-1526", [
-        [ "1. Install Xcode (Or any other IDE)", "md_BUILDING.html#autotoc_md1-install-xcode-or-any-other-ide", null ],
-        [ "2. Install required packages", "md_BUILDING.html#autotoc_md2-install-required-packages-1", null ]
-      ] ],
-      [ "Build Project", "md_BUILDING.html#build-project", [
-        [ "Visual Studio", "md_BUILDING.html#visual-studio", null ],
-        [ "Visual Studio Code (VS Code)", "md_BUILDING.html#visual-studio-code-vs-code", null ]
-      ] ]
+      [ "Windows", "md_BUILDING.html#windows", null ],
+      [ "macOS", "md_BUILDING.html#macos", null ],
+      [ "Linux", "md_BUILDING.html#linux", null ],
+      [ "Build project (Compile)", "md_BUILDING.html#build-project-compile", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -66,7 +52,11 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ]
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Variables", "globals_vars.html", null ]
+      ] ]
     ] ]
   ] ]
 ];
@@ -74,8 +64,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "aabb_8hpp.html",
-"structmath_1_1Sphere.html#aee0136d850c8712d56a5683235fc6707",
-"structmath_1_1int2.html#a3407aff753cf9847b8edaf080c69f9aa"
+"structmath_1_1Ray.html#a0a92a573b1da29d6e5406f8f400f65f4",
+"structmath_1_1i32x4.html#a87b83c714032a140951190d8d960d0a4"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';
