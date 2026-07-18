@@ -27,8 +27,6 @@
 #include <tmmintrin.h>
 
 #define MATH_SIMD_SUPPORT_SSE
-#define MATH_SIMD_VECTOR_ALIGNMENT 16
-
 // TODO: AVX512 support when more than 50% devices will be supported on steam hardware survey.
 
 #if defined(__AVX2__)
@@ -44,10 +42,7 @@
 
 #include <arm_neon.h>
 #define MATH_SIMD_SUPPORT_NEON
-#define MATH_SIMD_VECTOR_ALIGNMENT 16
 
-#elif defined(__arm__) || defined(_M_ARM)
-#define MATH_SIMD_VECTOR_ALIGNMENT 8
 #endif
 
 #if defined(_MSC_VER)
@@ -59,7 +54,7 @@ namespace math
 
 #if defined(MATH_SIMD_SUPPORT_SSE)
 typedef __m128 _simd_f128;
-typedef uint64 _simd_f64;
+typedef __m128i _simd_f64;
 typedef __m128i _simd_i128;
 typedef __m128i _simd_u128;
 #elif defined(MATH_SIMD_SUPPORT_NEON)

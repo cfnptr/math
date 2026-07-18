@@ -14,20 +14,19 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common floating point vector functions.
+ * @brief Common floating point 32 bit vector functions.
  * @details Based on this project: https://github.com/g-truc/glm
  */
 
 #pragma once
 #include "math/common.hpp"
-#include "math/vector/int.hpp"
-#include <cfloat>
+#include "math/vector/half.hpp"
 
 namespace math
 {
 
 /**
- * @brief Floating point 2 component vector structure.
+ * @brief A 2-component vector of 32-bit floating-point values.
  * @details Commonly used to represent: points, positions, directions, velocities, etc.
  */
 struct [[nodiscard]] float2
@@ -36,27 +35,62 @@ struct [[nodiscard]] float2
 	float y; /**< Second vector component. */
 
 	/**
-	 * @brief Creates a new floating point 2 component vector structure.
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
 	 * @param xy target value for all vector components
 	 */
 	constexpr explicit float2(float xy = 0.0f) noexcept : x(xy), y(xy) { }
 	/**
-	 * @brief Creates a new floating point 2 component vector structure.
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
 	 */
 	constexpr float2(float x, float y) noexcept : x(x), y(y) { }
 	/**
-	 * @brief Creates a new floating point 2 component vector structure.
-	 * @param xy target unsigned integer vector value
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
+	 * @param xy first and second vector component value
 	 */
-	constexpr float2(uint2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	explicit constexpr float2(half2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
 	/**
-	 * @brief Creates a new floating point 2 component vector structure.
-	 * @param xy target signed integer vector value
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
+	 * @param xy first and second vector component value
 	 */
-	constexpr float2(int2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	explicit constexpr float2(long2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	/**
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
+	 * @param xy first and second vector component value
+	 */
+	explicit constexpr float2(ulong2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	/**
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
+	 * @param xy first and second vector component value
+	 */
+	explicit constexpr float2(int2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	/**
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
+	 * @param xy first and second vector component value
+	 */
+	explicit constexpr float2(uint2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	/**
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
+	 * @param xy first and second vector component value
+	 */
+	constexpr float2(short2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	/**
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
+	 * @param xy first and second vector component value
+	 */
+	constexpr float2(ushort2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	/**
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
+	 * @param xy first and second vector component value
+	 */
+	constexpr float2(sbyte2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	/**
+	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
+	 * @param xy first and second vector component value
+	 */
+	constexpr float2(byte2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
 
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
@@ -77,26 +111,15 @@ struct [[nodiscard]] float2
 		return ((float*)this)[i];
 	}
 
-	/**
-	 * @brief Returns as 2 component unsigned integer vector. (xy)
-	 */
-	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
-	/**
-	 * @brief Returns as 2 component signed integer vector. (xy)
-	 */
+	constexpr explicit operator half2() const noexcept { return half2((half)x, (half)y); }
+	constexpr explicit operator long2() const noexcept { return long2((int64)x, (int64)y); }
+	constexpr explicit operator ulong2() const noexcept { return ulong2((uint64)x, (uint64)y); }
 	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
-	/**
-	 * @brief Returns first vector component as unsigned integer. (x)
-	 */
-	constexpr explicit operator uint32() const noexcept { return (uint32)x; }
-	/**
-	 * @brief Returns first vector component as signed integer. (x)
-	 */
-	constexpr explicit operator int32() const noexcept { return (int32)x; }
-	/**
-	 * @brief Returns first vector component value. (x)
-	 */
-	constexpr explicit operator float() const noexcept { return x; }
+	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
+	constexpr explicit operator short2() const noexcept { return short2((int16)x, (int16)y); }
+	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr float2 operator+(float2 v) const noexcept { return float2(x + v.x, y + v.y); }
@@ -163,7 +186,7 @@ inline constexpr float2 float2::bottom = float2(0.0f, -1.0f);
 inline constexpr float2 float2::top = float2(0.0f, 1.0f);
 
 /***********************************************************************************************************************
- * @brief Floating point 3 component vector structure.
+ * @brief A 3-component vector of 32-bit floating-point values.
  * @details Commonly used to represent: points, positions, directions, velocities, etc.
  */
 struct [[nodiscard]] float3
@@ -173,12 +196,12 @@ struct [[nodiscard]] float3
 	float z; /**< Third vector component. */
 
 	/**
-	 * @brief Creates a new floating point 3 component vector structure.
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
 	 * @param xyz target value for all vector components
 	 */
 	constexpr explicit float3(float xyz = 0.0f) noexcept : x(xyz), y(xyz), z(xyz) { }
 	/**
-	 * @brief Creates a new floating point 3 component vector structure.
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
@@ -186,29 +209,64 @@ struct [[nodiscard]] float3
 	 */
 	constexpr float3(float x, float y, float z) noexcept : x(x), y(y), z(z) { }
 	/**
-	 * @brief Creates a new floating point 3 component vector structure.
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
 	 *
-	 * @param xy first and second vector components value
+	 * @param xy first and second vector component value
 	 * @param z third vector component value
 	 */
 	constexpr float3(float2 xy, float z) noexcept : x(xy.x), y(xy.y), z(z) { }
 	/**
-	 * @brief Creates a new floating point 3 component vector structure.
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
 	 *
 	 * @param x first vector component value
-	 * @param yz second and third vector components value
+	 * @param yz second and third vector component value
 	 */
 	constexpr float3(float x, float2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 	/**
-	 * @brief Creates a new floating point 3 component vector structure.
-	 * @param xyz target unsigned integer vector value
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
+	 * @param xyz first, second and third vector component value
 	 */
-	constexpr float3(uint3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	explicit constexpr float3(half3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
 	/**
-	 * @brief Creates a new floating point 3 component vector structure.
-	 * @param xyz target signed integer vector value
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
+	 * @param xyz first, second and third vector component value
 	 */
-	constexpr float3(int3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	explicit constexpr float3(long3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	/**
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
+	 * @param xyz first, second and third vector component value
+	 */
+	explicit constexpr float3(ulong3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	/**
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
+	 * @param xyz first, second and third vector component value
+	 */
+	explicit constexpr float3(int3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	/**
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
+	 * @param xyz first, second and third vector component value
+	 */
+	explicit constexpr float3(uint3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	/**
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
+	 * @param xyz first, second and third vector component value
+	 */
+	constexpr float3(short3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	/**
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
+	 * @param xyz first, second and third vector component value
+	 */
+	constexpr float3(ushort3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	/**
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
+	 * @param xyz first, second and third vector component value
+	 */
+	constexpr float3(sbyte3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	/**
+	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
+	 * @param xyz first, second and third vector component value
+	 */
+	constexpr float3(byte3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
 
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
@@ -229,38 +287,25 @@ struct [[nodiscard]] float3
 		return ((float*)this)[i];
 	}
 
-	/**
-	 * @brief Returns as 3 component signed integer vector. (xyz)
-	 */
+	constexpr explicit operator half3() const noexcept { return half3((half)x, (half)y, (half)z); }
+	constexpr explicit operator long3() const noexcept { return long3((int64)x, (int64)y, (int64)z); }
+	constexpr explicit operator ulong3() const noexcept { return ulong3((uint64)x, (uint64)y, (uint64)z); }
 	constexpr explicit operator int3() const noexcept { return int3((int32)x, (int32)y, (int32)z); }
-	/**
-	 * @brief Returns as 3 component unsigned integer vector. (xyz)
-	 */
 	constexpr explicit operator uint3() const noexcept { return uint3((uint32)x, (uint32)y, (uint32)z); }
-	/**
-	 * @brief Returns as 2 component signed integer vector. (xy)
-	 */
-	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
-	/**
-	 * @brief Returns as 2 component unsigned integer vector. (xy)
-	 */
-	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
-	/**
-	 * @brief Returns first vector component as unsigned integer. (x)
-	 */
-	constexpr explicit operator uint32() const noexcept { return (uint32)x; }
-	/**
-	 * @brief Returns first vector component as signed integer. (x)
-	 */
-	constexpr explicit operator int32() const noexcept { return (int32)x; }
-	/**
-	 * @brief Returns as 2 component floating point vector. (xy)
-	 */
+	constexpr explicit operator short3() const noexcept { return short3((int16)x, (int16)y, (int16)z); }
+	constexpr explicit operator ushort3() const noexcept { return ushort3((uint16)x, (uint16)y, (uint16)z); }
+	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
+	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator float2() const noexcept { return float2(x, y); }
-	/**
-	 * @brief Returns first vector component value. (x)
-	 */
-	constexpr explicit operator float() const noexcept { return x; }
+	constexpr explicit operator half2() const noexcept { return half2((half)x, (half)y); }
+	constexpr explicit operator long2() const noexcept { return long2((int64)x, (int64)y); }
+	constexpr explicit operator ulong2() const noexcept { return ulong2((uint64)x, (uint64)y); }
+	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
+	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
+	constexpr explicit operator short2() const noexcept { return short2((int16)x, (int16)y); }
+	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr float3 operator+(float3 v) const noexcept { return float3(x + v.x, y + v.y, z + v.z); }
@@ -329,7 +374,7 @@ inline constexpr float3 float3::back = float3(0.0f, 0.0f, -1.0f);
 inline constexpr float3 float3::front = float3(0.0f, 0.0f, 1.0f);
 
 /***********************************************************************************************************************
- * @brief Floating point 4 component vector structure.
+ * @brief A 4-component vector of 32-bit floating-point values.
  * @details Commonly used to represent: points, positions, directions, velocities, etc.
  */
 struct [[nodiscard]] float4
@@ -340,12 +385,12 @@ struct [[nodiscard]] float4
 	float w; /**< Fourth vector component. */
 
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
 	 * @param xyzw target value for all vector components
 	 */
 	constexpr explicit float4(float xyzw = 0.0f) noexcept : x(xyzw), y(xyzw), z(xyzw), w(xyzw) { }
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
@@ -354,62 +399,95 @@ struct [[nodiscard]] float4
 	 */
 	constexpr float4(float x, float y, float z, float w) noexcept : x(x), y(y), z(z), w(w) { }
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
 	 *
-	 * @param xy first and second vector components value
+	 * @param xy first and second vector component value
 	 * @param z third vector component value
 	 * @param w fourth vector component value
 	 */
 	constexpr float4(float2 xy, float z, float w) noexcept : x(xy.x), y(xy.y), z(z), w(w) { }
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
 	 *
 	 * @param x first vector component value
-	 * @param yz second and third vector components value
+	 * @param yz second and third vector component value
 	 * @param w fourth vector component value
 	 */
 	constexpr float4(float x, float2 yz, float w) noexcept : x(x), y(yz.x), z(yz.y), w(w) { }
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
-	 * @param zw third and fourth vector components value
+	 * @param zw third and fourth vector component value
 	 */
 	constexpr float4(float x, float y, float2 zw) noexcept : x(x), y(y), z(zw.x), w(zw.y) { }
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
 	 *
-	 * @param xy first and second vector components value
-	 * @param zw third and fourth vector components value
+	 * @param xy first and second vector component value
+	 * @param zw third and fourth vector component value
 	 */
 	constexpr float4(float2 xy, float2 zw) noexcept : x(xy.x), y(xy.y), z(zw.x), w(zw.y) { }
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
 	 *
-	 * @param xyz first, second and third vector components value
+	 * @param xyz first, second and third vector component value
 	 * @param w fourth vector component value
 	 */
 	constexpr float4(float3 xyz, float w) noexcept : x(xyz.x), y(xyz.y), z(xyz.z), w(w) { }
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
 	 *
 	 * @param x first vector component value
-	 * @param yzw second, third and fourth vector components value
+	 * @param yzw second, third and fourth vector component value
 	 */
 	constexpr float4(float x, float3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
-	 * @param xyzw target unsigned integer vector value
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
+	 * @param xyzw first, second, third and fourth vector component value
 	 */
-	constexpr float4(uint4 xyzw) noexcept :
-		x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	explicit constexpr float4(half4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
 	/**
-	 * @brief Creates a new floating point 4 component vector structure.
-	 * @param xyzw target signed integer vector value
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
+	 * @param xyzw first, second, third and fourth vector component value
 	 */
-	constexpr float4(int4 xyzw) noexcept :
-		x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	explicit constexpr float4(long4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	/**
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
+	 * @param xyzw first, second, third and fourth vector component value
+	 */
+	explicit constexpr float4(ulong4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	/**
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
+	 * @param xyzw first, second, third and fourth vector component value
+	 */
+	explicit constexpr float4(int4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	/**
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
+	 * @param xyzw first, second, third and fourth vector component value
+	 */
+	explicit constexpr float4(uint4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	/**
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
+	 * @param xyzw first, second, third and fourth vector component value
+	 */
+	constexpr float4(short4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	/**
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
+	 * @param xyzw first, second, third and fourth vector component value
+	 */
+	constexpr float4(ushort4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	/**
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
+	 * @param xyzw first, second, third and fourth vector component value
+	 */
+	constexpr float4(sbyte4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	/**
+	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
+	 * @param xyzw first, second, third and fourth vector component value
+	 */
+	constexpr float4(byte4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
 
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
@@ -430,50 +508,35 @@ struct [[nodiscard]] float4
 		return ((float*)this)[i];
 	}
 
-	/**
-	 * @brief Returns as 4 component signed integer vector. (xyzw)
-	 */
+	constexpr explicit operator half4() const noexcept { return half4((half)x, (half)y, (half)z, (half)w); }
+	constexpr explicit operator long4() const noexcept { return long4((int64)x, (int64)y, (int64)z, (int64)w); }
+	constexpr explicit operator ulong4() const noexcept { return ulong4((uint64)x, (uint64)y, (uint64)z, (uint64)w); }
 	constexpr explicit operator int4() const noexcept { return int4((int32)x, (int32)y, (int32)z, (int32)w); }
-	/**
-	 * @brief Returns as 4 component unsigned integer vector. (xyzw)
-	 */
 	constexpr explicit operator uint4() const noexcept { return uint4((uint32)x, (uint32)y, (uint32)z, (uint32)w); }
-	/**
-	 * @brief Returns as 3 component signed integer vector. (xyz)
-	 */
-	constexpr explicit operator int3() const noexcept { return int3((int32)x, (int32)y, (int32)z); }
-	/**
-	 * @brief Returns as 3 component unsigned integer vector. (xyz)
-	 */
-	constexpr explicit operator uint3() const noexcept { return uint3((uint32)x, (uint32)y, (uint32)z); }
-	/**
-	 * @brief Returns as 2 component signed integer vector. (xy)
-	 */
-	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
-	/**
-	 * @brief Returns as 2 component unsigned integer vector. (xy)
-	 */
-	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
-	/**
-	 * @brief Returns first vector component as unsigned integer. (x)
-	 */
-	constexpr explicit operator uint32() const noexcept { return (uint32)x; }
-	/**
-	 * @brief Returns first vector component as signed integer. (x)
-	 */
-	constexpr explicit operator int32() const noexcept { return (int32)x; }
-	/**
-	 * @brief Returns as 3 component floating point vector. (xyz)
-	 */
+	constexpr explicit operator short4() const noexcept { return short4((int16)x, (int16)y, (int16)z, (int16)w); }
+	constexpr explicit operator ushort4() const noexcept { return ushort4((uint16)x, (uint16)y, (uint16)z, (uint16)w); }
+	constexpr explicit operator sbyte4() const noexcept { return sbyte4((int8)x, (int8)y, (int8)z, (int8)w); }
+	constexpr explicit operator byte4() const noexcept { return byte4((uint8)x, (uint8)y, (uint8)z, (uint8)w); }
 	constexpr explicit operator float3() const noexcept { return float3(x, y, z); }
-	/**
-	 * @brief Returns as 2 component floating point vector. (xy)
-	 */
+	constexpr explicit operator half3() const noexcept { return half3((half)x, (half)y, (half)z); }
+	constexpr explicit operator long3() const noexcept { return long3((int64)x, (int64)y, (int64)z); }
+	constexpr explicit operator ulong3() const noexcept { return ulong3((uint64)x, (uint64)y, (uint64)z); }
+	constexpr explicit operator int3() const noexcept { return int3((int32)x, (int32)y, (int32)z); }
+	constexpr explicit operator uint3() const noexcept { return uint3((uint32)x, (uint32)y, (uint32)z); }
+	constexpr explicit operator short3() const noexcept { return short3((int16)x, (int16)y, (int16)z); }
+	constexpr explicit operator ushort3() const noexcept { return ushort3((uint16)x, (uint16)y, (uint16)z); }
+	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
+	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator float2() const noexcept { return float2(x, y); }
-	/**
-	 * @brief Returns first vector component value. (x)
-	 */
-	constexpr explicit operator float() const noexcept { return x; }
+	constexpr explicit operator half2() const noexcept { return half2((half)x, (half)y); }
+	constexpr explicit operator long2() const noexcept { return long2((int64)x, (int64)y); }
+	constexpr explicit operator ulong2() const noexcept { return ulong2((uint64)x, (uint64)y); }
+	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
+	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
+	constexpr explicit operator short2() const noexcept { return short2((int16)x, (int16)y); }
+	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr float4 operator+(float4 v) const noexcept { return float4(x + v.x, y + v.y, z + v.z, w + v.w); }

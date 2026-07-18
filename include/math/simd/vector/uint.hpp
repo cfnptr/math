@@ -14,12 +14,12 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common single instruction multiple data (SIMD) 32-bit unsigned integer vector functions.
+ * @brief Common single instruction multiple data (SIMD) 32 bit unsigned integer vector functions.
  */
 
 #pragma once
 #include "math/simd/types.hpp"
-#include "math/vector/uint.hpp"
+#include "math/vector/float.hpp"
 
 namespace math
 {
@@ -31,10 +31,10 @@ static constexpr uint32 SwW = 3; /**< SIMD vector swizzle W component index. */
 static constexpr uint32 SwU = 2; /**< SIMD vector swizzle unused component index. */
 
 /**
- * @brief SIMD 4 component 32bit unsigned integer vector structure. (uint4)
+ * @brief A 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
  * @note Use it when you know how to implement a faster vectorized code.
  */
-struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
+struct [[nodiscard]] u32x4
 {
 	union
 	{
@@ -48,7 +48,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 	u32x4& operator=(const u32x4& v) noexcept = default;
 
 	/**
-	 * @brief Creates a new zero initialized SIMD 4 component 32bit unsigned integer vector structure. (uint4)
+	 * @brief Creates a new zero initialized 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
 	 */
 	u32x4() noexcept
 	{
@@ -61,7 +61,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
 	 * @param xyzw target value for all vector components
 	 */
 	explicit u32x4(uint32 xyzw) noexcept
@@ -75,7 +75,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
@@ -93,7 +93,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
 	 * @warning This constructor duplicates Z component to the W component!
 	 *
 	 * @param x first vector component value
@@ -111,9 +111,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
 	 *
-	 * @param xyz first, second and third vector component values
+	 * @param xyz first, second and third vector component value
 	 * @param w fourth vector component value
 	 */
 	u32x4(u32x4 xyz, uint32 w) noexcept
@@ -131,14 +131,14 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_NEON)
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
 	 * @param data target vector SIMD data
 	 */
 	u32x4(_simd_u128 data) noexcept : data(data) { }
 	#endif
 
 	/*******************************************************************************************************************
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
 	 * @param v target 4 component vector value
 	 */
 	explicit u32x4(uint4 v) noexcept
@@ -152,7 +152,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
+	 * @warning This constructor duplicates Z component to the W component!
 	 * @param v target 3 component vector value
 	 */
 	explicit u32x4(uint3 v) noexcept
@@ -166,22 +167,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit unsigned integer vector structure. (uint4)
-	 * @param v target 2 component vector value
-	 */
-	explicit u32x4(uint2 v) noexcept
-	{
-		#if defined(MATH_SIMD_SUPPORT_SSE)
-		data = _mm_set_epi32((int)v.y, (int)v.y, (int)v.y, (int)v.x);
-		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = (uint32x4_t){ v.x, v.y, v.y, v.y };
-		#else
-		uints = uint4(v, v.y, v.y);
-		#endif
-	}
-	/**
-	 * @brief Creates a new SIMD 4 component vector 32bit unsigned integer structure. (uint4)
-	 * @param[in] v target 4 component vector value pointer (unaligned)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
+	 * @param[in] v target 4 component vector value pointer (UNALIGNED)
 	 */
 	explicit u32x4(const uint32* v) noexcept
 	{
@@ -195,9 +182,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 	}
 	
 	/*******************************************************************************************************************
-	 * @brief Loads SIMD 4 component 32bit unsigned integer aligned vector value.
+	 * @brief Loads 4-component SIMD vector of aligned 32-bit unsigned integer values. (uint4)
 	 * @warning Specified vector pointer must be aligned in the memory!!!
-	 * @param[in] v target 4 component vector value pointer (aligned)
+	 * @param[in] v target 4 component vector value pointer (ALIGNED)
 	 */
 	void loadAligned(const uint32* v) noexcept
 	{
@@ -211,8 +198,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 	}
 
 	/**
-	 * @brief Stores SIMD 4 component 32bit unsigned integer unaligned vector value.
-	 * @param[out] v target 4 component vector value pointer (unaligned)
+	 * @brief Stores 4-component SIMD vector of unaligned 32-bit unsigned integer values. (uint4)
+	 * @param[out] v target 4 component vector value pointer (UNALIGNED)
 	 */
 	void store(uint32* v) noexcept
 	{
@@ -225,9 +212,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 		#endif
 	}
 	/**
-	 * @brief Stores SIMD 4 component 32bit unsigned integer aligned vector value.
+	 * @brief Stores 4-component SIMD vector of aligned 32-bit unsigned integer values. (uint4)
 	 * @warning Specified vector pointer must be aligned in the memory!!!
-	 * @param[out] v target 4 component vector value pointer (aligned)
+	 * @param[out] v target 4 component vector value pointer (ALIGNED)
 	 */
 	void storeAligned(uint32* v) noexcept
 	{
@@ -355,22 +342,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) u32x4
 	 */
 	uint32 operator[](psize i) const noexcept { return uints[i]; }
 
-	/**
-	 * @brief Returns SIMD vector as 4 component unsigned integer vector. (xyzw)
-	 */
 	explicit operator uint4() const noexcept { return uints; }
-	/**
-	 * @brief Returns SIMD vector as 3 component unsigned integer vector. (xyz)
-	 */
 	explicit operator uint3() const noexcept { return (uint3)uints; }
-	/**
-	 * @brief Returns SIMD vector as 2 component unsigned integer vector. (xy)
-	 */
 	explicit operator uint2() const noexcept { return (uint2)uints; }
-	/**
-	 * @brief Returns SIMD first vector component value. (x)
-	 */
-	explicit operator uint32() const noexcept { return getX(); }
 
 	//******************************************************************************************************************
 	u32x4 operator+(u32x4 v) const noexcept

@@ -14,18 +14,13 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common unsigned integer vector functions.
+ * @brief Common unsigned integer 32 bit vector functions.
  * @details Based on this project: https://github.com/g-truc/glm
  */
 
 #pragma once
-#include "math/types.hpp"
-
-#include <string>
-#include <algorithm>
+#include "math/vector/ushort.hpp"
 #include <cmath>
-#include <cassert>
-#include <cstring>
 
 namespace math
 {
@@ -33,7 +28,7 @@ namespace math
 using namespace std;
 
 /**
- * @brief Unsigned integer 2 component vector structure.
+ * @brief A 2-component vector of 32-bit unsigned integer values.
  * @details Commonly used to represent: points, positions, etc.
  */
 struct [[nodiscard]] uint2
@@ -42,12 +37,12 @@ struct [[nodiscard]] uint2
 	uint32 y; /**< Second vector component. */
 
 	/**
-	 * @brief Creates a new unsigned integer 2 component vector structure.
+	 * @brief Creates a new 2-component vector of 32-bit unsigned integer values.
 	 * @param xy target value for all vector components
 	 */
 	constexpr explicit uint2(uint32 xy = 0u) noexcept : x(xy), y(xy) { }
 	/**
-	 * @brief Creates a new unsigned integer 2 component vector structure.
+	 * @brief Creates a new 2-component vector of 32-bit unsigned integer values.
 	 * 
 	 * @param x first vector component value
 	 * @param y second vector component value
@@ -72,11 +67,6 @@ struct [[nodiscard]] uint2
 		assert(i <= 1);
 		return ((uint32*)this)[i];
 	}
-
-	/**
-	 * @brief Returns first vector component value. (x)
-	 */
-	constexpr explicit operator uint32() noexcept { return x; }
 
 	//******************************************************************************************************************
 	constexpr uint2 operator+(uint2 v) const noexcept { return uint2(x + v.x, y + v.y); }
@@ -148,14 +138,15 @@ struct [[nodiscard]] uint2
 	constexpr uint2 operator<=(uint32 n) const noexcept { return *this <= uint2(n); }
 	constexpr uint2 operator>=(uint32 n) const noexcept { return *this >= uint2(n); }
 
-	static const uint2 zero, one;
+	static const uint2 zero, one, max;
 };
 
 inline const uint2 uint2::zero = uint2(0u);
 inline const uint2 uint2::one = uint2(1u);
+inline const uint2 uint2::max = uint2(UINT32_MAX);
 
 /***********************************************************************************************************************
- * @brief Unsigned integer 3 component vector structure.
+ * @brief A 3-component vector of 32-bit unsigned integer values.
  * @details Commonly used to represent: points, positions, etc.
  */
 struct [[nodiscard]] uint3
@@ -165,12 +156,12 @@ struct [[nodiscard]] uint3
 	uint32 z; /**< Third vector component. */
 
 	/**
-	 * @brief Creates a new unsigned integer 3 component vector structure.
+	 * @brief Creates a new 3-component vector of 32-bit unsigned integer values.
 	 * @param xyz target value for all vector components
 	 */
 	constexpr explicit uint3(uint32 xyz = 0u) noexcept : x(xyz), y(xyz), z(xyz) { }
 	/**
-	 * @brief Creates a new unsigned integer 3 component vector structure.
+	 * @brief Creates a new 3-component vector of 32-bit unsigned integer values.
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
@@ -178,17 +169,17 @@ struct [[nodiscard]] uint3
 	 */
 	constexpr uint3(uint32 x, uint32 y, uint32 z) noexcept : x(x), y(y), z(z) { }
 	/**
-	 * @brief Creates a new unsigned integer 3 component vector structure.
+	 * @brief Creates a new 3-component vector of 32-bit unsigned integer values.
 	 *
-	 * @param xy first and second vector components value
+	 * @param xy first and second vector component value
 	 * @param z third vector component value
 	 */
 	constexpr uint3(uint2 xy, uint32 z) noexcept : x(xy.x), y(xy.y), z(z) { }
 	/**
-	 * @brief Creates a new unsigned integer 3 component vector structure.
+	 * @brief Creates a new 3-component vector of 32-bit unsigned integer values.
 	 *
 	 * @param x first vector component value
-	 * @param yz second and third vector components value
+	 * @param yz second and third vector component value
 	 */
 	constexpr uint3(uint32 x, uint2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
@@ -211,14 +202,7 @@ struct [[nodiscard]] uint3
 		return ((uint32*)this)[i];
 	}
 
-	/**
-	 * @brief Returns as 2 component unsigned integer vector. (xy)
-	 */
 	constexpr explicit operator uint2() const noexcept { return uint2(x, y); }
-	/**
-	 * @brief Returns first vector component value. (x)
-	 */
-	constexpr explicit operator uint32() const noexcept { return x; }
 
 	//******************************************************************************************************************
 	constexpr uint3 operator+(uint3 v) const noexcept { return uint3(x + v.x, y + v.y, z + v.z); }
@@ -290,14 +274,15 @@ struct [[nodiscard]] uint3
 	constexpr uint3 operator<=(uint32 n) const noexcept { return *this <= uint3(n); }
 	constexpr uint3 operator>=(uint32 n) const noexcept { return *this >= uint3(n); }
 
-	static const uint3 zero, one;
+	static const uint3 zero, one, max;
 };
 
 inline const uint3 uint3::zero = uint3(0u);
 inline const uint3 uint3::one = uint3(1u);
+inline const uint3 uint3::max = uint3(UINT32_MAX);
 
 /***********************************************************************************************************************
- * @brief Unsigned integer 4 component vector structure.
+ * @brief A 4-component vector of 32-bit unsigned integer values.
  * @details Commonly used to represent: points, positions, etc.
  */
 struct [[nodiscard]] uint4
@@ -308,12 +293,12 @@ struct [[nodiscard]] uint4
 	uint32 w; /**< Fourth vector component. */
 
 	/**
-	 * @brief Creates a new unsigned integer 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit unsigned integer values.
 	 * @param xyzw target value for all vector components
 	 */
 	constexpr explicit uint4(uint32 xyzw = 0u) noexcept : x(xyzw), y(xyzw), z(xyzw), w(xyzw) { }
 	/**
-	 * @brief Creates a new unsigned integer 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit unsigned integer values.
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
@@ -322,48 +307,48 @@ struct [[nodiscard]] uint4
 	 */
 	constexpr uint4(uint32 x, uint32 y, uint32 z, uint32 w) noexcept : x(x), y(y), z(z), w(w) { }
 	/**
-	 * @brief Creates a new unsigned integer 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit unsigned integer values.
 	 *
-	 * @param xy first and second vector components value
+	 * @param xy first and second vector component value
 	 * @param z third vector component value
 	 * @param w fourth vector component value
 	 */
 	constexpr uint4(uint2 xy, uint32 z, uint32 w) noexcept : x(xy.x), y(xy.y), z(z), w(w) { }
 	/**
-	 * @brief Creates a new unsigned integer 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit unsigned integer values.
 	 *
 	 * @param x first vector component value
-	 * @param yz second and third vector components value
+	 * @param yz second and third vector component value
 	 * @param w fourth vector component value
 	 */
 	constexpr uint4(uint32 x, uint2 yz, uint32 w) noexcept : x(x), y(yz.x), z(yz.y), w(w) { }
 	/**
-	 * @brief Creates a new unsigned integer 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit unsigned integer values.
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
-	 * @param zw third and fourth vector components value
+	 * @param zw third and fourth vector component value
 	 */
 	constexpr uint4(uint32 x, uint32 y, uint2 zw) noexcept : x(x), y(y), z(zw.x), w(zw.y) { }
 	/**
-	 * @brief Creates a new unsigned integer 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit unsigned integer values.
 	 *
-	 * @param xy first and second vector components value
-	 * @param zw third and fourth vector components value
+	 * @param xy first and second vector component value
+	 * @param zw third and fourth vector component value
 	 */
 	constexpr uint4(uint2 xy, uint2 zw) noexcept : x(xy.x), y(xy.y), z(zw.x), w(zw.y) { }
 	/**
-	 * @brief Creates a new unsigned integer 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit unsigned integer values.
 	 *
-	 * @param xyz first, second and third vector components value
+	 * @param xyz first, second and third vector component value
 	 * @param w fourth vector component value
 	 */
 	constexpr uint4(uint3 xyz, uint32 w) noexcept : x(xyz.x), y(xyz.y), z(xyz.z), w(w) { }
 	/**
-	 * @brief Creates a new unsigned integer 4 component vector structure.
+	 * @brief Creates a new 4-component vector of 32-bit unsigned integer values.
 	 *
 	 * @param x first vector component value
-	 * @param yzw second, third and fourth vector components value
+	 * @param yzw second, third and fourth vector component value
 	 */
 	constexpr uint4(uint32 x, uint3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
 
@@ -386,18 +371,8 @@ struct [[nodiscard]] uint4
 		return ((uint32*)this)[i];
 	}
 
-	/**
-	 * @brief Returns as 3 component unsigned integer vector. (xyz)
-	 */
 	constexpr explicit operator uint3() const noexcept { return uint3(x, y, z); }
-	/**
-	 * @brief Returns as 2 component unsigned integer vector. (xy)
-	 */
 	constexpr explicit operator uint2() const noexcept { return uint2(x, y); }
-	/**
-	 * @brief Returns first vector component value. (x)
-	 */
-	constexpr explicit operator uint32() const noexcept { return x; }
 
 	//******************************************************************************************************************
 	constexpr uint4 operator+(uint4 v) const noexcept { return uint4(x + v.x, y + v.y, z + v.z, w + v.w); }
@@ -473,11 +448,12 @@ struct [[nodiscard]] uint4
 	constexpr uint4 operator<=(uint32 n) const noexcept { return *this <= uint4(n); }
 	constexpr uint4 operator>=(uint32 n) const noexcept { return *this >= uint4(n); }
 
-	static const uint4 zero, one;
+	static const uint4 zero, one, max;
 };
 
 inline const uint4 uint4::zero = uint4(0u);
 inline const uint4 uint4::one = uint4(1u);
+inline const uint4 uint4::max = uint4(UINT32_MAX);
 
 //**********************************************************************************************************************
 static constexpr uint2 operator+(uint32 n, uint2 v) noexcept { return uint2(n) + v; }

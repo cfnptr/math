@@ -30,7 +30,7 @@ namespace math
 {
 
 /**
- * @brief Floating point 2x2 matrix structure.
+ * @brief A 2x2 matrix of 32-bit floating-point vectors.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
 struct [[nodiscard]] float2x2
@@ -39,12 +39,12 @@ struct [[nodiscard]] float2x2
 	float2 c1; /**< Second matrix column. */
 
 	/**
-	 * @brief Creates a new floating point 2x2 matrix structure.
+	 * @brief Creates a new 2x2 matrix of 32-bit floating-point vectors.
 	 * @param n target value for all columns and rows
 	 */
 	constexpr explicit float2x2(float n = 0.0f) noexcept : c0(n), c1(n) { }
 	/**
-	 * @brief Creates a new floating point 2x2 matrix structure.
+	 * @brief Creates a new 2x2 matrix of 32-bit floating-point vectors.
 	 * @details See the @ref float2x2.
 	 */
 	constexpr float2x2(
@@ -53,7 +53,7 @@ struct [[nodiscard]] float2x2
 		c0(float2(c0r0, c0r1)),
 		c1(float2(c1r0, c1r1)) { }
 	/**
-	 * @brief Creates a new floating point 2x2 matrix structure.
+	 * @brief Creates a new 2x2 matrix of 32-bit floating-point vectors.
 	 * 
 	 * @param c0 first matrix column value
 	 * @param c1 second matrix column value
@@ -136,7 +136,7 @@ inline constexpr float2x2 float2x2::one = float2x2(1.0f);
 inline constexpr float2x2 float2x2::minusOne = float2x2(-1.0f);
 
 /***********************************************************************************************************************
- * @brief Floating point 3x3 matrix structure.
+ * @brief A 3x3 matrix of 32-bit floating-point vectors.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
 struct [[nodiscard]] float3x3
@@ -146,12 +146,12 @@ struct [[nodiscard]] float3x3
 	float3 c2; /**< Third matrix column. */
 
 	/**
-	 * @brief Creates a new floating point 3x3 matrix structure.
+	 * @brief Creates a new 3x3 matrix of 32-bit floating-point vectors.
 	 * @param n target value for all columns and rows
 	 */
 	constexpr explicit float3x3(float n = 0.0f) noexcept : c0(n), c1(n), c2(n) { }
 	/**
-	 * @brief Creates a new floating point 3x3 matrix structure.
+	 * @brief Creates a new 3x3 matrix of 32-bit floating-point vectors.
 	 * @details See the @ref float3x3.
 	 */
 	constexpr float3x3(
@@ -162,18 +162,13 @@ struct [[nodiscard]] float3x3
 		c1(float3(c1r0, c1r1, c1r2)),
 		c2(float3(c2r0, c2r1, c2r2)) { }
 	/**
-	 * @brief Creates a new floating point 3x3 matrix structure.
+	 * @brief Creates a new 3x3 matrix of 32-bit floating-point vectors.
 	 *
 	 * @param c0 first matrix column value
 	 * @param c1 second matrix column value
 	 * @param c2 third matrix column value
 	 */
 	constexpr float3x3(float3 c0, float3 c1, float3 c2) noexcept : c0(c0), c1(c1), c2(c2) { }
-
-	/**
-	 * @brief Returns matrix 2x2 part.
-	 */
-	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
 	
 	/**
 	 * @brief Returns matrix column by index.
@@ -193,6 +188,8 @@ struct [[nodiscard]] float3x3
 		assert(i <= 2);
 		return ((float3*)this)[i];
 	}
+
+	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
 
 	constexpr float3x3 operator+(float n) const noexcept { return float3x3(c0 + n, c1 + n, c2 + n); }
 	constexpr float3x3 operator-(float n) const noexcept { return float3x3(c0 - n, c1 - n, c2 - n); }
@@ -254,7 +251,7 @@ inline constexpr float3x3 float3x3::one = float3x3(1.0f);
 inline constexpr float3x3 float3x3::minusOne = float3x3(-1.0f);
 
 /***********************************************************************************************************************
- * @brief Floating point 4x3 matrix structure.
+ * @brief A 4x3 matrix of 32-bit floating-point vectors.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
 struct [[nodiscard]] float4x3
@@ -265,12 +262,12 @@ struct [[nodiscard]] float4x3
 	float3 c3; /**< Fourth matrix column. */
 
 	/**
-	 * @brief Creates a new floating point 4x3 matrix structure.
+	 * @brief Creates a new 4x3 matrix of 32-bit floating-point vectors.
 	 * @param n target value for all columns and rows
 	 */
 	constexpr explicit float4x3(float n = 0.0f) noexcept : c0(n), c1(n), c2(n), c3(n) { }
 	/**
-	 * @brief Creates a new floating point 4x3 matrix structure.
+	 * @brief Creates a new 4x3 matrix of 32-bit floating-point vectors.
 	 * @details See the @ref float3x3.
 	 */
 	constexpr float4x3(
@@ -282,7 +279,7 @@ struct [[nodiscard]] float4x3
 		c2(float3(c2r0, c2r1, c2r2)),
 		c3(float3(c3r0, c3r1, c3r2)) { }
 	/**
-	 * @brief Creates a new floating point 4x3 matrix structure.
+	 * @brief Creates a new 4x3 matrix of 32-bit floating-point vectors.
 	 *
 	 * @param c0 first matrix column value
 	 * @param c1 second matrix column value
@@ -290,15 +287,6 @@ struct [[nodiscard]] float4x3
 	 * @param c3 fourth matrix column value
 	 */
 	constexpr float4x3(float3 c0, float3 c1, float3 c2, float3 c3) noexcept : c0(c0), c1(c1), c2(c2), c3(c3) { }
-
-	/**
-	 * @brief Returns matrix 2x2 part.
-	 */
-	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
-	/**
-	 * @brief Returns matrix 3x3 part.
-	 */
-	constexpr explicit operator float3x3() const noexcept { return float3x3(c0, c1, c2); }
 
 	/**
 	 * @brief Returns matrix column by index.
@@ -318,6 +306,9 @@ struct [[nodiscard]] float4x3
 		assert(i <= 3);
 		return ((float3*)this)[i];
 	}
+
+	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
+	constexpr explicit operator float3x3() const noexcept { return float3x3(c0, c1, c2); }
 
 	constexpr float4x3 operator+(float n) const noexcept { return float4x3(c0 + n, c1 + n, c2 + n, c3 + n); }
 	constexpr float4x3 operator-(float n) const noexcept { return float4x3(c0 - n, c1 - n, c2 - n, c3 - n); }
@@ -363,7 +354,7 @@ inline constexpr float4x3 float4x3::one = float4x3(1.0f);
 inline constexpr float4x3 float4x3::minusOne = float4x3(-1.0f);
 
 /***********************************************************************************************************************
- * @brief Floating point 3x4 matrix structure.
+ * @brief A 3x4 matrix of 32-bit floating-point vectors.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
 struct [[nodiscard]] float3x4
@@ -373,12 +364,12 @@ struct [[nodiscard]] float3x4
 	float4 c2; /**< Third matrix column. */
 
 	/**
-	 * @brief Creates a new floating point 3x4 matrix structure.
+	 * @brief Creates a new 3x4 matrix of 32-bit floating-point vectors.
 	 * @param n target value for all columns and rows
 	 */
 	constexpr explicit float3x4(float n = 0.0f) noexcept : c0(n), c1(n), c2(n) { }
 	/**
-	 * @brief Creates a new floating point 3x4 matrix structure.
+	 * @brief Creates a new 3x4 matrix of 32-bit floating-point vectors.
 	 * @details See the @ref float3x3.
 	 */
 	constexpr float3x4(
@@ -390,22 +381,13 @@ struct [[nodiscard]] float3x4
 		c1(float4(c1r0, c1r1, c1r2, c1r3)),
 		c2(float4(c2r0, c2r1, c2r2, c2r3)) { }
 	/**
-	 * @brief Creates a new floating point 3x4 matrix structure.
+	 * @brief Creates a new 3x4 matrix of 32-bit floating-point vectors.
 	 *
 	 * @param c0 first matrix column value
 	 * @param c1 second matrix column value
 	 * @param c2 third matrix column value
 	 */
 	constexpr float3x4(float4 c0, float4 c1, float4 c2) noexcept : c0(c0), c1(c1), c2(c2) { }
-
-	/**
-	 * @brief Returns matrix 2x2 part.
-	 */
-	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
-	/**
-	 * @brief Returns matrix 3x3 part.
-	 */
-	constexpr explicit operator float3x3() const noexcept { return float3x3((float3)c0, (float3)c1, (float3)c2); }
 
 	/**
 	 * @brief Returns matrix column by index.
@@ -425,6 +407,9 @@ struct [[nodiscard]] float3x4
 		assert(i <= 2);
 		return ((float4*)this)[i];
 	}
+
+	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
+	constexpr explicit operator float3x3() const noexcept { return float3x3((float3)c0, (float3)c1, (float3)c2); }
 
 	constexpr float3x4 operator+(float n) const noexcept { return float3x4(c0 + n, c1 + n, c2 + n); }
 	constexpr float3x4 operator-(float n) const noexcept { return float3x4(c0 - n, c1 - n, c2 - n); }
@@ -472,7 +457,7 @@ inline constexpr float3x4 float3x4::one = float3x4(1.0f);
 inline constexpr float3x4 float3x4::minusOne = float3x4(-1.0f);
 
 /***********************************************************************************************************************
- * @brief Floating point 4x4 matrix structure.
+ * @brief A 4x4 matrix of 32-bit floating-point vectors.
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  */
 struct [[nodiscard]] float4x4
@@ -483,12 +468,12 @@ struct [[nodiscard]] float4x4
 	float4 c3; /**< Fourth matrix column. */
 
 	/**
-	 * @brief Creates a new floating point 4x4 matrix structure.
+	 * @brief Creates a new 4x4 matrix of 32-bit floating-point vectors.
 	 * @param n target value for all columns and rows
 	 */
 	constexpr explicit float4x4(float n = 0.0f) noexcept : c0(n), c1(n), c2(n), c3(n) { }
 	/**
-	 * @brief Creates a new floating point 4x4 matrix structure.
+	 * @brief Creates a new 4x4 matrix of 32-bit floating-point vectors.
 	 *
 	 * @param[in] c0 first matrix column value
 	 * @param[in] c1 second matrix column value
@@ -498,7 +483,7 @@ struct [[nodiscard]] float4x4
 	constexpr float4x4(float4 c0, float4 c1, float4 c2, float4 c3) noexcept : 
 		c0(c0), c1(c1), c2(c2), c3(c3) { }
 	/**
-	 * @brief Creates a new floating point 4x4 matrix structure.
+	 * @brief Creates a new 4x4 matrix of 32-bit floating-point vectors.
 	 * @details See the @ref float4x4.
 	 */
 	constexpr float4x4(
@@ -511,7 +496,7 @@ struct [[nodiscard]] float4x4
 		c2(float4(c2r0, c2r1, c2r2, c2r3)),
 		c3(float4(c3r0, c3r1, c3r2, c3r3)) { }
 	/**
-	 * @brief Creates a new floating point 4x4 matrix structure.
+	 * @brief Creates a new 4x4 matrix of 32-bit floating-point vectors.
 	 *
 	 * @param[in] m4x3 target 4x3 matrix
 	 * @param r3 third rows vector
@@ -519,7 +504,7 @@ struct [[nodiscard]] float4x4
 	constexpr float4x4(const float4x3& m4x3, float4 r3 = float4::zero) noexcept :
 		c0(float4(m4x3.c0, r3.x)), c1(float4(m4x3.c1, r3.y)), c2(float4(m4x3.c2, r3.z)), c3(float4(m4x3.c3, r3.w)) { }
 	/**
-	 * @brief Creates a new floating point 4x4 matrix structure.
+	 * @brief Creates a new 4x4 matrix of 32-bit floating-point vectors.
 	 * 
 	 * @param[in] m target 3x3 matrix value
 	 * @param c3 third columns SIMD vector
@@ -527,22 +512,6 @@ struct [[nodiscard]] float4x4
 	 */
 	constexpr float4x4(const float3x3& m, float4 c3 = float4::zero, float4 r3 = float4::zero) noexcept : 
 		c0(float4(m.c0, r3.x)), c1(float4(m.c1, r3.y)), c2(float4(m.c2, r3.z)), c3(c3) { }
-
-	/**
-	 * @brief Returns matrix 4x3 part.
-	 */
-	constexpr explicit operator float4x3() const noexcept
-	{
-		return float4x3((float3)c0, (float3)c1, (float3)c2, (float3)c3);
-	}
-	/**
-	 * @brief Returns matrix 3x3 part.
-	 */
-	constexpr explicit operator float3x3() const noexcept { return float3x3((float3)c0, (float3)c1, (float3)c2); }
-	/**
-	 * @brief Returns matrix 2x2 part.
-	 */
-	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
 
 	/**
 	 * @brief Returns matrix column by index.
@@ -562,6 +531,13 @@ struct [[nodiscard]] float4x4
 		assert(i <= 3);
 		return ((float4*)this)[i];
 	}
+
+	constexpr explicit operator float4x3() const noexcept
+	{
+		return float4x3((float3)c0, (float3)c1, (float3)c2, (float3)c3);
+	}
+	constexpr explicit operator float3x3() const noexcept { return float3x3((float3)c0, (float3)c1, (float3)c2); }
+	constexpr explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
 
 	constexpr float4x4 operator+(float n) const noexcept { return float4x4(c0 + n, c1 + n, c2 + n, c3 + n); }
 	constexpr float4x4 operator-(float n) const noexcept { return float4x4(c0 - n, c1 - n, c2 - n, c3 - n); }

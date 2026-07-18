@@ -119,6 +119,8 @@ static float gain(float x, float k) noexcept
 	return (x < 0.5f) ? a : 1.0f - a;
 }
 
+// TODO: double variants
+
 /**
  * @brief Returns true if specified value is a power of 2.
  * 

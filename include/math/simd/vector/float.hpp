@@ -14,12 +14,11 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common single instruction multiple data (SIMD) 32-bit floating point vector functions.
+ * @brief Common single instruction multiple data (SIMD) 32 bit floating point vector functions.
  */
 
 #pragma once
-#include "math/vector/float.hpp"
-#include "math/simd/vector/int.hpp"
+#include "math/simd/vector/half.hpp"
 
 #if defined(MATH_SIMD_SUPPORT_AVX2)
 #define MATH_SIMD_FMA(mul1, mul2, add) _mm_fmadd_ps(mul1, mul2, add)  // r = mul1 * mul2 + add
@@ -32,16 +31,16 @@
 namespace math
 {
 
-struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4;
+struct [[nodiscard]] f32x4;
 static u32x4 floatAsUint(f32x4 v) noexcept;
 static f32x4 uintAsFloat(u32x4 v) noexcept;
 
 /**
- * @brief SIMD 4 component 32bit floating point vector structure. (float4)
+ * @brief A 4-component SIMD vector of 32-bit floating-point values. (float4)
  * @details Commonly used to represent: points, positions, directions, velocities, etc.
  * @note Use it when you know how to implement a faster vectorized code.
  */
-struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
+struct [[nodiscard]] f32x4
 {
 	union
 	{
@@ -55,7 +54,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 	f32x4& operator=(const f32x4& v) noexcept = default;
 
 	/**
-	 * @brief Creates a new zero initialized SIMD 4 component 32bit floating point vector structure. (float4)
+	 * @brief Creates a new zero initialized 4-component SIMD vector of 32-bit floating-point values. (float4)
 	 */
 	f32x4() noexcept
 	{
@@ -68,7 +67,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit floating-point values. (float4)
 	 * @param xyzw target value for all vector components
 	 */
 	explicit f32x4(float xyzw) noexcept
@@ -82,7 +81,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit floating-point values. (float4)
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
@@ -100,7 +99,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit floating-point values. (float4)
 	 * @warning This constructor duplicates Z component to the W component!
 	 *
 	 * @param x first vector component value
@@ -118,9 +117,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit floating-point values. (float4)
 	 *
-	 * @param xyz first, second and third vector component values
+	 * @param xyz first, second and third vector component value
 	 * @param w fourth vector component value
 	 */
 	f32x4(f32x4 xyz, float w) noexcept
@@ -137,17 +136,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 	}
 
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_NEON)
-	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
-	 * @param data target vector floating point SIMD data
-	 */
 	f32x4(_simd_f128 data) noexcept : data(data) { }
 	#endif
 
-	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
-	 * @param v target vector unsigned integer SIMD data
-	 */
 	explicit f32x4(u32x4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -158,10 +149,6 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		floats = v.floats;
 		#endif
 	}
-	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
-	 * @param v target vector signed integer SIMD data
-	 */
 	explicit f32x4(i32x4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -172,9 +159,20 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		floats = v.floats;
 		#endif
 	}
+	explicit f32x4(f16x4 v) noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
+		data = _mm_cvtph_ps(v.data);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		data = vcvt_f32_f16(v.data);
+		#else
+		floats = (float4)v.halfs;
+		#endif
+	}
+
 
 	/*******************************************************************************************************************
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit floating-point values. (float4)
 	 * @param v target 4 component vector value
 	 */
 	explicit f32x4(float4 v) noexcept
@@ -188,7 +186,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit floating-point values. (float4)
+	 * @warning This constructor duplicates Z component to the W component!
 	 * @param v target 3 component vector value
 	 */
 	explicit f32x4(float3 v) noexcept
@@ -202,22 +201,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
-	 * @param v target 2 component vector value
-	 */
-	explicit f32x4(float2 v) noexcept
-	{
-		#if defined(MATH_SIMD_SUPPORT_SSE)
-		data = _mm_set_ps(v.y, v.y, v.y, v.x);
-		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = (float32x4_t){ v.x, v.y, v.y, v.y };
-		#else
-		floats = float4(v, v.y, v.y);
-		#endif
-	}
-	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (float4)
-	 * @param[in] v target 4 component vector value pointer (unaligned)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit floating-point values. (float4)
+	 * @param[in] v target 4 component vector value pointer (UNALIGNED)
 	 */
 	explicit f32x4(const float* v) noexcept
 	{
@@ -231,9 +216,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 	}
 	
 	/*******************************************************************************************************************
-	 * @brief Loads SIMD 4 component 32bit floating point aligned vector values.
+	 * @brief Loads 4-component SIMD vector of 32-bit floating-point values.
 	 * @warning Specified vector pointer must be aligned in the memory!!!
-	 * @param[in] v target 4 component vector value pointer (aligned)
+	 * @param[in] v target 4 component vector value pointer (ALIGNED)
 	 */
 	void loadAligned(const float* v) noexcept
 	{
@@ -247,8 +232,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 	}
 
 	/**
-	 * @brief Stores SIMD 4 component 32bit floating point unaligned vector values.
-	 * @param[out] v target 4 component vector value pointer (unaligned)
+	 * @brief Stores 4-component SIMD vector of unaligned 32-bit floating-point values.
+	 * @param[out] v target 4 component vector value pointer (UNALIGNED)
 	 */
 	void store(float* v) noexcept
 	{
@@ -261,9 +246,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		#endif
 	}
 	/**
-	 * @brief Stores SIMD 4 component 32bit floating point aligned vector values.
+	 * @brief Stores 4-component SIMD vector of aligned 32-bit floating-point values.
 	 * @warning Specified vector pointer must be aligned in the memory!!!
-	 * @param[out] v target 4 component vector value pointer (aligned)
+	 * @param[out] v target 4 component vector value pointer (ALIGNED)
 	 */
 	void storeAligned(float* v) noexcept
 	{
@@ -406,9 +391,6 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 	 */
 	float operator[](psize i) const noexcept { return floats[i]; }
 
-	/**
-	 * @brief Returns as 4 component unsigned integer SIMD vector.
-	 */
 	explicit operator u32x4() const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -419,9 +401,6 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		return u32x4((uint4)floats);
 		#endif
 	}
-	/**
-	 * @brief Returns as 4 component signed integer SIMD vector.
-	 */
 	explicit operator i32x4() const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -432,23 +411,20 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4
 		return i32x4((uint4)floats);
 		#endif
 	}
+	explicit operator f16x4() const noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
+		return _mm_cvtps_ph(data, _MM_FROUND_TO_NEAREST_INT);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		return vcvt_f16_f32(v.data);
+		#else
+		return f16x4((half4)floats);
+		#endif
+	}
 
-	/**
-	 * @brief Returns SIMD vector as 4 component floating point vector. (xyzw)
-	 */
 	explicit operator float4() const noexcept { return floats; }
-	/**
-	 * @brief Returns SIMD vector as 3 component floating point vector. (xyz)
-	 */
 	explicit operator float3() const noexcept { return (float3)floats; }
-	/**
-	 * @brief Returns SIMD vector as 2 component floating point vector. (xy)
-	 */
 	explicit operator float2() const noexcept { return (float2)floats; }
-	/**
-	 * @brief Returns SIMD first vector component value. (x)
-	 */
-	explicit operator float() const noexcept { return getX(); }
 
 	//******************************************************************************************************************
 	f32x4 operator+(f32x4 v) const noexcept

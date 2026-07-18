@@ -60,18 +60,23 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Creates a new sRGB color structure.
 	 * 
-	 * @param rgb red green and blue channel color value
+	 * @param rgb red, green and blue channel color value
 	 * @param a alpha channel color value (transparency)
 	 */
 	constexpr Color(Color rgb, uint8 a) noexcept : r(rgb.r), g(rgb.g), b(rgb.b), a(a) { }
 	/**
 	 * @brief Creates a new sRGB color structure.
 	 * 
-	 * @param rgb red green and blue channel color value
+	 * @param rgb red, green and blue channel color value
 	 * @param a alpha channel color value (transparency)
 	 */
 	constexpr Color(Color rgb, float a) noexcept : r(rgb.r), g(rgb.g), b(rgb.b), 
 		a(uint8(saturate(a) * 255.0f + 0.5f)) { }
+	/**
+	 * @brief Creates a new sRGB color structure.
+	 * @param rgba red, green, blue and alpha channel color value
+	 */
+	constexpr Color(byte4 rgba) noexcept : r(rgba.x), g(rgba.y), b(rgba.z), a(rgba.w) { }
 
 	/**
 	 * @brief Creates a new sRGB color structure from the binary data.
@@ -181,9 +186,13 @@ struct [[nodiscard]] Color
 	 */
 	explicit operator f32x4() const noexcept { return f32x4(r, g, b, a) * (1.0f / 255.0f); }
 	/**
-	 * @brief Returns color binary data.
+	 * @brief Returns color as binary vector.
 	 */
-	explicit operator uint32() const noexcept { return *(const uint32*)this; }
+	explicit operator byte4() const noexcept { return *((const byte4*)this); }
+	/**
+	 * @brief Returns color as unsigned integer value
+	 */
+	explicit operator uint32() const noexcept { return *((const uint32*)this); }
 
 	/*******************************************************************************************************************
 	 * @brief Returns sRGB color normalizer R channel. (Red)

@@ -31,19 +31,19 @@ namespace math
 {
 
 /**
- * @brief SIMD 32bit floating point quaternion rotation container. (In 3D space)
+ * @brief SIMD 32-bit floating point quaternion rotation container. (In 3D space)
  * @details Represents rotation using complex numbers, avoiding gimbal lock problem.
  */
-struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) quat : public f32x4
+struct [[nodiscard]] quat : public f32x4
 {
 	/**
-	 * @brief Creates a new identity SIMD 32bit floating point quaternion structure.
+	 * @brief Creates a new identity SIMD 32-bit floating point quaternion structure.
 	 * @note Identity quaternion represents rotation of 0 degrees around all axis.
 	 * @param xyzw quaternion parts vector
 	 */
 	quat(f32x4 xyzw = identity) noexcept : f32x4(xyzw) { }
 	/**
-	 * @brief Creates a new SIMD 32bit floating point quaternion structure.
+	 * @brief Creates a new SIMD 32-bit floating point quaternion structure.
 	 * 
 	 * @param x imaginary vector X part
 	 * @param y imaginary vector Y part
@@ -54,7 +54,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) quat : public f32x4
 
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_NEON)
 	/**
-	 * @brief Creates a new SIMD 32bit floating point quaternion structure.
+	 * @brief Creates a new SIMD 32-bit floating point quaternion structure.
 	 * @param data target vector floating point SIMD data
 	 */
 	quat(_simd_f128 data) : f32x4(data) { }
