@@ -123,17 +123,9 @@ struct [[nodiscard]] i32x4
 	}
 
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_NEON)
-	/**
-	 * @brief Creates a new 4-component SIMD vector of 32-bit signed integer values. (int4)
-	 * @param data target vector SIMD data
-	 */
 	i32x4(_simd_i128 data) noexcept : data(data) { }
 	#endif
 
-	/**
-	 * @brief Creates a new 4-component SIMD vector of 32-bit signed integer values. (int4)
-	 * @param v target vector unsigned integer SIMD data
-	 */
 	explicit i32x4(u32x4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -188,6 +180,25 @@ struct [[nodiscard]] i32x4
 		ints = *v;
 		#endif
 	}
+
+	explicit i32x4(float4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(half4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(long4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(ulong4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(uint4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(short4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(ushort4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(sbyte4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(byte4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(float3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(half3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(long3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(ulong3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(uint3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(short3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(ushort3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(sbyte3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(byte3 v) noexcept { *this = (i32x4)int3(v); }
 	
 	/*******************************************************************************************************************
 	 * @brief Loads 4-component SIMD vector of aligned 32-bit signed integer values. (int4)
@@ -361,9 +372,36 @@ struct [[nodiscard]] i32x4
 		#endif
 	}
 
+	explicit operator float4() const noexcept { return (float4)ints; }
+	explicit operator half4() const noexcept { return (half4)ints; }
+	explicit operator long4() const noexcept { return (long4)ints; }
+	explicit operator ulong4() const noexcept { return (ulong4)ints; }
 	explicit operator int4() const noexcept { return ints; }
+	explicit operator uint4() const noexcept { return (uint4)ints; }
+	explicit operator short4() const noexcept { return (short4)ints; }
+	explicit operator ushort4() const noexcept { return (ushort4)ints; }
+	explicit operator sbyte4() const noexcept { return (sbyte4)ints; }
+	explicit operator byte4() const noexcept { return (byte4)ints; }
+	explicit operator float3() const noexcept { return (float3)ints; }
+	explicit operator half3() const noexcept { return (half3)ints; }
+	explicit operator long3() const noexcept { return (long3)ints; }
+	explicit operator ulong3() const noexcept { return (ulong3)ints; }
 	explicit operator int3() const noexcept { return (int3)ints; }
+	explicit operator uint3() const noexcept { return (uint3)ints; }
+	explicit operator short3() const noexcept { return (short3)ints; }
+	explicit operator ushort3() const noexcept { return (ushort3)ints; }
+	explicit operator sbyte3() const noexcept { return (sbyte3)ints; }
+	explicit operator byte3() const noexcept { return (byte3)ints; }
+	explicit operator float2() const noexcept { return (float2)ints; }
+	explicit operator half2() const noexcept { return (half2)ints; }
+	explicit operator long2() const noexcept { return (long2)ints; }
+	explicit operator ulong2() const noexcept { return (ulong2)ints; }
 	explicit operator int2() const noexcept { return (int2)ints; }
+	explicit operator uint2() const noexcept { return (uint2)ints; }
+	explicit operator short2() const noexcept { return (short2)ints; }
+	explicit operator ushort2() const noexcept { return (ushort2)ints; }
+	explicit operator sbyte2() const noexcept { return (sbyte2)ints; }
+	explicit operator byte2() const noexcept { return (byte2)ints; }
 
 	//******************************************************************************************************************
 	i32x4 operator+(i32x4 v) const noexcept

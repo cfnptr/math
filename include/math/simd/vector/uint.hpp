@@ -19,7 +19,7 @@
 
 #pragma once
 #include "math/simd/types.hpp"
-#include "math/vector/float.hpp"
+#include "math/vector/double.hpp"
 
 namespace math
 {
@@ -130,10 +130,6 @@ struct [[nodiscard]] u32x4
 	}
 
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_NEON)
-	/**
-	 * @brief Creates a new 4-component SIMD vector of 32-bit unsigned integer values. (uint4)
-	 * @param data target vector SIMD data
-	 */
 	u32x4(_simd_u128 data) noexcept : data(data) { }
 	#endif
 
@@ -180,6 +176,25 @@ struct [[nodiscard]] u32x4
 		uints = *v;
 		#endif
 	}
+
+	explicit u32x4(float4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(half4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(long4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(ulong4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(int4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(short4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(ushort4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(sbyte4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(byte4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(float3 v) noexcept { *this = (u32x4)uint3(v); }
+	explicit u32x4(half3 v) noexcept { *this = (u32x4)uint3(v); }
+	explicit u32x4(long3 v) noexcept { *this = (u32x4)uint3(v); }
+	explicit u32x4(ulong3 v) noexcept { *this = (u32x4)uint3(v); }
+	explicit u32x4(int3 v) noexcept { *this = (u32x4)uint3(v); }
+	explicit u32x4(short3 v) noexcept { *this = (u32x4)uint3(v); }
+	explicit u32x4(ushort3 v) noexcept { *this = (u32x4)uint3(v); }
+	explicit u32x4(sbyte3 v) noexcept { *this = (u32x4)uint3(v); }
+	explicit u32x4(byte3 v) noexcept { *this = (u32x4)uint3(v); }
 	
 	/*******************************************************************************************************************
 	 * @brief Loads 4-component SIMD vector of aligned 32-bit unsigned integer values. (uint4)
@@ -342,9 +357,36 @@ struct [[nodiscard]] u32x4
 	 */
 	uint32 operator[](psize i) const noexcept { return uints[i]; }
 
+	explicit operator float4() const noexcept { return (float4)uints; }
+	explicit operator half4() const noexcept { return (half4)uints; }
+	explicit operator long4() const noexcept { return (long4)uints; }
+	explicit operator ulong4() const noexcept { return (ulong4)uints; }
+	explicit operator int4() const noexcept { return (int4)uints; }
 	explicit operator uint4() const noexcept { return uints; }
+	explicit operator short4() const noexcept { return (short4)uints; }
+	explicit operator ushort4() const noexcept { return (ushort4)uints; }
+	explicit operator sbyte4() const noexcept { return (sbyte4)uints; }
+	explicit operator byte4() const noexcept { return (byte4)uints; }
+	explicit operator float3() const noexcept { return (float3)uints; }
+	explicit operator half3() const noexcept { return (half3)uints; }
+	explicit operator long3() const noexcept { return (long3)uints; }
+	explicit operator ulong3() const noexcept { return (ulong3)uints; }
+	explicit operator int3() const noexcept { return (int3)uints; }
 	explicit operator uint3() const noexcept { return (uint3)uints; }
+	explicit operator short3() const noexcept { return (short3)uints; }
+	explicit operator ushort3() const noexcept { return (ushort3)uints; }
+	explicit operator sbyte3() const noexcept { return (sbyte3)uints; }
+	explicit operator byte3() const noexcept { return (byte3)uints; }
+	explicit operator float2() const noexcept { return (float2)uints; }
+	explicit operator half2() const noexcept { return (half2)uints; }
+	explicit operator long2() const noexcept { return (long2)uints; }
+	explicit operator ulong2() const noexcept { return (ulong2)uints; }
+	explicit operator int2() const noexcept { return (int2)uints; }
 	explicit operator uint2() const noexcept { return (uint2)uints; }
+	explicit operator short2() const noexcept { return (short2)uints; }
+	explicit operator ushort2() const noexcept { return (ushort2)uints; }
+	explicit operator sbyte2() const noexcept { return (sbyte2)uints; }
+	explicit operator byte2() const noexcept { return (byte2)uints; }
 
 	//******************************************************************************************************************
 	u32x4 operator+(u32x4 v) const noexcept

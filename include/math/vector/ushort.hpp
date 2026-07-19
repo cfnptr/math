@@ -19,7 +19,7 @@
  */
 
 #pragma once
-#include "math/vector/byte.hpp"
+#include "math/vector/sbyte.hpp"
 
 namespace math
 {
@@ -47,10 +47,8 @@ struct [[nodiscard]] ushort2
 	 * @param y second vector component value
 	 */
 	constexpr ushort2(uint16 x, uint16 y) noexcept : x(x), y(y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit unsigned integer values.
-	 * @param xy first and second vector component value
-	 */
+
+	constexpr ushort2(sbyte2 xy) noexcept : x((uint16)xy.x), y((uint16)xy.y) { }
 	constexpr ushort2(byte2 xy) noexcept : x((uint16)xy.x), y((uint16)xy.y) { }
 
 	/**
@@ -71,6 +69,9 @@ struct [[nodiscard]] ushort2
 		assert(i <= 1);
 		return ((uint16*)this)[i];
 	}
+
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr ushort2 operator+(ushort2 v) const noexcept { return ushort2(x + v.x, y + v.y); }
@@ -186,10 +187,8 @@ struct [[nodiscard]] ushort3
 	 * @param yz second and third vector component value
 	 */
 	constexpr ushort3(uint16 x, ushort2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit unsigned integer values.
-	 * @param xyz first, second and third vector component value
-	 */
+
+	constexpr ushort3(sbyte3 xyz) noexcept : x((uint16)xyz.x), y((uint16)xyz.y), z((uint16)xyz.z) { }
 	constexpr ushort3(byte3 xyz) noexcept : x((uint16)xyz.x), y((uint16)xyz.y), z((uint16)xyz.z) { }
 
 	/*******************************************************************************************************************
@@ -211,7 +210,11 @@ struct [[nodiscard]] ushort3
 		return ((uint16*)this)[i];
 	}
 
+	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
+	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator ushort2() const noexcept { return ushort2(x, y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr ushort3 operator+(ushort3 v) const noexcept { return ushort3(x + v.x, y + v.y, z + v.z); }
@@ -360,10 +363,8 @@ struct [[nodiscard]] ushort4
 	 * @param yzw second, third and fourth vector component value
 	 */
 	constexpr ushort4(uint16 x, ushort3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit unsigned integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
+
+	constexpr ushort4(sbyte4 xyzw) noexcept : x((uint16)xyzw.x), y((uint16)xyzw.y), z((uint16)xyzw.z), w((uint16)xyzw.w) { }
 	constexpr ushort4(byte4 xyzw) noexcept : x((uint16)xyzw.x), y((uint16)xyzw.y), z((uint16)xyzw.z), w((uint16)xyzw.w) { }
 
 	/*******************************************************************************************************************
@@ -385,8 +386,14 @@ struct [[nodiscard]] ushort4
 		return ((uint16*)this)[i];
 	}
 
+	constexpr explicit operator sbyte4() const noexcept { return sbyte4((int8)x, (int8)y, (int8)z, (int8)w); }
+	constexpr explicit operator byte4() const noexcept { return byte4((uint8)x, (uint8)y, (uint8)z, (uint8)w); }
 	constexpr explicit operator ushort3() const noexcept { return ushort3(x, y, z); }
+	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
+	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator ushort2() const noexcept { return ushort2(x, y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr ushort4 operator+(ushort4 v) const noexcept { return ushort4(x + v.x, y + v.y, z + v.z, w + v.w); }

@@ -139,6 +139,16 @@ struct [[nodiscard]] f32x4
 	f32x4(_simd_f128 data) noexcept : data(data) { }
 	#endif
 
+	explicit f32x4(f16x4 v) noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
+		data = _mm_cvtph_ps(v.data);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		data = vcvt_f32_f16(v.data);
+		#else
+		floats = (float4)v.halfs;
+		#endif
+	}
 	explicit f32x4(u32x4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -159,17 +169,6 @@ struct [[nodiscard]] f32x4
 		floats = v.floats;
 		#endif
 	}
-	explicit f32x4(f16x4 v) noexcept
-	{
-		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		data = _mm_cvtph_ps(v.data);
-		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = vcvt_f32_f16(v.data);
-		#else
-		floats = (float4)v.halfs;
-		#endif
-	}
-
 
 	/*******************************************************************************************************************
 	 * @brief Creates a new 4-component SIMD vector of 32-bit floating-point values. (float4)
@@ -214,6 +213,25 @@ struct [[nodiscard]] f32x4
 		floats = *v;
 		#endif
 	}
+
+	explicit f32x4(half4 v) noexcept { *this = (f32x4)f16x4(v); }
+	explicit f32x4(long4 v) noexcept { *this = (f32x4)float4(v); }
+	explicit f32x4(ulong4 v) noexcept { *this = (f32x4)float4(v); }
+	explicit f32x4(int4 v) noexcept { *this = (f32x4)float4(v); }
+	explicit f32x4(uint4 v) noexcept { *this = (f32x4)float4(v); }
+	explicit f32x4(short4 v) noexcept { *this = (f32x4)float4(v); }
+	explicit f32x4(ushort4 v) noexcept { *this = (f32x4)float4(v); }
+	explicit f32x4(sbyte4 v) noexcept { *this = (f32x4)float4(v); }
+	explicit f32x4(byte4 v) noexcept { *this = (f32x4)float4(v); }
+	explicit f32x4(half3 v) noexcept { *this = (f32x4)f16x4(v); }
+	explicit f32x4(long3 v) noexcept { *this = (f32x4)float3(v); }
+	explicit f32x4(ulong3 v) noexcept { *this = (f32x4)float3(v); }
+	explicit f32x4(int3 v) noexcept { *this = (f32x4)float3(v); }
+	explicit f32x4(uint3 v) noexcept { *this = (f32x4)float3(v); }
+	explicit f32x4(short3 v) noexcept { *this = (f32x4)float3(v); }
+	explicit f32x4(ushort3 v) noexcept { *this = (f32x4)float3(v); }
+	explicit f32x4(sbyte3 v) noexcept { *this = (f32x4)float3(v); }
+	explicit f32x4(byte3 v) noexcept { *this = (f32x4)float3(v); }
 	
 	/*******************************************************************************************************************
 	 * @brief Loads 4-component SIMD vector of 32-bit floating-point values.
@@ -391,6 +409,16 @@ struct [[nodiscard]] f32x4
 	 */
 	float operator[](psize i) const noexcept { return floats[i]; }
 
+	explicit operator f16x4() const noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
+		return _mm_cvtps_ph(data, _MM_FROUND_TO_NEAREST_INT);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		return vcvt_f16_f32(v.data);
+		#else
+		return f16x4((half4)floats);
+		#endif
+	}
 	explicit operator u32x4() const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -411,20 +439,37 @@ struct [[nodiscard]] f32x4
 		return i32x4((uint4)floats);
 		#endif
 	}
-	explicit operator f16x4() const noexcept
-	{
-		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		return _mm_cvtps_ph(data, _MM_FROUND_TO_NEAREST_INT);
-		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		return vcvt_f16_f32(v.data);
-		#else
-		return f16x4((half4)floats);
-		#endif
-	}
 
 	explicit operator float4() const noexcept { return floats; }
+	explicit operator half4() const noexcept { return (half4)floats; }
+	explicit operator long4() const noexcept { return (long4)floats; }
+	explicit operator ulong4() const noexcept { return (ulong4)floats; }
+	explicit operator int4() const noexcept { return (int4)floats; }
+	explicit operator uint4() const noexcept { return (uint4)floats; }
+	explicit operator short4() const noexcept { return (short4)floats; }
+	explicit operator ushort4() const noexcept { return (ushort4)floats; }
+	explicit operator sbyte4() const noexcept { return (sbyte4)floats; }
+	explicit operator byte4() const noexcept { return (byte4)floats; }
 	explicit operator float3() const noexcept { return (float3)floats; }
+	explicit operator half3() const noexcept { return (half3)floats; }
+	explicit operator long3() const noexcept { return (long3)floats; }
+	explicit operator ulong3() const noexcept { return (ulong3)floats; }
+	explicit operator int3() const noexcept { return (int3)floats; }
+	explicit operator uint3() const noexcept { return (uint3)floats; }
+	explicit operator short3() const noexcept { return (short3)floats; }
+	explicit operator ushort3() const noexcept { return (ushort3)floats; }
+	explicit operator sbyte3() const noexcept { return (sbyte3)floats; }
+	explicit operator byte3() const noexcept { return (byte3)floats; }
 	explicit operator float2() const noexcept { return (float2)floats; }
+	explicit operator half2() const noexcept { return (half2)floats; }
+	explicit operator long2() const noexcept { return (long2)floats; }
+	explicit operator ulong2() const noexcept { return (ulong2)floats; }
+	explicit operator int2() const noexcept { return (int2)floats; }
+	explicit operator uint2() const noexcept { return (uint2)floats; }
+	explicit operator short2() const noexcept { return (short2)floats; }
+	explicit operator ushort2() const noexcept { return (ushort2)floats; }
+	explicit operator sbyte2() const noexcept { return (sbyte2)floats; }
+	explicit operator byte2() const noexcept { return (byte2)floats; }
 
 	//******************************************************************************************************************
 	f32x4 operator+(f32x4 v) const noexcept

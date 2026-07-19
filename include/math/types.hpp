@@ -74,8 +74,13 @@ typedef uint64_t uint64;
 typedef size_t psize;
 
 /**
- * @brief An IEEE-754 half-precision 16-bit floating point number.
+ * @brief An IEEE-754 half-precision 16-bit floating-point number.
  */
 typedef _Float16 half;
+
+/**
+ * @brief Half-precision 16-bit floating-point number literal.
+ */
+constexpr half operator""_hf(long double val) { return static_cast<half>(val); }
 
 } // namespace math

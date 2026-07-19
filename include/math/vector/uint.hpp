@@ -19,7 +19,7 @@
  */
 
 #pragma once
-#include "math/vector/ushort.hpp"
+#include "math/vector/short.hpp"
 #include <cmath>
 
 namespace math
@@ -49,6 +49,11 @@ struct [[nodiscard]] uint2
 	 */
 	constexpr uint2(uint32 x, uint32 y) noexcept : x(x), y(y) { }
 
+	constexpr uint2(short2 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(ushort2 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(sbyte2 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(byte2 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+
 	/**
 	 * @brief Returns vector component by index.
 	 * @param i target component index
@@ -67,6 +72,11 @@ struct [[nodiscard]] uint2
 		assert(i <= 1);
 		return ((uint32*)this)[i];
 	}
+
+	constexpr explicit operator short2() const noexcept { return short2((int16)x, (int16)y); }
+	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr uint2 operator+(uint2 v) const noexcept { return uint2(x + v.x, y + v.y); }
@@ -183,6 +193,11 @@ struct [[nodiscard]] uint3
 	 */
 	constexpr uint3(uint32 x, uint2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
+	constexpr uint3(short3 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
+	constexpr uint3(ushort3 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
+	constexpr uint3(sbyte3 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
+	constexpr uint3(byte3 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
+
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
 	 * @param i target component index
@@ -202,7 +217,15 @@ struct [[nodiscard]] uint3
 		return ((uint32*)this)[i];
 	}
 
+	constexpr explicit operator short3() const noexcept { return short3((int16)x, (int16)y, (int16)z); }
+	constexpr explicit operator ushort3() const noexcept { return ushort3((uint16)x, (uint16)y, (uint16)z); }
+	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
+	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator uint2() const noexcept { return uint2(x, y); }
+	constexpr explicit operator short2() const noexcept { return short2((int16)x, (int16)y); }
+	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr uint3 operator+(uint3 v) const noexcept { return uint3(x + v.x, y + v.y, z + v.z); }
@@ -352,6 +375,11 @@ struct [[nodiscard]] uint4
 	 */
 	constexpr uint4(uint32 x, uint3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
 
+	constexpr uint4(short4 xyzw) noexcept : x((uint32)xyzw.x), y((uint32)xyzw.y), z((uint32)xyzw.z), w((uint32)xyzw.w) { }
+	constexpr uint4(ushort4 xyzw) noexcept : x((uint32)xyzw.x), y((uint32)xyzw.y), z((uint32)xyzw.z), w((uint32)xyzw.w) { }
+	constexpr uint4(sbyte4 xyzw) noexcept : x((uint32)xyzw.x), y((uint32)xyzw.y), z((uint32)xyzw.z), w((uint32)xyzw.w) { }
+	constexpr uint4(byte4 xyzw) noexcept : x((uint32)xyzw.x), y((uint32)xyzw.y), z((uint32)xyzw.z), w((uint32)xyzw.w) { }
+
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
 	 * @param i target component index
@@ -371,8 +399,20 @@ struct [[nodiscard]] uint4
 		return ((uint32*)this)[i];
 	}
 
+	constexpr explicit operator short4() const noexcept { return short4((int16)x, (int16)y, (int16)z, (int16)w); }
+	constexpr explicit operator ushort4() const noexcept { return ushort4((uint16)x, (uint16)y, (uint16)z, (uint16)w); }
+	constexpr explicit operator sbyte4() const noexcept { return sbyte4((int8)x, (int8)y, (int8)z, (int8)w); }
+	constexpr explicit operator byte4() const noexcept { return byte4((uint8)x, (uint8)y, (uint8)z, (uint8)w); }
 	constexpr explicit operator uint3() const noexcept { return uint3(x, y, z); }
+	constexpr explicit operator short3() const noexcept { return short3((int16)x, (int16)y, (int16)z); }
+	constexpr explicit operator ushort3() const noexcept { return ushort3((uint16)x, (uint16)y, (uint16)z); }
+	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
+	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator uint2() const noexcept { return uint2(x, y); }
+	constexpr explicit operator short2() const noexcept { return short2((int16)x, (int16)y); }
+	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr uint4 operator+(uint4 v) const noexcept { return uint4(x + v.x, y + v.y, z + v.z, w + v.w); }

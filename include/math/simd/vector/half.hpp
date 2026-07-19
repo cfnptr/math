@@ -50,7 +50,7 @@ struct [[nodiscard]] f16x4
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		data = _mm_setzero_si128();
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = vdup_n_f16(0.0f);
+		data = vdup_n_f16(0.0_hf);
 		#else
 		halfs = half4::zero;
 		#endif
@@ -129,6 +129,55 @@ struct [[nodiscard]] f16x4
 	#endif
 
 	/*******************************************************************************************************************
+	 * @brief Creates a new 4-component SIMD vector of 16-bit floating-point values. (half4)
+	 * @param v target 4 component vector value
+	 */
+	explicit f16x4(half4 v) noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
+		data = _mm_cvtps_ph(_mm_set_ps(v.w, v.z, v.y, v.x), _MM_FROUND_TO_NEAREST_INT);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		data = (float16x4_t){ v.x, v.y, v.z, v.w };
+		#else
+		halfs = v;
+		#endif
+	}
+	/**
+	 * @brief Creates a new 4-component SIMD vector of 16-bit floating-point values. (half4)
+	 * @warning This constructor duplicates Z component to the W component!
+	 * @param v target 3 component vector value
+	 */
+	explicit f16x4(half3 v) noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
+		data = _mm_cvtps_ph(_mm_set_ps(v.z, v.z, v.y, v.x), _MM_FROUND_TO_NEAREST_INT);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		data = (float16x4_t){ v.x, v.y, v.z, v.z };
+		#else
+		halfs = half4(v, v.z);
+		#endif
+	}
+
+	explicit f16x4(float4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(long4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(ulong4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(int4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(uint4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(short4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(ushort4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(sbyte4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(byte4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(float3 v) noexcept { *this = (f16x4)half3(v); }
+	explicit f16x4(long3 v) noexcept { *this = (f16x4)half3(v); }
+	explicit f16x4(ulong3 v) noexcept { *this = (f16x4)half3(v); }
+	explicit f16x4(int3 v) noexcept { *this = (f16x4)half3(v); }
+	explicit f16x4(uint3 v) noexcept { *this = (f16x4)half3(v); }
+	explicit f16x4(short3 v) noexcept { *this = (f16x4)half3(v); }
+	explicit f16x4(ushort3 v) noexcept { *this = (f16x4)half3(v); }
+	explicit f16x4(sbyte3 v) noexcept { *this = (f16x4)half3(v); }
+	explicit f16x4(byte3 v) noexcept { *this = (f16x4)half3(v); }
+
+	/*******************************************************************************************************************
 	 * @brief Returns SIMD vector first component value.
 	 */
 	half getX() const noexcept { return halfs[0]; }
@@ -183,9 +232,36 @@ struct [[nodiscard]] f16x4
 	 */
 	half operator[](psize i) const noexcept { return halfs[i]; }
 
+	explicit operator float4() const noexcept { return (float4)halfs; }
 	explicit operator half4() const noexcept { return halfs; }
+	explicit operator long4() const noexcept { return (long4)halfs; }
+	explicit operator ulong4() const noexcept { return (ulong4)halfs; }
+	explicit operator int4() const noexcept { return (int4)halfs; }
+	explicit operator uint4() const noexcept { return (uint4)halfs; }
+	explicit operator short4() const noexcept { return (short4)halfs; }
+	explicit operator ushort4() const noexcept { return (ushort4)halfs; }
+	explicit operator sbyte4() const noexcept { return (sbyte4)halfs; }
+	explicit operator byte4() const noexcept { return (byte4)halfs; }
+	explicit operator float3() const noexcept { return (float3)halfs; }
 	explicit operator half3() const noexcept { return (half3)halfs; }
+	explicit operator long3() const noexcept { return (long3)halfs; }
+	explicit operator ulong3() const noexcept { return (ulong3)halfs; }
+	explicit operator int3() const noexcept { return (int3)halfs; }
+	explicit operator uint3() const noexcept { return (uint3)halfs; }
+	explicit operator short3() const noexcept { return (short3)halfs; }
+	explicit operator ushort3() const noexcept { return (ushort3)halfs; }
+	explicit operator sbyte3() const noexcept { return (sbyte3)halfs; }
+	explicit operator byte3() const noexcept { return (byte3)halfs; }
+	explicit operator float2() const noexcept { return (float2)halfs; }
 	explicit operator half2() const noexcept { return (half2)halfs; }
+	explicit operator long2() const noexcept { return (long2)halfs; }
+	explicit operator ulong2() const noexcept { return (ulong2)halfs; }
+	explicit operator int2() const noexcept { return (int2)halfs; }
+	explicit operator uint2() const noexcept { return (uint2)halfs; }
+	explicit operator short2() const noexcept { return (short2)halfs; }
+	explicit operator ushort2() const noexcept { return (ushort2)halfs; }
+	explicit operator sbyte2() const noexcept { return (sbyte2)halfs; }
+	explicit operator byte2() const noexcept { return (byte2)halfs; }
 
 	// TODO: math functions after adding AVX512 support.
 
@@ -194,23 +270,23 @@ struct [[nodiscard]] f16x4
 };
 
 //**********************************************************************************************************************
-inline const f16x4 f16x4::zero = f16x4(0.0f);
-inline const f16x4 f16x4::one = f16x4(1.0f);
-inline const f16x4 f16x4::minusOne = f16x4(-1.0f);
+inline const f16x4 f16x4::zero = f16x4(0.0_hf);
+inline const f16x4 f16x4::one = f16x4(1.0_hf);
+inline const f16x4 f16x4::minusOne = f16x4(-1.0_hf);
 inline const f16x4 f16x4::min = f16x4(FLT16_MIN);
 inline const f16x4 f16x4::minusMin = f16x4(-FLT16_MIN);
 inline const f16x4 f16x4::max = f16x4(FLT16_MAX);
 inline const f16x4 f16x4::minusMax = f16x4(-FLT16_MAX);
 inline const f16x4 f16x4::epsilon = f16x4(FLT16_EPSILON);
-inline const f16x4 f16x4::inf = f16x4(INFINITY);
-inline const f16x4 f16x4::minusInf = f16x4(-INFINITY);
-inline const f16x4 f16x4::nan = f16x4(NAN);
-inline const f16x4 f16x4::left = f16x4(-1.0f, 0.0f, 0.0f, 0.0f);
-inline const f16x4 f16x4::right = f16x4(1.0f, 0.0f, 0.0f, 0.0f);
-inline const f16x4 f16x4::bottom = f16x4(0.0f, -1.0f, 0.0f, 0.0f);
-inline const f16x4 f16x4::top = f16x4(0.0f, 1.0f, 0.0f, 0.0f);
-inline const f16x4 f16x4::back = f16x4(0.0f, 0.0f, -1.0f, 0.0f);
-inline const f16x4 f16x4::front = f16x4(0.0f, 0.0f, 1.0f, 0.0f);
+inline const f16x4 f16x4::inf = f16x4((half)INFINITY);
+inline const f16x4 f16x4::minusInf = f16x4((half)-INFINITY);
+inline const f16x4 f16x4::nan = f16x4((half)NAN);
+inline const f16x4 f16x4::left = f16x4(-1.0_hf, 0.0_hf, 0.0_hf, 0.0_hf);
+inline const f16x4 f16x4::right = f16x4(1.0_hf, 0.0_hf, 0.0_hf, 0.0_hf);
+inline const f16x4 f16x4::bottom = f16x4(0.0_hf, -1.0_hf, 0.0_hf, 0.0_hf);
+inline const f16x4 f16x4::top = f16x4(0.0_hf, 1.0_hf, 0.0_hf, 0.0_hf);
+inline const f16x4 f16x4::back = f16x4(0.0_hf, 0.0_hf, -1.0_hf, 0.0_hf);
+inline const f16x4 f16x4::front = f16x4(0.0_hf, 0.0_hf, 1.0_hf, 0.0_hf);
 
 } // namespace math
 #endif

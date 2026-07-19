@@ -38,7 +38,7 @@ struct [[nodiscard]] half2
 	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
 	 * @param xy target value for all vector components
 	 */
-	constexpr explicit half2(half xy = 0.0f) noexcept : x(xy), y(xy) { }
+	constexpr explicit half2(half xy = 0.0_hf) noexcept : x(xy), y(xy) { }
 	/**
 	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
 	 *
@@ -46,45 +46,30 @@ struct [[nodiscard]] half2
 	 * @param y second vector component value
 	 */
 	constexpr half2(half x, half y) noexcept : x(x), y(y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+
+	explicit constexpr half2(long4 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
+	explicit constexpr half2(long3 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
 	explicit constexpr half2(long2 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	explicit constexpr half2(ulong4 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
+	explicit constexpr half2(ulong3 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
 	explicit constexpr half2(ulong2 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	explicit constexpr half2(int4 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
+	explicit constexpr half2(int3 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
 	explicit constexpr half2(int2 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	explicit constexpr half2(uint4 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
+	explicit constexpr half2(uint3 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
 	explicit constexpr half2(uint2 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	explicit constexpr half2(short4 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
+	explicit constexpr half2(short3 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
 	explicit constexpr half2(short2 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	explicit constexpr half2(ushort4 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
+	explicit constexpr half2(ushort3 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
 	explicit constexpr half2(ushort2 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	constexpr half2(sbyte4 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
+	constexpr half2(sbyte3 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
 	constexpr half2(sbyte2 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	constexpr half2(byte4 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
+	constexpr half2(byte3 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
 	constexpr half2(byte2 xy) noexcept : x((half)xy.x), y((half)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -119,21 +104,21 @@ struct [[nodiscard]] half2
 		epsilon, inf, minusInf, nan, left, right, bottom, top;
 };
 
-inline constexpr half2 half2::zero = half2(0.0f);
-inline constexpr half2 half2::one = half2(1.0f);
-inline constexpr half2 half2::minusOne = half2(-1.0f);
+inline constexpr half2 half2::zero = half2(0.0_hf);
+inline constexpr half2 half2::one = half2(1.0_hf);
+inline constexpr half2 half2::minusOne = half2(-1.0_hf);
 inline constexpr half2 half2::min = half2(FLT16_MIN);
 inline constexpr half2 half2::minusMin = half2(-FLT16_MIN);
 inline constexpr half2 half2::max = half2(FLT16_MAX);
 inline constexpr half2 half2::minusMax = half2(-FLT16_MAX);
 inline constexpr half2 half2::epsilon = half2(FLT16_EPSILON);
-inline constexpr half2 half2::inf = half2(INFINITY);
-inline constexpr half2 half2::minusInf = half2(-INFINITY);
-inline constexpr half2 half2::nan = half2(NAN);
-inline constexpr half2 half2::left = half2(-1.0f, 0.0f);
-inline constexpr half2 half2::right = half2(1.0f, 0.0f);
-inline constexpr half2 half2::bottom = half2(0.0f, -1.0f);
-inline constexpr half2 half2::top = half2(0.0f, 1.0f);
+inline constexpr half2 half2::inf = half2((half)INFINITY);
+inline constexpr half2 half2::minusInf = half2((half)-INFINITY);
+inline constexpr half2 half2::nan = half2((half)NAN);
+inline constexpr half2 half2::left = half2(-1.0_hf, 0.0_hf);
+inline constexpr half2 half2::right = half2(1.0_hf, 0.0_hf);
+inline constexpr half2 half2::bottom = half2(0.0_hf, -1.0_hf);
+inline constexpr half2 half2::top = half2(0.0_hf, 1.0_hf);
 
 /***********************************************************************************************************************
  * @brief A 3-component vector of 16-bit floating-point values.
@@ -149,7 +134,7 @@ struct [[nodiscard]] half3
 	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
 	 * @param xyz target value for all vector components
 	 */
-	constexpr explicit half3(half xyz = 0.0f) noexcept : x(xyz), y(xyz), z(xyz) { }
+	constexpr explicit half3(half xyz = 0.0_hf) noexcept : x(xyz), y(xyz), z(xyz) { }
 	/**
 	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
 	 *
@@ -172,45 +157,22 @@ struct [[nodiscard]] half3
 	 * @param yz second and third vector component value
 	 */
 	constexpr half3(half x, half2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+
+	explicit constexpr half3(long4 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
 	explicit constexpr half3(long3 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	explicit constexpr half3(ulong4 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
 	explicit constexpr half3(ulong3 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	explicit constexpr half3(int4 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
 	explicit constexpr half3(int3 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	explicit constexpr half3(uint4 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
 	explicit constexpr half3(uint3 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	explicit constexpr half3(short4 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
 	explicit constexpr half3(short3 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	explicit constexpr half3(ushort4 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
 	explicit constexpr half3(ushort3 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	constexpr half3(sbyte4 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
 	constexpr half3(sbyte3 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	constexpr half3(byte4 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
 	constexpr half3(byte3 xyz) noexcept : x((half)xyz.x), y((half)xyz.y), z((half)xyz.z) { }
 
 	/*******************************************************************************************************************
@@ -254,23 +216,23 @@ struct [[nodiscard]] half3
 		epsilon, inf, minusInf, nan, left, right, bottom, top, back, front;
 };
 
-inline constexpr half3 half3::zero = half3(0.0f);
-inline constexpr half3 half3::one = half3(1.0f);
-inline constexpr half3 half3::minusOne = half3(-1.0f);
+inline constexpr half3 half3::zero = half3(0.0_hf);
+inline constexpr half3 half3::one = half3(1.0_hf);
+inline constexpr half3 half3::minusOne = half3(-1.0_hf);
 inline constexpr half3 half3::min = half3(FLT16_MIN);
 inline constexpr half3 half3::minusMin = half3(-FLT16_MIN);
 inline constexpr half3 half3::max = half3(FLT16_MAX);
 inline constexpr half3 half3::minusMax = half3(-FLT16_MAX);
 inline constexpr half3 half3::epsilon = half3(FLT16_EPSILON);
-inline constexpr half3 half3::inf = half3(INFINITY);
-inline constexpr half3 half3::minusInf = half3(-INFINITY);
-inline constexpr half3 half3::nan = half3(NAN);
-inline constexpr half3 half3::left = half3(-1.0f, 0.0f, 0.0f);
-inline constexpr half3 half3::right = half3(1.0f, 0.0f, 0.0f);
-inline constexpr half3 half3::bottom = half3(0.0f, -1.0f, 0.0f);
-inline constexpr half3 half3::top = half3(0.0f, 1.0f, 0.0f);
-inline constexpr half3 half3::back = half3(0.0f, 0.0f, -1.0f);
-inline constexpr half3 half3::front = half3(0.0f, 0.0f, 1.0f);
+inline constexpr half3 half3::inf = half3((half)INFINITY);
+inline constexpr half3 half3::minusInf = half3((half)-INFINITY);
+inline constexpr half3 half3::nan = half3((half)NAN);
+inline constexpr half3 half3::left = half3(-1.0_hf, 0.0_hf, 0.0_hf);
+inline constexpr half3 half3::right = half3(1.0_hf, 0.0_hf, 0.0_hf);
+inline constexpr half3 half3::bottom = half3(0.0_hf, -1.0_hf, 0.0_hf);
+inline constexpr half3 half3::top = half3(0.0_hf, 1.0_hf, 0.0_hf);
+inline constexpr half3 half3::back = half3(0.0_hf, 0.0_hf, -1.0_hf);
+inline constexpr half3 half3::front = half3(0.0_hf, 0.0_hf, 1.0_hf);
 
 /***********************************************************************************************************************
  * @brief A 4-component vector of 16-bit floating-point values.
@@ -287,7 +249,7 @@ struct [[nodiscard]] half4
 	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
 	 * @param xyzw target value for all vector components
 	 */
-	constexpr explicit half4(half xyzw = 0.0f) noexcept : x(xyzw), y(xyzw), z(xyzw), w(xyzw) { }
+	constexpr explicit half4(half xyzw = 0.0_hf) noexcept : x(xyzw), y(xyzw), z(xyzw), w(xyzw) { }
 	/**
 	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
 	 *
@@ -342,45 +304,14 @@ struct [[nodiscard]] half4
 	 * @param yzw second, third and fourth vector component value
 	 */
 	constexpr half4(half x, half3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
+
 	explicit constexpr half4(long4 xyzw) noexcept : x((half)xyzw.x), y((half)xyzw.y), z((half)xyzw.z), w((half)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	explicit constexpr half4(ulong4 xyzw) noexcept : x((half)xyzw.x), y((half)xyzw.y), z((half)xyzw.z), w((half)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	explicit constexpr half4(int4 xyzw) noexcept : x((half)xyzw.x), y((half)xyzw.y), z((half)xyzw.z), w((half)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	explicit constexpr half4(uint4 xyzw) noexcept : x((half)xyzw.x), y((half)xyzw.y), z((half)xyzw.z), w((half)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	explicit constexpr half4(short4 xyzw) noexcept : x((half)xyzw.x), y((half)xyzw.y), z((half)xyzw.z), w((half)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	explicit constexpr half4(ushort4 xyzw) noexcept : x((half)xyzw.x), y((half)xyzw.y), z((half)xyzw.z), w((half)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr half4(sbyte4 xyzw) noexcept : x((half)xyzw.x), y((half)xyzw.y), z((half)xyzw.z), w((half)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr half4(byte4 xyzw) noexcept : x((half)xyzw.x), y((half)xyzw.y), z((half)xyzw.z), w((half)xyzw.w) { }
 
 	/*******************************************************************************************************************
@@ -432,16 +363,16 @@ struct [[nodiscard]] half4
 	static const half4 zero, one, minusOne, min, minusMin, max, minusMax, epsilon, inf, minusInf, nan;
 };
 
-inline constexpr half4 half4::zero = half4(0.0f);
-inline constexpr half4 half4::one = half4(1.0f);
-inline constexpr half4 half4::minusOne = half4(-1.0f);
+inline constexpr half4 half4::zero = half4(0.0_hf);
+inline constexpr half4 half4::one = half4(1.0_hf);
+inline constexpr half4 half4::minusOne = half4(-1.0_hf);
 inline constexpr half4 half4::min = half4(FLT16_MIN);
 inline constexpr half4 half4::minusMin = half4(-FLT16_MIN);
 inline constexpr half4 half4::max = half4(FLT16_MAX);
 inline constexpr half4 half4::minusMax = half4(-FLT16_MAX);
 inline constexpr half4 half4::epsilon = half4(FLT16_EPSILON);
-inline constexpr half4 half4::inf = half4(INFINITY);
-inline constexpr half4 half4::minusInf = half4(-INFINITY);
-inline constexpr half4 half4::nan = half4(NAN);
+inline constexpr half4 half4::inf = half4((half)INFINITY);
+inline constexpr half4 half4::minusInf = half4((half)-INFINITY);
+inline constexpr half4 half4::nan = half4((half)NAN);
 
 } // namespace math

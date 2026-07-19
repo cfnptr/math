@@ -46,50 +46,33 @@ struct [[nodiscard]] float2
 	 * @param y second vector component value
 	 */
 	constexpr float2(float x, float y) noexcept : x(x), y(y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr float2(half2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr float2(long2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr float2(ulong2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr float2(int2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr float2(uint2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+
+	constexpr float2(half4 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(half3 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(half2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(long4 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(long3 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(long2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(ulong4 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(ulong3 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(ulong2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(int4 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(int3 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(int2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(uint4 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(uint3 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(uint2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(short4 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(short3 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
 	constexpr float2(short2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	constexpr float2(ushort4 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(ushort3 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
 	constexpr float2(ushort2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	constexpr float2(sbyte4 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(sbyte3 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
 	constexpr float2(sbyte2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+	constexpr float2(byte4 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
+	constexpr float2(byte3 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
 	constexpr float2(byte2 xy) noexcept : x((float)xy.x), y((float)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -222,50 +205,24 @@ struct [[nodiscard]] float3
 	 * @param yz second and third vector component value
 	 */
 	constexpr float3(float x, float2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr float3(half3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr float3(long3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr float3(ulong3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr float3(int3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr float3(uint3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+
+	constexpr float3(half4 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(half3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(long4 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(long3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(ulong4 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(ulong3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(int4 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(int3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(uint4 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(uint3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
+	constexpr float3(short4 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
 	constexpr float3(short3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	constexpr float3(ushort4 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
 	constexpr float3(ushort3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	constexpr float3(sbyte4 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
 	constexpr float3(sbyte3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	constexpr float3(byte4 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
 	constexpr float3(byte3 xyz) noexcept : x((float)xyz.x), y((float)xyz.y), z((float)xyz.z) { }
 
 	/*******************************************************************************************************************
@@ -443,50 +400,15 @@ struct [[nodiscard]] float4
 	 * @param yzw second, third and fourth vector component value
 	 */
 	constexpr float4(float x, float3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr float4(half4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr float4(long4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr float4(ulong4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr float4(int4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr float4(uint4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
+
+	constexpr float4(half4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	constexpr float4(long4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	constexpr float4(ulong4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	constexpr float4(int4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
+	constexpr float4(uint4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
 	constexpr float4(short4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr float4(ushort4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr float4(sbyte4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr float4(byte4 xyzw) noexcept : x((float)xyzw.x), y((float)xyzw.y), z((float)xyzw.z), w((float)xyzw.w) { }
 
 	/*******************************************************************************************************************
@@ -625,7 +547,7 @@ static string toString(float2 v) { return to_string(v.x) + " " + to_string(v.y);
  * @param a first vector to compare
  * @param b second vector to compare
  */
-static uint2 equal(float2 a, float4 b) noexcept
+static uint2 equal(float2 a, float2 b) noexcept
 {
 	return uint2(a.x == b.x ? UINT32_MAX : 0, a.y == b.y ? UINT32_MAX : 0);
 }
@@ -635,7 +557,7 @@ static uint2 equal(float2 a, float4 b) noexcept
  * @param a first vector to compare
  * @param b second vector to compare
  */
-static uint2 notEqual(float2 a, float4 b) noexcept
+static uint2 notEqual(float2 a, float2 b) noexcept
 {
 	return uint2(a.x != b.x ? UINT32_MAX : 0, a.y != b.y ? UINT32_MAX : 0);
 }
@@ -706,10 +628,7 @@ static constexpr float2 clamp(float2 v, float2 min, float2 max) noexcept
  * @brief Clamps vector components between the 0.0f and 1.0f. (Inclusive range)
  * @param v target vector to saturate
  */
-static constexpr float2 saturate(float2 v) noexcept
-{
-	return float2(std::clamp(v.x, 0.0f, 1.0f), std::clamp(v.y, 0.0f, 1.0f));
-}
+static constexpr float2 saturate(float2 v) noexcept { return float2(saturate(v.x), saturate(v.y)); }
 
 /***********************************************************************************************************************
  * @brief Fused multiply add, calculates: mul1 * mul2 + add
@@ -855,7 +774,7 @@ static float2 repeat(float2 v) noexcept { return float2(repeat(v.x), repeat(v.y)
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static float2 lerp(float2 a, float2 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+static constexpr float2 lerp(float2 a, float2 b, float t) noexcept { return a * (1.0f - t) + b * t; }
 /**
  * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
@@ -1001,10 +920,7 @@ static constexpr float3 clamp(float3 v, float3 min, float3 max) noexcept
  * @brief Clamps vector components between the 0.0f and 1.0f. (Inclusive range)
  * @param v target vector to saturate
  */
-static constexpr float3 saturate(float3 v) noexcept
-{
-	return float3(std::clamp(v.x, 0.0f, 1.0f), std::clamp(v.y, 0.0f, 1.0f), std::clamp(v.z, 0.0f, 1.0f));
-}
+static constexpr float3 saturate(float3 v) noexcept { return float3(saturate(v.x), saturate(v.y), saturate(v.z)); }
 
 /***********************************************************************************************************************
  * @brief Fused multiply add, calculates: mul1 * mul2 + add
@@ -1163,7 +1079,7 @@ static float3 repeat(float3 v) noexcept { return float3(repeat(v.x), repeat(v.y)
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static float3 lerp(float3 a, float3 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+static constexpr float3 lerp(float3 a, float3 b, float t) noexcept { return a * (1.0f - t) + b * t; }
 /**
  * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
@@ -1321,8 +1237,7 @@ static constexpr float4 clamp(float4 v, float4 min, float4 max) noexcept
  */
 static constexpr float4 saturate(float4 v) noexcept
 {
-	return float4(std::clamp(v.x, 0.0f, 1.0f), std::clamp(v.y, 0.0f, 1.0f),
-		std::clamp(v.z, 0.0f, 1.0f), std::clamp(v.w, 0.0f, 1.0f));
+	return float4(saturate(v.x), saturate(v.y), saturate(v.z), saturate(v.w));
 }
 
 /***********************************************************************************************************************
@@ -1478,7 +1393,7 @@ static float4 repeat(float4 v) noexcept { return float4(repeat(v.x), repeat(v.y)
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static float4 lerp(float4 a, float4 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+static constexpr float4 lerp(float4 a, float4 b, float t) noexcept { return a * (1.0f - t) + b * t; }
 /**
  * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!

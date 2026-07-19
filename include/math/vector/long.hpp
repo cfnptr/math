@@ -19,7 +19,6 @@
  */
 
 #pragma once
-#include "math/vector/int.hpp"
 #include "math/vector/ulong.hpp"
 
 namespace math
@@ -46,40 +45,13 @@ struct [[nodiscard]] long2
 	 * @param y second vector component value
 	 */
 	constexpr long2(int64 x, int64 y) noexcept : x(x), y(y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
+
 	constexpr long2(ulong2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr long2(int2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr long2(uint2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr long2(short2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr long2(ushort2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr long2(sbyte2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr long2(byte2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -229,40 +201,13 @@ struct [[nodiscard]] long3
 	 * @param yz second and third vector component value
 	 */
 	constexpr long3(int64 x, long2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
+
 	constexpr long3(ulong3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr long3(int3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr long3(uint3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr long3(short3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr long3(ushort3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr long3(sbyte3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr long3(byte3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
 
 	/*******************************************************************************************************************
@@ -455,40 +400,13 @@ struct [[nodiscard]] long4
 	 * @param[in] yzw second, third and fourth vector component value
 	 */
 	constexpr long4(int64 x, long3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
+
 	constexpr long4(ulong4 xyzw) noexcept : x((int64)xyzw.x), y((int64)xyzw.y), z((int64)xyzw.z), w((int64)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr long4(int4 xyzw) noexcept : x((int64)xyzw.x), y((int64)xyzw.y), z((int64)xyzw.z), w((int64)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr long4(uint4 xyzw) noexcept : x((int64)xyzw.x), y((int64)xyzw.y), z((int64)xyzw.z), w((int64)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr long4(short4 xyzw) noexcept : x((int64)xyzw.x), y((int64)xyzw.y), z((int64)xyzw.z), w((int64)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr long4(ushort4 xyzw) noexcept : x((int64)xyzw.x), y((int64)xyzw.y), z((int64)xyzw.z), w((int64)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr long4(sbyte4 xyzw) noexcept : x((int64)xyzw.x), y((int64)xyzw.y), z((int64)xyzw.z), w((int64)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr long4(byte4 xyzw) noexcept : x((int64)xyzw.x), y((int64)xyzw.y), z((int64)xyzw.z), w((int64)xyzw.w) { }
 
 	/*******************************************************************************************************************

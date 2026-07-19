@@ -19,7 +19,6 @@
  */
 
 #pragma once
-#include "math/vector/short.hpp"
 #include "math/vector/uint.hpp"
 
 namespace math
@@ -46,30 +45,11 @@ struct [[nodiscard]] int2
 	 * @param y second vector component value
 	 */
 	constexpr int2(int32 x, int32 y) noexcept : x(x), y(y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
+
 	constexpr int2(uint2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr int2(short2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr int2(ushort2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr int2(sbyte2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 32-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr int2(byte2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -217,30 +197,11 @@ struct [[nodiscard]] int3
 	 * @param yz second and third vector component value
 	 */
 	constexpr int3(int32 x, int2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
+
 	constexpr int3(uint3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr int3(short3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr int3(ushort3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr int3(sbyte3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 32-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr int3(byte3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
 
 	/*******************************************************************************************************************
@@ -429,30 +390,11 @@ struct [[nodiscard]] int4
 	 * @param[in] yzw second, third and fourth vector component value
 	 */
 	constexpr int4(int32 x, int3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
+
 	constexpr int4(uint4 xyzw) noexcept : x((int32)xyzw.x), y((int32)xyzw.y), z((int32)xyzw.z), w((int32)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr int4(short4 xyzw) noexcept : x((int32)xyzw.x), y((int32)xyzw.y), z((int32)xyzw.z), w((int32)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr int4(ushort4 xyzw) noexcept : x((int32)xyzw.x), y((int32)xyzw.y), z((int32)xyzw.z), w((int32)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr int4(sbyte4 xyzw) noexcept : x((int32)xyzw.x), y((int32)xyzw.y), z((int32)xyzw.z), w((int32)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 32-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr int4(byte4 xyzw) noexcept : x((int32)xyzw.x), y((int32)xyzw.y), z((int32)xyzw.z), w((int32)xyzw.w) { }
 
 	/*******************************************************************************************************************

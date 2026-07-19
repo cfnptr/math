@@ -19,8 +19,7 @@
  */
 
 #pragma once
-#include "math/common.hpp"
-#include "math/vector/half.hpp"
+#include "math/vector/float.hpp"
 
 namespace math
 {
@@ -46,50 +45,16 @@ struct [[nodiscard]] double2
 	 * @param y second vector component value
 	 */
 	constexpr double2(double x, double y) noexcept : x(x), y(y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr double2(half2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr double2(long2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr double2(ulong2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr double2(int2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
-	explicit constexpr double2(uint2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
+
+	constexpr double2(float2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(half2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(long2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(ulong2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(int2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(uint2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(short2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr double2(ushort2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr double2(sbyte2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 64-bit floating-point values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr double2(byte2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -111,6 +76,7 @@ struct [[nodiscard]] double2
 		return ((double*)this)[i];
 	}
 
+	constexpr explicit operator float2() const noexcept { return float2((float)x, (float)y); }
 	constexpr explicit operator half2() const noexcept { return half2((half)x, (half)y); }
 	constexpr explicit operator long2() const noexcept { return long2((int64)x, (int64)y); }
 	constexpr explicit operator ulong2() const noexcept { return ulong2((uint64)x, (uint64)y); }
@@ -120,6 +86,9 @@ struct [[nodiscard]] double2
 	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
 	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
 	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
+	
+	// TODO: 2/3 overrides, also add missing doubleX conversions in other files.
+	// Also looks like we will need to add 2/3 overrides also for all integer vector types.
 
 	//******************************************************************************************************************
 	constexpr double2 operator+(double2 v) const noexcept { return double2(x + v.x, y + v.y); }
@@ -176,7 +145,7 @@ inline constexpr double2 double2::min = double2(DBL_MIN);
 inline constexpr double2 double2::minusMin = double2(-DBL_MIN);
 inline constexpr double2 double2::max = double2(DBL_MAX);
 inline constexpr double2 double2::minusMax = double2(-DBL_MAX);
-inline constexpr double2 double2::epsilon = double2(FLT_EPSILON);
+inline constexpr double2 double2::epsilon = double2(DBL_EPSILON);
 inline constexpr double2 double2::inf = double2(INFINITY);
 inline constexpr double2 double2::minusInf = double2(-INFINITY);
 inline constexpr double2 double2::nan = double2(NAN);
@@ -222,50 +191,26 @@ struct [[nodiscard]] double3
 	 * @param yz second and third vector component value
 	 */
 	constexpr double3(double x, double2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr double3(half3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr double3(long3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr double3(ulong3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr double3(int3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
-	explicit constexpr double3(uint3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+
+	constexpr double3(float4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(float3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(half4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(half3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(long4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(long3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(ulong4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(ulong3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(int4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(int3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(uint4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(uint3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
+	constexpr double3(short4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
 	constexpr double3(short3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	constexpr double3(ushort4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
 	constexpr double3(ushort3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	constexpr double3(sbyte4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
 	constexpr double3(sbyte3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 64-bit floating-point values.
-	 * @param xyz first, second and third vector component value
-	 */
+	constexpr double3(byte4 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
 	constexpr double3(byte3 xyz) noexcept : x((double)xyz.x), y((double)xyz.y), z((double)xyz.z) { }
 
 	/*******************************************************************************************************************
@@ -287,6 +232,7 @@ struct [[nodiscard]] double3
 		return ((double*)this)[i];
 	}
 
+	constexpr explicit operator float3() const noexcept { return float3((float)x, (float)y, (float)z); }
 	constexpr explicit operator half3() const noexcept { return half3((half)x, (half)y, (half)z); }
 	constexpr explicit operator long3() const noexcept { return long3((int64)x, (int64)y, (int64)z); }
 	constexpr explicit operator ulong3() const noexcept { return ulong3((uint64)x, (uint64)y, (uint64)z); }
@@ -297,6 +243,7 @@ struct [[nodiscard]] double3
 	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
 	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator double2() const noexcept { return double2(x, y); }
+	constexpr explicit operator float2() const noexcept { return float2((float)x, (float)y); }
 	constexpr explicit operator half2() const noexcept { return half2((half)x, (half)y); }
 	constexpr explicit operator long2() const noexcept { return long2((int64)x, (int64)y); }
 	constexpr explicit operator ulong2() const noexcept { return ulong2((uint64)x, (uint64)y); }
@@ -362,7 +309,7 @@ inline constexpr double3 double3::min = double3(DBL_MIN);
 inline constexpr double3 double3::minusMin = double3(-DBL_MIN);
 inline constexpr double3 double3::max = double3(DBL_MAX);
 inline constexpr double3 double3::minusMax = double3(-DBL_MAX);
-inline constexpr double3 double3::epsilon = double3(FLT_EPSILON);
+inline constexpr double3 double3::epsilon = double3(DBL_EPSILON);
 inline constexpr double3 double3::inf = double3(INFINITY);
 inline constexpr double3 double3::minusInf = double3(-INFINITY);
 inline constexpr double3 double3::nan = double3(NAN);
@@ -443,50 +390,16 @@ struct [[nodiscard]] double4
 	 * @param yzw second, third and fourth vector component value
 	 */
 	constexpr double4(double x, double3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr double4(half4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr double4(long4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr double4(ulong4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr double4(int4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
-	explicit constexpr double4(uint4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
+
+	constexpr double4(float4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
+	constexpr double4(half4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
+	constexpr double4(long4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
+	constexpr double4(ulong4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
+	constexpr double4(int4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
+	constexpr double4(uint4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
 	constexpr double4(short4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr double4(ushort4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr double4(sbyte4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 64-bit floating-point values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr double4(byte4 xyzw) noexcept : x((double)xyzw.x), y((double)xyzw.y), z((double)xyzw.z), w((double)xyzw.w) { }
 
 	/*******************************************************************************************************************
@@ -508,6 +421,7 @@ struct [[nodiscard]] double4
 		return ((double*)this)[i];
 	}
 
+	constexpr explicit operator float4() const noexcept { return float4((float)x, (float)y, (float)z, (float)w); }
 	constexpr explicit operator half4() const noexcept { return half4((half)x, (half)y, (half)z, (half)w); }
 	constexpr explicit operator long4() const noexcept { return long4((int64)x, (int64)y, (int64)z, (int64)w); }
 	constexpr explicit operator ulong4() const noexcept { return ulong4((uint64)x, (uint64)y, (uint64)z, (uint64)w); }
@@ -518,6 +432,7 @@ struct [[nodiscard]] double4
 	constexpr explicit operator sbyte4() const noexcept { return sbyte4((int8)x, (int8)y, (int8)z, (int8)w); }
 	constexpr explicit operator byte4() const noexcept { return byte4((uint8)x, (uint8)y, (uint8)z, (uint8)w); }
 	constexpr explicit operator double3() const noexcept { return double3(x, y, z); }
+	constexpr explicit operator float3() const noexcept { return float3((float)x, (float)y, (float)z); }
 	constexpr explicit operator half3() const noexcept { return half3((half)x, (half)y, (half)z); }
 	constexpr explicit operator long3() const noexcept { return long3((int64)x, (int64)y, (int64)z); }
 	constexpr explicit operator ulong3() const noexcept { return ulong3((uint64)x, (uint64)y, (uint64)z); }
@@ -528,6 +443,7 @@ struct [[nodiscard]] double4
 	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
 	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator double2() const noexcept { return double2(x, y); }
+	constexpr explicit operator float2() const noexcept { return float2((float)x, (float)y); }
 	constexpr explicit operator half2() const noexcept { return half2((half)x, (half)y); }
 	constexpr explicit operator long2() const noexcept { return long2((int64)x, (int64)y); }
 	constexpr explicit operator ulong2() const noexcept { return ulong2((uint64)x, (uint64)y); }
@@ -596,7 +512,7 @@ inline constexpr double4 double4::min = double4(DBL_MIN);
 inline constexpr double4 double4::minusMin = double4(-DBL_MIN);
 inline constexpr double4 double4::max = double4(DBL_MAX);
 inline constexpr double4 double4::minusMax = double4(-DBL_MAX);
-inline constexpr double4 double4::epsilon = double4(FLT_EPSILON);
+inline constexpr double4 double4::epsilon = double4(DBL_EPSILON);
 inline constexpr double4 double4::inf = double4(INFINITY);
 inline constexpr double4 double4::minusInf = double4(-INFINITY);
 inline constexpr double4 double4::nan = double4(NAN);
@@ -625,7 +541,7 @@ static string toString(double2 v) { return to_string(v.x) + " " + to_string(v.y)
  * @param a first vector to compare
  * @param b second vector to compare
  */
-static uint2 equal(double2 a, double4 b) noexcept
+static uint2 equal(double2 a, double2 b) noexcept
 {
 	return uint2(a.x == b.x ? UINT32_MAX : 0, a.y == b.y ? UINT32_MAX : 0);
 }
@@ -635,7 +551,7 @@ static uint2 equal(double2 a, double4 b) noexcept
  * @param a first vector to compare
  * @param b second vector to compare
  */
-static uint2 notEqual(double2 a, double4 b) noexcept
+static uint2 notEqual(double2 a, double2 b) noexcept
 {
 	return uint2(a.x != b.x ? UINT32_MAX : 0, a.y != b.y ? UINT32_MAX : 0);
 }
@@ -646,7 +562,7 @@ static uint2 notEqual(double2 a, double4 b) noexcept
  * @param a first vector to binary compare
  * @param b second vector to binary compare
  */
-static bool isBinaryLess(double2 a, double2 b) noexcept { return *((const int64*)&a) < *((const int64*)&b); }
+static bool isBinaryLess(double2 a, double2 b) noexcept { return memcmp(&a, &b, sizeof(double2)) < 0; }
 
 /**
  * @brief Selects between two vector components based on the control vector values.
@@ -706,10 +622,7 @@ static constexpr double2 clamp(double2 v, double2 min, double2 max) noexcept
  * @brief Clamps vector components between the 0.0 and 1.0. (Inclusive range)
  * @param v target vector to saturate
  */
-static constexpr double2 saturate(double2 v) noexcept
-{
-	return double2(std::clamp(v.x, 0.0, 1.0), std::clamp(v.y, 0.0, 1.0));
-}
+static constexpr double2 saturate(double2 v) noexcept { return double2(saturate(v.x), saturate(v.y)); }
 
 /***********************************************************************************************************************
  * @brief Fused multiply add, calculates: mul1 * mul2 + add
@@ -816,7 +729,7 @@ static double distance(double2 a, double2 b) noexcept { return length(a - b); }
  * @param a first vector
  * @param b second vector
  */
-static constexpr bool isClose(double2 a, double2 b, double maxDistSq = 1.0e-12f) noexcept
+static constexpr bool isClose(double2 a, double2 b, double maxDistSq = 1.0e-28) noexcept
 {
 	return distanceSq(a, b) <= maxDistSq;
 }
@@ -832,7 +745,7 @@ static double2 normalize(double2 v) noexcept { return v * (1.0 / length(v)); }
  * @param v target vector to check
  * @param tolerance floating point precision tolerance
  */
-static bool isNormalized(double2 v, double tolerance = 1.0e-6f) noexcept
+static bool isNormalized(double2 v, double tolerance = 1.0e-14) noexcept
 {
 	return std::abs(lengthSq(v) - 1.0) <= tolerance;
 }
@@ -855,7 +768,7 @@ static double2 repeat(double2 v) noexcept { return double2(repeat(v.x), repeat(v
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static double2 lerp(double2 a, double2 b, double t) noexcept { return a * (1.0 - t) + b * t; }
+static constexpr double2 lerp(double2 a, double2 b, double t) noexcept { return a * (1.0 - t) + b * t; }
 /**
  * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
@@ -886,8 +799,8 @@ static double2 pow(double2 b, double2 e) noexcept { return double2(std::pow(b.x,
  */
 static double2 gain(double2 x, double2 k) noexcept
 {
-	auto a = double2(0.5f) * pow(2.0 * select(x < 0.5f, x, 1.0 - x), k);
-	return select(x < 0.5f, a, 1.0 - a);
+	auto a = double2(0.5) * pow(2.0 * select(x < 0.5, x, 1.0 - x), k);
+	return select(x < 0.5, a, 1.0 - a);
 }
 
 //**********************************************************************************************************************
@@ -1001,10 +914,7 @@ static constexpr double3 clamp(double3 v, double3 min, double3 max) noexcept
  * @brief Clamps vector components between the 0.0 and 1.0. (Inclusive range)
  * @param v target vector to saturate
  */
-static constexpr double3 saturate(double3 v) noexcept
-{
-	return double3(std::clamp(v.x, 0.0, 1.0), std::clamp(v.y, 0.0, 1.0), std::clamp(v.z, 0.0, 1.0));
-}
+static constexpr double3 saturate(double3 v) noexcept { return double3(saturate(v.x), saturate(v.y), saturate(v.z)); }
 
 /***********************************************************************************************************************
  * @brief Fused multiply add, calculates: mul1 * mul2 + add
@@ -1124,7 +1034,7 @@ static double distance(double3 a, double3 b) noexcept { return length(a - b); }
  * @param a first vector
  * @param b second vector
  */
-static constexpr bool isClose(double3 a, double3 b, double maxDistSq = 1.0e-12f) noexcept
+static constexpr bool isClose(double3 a, double3 b, double maxDistSq = 1.0e-28) noexcept
 {
 	return distanceSq(a, b) <= maxDistSq;
 }
@@ -1140,7 +1050,7 @@ static double3 normalize(double3 v) noexcept { return v * (1.0 / length(v)); }
  * @param v target vector to check
  * @param tolerance floating point precision tolerance
  */
-static bool isNormalized(double3 v, double tolerance = 1.0e-6f) noexcept
+static bool isNormalized(double3 v, double tolerance = 1.0e-14) noexcept
 {
 	return std::abs(lengthSq(v) - 1.0) <= tolerance;
 }
@@ -1163,7 +1073,7 @@ static double3 repeat(double3 v) noexcept { return double3(repeat(v.x), repeat(v
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static double3 lerp(double3 a, double3 b, double t) noexcept { return a * (1.0 - t) + b * t; }
+static constexpr double3 lerp(double3 a, double3 b, double t) noexcept { return a * (1.0 - t) + b * t; }
 /**
  * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
@@ -1197,8 +1107,8 @@ static double3 pow(double3 b, double3 e) noexcept
  */
 static double3 gain(double3 x, double3 k) noexcept
 {
-	auto a = double3(0.5f) * pow(2.0 * select(x < 0.5f, x, 1.0 - x), k);
-	return select(x < 0.5f, a, 1.0 - a);
+	auto a = double3(0.5) * pow(2.0 * select(x < 0.5, x, 1.0 - x), k);
+	return select(x < 0.5, a, 1.0 - a);
 }
 
 //**********************************************************************************************************************
@@ -1321,8 +1231,7 @@ static constexpr double4 clamp(double4 v, double4 min, double4 max) noexcept
  */
 static constexpr double4 saturate(double4 v) noexcept
 {
-	return double4(std::clamp(v.x, 0.0, 1.0), std::clamp(v.y, 0.0, 1.0),
-		std::clamp(v.z, 0.0, 1.0), std::clamp(v.w, 0.0, 1.0));
+	return double4(saturate(v.x), saturate(v.y), saturate(v.z), saturate(v.w));
 }
 
 /***********************************************************************************************************************
@@ -1439,7 +1348,7 @@ static double distance(double4 a, double4 b) noexcept { return length(a - b); }
  * @param a first vector
  * @param b second vector
  */
-static constexpr bool isClose(double4 a, double4 b, double maxDistSq = 1.0e-12f) noexcept
+static constexpr bool isClose(double4 a, double4 b, double maxDistSq = 1.0e-28) noexcept
 {
 	return distanceSq(a, b) <= maxDistSq;
 }
@@ -1455,7 +1364,7 @@ static double4 normalize(double4 v) noexcept { return v * (1.0 / length(v)); }
  * @param v target vector to check
  * @param tolerance floating point precision tolerance
  */
-static bool isNormalized(double4 v, double tolerance = 1.0e-6f) noexcept
+static bool isNormalized(double4 v, double tolerance = 1.0e-14) noexcept
 {
 	return std::abs(lengthSq(v) - 1.0) <= tolerance;
 }
@@ -1478,7 +1387,7 @@ static double4 repeat(double4 v) noexcept { return double4(repeat(v.x), repeat(v
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static double4 lerp(double4 a, double4 b, double t) noexcept { return a * (1.0 - t) + b * t; }
+static constexpr double4 lerp(double4 a, double4 b, double t) noexcept { return a * (1.0 - t) + b * t; }
 /**
  * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
@@ -1512,8 +1421,8 @@ static double4 pow(double4 b, double4 e) noexcept
  */
 static double4 gain(double4 x, double4 k) noexcept
 {
-	auto a = double4(0.5f) * pow(2.0 * select(x < 0.5f, x, 1.0 - x), k);
-	return select(x < 0.5f, a, 1.0 - a);
+	auto a = double4(0.5) * pow(2.0 * select(x < 0.5, x, 1.0 - x), k);
+	return select(x < 0.5, a, 1.0 - a);
 }
 
 //**********************************************************************************************************************

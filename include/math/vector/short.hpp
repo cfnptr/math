@@ -19,7 +19,6 @@
  */
 
 #pragma once
-#include "math/vector/sbyte.hpp"
 #include "math/vector/ushort.hpp"
 
 namespace math
@@ -46,20 +45,9 @@ struct [[nodiscard]] short2
 	 * @param y second vector component value
 	 */
 	constexpr short2(int16 x, int16 y) noexcept : x(x), y(y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
+
 	constexpr short2(ushort2 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr short2(sbyte2 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 16-bit signed integer values.
-	 * @param xy first and second vector component value
-	 */
 	constexpr short2(byte2 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -205,20 +193,9 @@ struct [[nodiscard]] short3
 	 * @param yz second and third vector component value
 	 */
 	constexpr short3(int16 x, short2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
+
 	constexpr short3(ushort3 xyz) noexcept : x((int16)xyz.x), y((int16)xyz.y), z((int16)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr short3(sbyte3 xyz) noexcept : x((int16)xyz.x), y((int16)xyz.y), z((int16)xyz.z) { }
-	/**
-	 * @brief Creates a new 3-component vector of 16-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
 	constexpr short3(byte3 xyz) noexcept : x((int16)xyz.x), y((int16)xyz.y), z((int16)xyz.z) { }
 
 	/*******************************************************************************************************************
@@ -403,20 +380,9 @@ struct [[nodiscard]] short4
 	 * @param[in] yzw second, third and fourth vector component value
 	 */
 	constexpr short4(int16 x, short3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
+
 	constexpr short4(ushort4 xyzw) noexcept : x((int16)xyzw.x), y((int16)xyzw.y), z((int16)xyzw.z), w((int16)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr short4(sbyte4 xyzw) noexcept : x((int16)xyzw.x), y((int16)xyzw.y), z((int16)xyzw.z), w((int16)xyzw.w) { }
-	/**
-	 * @brief Creates a new 4-component vector of 16-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
 	constexpr short4(byte4 xyzw) noexcept : x((int16)xyzw.x), y((int16)xyzw.y), z((int16)xyzw.z), w((int16)xyzw.w) { }
 
 	/*******************************************************************************************************************

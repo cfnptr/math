@@ -19,7 +19,7 @@
  */
 
 #pragma once
-#include "math/vector/uint.hpp"
+#include "math/vector/int.hpp"
 
 namespace math
 {
@@ -48,6 +48,13 @@ struct [[nodiscard]] ulong2
 	 */
 	constexpr ulong2(uint64 x, uint64 y) noexcept : x(x), y(y) { }
 
+	constexpr ulong2(int2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(uint2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(short2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(ushort2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(sbyte2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(byte2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+
 	/**
 	 * @brief Returns vector component by index.
 	 * @param i target component index
@@ -66,6 +73,13 @@ struct [[nodiscard]] ulong2
 		assert(i <= 1);
 		return ((uint64*)this)[i];
 	}
+
+	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
+	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
+	constexpr explicit operator short2() const noexcept { return short2((int16)x, (int16)y); }
+	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr ulong2 operator+(ulong2 v) const noexcept { return ulong2(x + v.x, y + v.y); }
@@ -181,6 +195,13 @@ struct [[nodiscard]] ulong3
 	 */
 	constexpr ulong3(uint64 x, ulong2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
+	constexpr ulong3(int3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(uint3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(short3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(ushort3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(sbyte3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(byte3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
 	 * @param i target component index
@@ -200,7 +221,19 @@ struct [[nodiscard]] ulong3
 		return ((uint64*)this)[i];
 	}
 
+	constexpr explicit operator int3() const noexcept { return int3((int32)x, (int32)y, (int32)z); }
+	constexpr explicit operator uint3() const noexcept { return uint3((uint32)x, (uint32)y, (uint32)z); }
+	constexpr explicit operator short3() const noexcept { return short3((int16)x, (int16)y, (int16)z); }
+	constexpr explicit operator ushort3() const noexcept { return ushort3((uint16)x, (uint16)y, (uint16)z); }
+	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
+	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator ulong2() const noexcept { return ulong2(x, y); }
+	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
+	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
+	constexpr explicit operator short2() const noexcept { return short2((int16)x, (int16)y); }
+	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr ulong3 operator+(ulong3 v) const noexcept { return ulong3(x + v.x, y + v.y, z + v.z); }
@@ -350,6 +383,13 @@ struct [[nodiscard]] ulong4
 	 */
 	constexpr ulong4(uint64 x, ulong3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
 
+	constexpr ulong4(int4 xyzw) noexcept : x((uint64)xyzw.x), y((uint64)xyzw.y), z((uint64)xyzw.z), w((uint64)xyzw.w) { }
+	constexpr ulong4(uint4 xyzw) noexcept : x((uint64)xyzw.x), y((uint64)xyzw.y), z((uint64)xyzw.z), w((uint64)xyzw.w) { }
+	constexpr ulong4(short4 xyzw) noexcept : x((uint64)xyzw.x), y((uint64)xyzw.y), z((uint64)xyzw.z), w((uint64)xyzw.w) { }
+	constexpr ulong4(ushort4 xyzw) noexcept : x((uint64)xyzw.x), y((uint64)xyzw.y), z((uint64)xyzw.z), w((uint64)xyzw.w) { }
+	constexpr ulong4(sbyte4 xyzw) noexcept : x((uint64)xyzw.x), y((uint64)xyzw.y), z((uint64)xyzw.z), w((uint64)xyzw.w) { }
+	constexpr ulong4(byte4 xyzw) noexcept : x((uint64)xyzw.x), y((uint64)xyzw.y), z((uint64)xyzw.z), w((uint64)xyzw.w) { }
+
 	/*******************************************************************************************************************
 	 * @brief Returns vector component by index.
 	 * @param i target component index
@@ -369,8 +409,26 @@ struct [[nodiscard]] ulong4
 		return ((uint64*)this)[i];
 	}
 
+	constexpr explicit operator int4() const noexcept { return int4((int32)x, (int32)y, (int32)z, (int32)w); }
+	constexpr explicit operator uint4() const noexcept { return uint4((uint32)x, (uint32)y, (uint32)z, (uint32)w); }
+	constexpr explicit operator short4() const noexcept { return short4((int16)x, (int16)y, (int16)z, (int16)w); }
+	constexpr explicit operator ushort4() const noexcept { return ushort4((uint16)x, (uint16)y, (uint16)z, (uint16)w); }
+	constexpr explicit operator sbyte4() const noexcept { return sbyte4((int8)x, (int8)y, (int8)z, (int8)w); }
+	constexpr explicit operator byte4() const noexcept { return byte4((uint8)x, (uint8)y, (uint8)z, (uint8)w); }
 	constexpr explicit operator ulong3() const noexcept { return ulong3(x, y, z); }
+	constexpr explicit operator int3() const noexcept { return int3((int32)x, (int32)y, (int32)z); }
+	constexpr explicit operator uint3() const noexcept { return uint3((uint32)x, (uint32)y, (uint32)z); }
+	constexpr explicit operator short3() const noexcept { return short3((int16)x, (int16)y, (int16)z); }
+	constexpr explicit operator ushort3() const noexcept { return ushort3((uint16)x, (uint16)y, (uint16)z); }
+	constexpr explicit operator sbyte3() const noexcept { return sbyte3((int8)x, (int8)y, (int8)z); }
+	constexpr explicit operator byte3() const noexcept { return byte3((uint8)x, (uint8)y, (uint8)z); }
 	constexpr explicit operator ulong2() const noexcept { return ulong2(x, y); }
+	constexpr explicit operator int2() const noexcept { return int2((int32)x, (int32)y); }
+	constexpr explicit operator uint2() const noexcept { return uint2((uint32)x, (uint32)y); }
+	constexpr explicit operator short2() const noexcept { return short2((int16)x, (int16)y); }
+	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
+	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
+	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
 	//******************************************************************************************************************
 	constexpr ulong4 operator+(ulong4 v) const noexcept { return ulong4(x + v.x, y + v.y, z + v.z, w + v.w); }

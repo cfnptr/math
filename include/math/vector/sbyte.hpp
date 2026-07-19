@@ -45,10 +45,7 @@ struct [[nodiscard]] sbyte2
 	 * @param y second vector component value
 	 */
 	constexpr sbyte2(int8 x, int8 y) noexcept : x(x), y(y) { }
-	/**
-	 * @brief Creates a new 2-component vector of 8-bit signed integer values.
-	 * @param xyzw first and second vector component value
-	 */
+
 	constexpr sbyte2(byte2 xy) noexcept : x((int8)xy.x), y((int8)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -192,10 +189,7 @@ struct [[nodiscard]] sbyte3
 	 * @param yz second and third vector component value
 	 */
 	constexpr sbyte3(int8 x, sbyte2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
-	/**
-	 * @brief Creates a new 3-component vector of 8-bit signed integer values.
-	 * @param xyz first, second and third vector component value
-	 */
+
 	constexpr sbyte3(byte3 xyz) noexcept : x((int8)xyz.x), y((int8)xyz.y), z((int8)xyz.z) { }
 
 	/*******************************************************************************************************************
@@ -376,10 +370,7 @@ struct [[nodiscard]] sbyte4
 	 * @param[in] yzw second, third and fourth vector component value
 	 */
 	constexpr sbyte4(int8 x, sbyte3 yzw) noexcept : x(x), y(yzw.x), z(yzw.y), w(yzw.z) { }
-	/**
-	 * @brief Creates a new 4-component vector of 8-bit signed integer values.
-	 * @param xyzw first, second, third and fourth vector component value
-	 */
+
 	constexpr sbyte4(byte4 xyzw) noexcept : x((int8)xyzw.x), y((int8)xyzw.y), z((int8)xyzw.z), w((int8)xyzw.w) { }
 
 	/*******************************************************************************************************************
