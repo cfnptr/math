@@ -46,12 +46,26 @@ struct [[nodiscard]] long2
 	 */
 	constexpr long2(int64 x, int64 y) noexcept : x(x), y(y) { }
 
+	constexpr long2(ulong4 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(ulong3 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
 	constexpr long2(ulong2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(int4 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(int3 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
 	constexpr long2(int2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(uint4 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(uint3 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
 	constexpr long2(uint2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(short4 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(short3 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
 	constexpr long2(short2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(ushort4 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(ushort3 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
 	constexpr long2(ushort2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(sbyte4 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(sbyte3 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
 	constexpr long2(sbyte2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(byte4 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
+	constexpr long2(byte3 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
 	constexpr long2(byte2 xy) noexcept : x((int64)xy.x), y((int64)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -202,12 +216,19 @@ struct [[nodiscard]] long3
 	 */
 	constexpr long3(int64 x, long2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
+	constexpr long3(ulong4 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
 	constexpr long3(ulong3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
+	constexpr long3(int4 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
 	constexpr long3(int3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
+	constexpr long3(uint4 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
 	constexpr long3(uint3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
+	constexpr long3(short4 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
 	constexpr long3(short3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
+	constexpr long3(ushort4 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
 	constexpr long3(ushort3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
+	constexpr long3(sbyte4 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
 	constexpr long3(sbyte3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
+	constexpr long3(byte4 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
 	constexpr long3(byte3 xyz) noexcept : x((int64)xyz.x), y((int64)xyz.y), z((int64)xyz.z) { }
 
 	/*******************************************************************************************************************

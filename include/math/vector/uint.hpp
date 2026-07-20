@@ -49,9 +49,17 @@ struct [[nodiscard]] uint2
 	 */
 	constexpr uint2(uint32 x, uint32 y) noexcept : x(x), y(y) { }
 
+	constexpr uint2(short4 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(short3 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
 	constexpr uint2(short2 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(ushort4 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(ushort3 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
 	constexpr uint2(ushort2 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(sbyte4 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(sbyte3 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
 	constexpr uint2(sbyte2 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(byte4 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
+	constexpr uint2(byte3 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
 	constexpr uint2(byte2 xy) noexcept : x((uint32)xy.x), y((uint32)xy.y) { }
 
 	/**
@@ -193,9 +201,13 @@ struct [[nodiscard]] uint3
 	 */
 	constexpr uint3(uint32 x, uint2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
+	constexpr uint3(short4 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
 	constexpr uint3(short3 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
+	constexpr uint3(ushort4 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
 	constexpr uint3(ushort3 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
+	constexpr uint3(sbyte4 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
 	constexpr uint3(sbyte3 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
+	constexpr uint3(byte4 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
 	constexpr uint3(byte3 xyz) noexcept : x((uint32)xyz.x), y((uint32)xyz.y), z((uint32)xyz.z) { }
 
 	/*******************************************************************************************************************

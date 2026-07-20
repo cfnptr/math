@@ -18,7 +18,7 @@
  */
 
 #pragma once
-#include "math/vector/float.hpp"
+#include "math/vector/double.hpp"
 #include "math/simd/vector/int.hpp"
 
 #if defined(MATH_SIMD_SUPPORT_AVX2) || defined(MATH_SIMD_SUPPORT_NEON) || defined(FLT16_MIN)
@@ -128,6 +128,27 @@ struct [[nodiscard]] f16x4
 	f16x4(_simd_f64 data) noexcept : data(data) { }
 	#endif
 
+	explicit f16x4(u32x4 v) noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_SSE)
+		data = _mm_cvtps_ph(_mm_cvtepi32_ps(v.data), _MM_FROUND_TO_NEAREST_INT);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		data = vcvt_f32_f16(vcvtq_f32_u32(v.data));
+		#else
+		halfs = (half4)v.uints;
+		#endif
+	}
+	explicit f16x4(i32x4 v) noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_SSE)
+		data = _mm_cvtps_ph(_mm_cvtepi32_ps(v.data), _MM_FROUND_TO_NEAREST_INT);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		data = vcvt_f32_f16(vcvtq_f32_s32(v.data));
+		#else
+		halfs = (half4)v.ints;
+		#endif
+	}
+
 	/*******************************************************************************************************************
 	 * @brief Creates a new 4-component SIMD vector of 16-bit floating-point values. (half4)
 	 * @param v target 4 component vector value
@@ -158,6 +179,7 @@ struct [[nodiscard]] f16x4
 		#endif
 	}
 
+	explicit f16x4(double4 v) noexcept { *this = (f16x4)half4(v); }
 	explicit f16x4(float4 v) noexcept { *this = (f16x4)half4(v); }
 	explicit f16x4(long4 v) noexcept { *this = (f16x4)half4(v); }
 	explicit f16x4(ulong4 v) noexcept { *this = (f16x4)half4(v); }
@@ -167,6 +189,7 @@ struct [[nodiscard]] f16x4
 	explicit f16x4(ushort4 v) noexcept { *this = (f16x4)half4(v); }
 	explicit f16x4(sbyte4 v) noexcept { *this = (f16x4)half4(v); }
 	explicit f16x4(byte4 v) noexcept { *this = (f16x4)half4(v); }
+	explicit f16x4(double3 v) noexcept { *this = (f16x4)half3(v); }
 	explicit f16x4(float3 v) noexcept { *this = (f16x4)half3(v); }
 	explicit f16x4(long3 v) noexcept { *this = (f16x4)half3(v); }
 	explicit f16x4(ulong3 v) noexcept { *this = (f16x4)half3(v); }
@@ -232,6 +255,7 @@ struct [[nodiscard]] f16x4
 	 */
 	half operator[](psize i) const noexcept { return halfs[i]; }
 
+	explicit operator double4() const noexcept { return (double4)halfs; }
 	explicit operator float4() const noexcept { return (float4)halfs; }
 	explicit operator half4() const noexcept { return halfs; }
 	explicit operator long4() const noexcept { return (long4)halfs; }
@@ -242,6 +266,7 @@ struct [[nodiscard]] f16x4
 	explicit operator ushort4() const noexcept { return (ushort4)halfs; }
 	explicit operator sbyte4() const noexcept { return (sbyte4)halfs; }
 	explicit operator byte4() const noexcept { return (byte4)halfs; }
+	explicit operator double3() const noexcept { return (double3)halfs; }
 	explicit operator float3() const noexcept { return (float3)halfs; }
 	explicit operator half3() const noexcept { return (half3)halfs; }
 	explicit operator long3() const noexcept { return (long3)halfs; }
@@ -252,6 +277,7 @@ struct [[nodiscard]] f16x4
 	explicit operator ushort3() const noexcept { return (ushort3)halfs; }
 	explicit operator sbyte3() const noexcept { return (sbyte3)halfs; }
 	explicit operator byte3() const noexcept { return (byte3)halfs; }
+	explicit operator double2() const noexcept { return (double2)halfs; }
 	explicit operator float2() const noexcept { return (float2)halfs; }
 	explicit operator half2() const noexcept { return (half2)halfs; }
 	explicit operator long2() const noexcept { return (long2)halfs; }
@@ -263,7 +289,32 @@ struct [[nodiscard]] f16x4
 	explicit operator sbyte2() const noexcept { return (sbyte2)halfs; }
 	explicit operator byte2() const noexcept { return (byte2)halfs; }
 
-	// TODO: math functions after adding AVX512 support.
+	// TODO: math functions after adding AVX512 / AVX10 support.
+
+	//******************************************************************************************************************
+	bool operator==(f16x4 v) const noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_SSE)
+		return _mm_movemask_epi8(_mm_cmpeq_epi32(data, v.data)) == 0xFFFF;
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		return vminv_u16(vceq_f16(data, v.data)) == 0xFFFFFFFFu;
+		#else
+		return halfs == v.halfs;
+		#endif
+	}
+	bool operator!=(f16x4 v) const noexcept
+	{
+		#if defined(MATH_SIMD_SUPPORT_SSE)
+		return _mm_movemask_epi8(_mm_cmpeq_epi32(data, v.data)) != 0xFFFF;
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		return vminv_u16(vceq_f16(data, v.data)) == 0u;
+		#else
+		return halfs != v.halfs;
+		#endif
+	}
+
+	bool operator==(half n) const noexcept { return *this == f16x4(n); }
+	bool operator!=(half n) const noexcept { return *this != f16x4(n); }
 
 	static const f16x4 zero, one, minusOne, min, minusMin, max, minusMax, 
 		epsilon, inf, minusInf, nan, left, right, bottom, top, back, front;

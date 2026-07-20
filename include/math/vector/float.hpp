@@ -774,20 +774,17 @@ static float2 repeat(float2 v) noexcept { return float2(repeat(v.x), repeat(v.y)
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr float2 lerp(float2 a, float2 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+static constexpr float2 lerp(float2 a, float2 b, float t) noexcept { return fma(float2(t), b, fma(float2(-t), a, a)); }
 /**
- * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
+ * @brief Linearly interpolates each component of the vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
  * 
  * @param a minimum vector (t == 0.0)
  * @param b maximum vector (t == 1.0)
- * @param t target interpolation value (0.0 - 1.0)
+ * @param dr target decay rate value
  * @param dt current delta time
  */
-static float2 lerpDelta(float2 a, float2 b, float f, float dt) noexcept
-{
-	return a + (1.0f - std::pow(f, dt)) * (b - a);
-}
+static float2 lerpDelta(float2 a, float2 b, float dr, float dt) noexcept { return lerp(b, a, std::exp(-dr * dt)); }
 
 /**
  * @brief Computes the power of each component of base b raised to the corresponding exponent e.
@@ -1079,20 +1076,17 @@ static float3 repeat(float3 v) noexcept { return float3(repeat(v.x), repeat(v.y)
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr float3 lerp(float3 a, float3 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+static constexpr float3 lerp(float3 a, float3 b, float t) noexcept { return fma(float3(t), b, fma(float3(-t), a, a)); }
 /**
- * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
+ * @brief Linearly interpolates each component of the vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
  * 
  * @param a minimum vector (t == 0.0)
  * @param b maximum vector (t == 1.0)
- * @param t target interpolation value (0.0 - 1.0)
+ * @param dr target decay rate value
  * @param dt current delta time
  */
-static float3 lerpDelta(float3 a, float3 b, float f, float dt) noexcept
-{
-	return a + (1.0f - std::pow(f, dt)) * (b - a);
-}
+static float3 lerpDelta(float3 a, float3 b, float dr, float dt) noexcept { return lerp(b, a, std::exp(-dr * dt)); }
 
 /**
  * @brief Computes the power of each component of base b raised to the corresponding exponent e.
@@ -1393,20 +1387,17 @@ static float4 repeat(float4 v) noexcept { return float4(repeat(v.x), repeat(v.y)
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr float4 lerp(float4 a, float4 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+static constexpr float4 lerp(float4 a, float4 b, float t) noexcept { return fma(float4(t), b, fma(float4(-t), a, a)); }
 /**
- * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
+ * @brief Linearly interpolates each component of the vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
  * 
  * @param a minimum vector (t == 0.0)
  * @param b maximum vector (t == 1.0)
- * @param t target interpolation value (0.0 - 1.0)
+ * @param dr target decay rate value
  * @param dt current delta time
  */
-static float4 lerpDelta(float4 a, float4 b, float f, float dt) noexcept
-{
-	return a + (1.0f - std::pow(f, dt)) * (b - a);
-}
+static float4 lerpDelta(float4 a, float4 b, float dr, float dt) noexcept { return lerp(b, a, std::exp(-dr * dt)); }
 
 /**
  * @brief Computes the power of each component of base b raised to the corresponding exponent e.

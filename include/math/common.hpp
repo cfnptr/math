@@ -27,6 +27,8 @@ namespace math
 
 using namespace std;
 
+#define M_LN100 4.60517018598809136803598290936872842  // loge(100)
+
 /**
  * @brief Returns the minimum of three values.
  * 
@@ -70,7 +72,7 @@ static float sign(float v) noexcept { return std::signbit(v) ? -1.0f : 1.0f; }
  */
 static double sign(double v) noexcept { return std::signbit(v) ? -1.0 : 1.0; }
 
-/**
+/***********************************************************************************************************************
  * @brief Remaps specified value to the 0.0 - 1.0 range.
  * @param v target floating-point value to repeat
  */
@@ -102,7 +104,7 @@ static double repeat(double v) noexcept
  * @param b maximum value (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr float lerp(float a, float b, float t) noexcept { return a + t * (b - a); }
+static constexpr float lerp(float a, float b, float t) noexcept { return std::fma(t, b, std::fma(-t, a, a)); }
 /**
  * @brief Linearly interpolates between a and b values using t.
  * 
@@ -110,36 +112,43 @@ static constexpr float lerp(float a, float b, float t) noexcept { return a + t *
  * @param b maximum value (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr double lerp(double a, double b, double t) noexcept { return a + t * (b - a); }
+static constexpr double lerp(double a, double b, double t) noexcept { return std::fma(t, b, std::fma(-t, a, a)); }
 
 /**
- * @brief Linearly interpolates between a and b values using t, taking into account delta time.
+ * @brief Linearly interpolates between a and b values taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
  * 
  * @param a minimum value (t == 0.0)
  * @param b maximum value (t == 1.0)
- * @param t target interpolation value (0.0 - 1.0)
+ * @param dr target decay rate value
  * @param dt current delta time
  */
-static float lerpDelta(float a, float b, float f, float dt) noexcept
-{
-	return a + (1.0f - std::pow(f, dt)) * (b - a);
-}
+static float lerpDelta(float a, float b, float dr, float dt) noexcept { return lerp(b, a, std::exp(-dr * dt)); }
 /**
- * @brief Linearly interpolates between a and b values using t, taking into account delta time.
+ * @brief Linearly interpolates between a and b values taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
  * 
  * @param a minimum value (t == 0.0)
  * @param b maximum value (t == 1.0)
- * @param t target interpolation value (0.0 - 1.0)
+ * @param dr target decay rate value
  * @param dt current delta time
  */
-static double lerpDelta(double a, double b, double f, double dt) noexcept
-{
-	return a + (1.0 - std::pow(f, dt)) * (b - a);
-}
+static double lerpDelta(double a, double b, double dr, double dt) noexcept  { return lerp(b, a, std::exp(-dr * dt)); }
 
 /**
+ * @brief Converts seconds needed to reach 99% of the distance to the decay rate.
+ * @details Use this function to calculate dt parameter for the lerpDelta().
+ * @param time target time to convert in seconds
+ */
+static constexpr float secToDecRate(float time) noexcept  { return (float)M_LN100 / time; }
+/**
+ * @brief Converts seconds needed to reach 99% of the distance to the decay rate.
+ * @details Use this function to calculate dt parameter for the lerpDelta().
+ * @param time target time to convert in seconds
+ */
+static constexpr double secToDecRate(double time) noexcept  { return M_LN100 / time; }
+
+/***********************************************************************************************************************
  * @brief Applies gain function to the x value.
  * @note The function is symmetric when x == 0.5.
  * 

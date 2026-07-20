@@ -46,15 +46,35 @@ struct [[nodiscard]] double2
 	 */
 	constexpr double2(double x, double y) noexcept : x(x), y(y) { }
 
+	constexpr double2(float4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(float3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(float2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(half4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(half3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(half2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(long4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(long3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(long2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(ulong4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(ulong3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(ulong2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(int4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(int3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(int2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(uint4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(uint3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(uint2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(short4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(short3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(short2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(ushort4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(ushort3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(ushort2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(sbyte4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(sbyte3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(sbyte2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(byte4 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
+	constexpr double2(byte3 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 	constexpr double2(byte2 xy) noexcept : x((double)xy.x), y((double)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -86,9 +106,6 @@ struct [[nodiscard]] double2
 	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
 	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
 	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
-	
-	// TODO: 2/3 overrides, also add missing doubleX conversions in other files.
-	// Also looks like we will need to add 2/3 overrides also for all integer vector types.
 
 	//******************************************************************************************************************
 	constexpr double2 operator+(double2 v) const noexcept { return double2(x + v.x, y + v.y); }
@@ -768,20 +785,20 @@ static double2 repeat(double2 v) noexcept { return double2(repeat(v.x), repeat(v
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr double2 lerp(double2 a, double2 b, double t) noexcept { return a * (1.0 - t) + b * t; }
+static constexpr double2 lerp(double2 a, double2 b, double t) noexcept
+{
+	return fma(double2(t), b, fma(double2(-t), a, a));
+}
 /**
- * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
+ * @brief Linearly interpolates each component of the vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
  * 
  * @param a minimum vector (t == 0.0)
  * @param b maximum vector (t == 1.0)
- * @param t target interpolation value (0.0 - 1.0)
+ * @param dr target decay rate value
  * @param dt current delta time
  */
-static double2 lerpDelta(double2 a, double2 b, double f, double dt) noexcept
-{
-	return a + (1.0 - std::pow(f, dt)) * (b - a);
-}
+static double2 lerpDelta(double2 a, double2 b, double dr, double dt) noexcept { return lerp(b, a, std::exp(-dr * dt)); }
 
 /**
  * @brief Computes the power of each component of base b raised to the corresponding exponent e.
@@ -1073,20 +1090,20 @@ static double3 repeat(double3 v) noexcept { return double3(repeat(v.x), repeat(v
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr double3 lerp(double3 a, double3 b, double t) noexcept { return a * (1.0 - t) + b * t; }
+static constexpr double3 lerp(double3 a, double3 b, double t) noexcept
+{
+	return fma(double3(t), b, fma(double3(-t), a, a));
+}
 /**
- * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
+ * @brief Linearly interpolates each component of the vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
  * 
  * @param a minimum vector (t == 0.0)
  * @param b maximum vector (t == 1.0)
- * @param t target interpolation value (0.0 - 1.0)
+ * @param dr target decay rate value
  * @param dt current delta time
  */
-static double3 lerpDelta(double3 a, double3 b, double f, double dt) noexcept
-{
-	return a + (1.0 - std::pow(f, dt)) * (b - a);
-}
+static double3 lerpDelta(double3 a, double3 b, double dr, double dt) noexcept { return lerp(b, a, std::exp(-dr * dt)); }
 
 /**
  * @brief Computes the power of each component of base b raised to the corresponding exponent e.
@@ -1387,20 +1404,20 @@ static double4 repeat(double4 v) noexcept { return double4(repeat(v.x), repeat(v
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr double4 lerp(double4 a, double4 b, double t) noexcept { return a * (1.0 - t) + b * t; }
+static constexpr double4 lerp(double4 a, double4 b, double t) noexcept
+{
+	return fma(double4(t), b, fma(double4(-t), a, a));
+}
 /**
- * @brief Linearly interpolates each component of the vector between a and b using t, taking into account delta time.
+ * @brief Linearly interpolates each component of the vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
  * 
  * @param a minimum vector (t == 0.0)
  * @param b maximum vector (t == 1.0)
- * @param t target interpolation value (0.0 - 1.0)
+ * @param dr target decay rate value
  * @param dt current delta time
  */
-static double4 lerpDelta(double4 a, double4 b, double f, double dt) noexcept
-{
-	return a + (1.0 - std::pow(f, dt)) * (b - a);
-}
+static double4 lerpDelta(double4 a, double4 b, double dr, double dt) noexcept  { return lerp(b, a, std::exp(-dr * dt)); }
 
 /**
  * @brief Computes the power of each component of base b raised to the corresponding exponent e.

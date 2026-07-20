@@ -46,6 +46,8 @@ struct [[nodiscard]] sbyte2
 	 */
 	constexpr sbyte2(int8 x, int8 y) noexcept : x(x), y(y) { }
 
+	constexpr sbyte2(byte4 xy) noexcept : x((int8)xy.x), y((int8)xy.y) { }
+	constexpr sbyte2(byte3 xy) noexcept : x((int8)xy.x), y((int8)xy.y) { }
 	constexpr sbyte2(byte2 xy) noexcept : x((int8)xy.x), y((int8)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -190,6 +192,7 @@ struct [[nodiscard]] sbyte3
 	 */
 	constexpr sbyte3(int8 x, sbyte2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
+	constexpr sbyte3(byte4 xyz) noexcept : x((int8)xyz.x), y((int8)xyz.y), z((int8)xyz.z) { }
 	constexpr sbyte3(byte3 xyz) noexcept : x((int8)xyz.x), y((int8)xyz.y), z((int8)xyz.z) { }
 
 	/*******************************************************************************************************************

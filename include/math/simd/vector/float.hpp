@@ -31,10 +31,6 @@
 namespace math
 {
 
-struct [[nodiscard]] f32x4;
-static u32x4 floatAsUint(f32x4 v) noexcept;
-static f32x4 uintAsFloat(u32x4 v) noexcept;
-
 /**
  * @brief A 4-component SIMD vector of 32-bit floating-point values. (float4)
  * @details Commonly used to represent: points, positions, directions, velocities, etc.
@@ -156,7 +152,7 @@ struct [[nodiscard]] f32x4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vcvtq_f32_u32(v.data);
 		#else
-		floats = v.floats;
+		floats = (float4)v.uints;
 		#endif
 	}
 	explicit f32x4(i32x4 v) noexcept
@@ -166,7 +162,7 @@ struct [[nodiscard]] f32x4
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vcvtq_f32_s32(v.data);
 		#else
-		floats = v.floats;
+		floats = (float4)v.ints;
 		#endif
 	}
 
@@ -214,6 +210,7 @@ struct [[nodiscard]] f32x4
 		#endif
 	}
 
+	explicit f32x4(double4 v) noexcept { *this = (f32x4)float4(v); }
 	explicit f32x4(half4 v) noexcept { *this = (f32x4)f16x4(v); }
 	explicit f32x4(long4 v) noexcept { *this = (f32x4)float4(v); }
 	explicit f32x4(ulong4 v) noexcept { *this = (f32x4)float4(v); }
@@ -223,6 +220,7 @@ struct [[nodiscard]] f32x4
 	explicit f32x4(ushort4 v) noexcept { *this = (f32x4)float4(v); }
 	explicit f32x4(sbyte4 v) noexcept { *this = (f32x4)float4(v); }
 	explicit f32x4(byte4 v) noexcept { *this = (f32x4)float4(v); }
+	explicit f32x4(double3 v) noexcept { *this = (f32x4)float3(v); }
 	explicit f32x4(half3 v) noexcept { *this = (f32x4)f16x4(v); }
 	explicit f32x4(long3 v) noexcept { *this = (f32x4)float3(v); }
 	explicit f32x4(ulong3 v) noexcept { *this = (f32x4)float3(v); }
@@ -440,6 +438,7 @@ struct [[nodiscard]] f32x4
 		#endif
 	}
 
+	explicit operator double4() const noexcept { return (double4)floats; }
 	explicit operator float4() const noexcept { return floats; }
 	explicit operator half4() const noexcept { return (half4)floats; }
 	explicit operator long4() const noexcept { return (long4)floats; }
@@ -450,6 +449,7 @@ struct [[nodiscard]] f32x4
 	explicit operator ushort4() const noexcept { return (ushort4)floats; }
 	explicit operator sbyte4() const noexcept { return (sbyte4)floats; }
 	explicit operator byte4() const noexcept { return (byte4)floats; }
+	explicit operator double3() const noexcept { return (double3)floats; }
 	explicit operator float3() const noexcept { return (float3)floats; }
 	explicit operator half3() const noexcept { return (half3)floats; }
 	explicit operator long3() const noexcept { return (long3)floats; }
@@ -460,6 +460,7 @@ struct [[nodiscard]] f32x4
 	explicit operator ushort3() const noexcept { return (ushort3)floats; }
 	explicit operator sbyte3() const noexcept { return (sbyte3)floats; }
 	explicit operator byte3() const noexcept { return (byte3)floats; }
+	explicit operator double2() const noexcept { return (double2)floats; }
 	explicit operator float2() const noexcept { return (float2)floats; }
 	explicit operator half2() const noexcept { return (half2)floats; }
 	explicit operator long2() const noexcept { return (long2)floats; }
@@ -514,7 +515,13 @@ struct [[nodiscard]] f32x4
 	}
 	f32x4 operator^(f32x4 v) const noexcept
 	{
-		return uintAsFloat(floatAsUint(*this) ^ floatAsUint(v));
+		#if defined(MATH_SIMD_SUPPORT_SSE)
+		return _mm_xor_ps(data, v.data);
+		#elif defined(MATH_SIMD_SUPPORT_NEON)
+		return vreinterpretq_f32_u32(veorq_u32(vreinterpretq_u32_f32(data), vreinterpretq_u32_f32(v.data)));
+		#else
+		return *((const f32x4*)(*((const u32x4*)this) ^ *((const u32x4*)&v)));
+		#endif
 	}
 	f32x4 operator-() const noexcept
 	{
@@ -1487,20 +1494,17 @@ static f32x4 repeat(f32x4 v) noexcept
  * @param b maximum SIMD vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static f32x4 lerp(f32x4 a, f32x4 b, float t) noexcept { return a * (1.0f - t) + b * t; }
+static f32x4 lerp(f32x4 a, f32x4 b, float t) noexcept { return fma(f32x4(t), b, fma(f32x4(-t), a, a)); }
 /**
- * @brief Linearly interpolates each component of the SIMD vector between a and b using t, taking into account delta time.
+ * @brief Linearly interpolates each component of the SIMD vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
  * 
  * @param a minimum SIMD vector (t == 0.0)
  * @param b maximum SIMD vector (t == 1.0)
- * @param t target interpolation value (0.0 - 1.0)
- * @param dt current delta time
+ * @param dr target decay rate value
+ * @param dt current delta time value
  */
-static f32x4 lerpDelta(f32x4 a, f32x4 b, float f, float dt) noexcept
-{
-	return a + (1.0f - std::pow(f, dt)) * (b - a);
-}
+static f32x4 lerpDelta(f32x4 a, f32x4 b, float dr, float dt) noexcept { return lerp(b, a, std::exp(-dr * dt)); }
 
 /***********************************************************************************************************************
  * @brief Compresses 4D SIMD unit vector into the 4 byte value.

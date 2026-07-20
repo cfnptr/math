@@ -100,6 +100,12 @@ struct [[nodiscard]] half2
 	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
 	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
 
+	constexpr bool operator==(half2 v) const noexcept { return x == v.x && y == v.y; }
+	constexpr bool operator!=(half2 v) const noexcept { return x != v.x || y != v.y; }
+
+	constexpr bool operator==(float n) const noexcept { return *this == half2(n); }
+	constexpr bool operator!=(float n) const noexcept { return *this != half2(n); }
+
 	static const half2 zero, one, minusOne, min, minusMin, max, minusMax, 
 		epsilon, inf, minusInf, nan, left, right, bottom, top;
 };
@@ -211,6 +217,12 @@ struct [[nodiscard]] half3
 	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
 	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
 	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
+
+	constexpr bool operator==(half3 v) const noexcept { return x == v.x && y == v.y && z == v.z; }
+	constexpr bool operator!=(half3 v) const noexcept { return x != v.x || y != v.y || z != v.z; }
+
+	constexpr bool operator==(half n) const noexcept { return *this == half3(n); }
+	constexpr bool operator!=(half n) const noexcept { return *this != half3(n); }
 
 	static const half3 zero, one, minusOne, min, minusMin, max, minusMax, 
 		epsilon, inf, minusInf, nan, left, right, bottom, top, back, front;
@@ -359,6 +371,12 @@ struct [[nodiscard]] half4
 	constexpr explicit operator ushort2() const noexcept { return ushort2((uint16)x, (uint16)y); }
 	constexpr explicit operator sbyte2() const noexcept { return sbyte2((int8)x, (int8)y); }
 	constexpr explicit operator byte2() const noexcept { return byte2((uint8)x, (uint8)y); }
+
+	constexpr bool operator==(half4 v) const noexcept { return x == v.x && y == v.y && z == v.z && w == v.w; }
+	constexpr bool operator!=(half4 v) const noexcept { return x != v.x || y != v.y || z != v.z || w != v.w; }
+
+	constexpr bool operator==(half n) const noexcept { return *this == half4(n); }
+	constexpr bool operator!=(half n) const noexcept { return *this != half4(n); }
 
 	static const half4 zero, one, minusOne, min, minusMin, max, minusMax, epsilon, inf, minusInf, nan;
 };

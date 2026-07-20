@@ -46,8 +46,14 @@ struct [[nodiscard]] short2
 	 */
 	constexpr short2(int16 x, int16 y) noexcept : x(x), y(y) { }
 
+	constexpr short2(ushort4 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
+	constexpr short2(ushort3 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
 	constexpr short2(ushort2 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
+	constexpr short2(sbyte4 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
+	constexpr short2(sbyte3 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
 	constexpr short2(sbyte2 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
+	constexpr short2(byte4 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
+	constexpr short2(byte3 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
 	constexpr short2(byte2 xy) noexcept : x((int16)xy.x), y((int16)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -194,8 +200,11 @@ struct [[nodiscard]] short3
 	 */
 	constexpr short3(int16 x, short2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
+	constexpr short3(ushort4 xyz) noexcept : x((int16)xyz.x), y((int16)xyz.y), z((int16)xyz.z) { }
 	constexpr short3(ushort3 xyz) noexcept : x((int16)xyz.x), y((int16)xyz.y), z((int16)xyz.z) { }
+	constexpr short3(sbyte4 xyz) noexcept : x((int16)xyz.x), y((int16)xyz.y), z((int16)xyz.z) { }
 	constexpr short3(sbyte3 xyz) noexcept : x((int16)xyz.x), y((int16)xyz.y), z((int16)xyz.z) { }
+	constexpr short3(byte4 xyz) noexcept : x((int16)xyz.x), y((int16)xyz.y), z((int16)xyz.z) { }
 	constexpr short3(byte3 xyz) noexcept : x((int16)xyz.x), y((int16)xyz.y), z((int16)xyz.z) { }
 
 	/*******************************************************************************************************************

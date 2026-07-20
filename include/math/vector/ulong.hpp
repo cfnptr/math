@@ -48,11 +48,23 @@ struct [[nodiscard]] ulong2
 	 */
 	constexpr ulong2(uint64 x, uint64 y) noexcept : x(x), y(y) { }
 
+	constexpr ulong2(int4 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(int3 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
 	constexpr ulong2(int2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(uint4 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(uint3 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
 	constexpr ulong2(uint2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(short4 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(short3 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
 	constexpr ulong2(short2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(ushort4 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(ushort3 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
 	constexpr ulong2(ushort2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(sbyte4 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(sbyte3 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
 	constexpr ulong2(sbyte2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(byte4 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
+	constexpr ulong2(byte3 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
 	constexpr ulong2(byte2 xy) noexcept : x((uint64)xy.x), y((uint64)xy.y) { }
 
 	/**
@@ -195,11 +207,17 @@ struct [[nodiscard]] ulong3
 	 */
 	constexpr ulong3(uint64 x, ulong2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
+	constexpr ulong3(int4 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
 	constexpr ulong3(int3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(uint4 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
 	constexpr ulong3(uint3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(short4 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
 	constexpr ulong3(short3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(ushort4 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
 	constexpr ulong3(ushort3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(sbyte4 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
 	constexpr ulong3(sbyte3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
+	constexpr ulong3(byte4 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
 	constexpr ulong3(byte3 xyz) noexcept : x((uint64)xyz.x), y((uint64)xyz.y), z((uint64)xyz.z) { }
 
 	/*******************************************************************************************************************

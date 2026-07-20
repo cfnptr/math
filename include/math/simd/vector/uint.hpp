@@ -177,6 +177,7 @@ struct [[nodiscard]] u32x4
 		#endif
 	}
 
+	explicit u32x4(double4 v) noexcept { *this = (u32x4)uint4(v); }
 	explicit u32x4(float4 v) noexcept { *this = (u32x4)uint4(v); }
 	explicit u32x4(half4 v) noexcept { *this = (u32x4)uint4(v); }
 	explicit u32x4(long4 v) noexcept { *this = (u32x4)uint4(v); }
@@ -186,6 +187,7 @@ struct [[nodiscard]] u32x4
 	explicit u32x4(ushort4 v) noexcept { *this = (u32x4)uint4(v); }
 	explicit u32x4(sbyte4 v) noexcept { *this = (u32x4)uint4(v); }
 	explicit u32x4(byte4 v) noexcept { *this = (u32x4)uint4(v); }
+	explicit u32x4(double3 v) noexcept { *this = (u32x4)uint3(v); }
 	explicit u32x4(float3 v) noexcept { *this = (u32x4)uint3(v); }
 	explicit u32x4(half3 v) noexcept { *this = (u32x4)uint3(v); }
 	explicit u32x4(long3 v) noexcept { *this = (u32x4)uint3(v); }
@@ -357,6 +359,7 @@ struct [[nodiscard]] u32x4
 	 */
 	uint32 operator[](psize i) const noexcept { return uints[i]; }
 
+	explicit operator double4() const noexcept { return (double4)uints; }
 	explicit operator float4() const noexcept { return (float4)uints; }
 	explicit operator half4() const noexcept { return (half4)uints; }
 	explicit operator long4() const noexcept { return (long4)uints; }
@@ -367,6 +370,7 @@ struct [[nodiscard]] u32x4
 	explicit operator ushort4() const noexcept { return (ushort4)uints; }
 	explicit operator sbyte4() const noexcept { return (sbyte4)uints; }
 	explicit operator byte4() const noexcept { return (byte4)uints; }
+	explicit operator double3() const noexcept { return (double3)uints; }
 	explicit operator float3() const noexcept { return (float3)uints; }
 	explicit operator half3() const noexcept { return (half3)uints; }
 	explicit operator long3() const noexcept { return (long3)uints; }
@@ -377,6 +381,7 @@ struct [[nodiscard]] u32x4
 	explicit operator ushort3() const noexcept { return (ushort3)uints; }
 	explicit operator sbyte3() const noexcept { return (sbyte3)uints; }
 	explicit operator byte3() const noexcept { return (byte3)uints; }
+	explicit operator double2() const noexcept { return (double2)uints; }
 	explicit operator float2() const noexcept { return (float2)uints; }
 	explicit operator half2() const noexcept { return (half2)uints; }
 	explicit operator long2() const noexcept { return (long2)uints; }

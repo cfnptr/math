@@ -46,10 +46,20 @@ struct [[nodiscard]] int2
 	 */
 	constexpr int2(int32 x, int32 y) noexcept : x(x), y(y) { }
 
+	constexpr int2(uint4 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
+	constexpr int2(uint3 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
 	constexpr int2(uint2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
+	constexpr int2(short4 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
+	constexpr int2(short3 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
 	constexpr int2(short2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
+	constexpr int2(ushort4 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
+	constexpr int2(ushort3 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
 	constexpr int2(ushort2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
+	constexpr int2(sbyte4 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
+	constexpr int2(sbyte3 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
 	constexpr int2(sbyte2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
+	constexpr int2(byte4 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
+	constexpr int2(byte3 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
 	constexpr int2(byte2 xy) noexcept : x((int32)xy.x), y((int32)xy.y) { }
 
 	/*******************************************************************************************************************
@@ -198,10 +208,15 @@ struct [[nodiscard]] int3
 	 */
 	constexpr int3(int32 x, int2 yz) noexcept : x(x), y(yz.x), z(yz.y) { }
 
+	constexpr int3(uint4 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
 	constexpr int3(uint3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
+	constexpr int3(short4 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
 	constexpr int3(short3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
+	constexpr int3(ushort4 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
 	constexpr int3(ushort3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
+	constexpr int3(sbyte4 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
 	constexpr int3(sbyte3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
+	constexpr int3(byte4 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
 	constexpr int3(byte3 xyz) noexcept : x((int32)xyz.x), y((int32)xyz.y), z((int32)xyz.z) { }
 
 	/*******************************************************************************************************************

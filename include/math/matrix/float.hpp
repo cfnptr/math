@@ -112,18 +112,18 @@ struct [[nodiscard]] float2x2
 	 * @brief Calculates dot product between two matrices.
 	 * @param[in] m target matrix to dot by
 	 */
-	float2x2& operator*=(const float2x2& m) noexcept { return *this = *this * m; }
+	float2x2& operator*=(float2x2 m) noexcept { return *this = *this * m; }
 
 	/**
 	 * @brief Returns true if matrices have the same values.
 	 * @param[in] m another matrix to compare with
 	 */
-	bool operator==(const float2x2& m) const noexcept { return memcmp(this, &m, sizeof(float2x2)) == 0; }
+	bool operator==(float2x2 m) const noexcept { return memcmp(this, &m, sizeof(float2x2)) == 0; }
 	/**
 	 * @brief Returns true if matrices have different values.
 	 * @param[in] m another matrix to compare with
 	 */
-	bool operator!=(const float2x2& m) const noexcept { return memcmp(this, &m, sizeof(float2x2)) != 0; }
+	bool operator!=(float2x2 m) const noexcept { return memcmp(this, &m, sizeof(float2x2)) != 0; }
 
 	static const float2x2 zero, one, minusOne, identity;
 };
@@ -646,10 +646,10 @@ static constexpr float3x3 operator-(float n, const float3x3& m) noexcept { retur
 static constexpr float3x3 operator*(float n, const float3x3& m) noexcept { return float3x3(n * m.c0, n * m.c1, n * m.c2); }
 static constexpr float3x3 operator/(float n, const float3x3& m) noexcept { return float3x3(n / m.c0, n / m.c1, n / m.c2); }
 
-static constexpr float2x2 operator+(float n, const float2x2& m) noexcept { return float2x2(n + m.c0, n + m.c1); }
-static constexpr float2x2 operator-(float n, const float2x2& m) noexcept { return float2x2(n - m.c0, n - m.c1); }
-static constexpr float2x2 operator*(float n, const float2x2& m) noexcept { return float2x2(n * m.c0, n * m.c1); }
-static constexpr float2x2 operator/(float n, const float2x2& m) noexcept { return float2x2(n / m.c0, n / m.c1); }
+static constexpr float2x2 operator+(float n, float2x2 m) noexcept { return float2x2(n + m.c0, n + m.c1); }
+static constexpr float2x2 operator-(float n, float2x2 m) noexcept { return float2x2(n - m.c0, n - m.c1); }
+static constexpr float2x2 operator*(float n, float2x2 m) noexcept { return float2x2(n * m.c0, n * m.c1); }
+static constexpr float2x2 operator/(float n, float2x2 m) noexcept { return float2x2(n / m.c0, n / m.c1); }
 
 /***********************************************************************************************************************
  * @brief Calculates dot product between vector and matrix.
