@@ -23,7 +23,6 @@
 #include <cfloat>
 #include <cstdint>
 #include <cstddef>
-#include <stdfloat>
 
 namespace math
 {
@@ -68,6 +67,7 @@ typedef size_t psize;
 
 //**********************************************************************************************************************
 #ifndef FLT16_MIN // Note: MSVC half float support.
+#include <stdfloat>
 
 #define FLT16_MIN     0.00006103515625f /**< Minimum positive value representable as a 16-bit float. */
 #define FLT16_MAX     65504.0f          /**< Maximum representable finite positive 16-bit value. */
