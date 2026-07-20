@@ -26,7 +26,11 @@ project(math VERSION 0.2.0 LANGUAGES CXX
 	DESCRIPTION "Linear algebra mathematics library."
 	HOMEPAGE_URL "https://github.com/cfnptr/math")
 
-set(CMAKE_CXX_STANDARD 17)
+if(NOT MSVC)
+	set(CMAKE_CXX_STANDARD 17)
+else()
+	set(CMAKE_CXX_STANDARD 23) # Because MSVC does not support half floats...
+endif()
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 option(MATH_BUILD_SHARED "Build Math shared library" ON)
