@@ -36,12 +36,14 @@ set(MATH_SOURCES source/aabb.cpp source/bvh.cpp)
 
 add_library(math-static STATIC ${MATH_SOURCES})
 target_include_directories(math-static PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_compile_definitions(math-static PUBLIC __STDC_WANT_IEC_60559_TYPES_EXT__)
 
 if(MATH_BUILD_SHARED)
 	add_library(math-shared SHARED ${MATH_SOURCES})
 	set_target_properties(math-shared PROPERTIES
 		OUTPUT_NAME "math" WINDOWS_EXPORT_ALL_SYMBOLS ON)
 	target_include_directories(math-shared PUBLIC ${PROJECT_SOURCE_DIR}/include)
+	target_compile_definitions(math-shared PUBLIC __STDC_WANT_IEC_60559_TYPES_EXT__)
 endif()
 
 if(MATH_BUILD_TESTS)

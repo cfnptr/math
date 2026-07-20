@@ -18,8 +18,6 @@
  */
 
 #pragma once
-
-#define __STDC_WANT_IEC_60559_TYPES_EXT__
 #include <cfloat>
 #include <cstdint>
 #include <cstddef>
