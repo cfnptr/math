@@ -297,7 +297,7 @@ struct [[nodiscard]] f16x4
 		#if defined(MATH_SIMD_SUPPORT_SSE)
 		return _mm_movemask_epi8(_mm_cmpeq_epi32(data, v.data)) == 0xFFFF;
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		return vminv_u16(vceq_f16(data, v.data)) == 0xFFFFFFFFu;
+		return vminv_u16(vceq_f16(data, v.data)) == 0xFFFFu;
 		#else
 		return halfs == v.halfs;
 		#endif

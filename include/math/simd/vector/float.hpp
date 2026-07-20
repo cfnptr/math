@@ -412,7 +412,7 @@ struct [[nodiscard]] f32x4
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		return _mm_cvtps_ph(data, _MM_FROUND_TO_NEAREST_INT);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		return vcvt_f16_f32(v.data);
+		return vcvt_f16_f32(data);
 		#else
 		return f16x4((half4)floats);
 		#endif
