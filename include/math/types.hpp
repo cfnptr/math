@@ -155,7 +155,7 @@ struct half
 		e = e + (127 - 15); m = m << 13;
 		return (s << 31) | (e << 23) | m;
 	}
-	Half(float f) noexcept
+	half(float f) noexcept
 	{
 		#if defined(__AVX2__)
 		data = _cvtss_sh(f, _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
