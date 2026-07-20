@@ -26,11 +26,7 @@ project(math VERSION 0.2.0 LANGUAGES CXX
 	DESCRIPTION "Linear algebra mathematics library."
 	HOMEPAGE_URL "https://github.com/cfnptr/math")
 
-if(NOT MSVC)
-	set(CMAKE_CXX_STANDARD 17)
-else()
-	set(CMAKE_CXX_STANDARD 23) # Because MSVC does not support half floats...
-endif()
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 option(MATH_BUILD_SHARED "Build Math shared library" ON)
@@ -40,14 +36,12 @@ set(MATH_SOURCES source/aabb.cpp source/bvh.cpp)
 
 add_library(math-static STATIC ${MATH_SOURCES})
 target_include_directories(math-static PUBLIC ${PROJECT_SOURCE_DIR}/include)
-target_compile_definitions(math-static PUBLIC _USE_MATH_DEFINES NOMINMAX)
 
 if(MATH_BUILD_SHARED)
 	add_library(math-shared SHARED ${MATH_SOURCES})
 	set_target_properties(math-shared PROPERTIES
 		OUTPUT_NAME "math" WINDOWS_EXPORT_ALL_SYMBOLS ON)
 	target_include_directories(math-shared PUBLIC ${PROJECT_SOURCE_DIR}/include)
-	target_compile_definitions(math-shared PUBLIC _USE_MATH_DEFINES NOMINMAX)
 endif()
 
 if(MATH_BUILD_TESTS)

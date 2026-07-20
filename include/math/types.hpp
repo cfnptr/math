@@ -65,34 +65,10 @@ typedef uint64_t uint64;
  */
 typedef size_t psize;
 
-//**********************************************************************************************************************
-#ifndef FLT16_MIN // Note: MSVC half float support.
-#include <stdfloat>
-
-#define FLT16_MIN     0.00006103515625f /**< Minimum positive value representable as a 16-bit float. */
-#define FLT16_MAX     65504.0f          /**< Maximum representable finite positive 16-bit value. */
-#define FLT16_EPSILON 0.0009765625f     /**< Smallest positive 16-bit value. */
-
-#define FLT16_MANT_DIG     11
-#define FLT16_DECIMAL_DIG  5
-#define FLT16_DIG          3
-#define FLT16_MIN_EXP     -13
-#define FLT16_MIN_10_EXP  -4
-#define FLT16_MAX_EXP      16
-#define FLT16_MAX_10_EXP   4
-#define FLT16_RADIX        2
-
-/**
- * @brief An IEEE-754 half-precision 16-bit floating-point number.
- */
-typedef std::float16_t half;
-#else
 /**
  * @brief An IEEE-754 half-precision 16-bit floating-point number.
  */
 typedef _Float16 half;
-#endif
-
 /**
  * @brief Half-precision 16-bit floating-point number literal.
  */
