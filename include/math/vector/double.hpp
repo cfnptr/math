@@ -785,10 +785,7 @@ static double2 repeat(double2 v) noexcept { return double2(repeat(v.x), repeat(v
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr double2 lerp(double2 a, double2 b, double t) noexcept
-{
-	return fma(double2(t), b, fma(double2(-t), a, a));
-}
+static double2 lerp(double2 a, double2 b, double t) noexcept { return fma(double2(t), b, fma(double2(-t), a, a)); }
 /**
  * @brief Linearly interpolates each component of the vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
@@ -1090,10 +1087,7 @@ static double3 repeat(double3 v) noexcept { return double3(repeat(v.x), repeat(v
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr double3 lerp(double3 a, double3 b, double t) noexcept
-{
-	return fma(double3(t), b, fma(double3(-t), a, a));
-}
+static double3 lerp(double3 a, double3 b, double t) noexcept { return fma(double3(t), b, fma(double3(-t), a, a)); }
 /**
  * @brief Linearly interpolates each component of the vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!
@@ -1404,10 +1398,7 @@ static double4 repeat(double4 v) noexcept { return double4(repeat(v.x), repeat(v
  * @param b maximum vector (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr double4 lerp(double4 a, double4 b, double t) noexcept
-{
-	return fma(double4(t), b, fma(double4(-t), a, a));
-}
+static double4 lerp(double4 a, double4 b, double t) noexcept { return fma(double4(t), b, fma(double4(-t), a, a)); }
 /**
  * @brief Linearly interpolates each component of the vector between a and b taking into account delta time.
  * @note Always use this function instead of basic lerp() when you have variable delta time!

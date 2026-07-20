@@ -104,7 +104,7 @@ static double repeat(double v) noexcept
  * @param b maximum value (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr float lerp(float a, float b, float t) noexcept { return std::fma(t, b, std::fma(-t, a, a)); }
+static float lerp(float a, float b, float t) noexcept { return std::fma(t, b, std::fma(-t, a, a)); }
 /**
  * @brief Linearly interpolates between a and b values using t.
  * 
@@ -112,7 +112,7 @@ static constexpr float lerp(float a, float b, float t) noexcept { return std::fm
  * @param b maximum value (t == 1.0)
  * @param t target interpolation value (0.0 - 1.0)
  */
-static constexpr double lerp(double a, double b, double t) noexcept { return std::fma(t, b, std::fma(-t, a, a)); }
+static double lerp(double a, double b, double t) noexcept { return std::fma(t, b, std::fma(-t, a, a)); }
 
 /**
  * @brief Linearly interpolates between a and b values taking into account delta time.

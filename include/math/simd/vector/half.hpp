@@ -130,7 +130,7 @@ struct [[nodiscard]] f16x4
 
 	explicit f16x4(u32x4 v) noexcept
 	{
-		#if defined(MATH_SIMD_SUPPORT_SSE)
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		data = _mm_cvtps_ph(_mm_cvtepi32_ps(v.data), _MM_FROUND_TO_NEAREST_INT);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vcvt_f32_f16(vcvtq_f32_u32(v.data));
@@ -140,7 +140,7 @@ struct [[nodiscard]] f16x4
 	}
 	explicit f16x4(i32x4 v) noexcept
 	{
-		#if defined(MATH_SIMD_SUPPORT_SSE)
+		#if defined(MATH_SIMD_SUPPORT_AVX2)
 		data = _mm_cvtps_ph(_mm_cvtepi32_ps(v.data), _MM_FROUND_TO_NEAREST_INT);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vcvt_f32_f16(vcvtq_f32_s32(v.data));

@@ -103,8 +103,8 @@ struct [[nodiscard]] half2
 	constexpr bool operator==(half2 v) const noexcept { return x == v.x && y == v.y; }
 	constexpr bool operator!=(half2 v) const noexcept { return x != v.x || y != v.y; }
 
-	constexpr bool operator==(float n) const noexcept { return *this == half2(n); }
-	constexpr bool operator!=(float n) const noexcept { return *this != half2(n); }
+	constexpr bool operator==(half n) const noexcept { return *this == half2(n); }
+	constexpr bool operator!=(half n) const noexcept { return *this != half2(n); }
 
 	static const half2 zero, one, minusOne, min, minusMin, max, minusMax, 
 		epsilon, inf, minusInf, nan, left, right, bottom, top;
