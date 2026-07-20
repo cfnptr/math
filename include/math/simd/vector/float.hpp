@@ -410,7 +410,7 @@ struct [[nodiscard]] f32x4
 	explicit operator f16x4() const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		return _mm_cvtps_ph(data, _MM_FROUND_TO_NEAREST_INT);
+		return _mm_cvtps_ph(data, _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		return vcvt_f16_f32(data);
 		#else

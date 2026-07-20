@@ -62,7 +62,7 @@ struct [[nodiscard]] f16x4
 	explicit f16x4(half xyzw) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		data = _mm_cvtps_ph(_mm_set1_ps(xyzw), _MM_FROUND_TO_NEAREST_INT);
+		data = _mm_cvtps_ph(_mm_set1_ps(xyzw), _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vdup_n_f16(xyzw);
 		#else
@@ -80,7 +80,7 @@ struct [[nodiscard]] f16x4
 	f16x4(half x, half y, half z, half w) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		data = _mm_cvtps_ph(_mm_set_ps(w, z, y, x), _MM_FROUND_TO_NEAREST_INT);
+		data = _mm_cvtps_ph(_mm_set_ps(w, z, y, x), _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = (float16x4_t){ x, y, z, w };
 		#else
@@ -98,7 +98,7 @@ struct [[nodiscard]] f16x4
 	f16x4(half x, half y, half z) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		data = _mm_cvtps_ph(_mm_set_ps(z, z, y, x), _MM_FROUND_TO_NEAREST_INT);
+		data = _mm_cvtps_ph(_mm_set_ps(z, z, y, x), _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = (float16x4_t){ x, y, z, z };
 		#else
@@ -131,7 +131,7 @@ struct [[nodiscard]] f16x4
 	explicit f16x4(u32x4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		data = _mm_cvtps_ph(_mm_cvtepi32_ps(v.data), _MM_FROUND_TO_NEAREST_INT);
+		data = _mm_cvtps_ph(_mm_cvtepi32_ps(v.data), _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vcvt_f16_f32(vcvtq_f32_u32(v.data));
 		#else
@@ -141,7 +141,7 @@ struct [[nodiscard]] f16x4
 	explicit f16x4(i32x4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		data = _mm_cvtps_ph(_mm_cvtepi32_ps(v.data), _MM_FROUND_TO_NEAREST_INT);
+		data = _mm_cvtps_ph(_mm_cvtepi32_ps(v.data), _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = vcvt_f16_f32(vcvtq_f32_s32(v.data));
 		#else
@@ -156,7 +156,7 @@ struct [[nodiscard]] f16x4
 	explicit f16x4(half4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		data = _mm_cvtps_ph(_mm_set_ps(v.w, v.z, v.y, v.x), _MM_FROUND_TO_NEAREST_INT);
+		data = _mm_cvtps_ph(_mm_set_ps(v.w, v.z, v.y, v.x), _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = (float16x4_t){ v.x, v.y, v.z, v.w };
 		#else
@@ -171,7 +171,7 @@ struct [[nodiscard]] f16x4
 	explicit f16x4(half3 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_AVX2)
-		data = _mm_cvtps_ph(_mm_set_ps(v.z, v.z, v.y, v.x), _MM_FROUND_TO_NEAREST_INT);
+		data = _mm_cvtps_ph(_mm_set_ps(v.z, v.z, v.y, v.x), _MM_FROUND_TO_NEAREST_INT | _MM_FROUND_NO_EXC);
 		#elif defined(MATH_SIMD_SUPPORT_NEON)
 		data = (float16x4_t){ v.x, v.y, v.z, v.z };
 		#else
