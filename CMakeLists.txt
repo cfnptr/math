@@ -46,6 +46,7 @@ if(MATH_BUILD_SHARED)
 	set_target_properties(math-shared PROPERTIES
 		OUTPUT_NAME "math" WINDOWS_EXPORT_ALL_SYMBOLS ON)
 	target_include_directories(math-shared PUBLIC ${PROJECT_SOURCE_DIR}/include)
+	target_compile_definitions(math-shared PUBLIC __STDC_WANT_IEC_60559_TYPES_EXT__)
 	if(WIN32)
 		target_compile_definitions(math-shared PUBLIC _USE_MATH_DEFINES NOMINMAX)
 	endif()
