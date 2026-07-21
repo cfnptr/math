@@ -14,7 +14,7 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common single instruction multiple data (SIMD) floating point vector functions.
+ * @brief Common single instruction multiple data (SIMD) 32 bit floating point vector functions.
  */
 
 #pragma once
@@ -24,25 +24,25 @@ namespace math
 {
 
 /**
- * @brief SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+ * @brief A 4x4 SIMD matrix of 32-bit floating-point vectors. (float4x4)
  * @details Commonly used for basic transformations: translation, scale, rotation, etc.
  * @note Use it when you know how to implement a faster vectorized code.
  */
-struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
+struct [[nodiscard]] f32x4x4
 {
 	f32x4 c0, c1, c2, c3;
 
 	/**
-	 * @brief Creates a new zero initialized SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @brief Creates a new zero initialized 4x4 SIMD matrix of 32-bit floating-point vectors. (float4x4)
 	 */
 	f32x4x4() noexcept = default;
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @brief Creates a new 4x4 SIMD matrix of 32-bit floating-point vectors. (float4x4)
 	 * @param n target value for all matrix vector components
 	 */
 	explicit f32x4x4(float n) noexcept : c0(n), c1(n), c2(n), c3(n) { }
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @brief Creates a new 4x4 SIMD matrix of 32-bit floating-point vectors. (float4x4)
 	 * @details See the @ref f32x4x4.
 	 */
 	f32x4x4(
@@ -55,7 +55,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 		c2(f32x4(c2r0, c2r1, c2r2, c2r3)),
 		c3(f32x4(c3r0, c3r1, c3r2, c3r3)) { }
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @brief Creates a new 4x4 SIMD matrix of 32-bit floating-point vectors. (float4x4)
 	 * 
 	 * @param c0 first matrix column value
 	 * @param c1 second matrix column value
@@ -64,7 +64,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 	 */
 	f32x4x4(f32x4 c0, f32x4 c1, f32x4 c2, f32x4 c3) noexcept : c0(c0), c1(c1), c2(c2), c3(c3) { }
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @brief Creates a new 4x4 SIMD matrix of 32-bit floating-point vectors. (float4x4)
 	 * @warning This constructor duplicates second column vector to the third column!
 	 *
 	 * @param c0 first matrix column value
@@ -74,12 +74,12 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 	f32x4x4(f32x4 c0, f32x4 c1, f32x4 c2) noexcept : c0(c0), c1(c1), c2(c2), c3(c2) { }
 	
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @brief Creates a new 4x4 SIMD matrix of 32-bit floating-point vectors. (float4x4)
 	 * @param[in] m target 4x4 matrix value
 	 */
 	explicit f32x4x4(const float4x4& m) noexcept { *this = *((const f32x4x4*)&m); }
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @brief Creates a new 4x4 SIMD matrix of 32-bit floating-point vectors. (float4x4)
 	 * 
 	 * @param[in] m target 3x3 matrix value
 	 * @param r3 third rows SIMD vector
@@ -88,7 +88,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 		c0(float4(m.c0, r3.getX())), c1(float4(m.c1, r3.getY())), 
 		c2(float4(m.c2, r3.getZ())), c3(float4(m.c3, r3.getW())) { }
 	/**
-	 * @brief Creates a new SIMD 32bit floating point 4x4 matrix structure. (float4x4)
+	 * @brief Creates a new 4x4 SIMD matrix of 32-bit floating-point vectors. (float4x4)
 	 * 
 	 * @param[in] m target 3x3 matrix value
 	 * @param c3 third columns SIMD vector
@@ -116,37 +116,19 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) f32x4x4
 		return ((f32x4*)this)[i];
 	}
 
-	/**
-	 * @brief Returns SIMD matrix as 4x4 floating point matrix.
-	 */
-	explicit operator float4x4() const noexcept
-	{
-		return *((const float4x4*)this);
-	}
-	/**
-	 * @brief Returns SIMD matrix as 4x3 floating point matrix.
-	 */
+	explicit operator float4x4() const noexcept { return *((const float4x4*)this); }
 	explicit operator float4x3() const noexcept
 	{
 		return float4x3((float3)c0, (float3)c1, (float3)c2, (float3)c3);
 	}
-	/**
-	 * @brief Returns SIMD matrix as 3x4 floating point matrix.
-	 */
 	explicit operator float3x4() const noexcept
 	{
 		return float3x4((float4)c0, (float4)c1, (float4)c2);
 	}
-	/**
-	 * @brief Returns SIMD matrix as 3x3 floating point matrix.
-	 */
 	explicit operator float3x3() const noexcept
 	{
 		return float3x3((float3)c0, (float3)c1, (float3)c2);
 	}
-	/**
-	 * @brief Returns SIMD matrix as 3x3 floating point matrix.
-	 */
 	explicit operator float2x2() const noexcept { return float2x2((float2)c0, (float2)c1); }
 
 	/*******************************************************************************************************************

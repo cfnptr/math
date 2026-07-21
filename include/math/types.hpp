@@ -18,64 +18,58 @@
  */
 
 #pragma once
-
-#define __STDC_WANT_IEC_60559_TYPES_EXT__
 #include <cfloat>
 #include <cstdint>
 #include <cstddef>
 
-#ifndef FLT16_MIN
-#define _Float16 uint16_t // Note: MSVC fix
-#endif
-
-#define FLOAT_SMALL_16 0.00006103515625f
-#define FLOAT_BIG_16 65504.0f
-
 namespace math
 {
-
 /**
- * @brief Signed 8bit integer type. (-128 to 127)
+ * @brief A signed 8-bit integer type. (-128 to 127)
  */
 typedef int8_t int8;
 /**
- * @brief Signed 16bit integer type. (-32,768 to 32,767)
+ * @brief A signed 16-bit integer type. (-32,768 to 32,767)
  */
 typedef int16_t int16;
 /**
- * @brief Signed 32bit integer type. (-2,147,483,648 to 2,147,483,647)
+ * @brief A signed 32-bit integer type. (-2,147,483,648 to 2,147,483,647)
  */
 typedef int32_t int32;
 /**
- * @brief Signed 64bit integer type. (-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807)
+ * @brief A signed 64-bit integer type. (-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807)
  */
 typedef int64_t int64;
 
 /**
- * @brief Unsigned 8bit integer type. (0 to 255)
+ * @brief An unsigned 8-bit integer type. (0 to 255)
  */
 typedef uint8_t uint8;
 /**
- * @brief Unsigned 16bit integer type. (0 to 65,535)
+ * @brief An unsigned 16-bit integer type. (0 to 65,535)
  */
 typedef uint16_t uint16;
 /**
- * @brief Unsigned 32bit integer type. (0 to 4,294,967,295)
+ * @brief An unsigned 32-bit integer type. (0 to 4,294,967,295)
  */
 typedef uint32_t uint32;
 /**
- * @brief Unsigned 64bit integer type. (0 to 18,446,744,073,709,551,615)
+ * @brief An unsigned 64-bit type. (0 to 18,446,744,073,709,551,615)
  */
 typedef uint64_t uint64;
 
 /**
- * @brief Unsigned pointer type. (CPU architecture dependant)
+ * @brief Unsigned pointer type. (CPU architecture dependant!)
  */
 typedef size_t psize;
 
 /**
- * @brief Signed 16bit floating point type. (Half precision float)
+ * @brief An IEEE-754 half-precision 16-bit floating-point number.
  */
 typedef _Float16 half;
+/**
+ * @brief Half-precision 16-bit floating-point number literal.
+ */
+constexpr half operator""_hf(long double val) { return static_cast<half>(val); }
 
 } // namespace math

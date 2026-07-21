@@ -21,9 +21,16 @@ jobs:
       run: cmake -E make_directory ${{runner.workspace}}/build
 
     - name: Configure CMake
+      if: matrix.os != 'windows-latest'
       shell: bash
       working-directory: ${{runner.workspace}}/build
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Configure Windows CMake
+      if: matrix.os == 'windows-latest'
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -T ClangCL -A x64
 
     - name: Build project
       working-directory: ${{runner.workspace}}/build

@@ -6,10 +6,11 @@ See the [documentation](https://cfnptr.github.io/math).
 
 ## Features
 
-* Vector (float2/3/4, int2/3/4, half)
+* Vector (float2/3/4, int2/3/4, half2/3/4)
+* Types (byte, sbyte, short, ushort, int, uint, long, ulong)
 * Matrix (float2x2/3x3/4x4)
-* Quaternion (float4)
-* SIMD optimized (f32x4, f32x4x4, f16x4)
+* Quaternion rotations (float4)
+* SIMD optimized (i32x4, f32x4, f32x4x4, f16x4)
 * Euler angles/radians conversion
 * Matrix translate, scale, rotate
 * Perspective, orthographic projection

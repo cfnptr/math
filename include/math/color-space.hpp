@@ -256,7 +256,7 @@ static uint32 encodeB10G11R11(float value, uint32 bits, uint32 mask) noexcept
  */
 static uint32 encodeB10G11R11(f32x4 rgb) noexcept
 {
-	rgb = clamp(rgb, f32x4::zero, f32x4(FLOAT_BIG_16));
+	rgb = clamp(rgb, f32x4::zero, f32x4(FLT16_MAX));
 	auto r = encodeB10G11R11(rgb.getX(), 6, 0b111111);
 	auto g = encodeB10G11R11(rgb.getY(), 6, 0b111111);
 	auto b = encodeB10G11R11(rgb.getZ(), 5, 0b11111);

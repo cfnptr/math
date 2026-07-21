@@ -14,21 +14,20 @@
 
 /***********************************************************************************************************************
  * @file
- * @brief Common single instruction multiple data (SIMD) 32-bit signed integer vector functions.
+ * @brief Common single instruction multiple data (SIMD) 32 bit signed integer vector functions.
  */
 
 #pragma once
-#include "math/vector/int.hpp"
 #include "math/simd/vector/uint.hpp"
 
 namespace math
 {
 
 /**
- * @brief SIMD 4 component 32bit signed integer vector structure. (int4)
+ * @brief A 4-component SIMD vector of 32-bit signed integer values. (int4)
  * @note Use it when you know how to implement a faster vectorized code.
  */
-struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
+struct [[nodiscard]] i32x4
 {
 	union
 	{
@@ -42,7 +41,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 	i32x4& operator=(const i32x4& v) noexcept = default;
 
 	/**
-	 * @brief Creates a new zero initialized SIMD 4 component 32bit signed integer vector structure. (int4)
+	 * @brief Creates a new zero initialized 4-component SIMD vector of 32-bit signed integer values. (int4)
 	 */
 	i32x4() noexcept
 	{
@@ -55,7 +54,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit signed integer vector structure. (int4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit signed integer values. (int4)
 	 * @param xyzw target value for all vector components
 	 */
 	explicit i32x4(int32 xyzw) noexcept
@@ -69,7 +68,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit signed integer vector structure. (int4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit signed integer values. (int4)
 	 *
 	 * @param x first vector component value
 	 * @param y second vector component value
@@ -87,7 +86,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit signed integer vector structure. (int4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit signed integer values. (int4)
 	 * @warning This constructor duplicates Z component to the W component!
 	 *
 	 * @param x first vector component value
@@ -105,9 +104,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit signed integer vector structure. (int4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit signed integer values. (int4)
 	 *
-	 * @param xyz first, second and third vector component values
+	 * @param xyz first, second and third vector component value
 	 * @param w fourth vector component value
 	 */
 	i32x4(i32x4 xyz, int32 w) noexcept
@@ -124,17 +123,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 	}
 
 	#if defined(MATH_SIMD_SUPPORT_SSE) || defined(MATH_SIMD_SUPPORT_NEON)
-	/**
-	 * @brief Creates a new SIMD 4 component 32bit signed integer vector structure. (int4)
-	 * @param data target vector SIMD data
-	 */
 	i32x4(_simd_i128 data) noexcept : data(data) { }
 	#endif
 
-	/**
-	 * @brief Creates a new SIMD 4 component 32bit floating point vector structure. (int4)
-	 * @param v target vector unsigned integer SIMD data
-	 */
 	explicit i32x4(u32x4 v) noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -147,7 +138,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 	}
 
 	/*******************************************************************************************************************
-	 * @brief Creates a new SIMD 4 component 32bit signed integer vector structure. (int4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit signed integer values. (int4)
 	 * @param v target 4 component vector value
 	 */
 	explicit i32x4(int4 v) noexcept
@@ -161,7 +152,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit signed integer vector structure. (int4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit signed integer values. (int4)
+	 * @warning This constructor duplicates Z component to the W component!
 	 * @param v target 3 component vector value
 	 */
 	explicit i32x4(int3 v) noexcept
@@ -175,21 +167,7 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		#endif
 	}
 	/**
-	 * @brief Creates a new SIMD 4 component 32bit signed integer vector structure. (int4)
-	 * @param v target 2 component vector value
-	 */
-	explicit i32x4(int2 v) noexcept
-	{
-		#if defined(MATH_SIMD_SUPPORT_SSE)
-		data = _mm_set_epi32(v.y, v.y, v.y, v.x);
-		#elif defined(MATH_SIMD_SUPPORT_NEON)
-		data = (int32x4_t){ v.x, v.y, v.y, v.y };
-		#else
-		ints = int4(v, v.y, v.y);
-		#endif
-	}
-	/**
-	 * @brief Creates a new SIMD 4 component vector 32bit signed integer structure. (int4)
+	 * @brief Creates a new 4-component SIMD vector of 32-bit signed integer values. (int4)
 	 * @param[in] v target 4 component vector value pointer (unaligned)
 	 */
 	explicit i32x4(const int32* v) noexcept
@@ -202,11 +180,32 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		ints = *v;
 		#endif
 	}
+
+	explicit i32x4(double4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(float4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(half4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(long4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(ulong4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(uint4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(short4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(ushort4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(sbyte4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(byte4 v) noexcept { *this = (i32x4)int4(v); }
+	explicit i32x4(double3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(float3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(half3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(long3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(ulong3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(uint3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(short3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(ushort3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(sbyte3 v) noexcept { *this = (i32x4)int3(v); }
+	explicit i32x4(byte3 v) noexcept { *this = (i32x4)int3(v); }
 	
 	/*******************************************************************************************************************
-	 * @brief Loads SIMD 4 component 32bit signed integer aligned vector values.
+	 * @brief Loads 4-component SIMD vector of aligned 32-bit signed integer values. (int4)
 	 * @warning Specified vector pointer must be aligned in the memory!!!
-	 * @param[in] v target 4 component vector value pointer (aligned)
+	 * @param[in] v target 4 component vector value pointer (ALIGNED)
 	 */
 	void loadAligned(const int32* v) noexcept
 	{
@@ -220,8 +219,8 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 	}
 
 	/**
-	 * @brief Stores SIMD 4 component 32bit signed integer unaligned vector values.
-	 * @param[out] v target 4 component vector value pointer (unaligned)
+	 * @brief Stores 4-component SIMD vector of unaligned 32-bit signed integer values. (int4)
+	 * @param[out] v target 4 component vector value pointer (UNALIGNED)
 	 */
 	void store(int32* v) noexcept
 	{
@@ -234,9 +233,9 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		#endif
 	}
 	/**
-	 * @brief Stores SIMD 4 component 32bit signed integer aligned vector values.
+	 * @brief Stores 4-component SIMD vector of aligned 32-bit signed integer values. (int4)
 	 * @warning Specified vector pointer must be aligned in the memory!!!
-	 * @param[out] v target 4 component vector value pointer (aligned)
+	 * @param[out] v target 4 component vector value pointer (ALIGNED)
 	 */
 	void storeAligned(int32* v) noexcept
 	{
@@ -364,9 +363,6 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 	 */
 	int32 operator[](psize i) const noexcept { return ints[i]; }
 
-	/**
-	 * @brief Returns as 4 component unsigned integer SIMD vector.
-	 */
 	explicit operator u32x4() const noexcept
 	{
 		#if defined(MATH_SIMD_SUPPORT_SSE)
@@ -378,22 +374,39 @@ struct [[nodiscard]] alignas(MATH_SIMD_VECTOR_ALIGNMENT) i32x4
 		#endif
 	}
 
-	/**
-	 * @brief Returns SIMD vector as 4 component signed integer vector. (xyzw)
-	 */
+	explicit operator double4() const noexcept { return (double4)ints; }
+	explicit operator float4() const noexcept { return (float4)ints; }
+	explicit operator half4() const noexcept { return (half4)ints; }
+	explicit operator long4() const noexcept { return (long4)ints; }
+	explicit operator ulong4() const noexcept { return (ulong4)ints; }
 	explicit operator int4() const noexcept { return ints; }
-	/**
-	 * @brief Returns SIMD vector as 3 component signed integer vector. (xyz)
-	 */
+	explicit operator uint4() const noexcept { return (uint4)ints; }
+	explicit operator short4() const noexcept { return (short4)ints; }
+	explicit operator ushort4() const noexcept { return (ushort4)ints; }
+	explicit operator sbyte4() const noexcept { return (sbyte4)ints; }
+	explicit operator byte4() const noexcept { return (byte4)ints; }
+	explicit operator double3() const noexcept { return (double3)ints; }
+	explicit operator float3() const noexcept { return (float3)ints; }
+	explicit operator half3() const noexcept { return (half3)ints; }
+	explicit operator long3() const noexcept { return (long3)ints; }
+	explicit operator ulong3() const noexcept { return (ulong3)ints; }
 	explicit operator int3() const noexcept { return (int3)ints; }
-	/**
-	 * @brief Returns SIMD vector as 2 component signed integer vector. (xy)
-	 */
+	explicit operator uint3() const noexcept { return (uint3)ints; }
+	explicit operator short3() const noexcept { return (short3)ints; }
+	explicit operator ushort3() const noexcept { return (ushort3)ints; }
+	explicit operator sbyte3() const noexcept { return (sbyte3)ints; }
+	explicit operator byte3() const noexcept { return (byte3)ints; }
+	explicit operator double2() const noexcept { return (double2)ints; }
+	explicit operator float2() const noexcept { return (float2)ints; }
+	explicit operator half2() const noexcept { return (half2)ints; }
+	explicit operator long2() const noexcept { return (long2)ints; }
+	explicit operator ulong2() const noexcept { return (ulong2)ints; }
 	explicit operator int2() const noexcept { return (int2)ints; }
-	/**
-	 * @brief Returns SIMD first vector component value. (x)
-	 */
-	explicit operator int32() const noexcept { return getX(); }
+	explicit operator uint2() const noexcept { return (uint2)ints; }
+	explicit operator short2() const noexcept { return (short2)ints; }
+	explicit operator ushort2() const noexcept { return (ushort2)ints; }
+	explicit operator sbyte2() const noexcept { return (sbyte2)ints; }
+	explicit operator byte2() const noexcept { return (byte2)ints; }
 
 	//******************************************************************************************************************
 	i32x4 operator+(i32x4 v) const noexcept

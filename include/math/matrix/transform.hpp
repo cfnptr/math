@@ -198,7 +198,7 @@ static f32x4x4 extractRotationOnly(const f32x4x4& m) noexcept
  * @brief Extracts total SIMD matrix rotation quaternion of an object in 3D space.
  * @param m target rotation SIMD matrix to extract from
  */
-static quat extractQuat(f32x4x4 m) noexcept
+static quat extractQuat(const f32x4x4& m) noexcept
 {
 	auto c0X = m.c0.getX(), c1Y = m.c1.getY(), c2Z = m.c2.getZ();
 	auto fourXSquaredMinus1 = c0X - c1Y - c2Z;
@@ -265,8 +265,14 @@ static f32x4x4 calcModel(f32x4 position = f32x4::zero,
 static void extractTransform(const f32x4x4& m, f32x4& position, quat& rotation, f32x4& scale) noexcept
 {
 	position = getTranslation(m);
-	rotation = extractQuat(extractRotation(m));
 	scale = extractScale(m);
+
+	auto r = extractRotationOnly(m);
+	auto invScale = 1.0f / scale;
+	r.c0 *= invScale.getX();
+	r.c1 *= invScale.getY();
+	r.c2 *= invScale.getZ();
+	rotation = extractQuat(r);
 }
 /**
  * @brief Extracts total SIMD matrix position and rotation of an object in 3D space. (Decompose)
@@ -278,7 +284,7 @@ static void extractTransform(const f32x4x4& m, f32x4& position, quat& rotation, 
 static void extractTransform(const f32x4x4& m, f32x4& position, quat& rotation) noexcept
 {
 	position = getTranslation(m);
-	rotation = extractQuat(extractRotationOnly(m));
+	rotation = extractQuat(extractRotation(m));
 }
 
 /***********************************************************************************************************************

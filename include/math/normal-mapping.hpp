@@ -33,7 +33,7 @@ static float3 unpackNormal(float3 packedNormal) noexcept { return fma(packedNorm
 static f32x4 packNormal(f32x4 packedNormal) noexcept { return fma(packedNormal, f32x4(0.5f), f32x4(0.5f)); }
 static f32x4 unpackNormal(f32x4 packedNormal) noexcept { return fma(packedNormal, f32x4(2.0f), f32x4(-1.0f)); }
 
-static f32x4x4 computeTBN(f32x4x4 model, f32x4 normal, f32x4 tangent) noexcept
+static f32x4x4 computeTBN(const f32x4x4& model, f32x4 normal, f32x4 tangent) noexcept
 {
 	assert(normal == normalize3(normal));
 	assert(tangent == normalize3(tangent));
@@ -63,10 +63,10 @@ static float3x3 fastApproximateTBN(float3 normal) noexcept // Branchless ONB (Du
 	return float3x3(tangent, bitangent, normal);
 }
 
-static f32x4x4 tbnToTangentSpace(f32x4x4 tbn) noexcept { return transpose3x3(tbn); }
-static f32x4 getTbnTangent(f32x4x4 tbn) noexcept { return tbn[0]; }
-static f32x4 getTbnBitangent(f32x4x4 tbn) noexcept { return tbn[1]; }
-static f32x4 getTbnNormal(f32x4x4 tbn) noexcept { return tbn[2]; }
+static f32x4x4 tbnToTangentSpace(const f32x4x4& tbn) noexcept { return transpose3x3(tbn); }
+static f32x4 getTbnTangent(const f32x4x4& tbn) noexcept { return tbn[0]; }
+static f32x4 getTbnBitangent(const f32x4x4& tbn) noexcept { return tbn[1]; }
+static f32x4 getTbnNormal(const f32x4x4& tbn) noexcept { return tbn[2]; }
 
 static float3 snapToAxis(float3 normal) noexcept
 {

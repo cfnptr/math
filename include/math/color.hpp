@@ -60,18 +60,23 @@ struct [[nodiscard]] Color
 	/**
 	 * @brief Creates a new sRGB color structure.
 	 * 
-	 * @param rgb red green and blue channel color value
+	 * @param rgb red, green and blue channel color value
 	 * @param a alpha channel color value (transparency)
 	 */
 	constexpr Color(Color rgb, uint8 a) noexcept : r(rgb.r), g(rgb.g), b(rgb.b), a(a) { }
 	/**
 	 * @brief Creates a new sRGB color structure.
 	 * 
-	 * @param rgb red green and blue channel color value
+	 * @param rgb red, green and blue channel color value
 	 * @param a alpha channel color value (transparency)
 	 */
 	constexpr Color(Color rgb, float a) noexcept : r(rgb.r), g(rgb.g), b(rgb.b), 
 		a(uint8(saturate(a) * 255.0f + 0.5f)) { }
+	/**
+	 * @brief Creates a new sRGB color structure.
+	 * @param rgba red, green, blue and alpha channel color value
+	 */
+	constexpr Color(byte4 rgba) noexcept : r(rgba.x), g(rgba.y), b(rgba.z), a(rgba.w) { }
 
 	/**
 	 * @brief Creates a new sRGB color structure from the binary data.
@@ -165,25 +170,37 @@ struct [[nodiscard]] Color
 	}
 	
 	/*******************************************************************************************************************
-	 * @brief Converts sRGB color to the normalized RG vector. (Red, Green)
+	 * @brief Converts sRGB color to the normalized RGBA SIMD vector. (Red, Green, Blue, Alpha)
 	 */
-	constexpr explicit operator float2() const noexcept { return float2(r, g) * (1.0f / 255.0f); }
+	explicit operator f32x4() const noexcept { return f32x4(r, g, b, a) * (1.0f / 255.0f); }
 	/**
-	 * @brief Converts sRGB color to the normalized RGB vector. (Red, Green, Blue)
+	 * @brief Converts sRGB color to the normalized RGBA SIMD vector. (Red, Green, Blue, Alpha)
 	 */
-	constexpr explicit operator float3() const noexcept { return float3(r, g, b) * (1.0f / 255.0f); }
+	explicit operator f16x4() const noexcept { return (f16x4)(f32x4(r, g, b, a) * (1.0f / 255.0f)); }
 	/**
 	 * @brief Converts sRGB color to the normalized RGBA vector. (Red, Green, Blue, Alpha)
 	 */
 	constexpr explicit operator float4() const noexcept { return float4(r, g, b, a) * (1.0f / 255.0f); }
 	/**
-	 * @brief Converts sRGB color to the normalized RGBA SIMD vector. (Red, Green, Blue, Alpha)
+	 * @brief Converts sRGB color to the normalized RGBA vector. (Red, Green, Blue, Alpha)
 	 */
-	explicit operator f32x4() const noexcept { return f32x4(r, g, b, a) * (1.0f / 255.0f); }
+	constexpr explicit operator half4() const noexcept { return (half4)(float4(r, g, b, a) * (1.0f / 255.0f)); }
 	/**
-	 * @brief Returns color binary data.
+	 * @brief Returns color as binary vector.
 	 */
-	explicit operator uint32() const noexcept { return *(const uint32*)this; }
+	explicit operator byte4() const noexcept { return *((const byte4*)this); }
+	/**
+	 * @brief Converts sRGB color to the normalized RGB vector. (Red, Green, Blue)
+	 */
+	constexpr explicit operator float3() const noexcept { return float3(r, g, b) * (1.0f / 255.0f); }
+	/**
+	 * @brief Converts sRGB color to the normalized RGB vector. (Red, Green, Blue)
+	 */
+	constexpr explicit operator half3() const noexcept { return (half3)(float3(r, g, b) * (1.0f / 255.0f)); }
+	/**
+	 * @brief Returns color as unsigned integer value
+	 */
+	explicit operator uint32() const noexcept { return *((const uint32*)this); }
 
 	/*******************************************************************************************************************
 	 * @brief Returns sRGB color normalizer R channel. (Red)
@@ -294,14 +311,6 @@ static constexpr bool operator<=(uint8 n, Color c) noexcept { return Color(n) <=
 static constexpr bool operator>=(uint8 n, Color c) noexcept { return Color(n) >= c; }
 
 /**
- * @brief Returns true if first color binary representation is less than the second.
- *
- * @param a first color to binary compare
- * @param b second color to binary compare
- */
-static bool isBinaryLess(Color a, Color b) noexcept { return  *((const uint32*)&a) < *((const uint32*)&b); }
-
-/**
  * @brief Creates a new sRGB color. (CSS style declaration)
  * 
  * @param r red channel color value
@@ -310,6 +319,39 @@ static bool isBinaryLess(Color a, Color b) noexcept { return  *((const uint32*)&
  * @param a alpha channel color value (transparency)
  */
 static constexpr Color rgba(uint8 r, uint8 g, uint8 b, float a) noexcept { return Color(Color(r, g, b), a); }
+
+/**
+ * @brief Returns true if first color binary representation is less than the second.
+ *
+ * @param a first color to binary compare
+ * @param b second color to binary compare
+ */
+static bool isBinaryLess(Color a, Color b) noexcept { return  *((const uint32*)&a) < *((const uint32*)&b); }
+
+/***********************************************************************************************************************
+ * @brief Linearly interpolates each component of the color between a and b using t.
+ * 
+ * @param a minimum color (t == 0.0)
+ * @param b maximum color (t == 1.0)
+ * @param t target interpolation value (0.0 - 1.0)
+ */
+static Color lerp(Color a, Color b, float t) noexcept
+{
+	return Color::fromLinear(lerp(a.toLinear(), b.toLinear(), t));
+}
+/**
+ * @brief Linearly interpolates each component of the color between a and b taking into account delta time.
+ * @note Always use this function instead of basic lerp() when you have variable delta time!
+ * 
+ * @param a minimum color (t == 0.0)
+ * @param b maximum color (t == 1.0)
+ * @param dr target decay rate value
+ * @param dt current delta time value
+ */
+static Color lerpDelta(Color a, Color b, float dr, float dt) noexcept
+{
+	return Color::fromLinear(lerpDelta(a.toLinear(), b.toLinear(), dr, dt));
+}
 
 // TODO: color conversion functions.
 

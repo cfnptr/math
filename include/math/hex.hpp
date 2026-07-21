@@ -77,7 +77,7 @@ static string toHex8(const uint8* data, psize size) noexcept
 }
 
 /***********************************************************************************************************************
- * @brief Converts hexadecimal string to the 32bit integer value.
+ * @brief Converts hexadecimal string to the 32-bit integer value.
  * @param[in] hex target hexadecimal string
  */
 static uint32 toInt32(const string& hex) noexcept { return (uint32)std::stoul(hex, nullptr, 16); }

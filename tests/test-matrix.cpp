@@ -45,7 +45,7 @@ static void cmp(f32x4 a, float3 b, float tolerance = 1.0e-9f)
 	if (difference > tolerance)
 		throw runtime_error("Float3 vectors test failed.");
 }
-static void cmp(f32x4x4 a, float4x4 b, float tolerance = 1.0e-9f)
+static void cmp(const f32x4x4& a, float4x4 b, float tolerance = 1.0e-9f)
 {
 	for (int c = 0; c < 4; c++)
 	{
@@ -62,7 +62,7 @@ static void cmp(f32x4x4 a, float4x4 b, float tolerance = 1.0e-9f)
 			throw runtime_error("Float4 matrices test failed.");
 	}
 }
-static void cmp(f32x4x4 a, float3x3 b, float tolerance = 1.0e-9f)
+static void cmp(const f32x4x4& a, float3x3 b, float tolerance = 1.0e-9f)
 {
 	for (int c = 0; c < 3; c++)
 	{
