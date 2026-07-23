@@ -22,6 +22,8 @@
 
 #include <string>
 #include <cassert>
+#include <charconv>
+#include <string_view>
 
 namespace math
 {
@@ -40,7 +42,7 @@ struct [[nodiscard]] Version
 	uint8 build; /**< Build version part. */
 
 	/**
-	 * @brief Creates a new version structure.
+	 * @brief Creates a new version container.
 	 * 
 	 * @param major version major part value
 	 * @param minor version minor part value
@@ -50,7 +52,7 @@ struct [[nodiscard]] Version
 	constexpr Version(uint8 major = 0, uint8 minor = 0, uint8 patch = 0, uint8 build = 0) noexcept :
 		major(major), minor(minor), patch(patch), build(build) { }
 	/**
-	 * @brief Creates a new version structure from encoded data.
+	 * @brief Creates a new version container from encoded data.
 	 * @param version target version encoded data
 	 */
 	constexpr Version(uint32 version) noexcept :
@@ -65,7 +67,7 @@ struct [[nodiscard]] Version
 		return ((uint32)major << 24u) | ((uint32)minor << 16u) | ((uint32)patch << 8u) | (uint32)build;
 	}
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Returns version part by the index.
 	 * @param i target version part index
 	 */
@@ -101,23 +103,57 @@ struct [[nodiscard]] Version
 	/**
 	 * @brief Creates a new version string. (X.X.X)
 	 */
-	string toString3() const noexcept
-	{
-		return to_string(major) + "." + to_string(minor) + "." + to_string(patch);
-	}
+	string toString3() const noexcept { return to_string(major) + "." + to_string(minor) + "." + to_string(patch); }
 	/**
 	 * @brief Creates a new version string. (X.X)
 	 */
-	string toString2() const noexcept
-	{
-		return to_string(major) + "." + to_string(minor);
-	}
+	string toString2() const noexcept { return to_string(major) + "." + to_string(minor); }
 	/**
 	 * @brief Creates a new version string. (X)
 	 */
-	string toString1() const noexcept
+	string toString1() const noexcept { return to_string(major); }
+
+	/**
+	 * @brief Creates a new version container from the string value.
+	 * @return True on string parsing success, otherwise false.
+	 *
+	 * @param str target version string value
+	 * @param[out] version coverted version container
+	 */
+	static bool fromString(string_view str, Version& version) noexcept
 	{
-		return to_string(major);
+		if (str.empty())
+			return false;
+
+		auto end = str.data() + str.length();
+		auto result = from_chars(str.data(), end, version.major);
+		if (result.ec != errc())
+			return false;
+		if (result.ptr == end)
+		{
+			version.minor = version.patch = version.build = 0;
+			return true;
+		}
+
+		result = from_chars(result.ptr + 1, end, version.minor);
+		if (result.ec != errc())
+			return false;
+		if (result.ptr == end)
+		{
+			version.patch = version.build = 0;
+			return true;
+		}
+
+		result = from_chars(result.ptr + 1, end, version.patch);
+		if (result.ec != errc())
+			return false;
+		if (result.ptr == end)
+		{
+			version.build = 0;
+			return true;
+		}
+
+		return from_chars(result.ptr + 1, end, version.build).ec == errc();
 	}
 };
 
