@@ -1506,6 +1506,29 @@ static f32x4 lerp(f32x4 a, f32x4 b, float t) noexcept { return fma(f32x4(t), b, 
  */
 static f32x4 lerpDelta(f32x4 a, f32x4 b, float dr, float dt) noexcept { return lerp(b, a, std::exp(-dr * dt)); }
 
+//**********************************************************************************************************************
+static uint8 quantizeUnorm8(float v) noexcept { return (uint8)std::fma(saturate(v), (float)UINT8_MAX, 0.5f); }
+static byte2 quantizeUnorm8(float2 v) noexcept { return (byte2)fma(saturate(v), float2(UINT8_MAX), float2(0.5f)); }
+static byte3 quantizeUnorm8(float3 v) noexcept { return (byte3)fma(saturate(f32x4(v)), f32x4(UINT8_MAX), f32x4(0.5f)); }
+static byte4 quantizeUnorm8(float4 v) noexcept { return (byte4)fma(saturate(f32x4(v)), f32x4(UINT8_MAX), f32x4(0.5f)); }
+static byte4 quantizeUnorm8(f32x4 v) noexcept { return (byte4)fma(saturate(v), f32x4(UINT8_MAX), f32x4(0.5f)); }
+
+static uint16 quantizeUnorm16(float v) noexcept { return (uint16)std::fma(saturate(v), (float)UINT16_MAX, 0.5f); }
+static ushort2 quantizeUnorm16(float2 v) noexcept { return (ushort2)fma(saturate(v), float2(UINT16_MAX), float2(0.5f)); }
+static ushort3 quantizeUnorm16(float3 v) noexcept { return (ushort3)fma(saturate(f32x4(v)), f32x4(UINT16_MAX), f32x4(0.5f)); }
+static ushort4 quantizeUnorm16(float4 v) noexcept { return (ushort4)fma(saturate(f32x4(v)), f32x4(UINT16_MAX), f32x4(0.5f)); }
+static ushort4 quantizeUnorm16(f32x4 v) noexcept { return (ushort4)fma(saturate(v), f32x4(UINT16_MAX), f32x4(0.5f)); }
+
+static float dequantizeUnorm8(uint8 v) noexcept { return (float)v * (float)(1.0 / UINT8_MAX); }
+static float2 dequantizeUnorm8(byte2 v) noexcept { return float2(v) * (float)(1.0 / UINT8_MAX); }
+static f32x4 dequantizeUnorm8(byte3 v) noexcept { return f32x4(v) * (float)(1.0 / UINT8_MAX); }
+static f32x4 dequantizeUnorm8(byte4 v) noexcept { return f32x4(v) * (float)(1.0 / UINT8_MAX); }
+
+static float dequantizeUnorm16(uint16 v) noexcept { return (float)v * (float)(1.0 / UINT16_MAX); }
+static float2 dequantizeUnorm16(ushort2 v) noexcept { return float2(v) * (float)(1.0 / UINT16_MAX); }
+static f32x4 dequantizeUnorm16(ushort3 v) noexcept { return f32x4(v) * (float)(1.0 / UINT16_MAX); }
+static f32x4 dequantizeUnorm16(ushort4 v) noexcept { return f32x4(v) * (float)(1.0 / UINT16_MAX); }
+
 /***********************************************************************************************************************
  * @brief Compresses 4D SIMD unit vector into the 4 byte value.
  * @details Precision is around 0.0005f, or 0.5 degree for a quaternion.
