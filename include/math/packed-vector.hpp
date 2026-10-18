@@ -17,34 +17,51 @@
  * @brief Common packed vector functions.
  */
 
+// TODO: pack odd bit sizes.
+
 #pragma once
 #include "math/types.hpp"
-#include <cstdlib>
+
 #include <vector>
+#include <cstdlib>
 
 namespace math
 {
 
+/**
+ * @brief Packed bits container. (Based on the @ref std::vector)
+ * @tparam Bits number of bits per element.
+ */
 template<int Bits = 1>
 class PackedVector final : public std::vector<uint8>
 {
 private:
 	uint8* ptr = nullptr;
 public:
+	/**
+	 * @brief Creates a new packed vector container.
+	 */
 	PackedVector()
 	{
 		static_assert(Bits > 0, "Should be at least 1 bit.");
 		static_assert(Bits == 1 || Bits == 2 || Bits == 4, "Partial support of packing.");
 		ptr = data();
 	}
+	/**
+	 * @brief Creates a new packed vector container with specified size.
+	 * @param elementCount target array element count
+	 */
 	PackedVector(psize elementCount)
 	{
 		static_assert(Bits > 0, "Should be at least 1 bit.");
 		static_assert(Bits == 1 || Bits == 2 || Bits == 4, "Partial support of packing.");
 		resize(elementCount);
 	}
-	// TODO: pack odd bit sizes.
 
+	/**
+	 * @brief Returns packed vector element at specified index. (No asserts!)
+	 * @param i target element index in the array
+	 */
 	uint8 unsafeGet(psize i) const noexcept
 	{
 		if constexpr (Bits == 1)
@@ -61,6 +78,10 @@ public:
 		}
 		abort();
 	}
+	/**
+	 * @brief Returns packed vector element at specified index.
+	 * @param i target element index in the array
+	 */
 	uint8 get(psize i) const noexcept
 	{
 		if constexpr (Bits == 1)
@@ -72,6 +93,12 @@ public:
 		return unsafeGet(i);
 	}
 
+	/**
+	 * @brief Sets packed vector element at specified index. (No asserts!)
+	 *
+	 * @param i target element index in the array
+	 * @param value element value to set
+	 */
 	void unsafeSet(psize i, uint8 value) noexcept
 	{
 		if constexpr (Bits == 1)
@@ -90,6 +117,12 @@ public:
 			b = (b & ~((uint8)0x0F << shift)) | ((value & (uint8)0x0F) << shift);
 		}
 	}
+	/**
+	 * @brief Returns packed vector element at specified index.
+	 *
+	 * @param i target element index in the array
+	 * @param value element value to set
+	 */
 	uint8 set(psize i, uint8 value) noexcept
 	{
 		if constexpr (Bits == 1)
@@ -101,6 +134,10 @@ public:
 		return unsafeSet(i, value);
 	}
 
+	/**
+	 * @brief Resizes packed vector array.
+	 * @param elementCount target array element count
+	 */
 	void resize(psize elementCount)
 	{
 		if constexpr (Bits == 1)

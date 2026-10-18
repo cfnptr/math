@@ -294,8 +294,9 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& root
 		centroidData = _centroids;
 	}
 
+	auto nodeData = nodes.data();
 	auto nodeCount = (uint32)1;
-	auto node = &nodes[0];
+	auto node = &nodeData[0];
 	node->aabb = rootAabb;
 	node->setPrimitiveCount(primitiveCount);
 	node->setFirstPrimitive(0);
@@ -355,13 +356,13 @@ void Bvh::recreate(const uint8* vertices, const uint8* indices, const Aabb& root
 		node->setLeftNode(leftNodeID);
 		node->setPrimitiveCount(0);
 	
-		auto node1 = &nodes[leftNodeID];
+		auto node1 = &nodeData[leftNodeID];
 		node1->aabb = calculateNodeAabb(firstPrimitive, count1, vertices, 
 			indices, primitives.data(), vertexSize, indexSize, getIndex);
 		node1->setFirstPrimitive(firstPrimitive);
 		node1->setPrimitiveCount(count1);
 
-		auto node2 = &nodes[rightNodeID];
+		auto node2 = &nodeData[rightNodeID];
 		node2->aabb = calculateNodeAabb(i, count2, vertices, indices, 
 			primitives.data(), vertexSize, indexSize, getIndex);
 		node2->setFirstPrimitive(i);
