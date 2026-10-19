@@ -86,6 +86,10 @@ static float3 decodeNormalOct3(float3 encoded) noexcept
 }
 
 //**********************************************************************************************************************
+static f32x4x4 createTBN(f32x4 normal, f32x4 tangent, f32x4 bitangent) noexcept
+{
+	return f32x4x4(tangent, bitangent, normal);
+}
 static f32x4x4 computeTBN(const f32x4x4& model, f32x4 normal, f32x4 tangent) noexcept
 {
 	assert(normal == normalize3(normal));
