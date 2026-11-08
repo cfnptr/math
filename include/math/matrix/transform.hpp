@@ -127,10 +127,21 @@ static float2 extractScale2(const f32x4x4& m) noexcept
  * @param s target object scale
  * @param t target object translation
  */
-static f32x4x4 scaleAndTranslate(f32x4 s, f32x4 t) noexcept
+static f32x4x4 scaleThenTranslate(f32x4 s, f32x4 t) noexcept
 {
 	return f32x4x4(f32x4(s.getX(), 0.0f, 0.0f, 0.0f), f32x4(0.0f, s.getY(), 0.0f, 0.0f),
 		f32x4(0.0f, 0.0f, s.getZ(), 0.0f), f32x4(t, 1.0f));
+}
+/**
+ * @brief Creates a new SIMD matrix with a specified object position and scale in 3D space.
+ *
+ * @param t target object translation
+ * @param s target object scale
+ */
+static f32x4x4 translateThenScale(f32x4 t, f32x4 s) noexcept
+{
+	return f32x4x4(f32x4(s.getX(), 0.0f, 0.0f, 0.0f), f32x4(0.0f, s.getY(), 0.0f, 0.0f),
+		f32x4(0.0f, 0.0f, s.getZ(), 0.0f), f32x4(t * s, 1.0f));
 }
 
 /***********************************************************************************************************************

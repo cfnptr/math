@@ -64,7 +64,7 @@ public:
 	 */
 	f32x4 getMax() const noexcept { return max; }
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Sets minimum AABB corner position in 3D space.
 	 * @details See the @ref getMin().
 	 * @param min minimum bounding box corner position in 3D space
@@ -113,7 +113,7 @@ public:
 		return true;
 	}
 	
-	/**
+	/*******************************************************************************************************************
 	 * @brief Sets size of the bounding box.
 	 * @param size target size of the bounding box
 	 */
@@ -207,7 +207,7 @@ public:
 		min = math::max(min, aabb.min); max = math::min(max, aabb.max); 
 	}
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Translates bounding box in 3D space.
 	 * @param translation target translation transformation in 3D space
 	 */
@@ -238,6 +238,19 @@ public:
 		auto extent = max - min;
 		return extent.getX() * extent.getY() * extent.getZ();
 	}
+
+	/**
+	 * @brief Inverses X-axis of the bounding box.
+	 */
+	void invertX() { min.setX(-min.getX()); max.setX(-max.getX()); }
+	/**
+	 * @brief Inverses Y-axis of the bounding box.
+	 */
+	void invertY() { min.setY(-min.getY()); max.setY(-max.getY()); }
+	/**
+	 * @brief Inverses Z-axis of the bounding box.
+	 */
+	void invertZ() { min.setZ(-min.getZ()); max.setZ(-max.getZ()); }
 
 	/**
 	 * @brief Returns invalid inverted axis aligned bounding box.
